@@ -30,20 +30,6 @@
     "storybook": "start-storybook -p 6006 -s public",
     "build-storybook": "build-storybook -s public"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged",
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
-      "prepare-commit-msg": "exec < /dev/tty && git cz --hook || true"
-    }
-  },
-  "lint-staged": {
-    "*.{js, jsx}": [
-      "eslint --fix",
-      "prettier --write",
-      "git add"
-    ]
-  },
   "eslintConfig": {
     "extends": [
       "react-app",
@@ -94,7 +80,6 @@
     "eslint-plugin-react": "^7.21.5",
     "eslint-plugin-react-hooks": "^1.7.0",
     "husky": "^7.0.2",
-    "lint-staged": "^11.2.3",
     "prettier": "^2.4.1",
     "stylelint-config-recess-order": "^2.5.0"
   },
