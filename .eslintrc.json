@@ -4,5 +4,8 @@
     "es6": true,
     "node": true
   },
-  "extends": ["react-app", "plugin:prettier/recommended"]
+  "extends": ["react-app", "plugin:prettier/recommended"],
+  "rules": {
+    "import/no-anonymous-default-export": "off"
+  }
 }
