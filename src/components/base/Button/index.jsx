@@ -1,26 +1,25 @@
-// import React from 'react';
 import styled from '@emotion/styled';
-// import { css } from '@emotion/react';
 
 const Button = styled.button`
   box-sizing: border-box;
   display: block;
-  width: 100%;
-  height: 40px;
+  width: 550px;
+  height: 56px;
   padding: 8px 6px;
+  font-size: 18px;
   color: white;
   cursor: pointer;
-  background-color: black;
+  background-color: #ffd039;
   border: none;
-  border-radius: 4px;
+  border-radius: 16px;
   outline: none;
 
   &:hover {
-    background-color: #eee;
+    opacity: 0.8;
   }
 
   &:active {
-    background-color: #222;
+    border: solid 1px white;
   }
 
   &:disabled {
