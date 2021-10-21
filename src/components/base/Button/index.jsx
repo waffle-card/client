@@ -1,30 +1,29 @@
-import styled from '@emotion/styled';
+import { useCallback } from 'react';
+import PropTypes from 'prop-types';
+import './Button.scss';
 
-const Button = styled.button`
-  box-sizing: border-box;
-  display: block;
-  width: 550px;
-  height: 56px;
-  padding: 8px 6px;
-  font-size: 18px;
-  color: white;
-  cursor: pointer;
-  background-color: #ffd039;
-  border: none;
-  border-radius: 16px;
-  outline: none;
+const Button = ({
+  children,
+  size = 'small',
+  color = 'yellow',
+  onClick,
+  ...props
+}) => {
+  const handleClick = useCallback(() => {
+    onClick && onClick();
+  }, [onClick]);
 
-  &:hover {
-    opacity: 0.8;
-  }
+  return (
+    <button {...props} className={`${size} ${color}`} onClick={handleClick}>
+      {children}
+    </button>
+  );
+};
 
-  &:active {
-    border: solid 1px white;
-  }
-
-  &:disabled {
-    background-color: #888;
-  }
-`;
+Button.propTypes = {
+  children: PropTypes.string.isRequired,
+  size: PropTypes.string.isRequired,
+  color: PropTypes.string.isRequired,
+};
 
 export default Button;
