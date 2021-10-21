@@ -5,15 +5,27 @@ import PropTypes from 'prop-types';
 const StyledButton = styled.button`
   box-sizing: border-box;
   display: block;
-  width: ${({ width }) => width}px;
-  height: ${({ height }) => height}px;
+  width: ${({ width }) => {
+    return typeof width === 'number' ? `${width}px` : width;
+  }};
+  height: ${({ height }) => {
+    return typeof height === 'number' ? `${height}px` : height;
+  }};
   padding: 8px 6px;
-  font-size: ${({ fontsize }) => fontsize}px;
+  font-size: ${({ fontsize }) => {
+    return typeof fontsize === 'number' ? `${fontsize}px` : fontsize;
+  }};
   color: ${({ fontcolor }) => fontcolor};
   cursor: pointer;
   background-color: ${({ backgroundcolor }) => backgroundcolor};
   border: none;
-  border-radius: 16px;
+  border-radius: ${({ width }) => {
+    if (typeof width === 'number') {
+      return width < 250 ? '12px' : '16px';
+    } else {
+      return '16px';
+    }
+  }};
   outline: none;
 
   &:hover {
@@ -59,11 +71,12 @@ const Button = ({
 
 Button.propTypes = {
   children: PropTypes.string,
-  width: PropTypes.number.isRequired,
-  height: PropTypes.number.isRequired,
+  width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
+  height: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
   backgroundColor: PropTypes.string.isRequired,
   fontColor: PropTypes.string.isRequired,
-  fontSize: PropTypes.number.isRequired,
+  fontSize: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
+    .isRequired,
   onClick: PropTypes.func,
 };
 

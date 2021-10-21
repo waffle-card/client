@@ -43,7 +43,7 @@ export const Test = () => {
     fontColor: 'white',
     backgroundColor: '#FFD039',
     width: 300,
-    height: 32,
+    height: '42px',
     fontSize: 12,
   };
   return (
@@ -51,11 +51,11 @@ export const Test = () => {
       <Button {...buttonOptions}>구조분해 버튼</Button>
       <br />
       <Button
-        width={400}
-        height={32}
+        width={'400px'}
+        height={56}
         fontColor={'#FFD039'}
         backgroundColor={'royalblue'}
-        fontSize={18}>
+        fontSize={'22px'}>
         속성지정 버튼
       </Button>
     </>
