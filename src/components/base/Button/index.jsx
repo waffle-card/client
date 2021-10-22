@@ -71,12 +71,11 @@ const Button = ({
 
 Button.propTypes = {
   children: PropTypes.string,
-  width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
-  height: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
-  backgroundColor: PropTypes.string.isRequired,
-  fontColor: PropTypes.string.isRequired,
-  fontSize: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
-    .isRequired,
+  width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  height: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  backgroundColor: PropTypes.string,
+  fontColor: PropTypes.string,
+  fontSize: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   onClick: PropTypes.func,
 };
 
