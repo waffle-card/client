@@ -34,6 +34,34 @@ export const Common = {
     chattingElement: '2px 5px 6px rgba(0, 0, 0, 1.2)',
   },
 
+  fontSize: {
+    micro: () => `
+      font-size: 0.75rem;
+      line-height: 16px;
+      letter-spacing: -0.005em;
+    `,
+    small: () => `
+      font-size: 0.875rem;
+      line-height: 24px;
+      letter-spacing: -0.01em;
+    `,
+    base: () => `
+      font-size: 1rem;
+      line-height: 24px;
+      letter-spacing: -0.01em;
+    `,
+    medium: () => `
+      font-size: 1.125rem;
+      line-height: 28px;
+      letter-spacing: -0.02em;
+    `,
+    large: () => `
+      font-size: 1.5rem;
+      line-height: 34px;
+      letter-spacing: -0.01em;
+    `,
+  },
+
   fontWeight: {
     regular: 400,
     medium: 500,
