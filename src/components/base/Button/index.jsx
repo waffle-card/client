@@ -12,12 +12,12 @@ const StyledButton = styled.button`
     return typeof height === 'number' ? `${height}px` : height;
   }};
   padding: 8px 6px;
-  font-size: ${({ fontsize }) => {
-    return typeof fontsize === 'number' ? `${fontsize}px` : fontsize;
+  font-size: ${({ fontSize }) => {
+    return typeof fontSize === 'number' ? `${fontSize}px` : fontSize;
   }};
-  color: ${({ fontcolor }) => fontcolor};
+  color: ${({ fontColor }) => fontColor};
   cursor: pointer;
-  background-color: ${({ backgroundcolor }) => backgroundcolor};
+  background-color: ${({ backgroundColor }) => backgroundColor};
   border: none;
   border-radius: ${({ width }) => {
     if (typeof width === 'number') {
@@ -37,7 +37,7 @@ const StyledButton = styled.button`
   }
 
   &:active {
-    border: solid 2px ${({ fontcolor }) => fontcolor};
+    border: solid 2px ${({ fontColor }) => fontColor};
   }
 `;
 
@@ -60,9 +60,9 @@ const Button = ({
       {...props}
       width={width}
       height={height}
-      backgroundcolor={backgroundColor}
-      fontcolor={fontColor}
-      fontsize={fontSize}
+      backgroundColor={backgroundColor}
+      fontColor={fontColor}
+      fontSize={fontSize}
       onClick={handleClick}>
       {children}
     </StyledButton>
