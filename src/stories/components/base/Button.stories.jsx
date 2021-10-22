@@ -5,11 +5,11 @@ export default {
   component: Button,
   argTypes: {
     width: {
-      defaultValue: 550,
+      defaultValue: 300,
       control: { type: 'number' },
     },
     height: {
-      defaultValue: 56,
+      defaultValue: 44,
       control: { type: 'number' },
     },
     fontColor: {
@@ -17,18 +17,28 @@ export default {
       control: { type: 'color' },
     },
     backgroundColor: {
-      defaultValue: '#FFD039',
+      defaultValue: 'royalblue',
       control: { type: 'color' },
     },
     fontSize: {
-      defaultValue: 18,
+      defaultValue: 12,
       control: { type: 'number' },
     },
     onClick: { action: 'onClick' },
   },
 };
 
-export const Default = args => {
+export const Default = () => {
+  return (
+    <>
+      <Button>가입하기</Button>
+      <br />
+      <Button>입장하기</Button>
+    </>
+  );
+};
+
+export const Custom = args => {
   return (
     <>
       <Button {...args}>가입하기</Button>

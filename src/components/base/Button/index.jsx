@@ -80,4 +80,12 @@ Button.propTypes = {
   onClick: PropTypes.func,
 };
 
+Button.defaultProps = {
+  width: 550,
+  height: 56,
+  backgroundColor: '#FFD039',
+  fontColor: '#fff',
+  fontSize: '18px',
+};
+
 export default Button;
