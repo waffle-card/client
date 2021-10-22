@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const Spacer = ({ children, type = 'horizontal', size = 8, ...props }) => {
   const spacerStyle = {
@@ -31,6 +32,12 @@ const Spacer = ({ children, type = 'horizontal', size = 8, ...props }) => {
       {nodes}
     </div>
   );
+};
+
+Spacer.propTypes = {
+  children: PropTypes.node,
+  type: PropTypes.string,
+  size: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 };
 
 export default Spacer;
