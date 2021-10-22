@@ -3,38 +3,76 @@ import Icons from '@components/base/Icons';
 export default {
   title: 'component/Icons',
   component: Icons,
+  argTypes: {
+    color: {
+      defaultValue: 'white',
+      control: 'color',
+    },
+    fontSize: {
+      defaultValue: '80px',
+      control: 'number',
+    },
+  },
 };
 
-export const ArrowBack = () => {
-  return <Icons.ArrowBack />;
+export const Add = args => {
+  return (
+    <Icons>
+      <Icons.Add {...args} />
+    </Icons>
+  );
 };
 
-export const Edit = args => {
-  return <Icons.Edit {...args} />;
+export const ArrowBack = args => {
+  return (
+    <Icons>
+      <Icons.ArrowBack {...args} />
+    </Icons>
+  );
 };
 
 export const Delete = args => {
-  return <Icons.Delete {...args} />;
+  return (
+    <Icons>
+      <Icons.Delete {...args} />
+    </Icons>
+  );
 };
 
-export const Person = args => {
-  return <Icons.Person {...args} />;
+export const Edit = args => {
+  return (
+    <Icons>
+      <Icons.Edit {...args} />
+    </Icons>
+  );
 };
 
 export const Favorite = args => {
   return (
     <>
-      <Icons.Favorite {...args} />
-      <Icons.Favorite {...args} active />
+      <Icons>
+        <Icons.Favorite {...args} />
+      </Icons>
+      <Icons>
+        <Icons.Favorite active {...args} />
+      </Icons>
     </>
   );
 };
 
 export const Like = args => {
   return (
-    <>
+    <Icons>
       <Icons.Like {...args} />
-      <Icons.Like {...args} active />
-    </>
+      <Icons.Like active {...args} />
+    </Icons>
+  );
+};
+
+export const Person = args => {
+  return (
+    <Icons>
+      <Icons.Person {...args} />
+    </Icons>
   );
 };
