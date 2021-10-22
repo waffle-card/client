@@ -12,7 +12,7 @@ const Container = styled.div`
   cursor: pointer;
   background-color: ${({ backgroundColor }) =>
     backgroundColor ? backgroundColor : `rgba(0, 0, 0, 0.1)`};
-
+  margin: 10px;
   &:hover {
     background-color: none;
   }

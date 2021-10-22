@@ -16,6 +16,7 @@ export default {
     backgroundColor: {
       control: 'color',
     },
+    onClick: { action: 'onClick' },
   },
 };
 

@@ -49,7 +49,6 @@ const Button = ({
   fontColor,
   fontSize,
   onClick,
-  ...props
 }) => {
   const handleClick = useCallback(() => {
     onClick && onClick();
@@ -57,7 +56,6 @@ const Button = ({
 
   return (
     <StyledButton
-      {...props}
       width={width}
       height={height}
       backgroundcolor={backgroundColor}

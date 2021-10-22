@@ -62,10 +62,14 @@ export const Favorite = args => {
 
 export const Like = args => {
   return (
-    <Icons>
-      <Icons.Like {...args} />
-      <Icons.Like active {...args} />
-    </Icons>
+    <>
+      <Icons>
+        <Icons.Like {...args} />
+      </Icons>
+      <Icons>
+        <Icons.Like active {...args} />
+      </Icons>
+    </>
   );
 };
 
