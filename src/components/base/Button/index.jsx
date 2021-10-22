@@ -57,13 +57,13 @@ const Button = ({
 
   return (
     <StyledButton
-      {...props}
+      onClick={handleClick}
       width={width}
       height={height}
       backgroundColor={backgroundColor}
-      fontColor={fontColor}
       fontSize={fontSize}
-      onClick={handleClick}>
+      fontColor={fontColor}
+      {...props}>
       {children}
     </StyledButton>
   );
