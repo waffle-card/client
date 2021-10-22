@@ -1,20 +1,25 @@
 import Icon from '@mui/material/Icon';
 import PropTypes from 'prop-types';
 import { useCallback } from 'react';
+import useToggle from '@hooks/useToggle';
 
-const Like = ({ fontSize, color, active = false }) => {
+const Like = ({ fontSize, color, active = false, onClick }) => {
   const iconStyle = {
     fontSize,
     color,
   };
 
-  const handleClick = useCallback(() => {
+  const [liked, toggle] = useToggle(active);
+
+  const handleClick = e => {
+    toggle();
+    onClick && onClick();
     console.log('Like Icon Clicked!');
-  }, []);
+  };
 
   return (
     <Icon style={{ ...iconStyle }} onClick={handleClick}>
-      {active ? `favorite` : `favorite_border`}
+      {liked ? `favorite` : `favorite_border`}
     </Icon>
   );
 };
