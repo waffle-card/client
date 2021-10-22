@@ -3,29 +3,36 @@ import { useCallback } from 'react';
 import PropTypes from 'prop-types';
 
 const StyledButton = styled.button`
-  box-sizing: border-box;
-  display: block;
-  width: ${({ width }) => {
+  --width: ${({ width }) => {
     return typeof width === 'number' ? `${width}px` : width;
   }};
-  height: ${({ height }) => {
+  --height: ${({ height }) => {
     return typeof height === 'number' ? `${height}px` : height;
   }};
-  padding: 8px 6px;
-  font-size: ${({ fontSize }) => {
+  --font-size: ${({ fontSize }) => {
     return typeof fontSize === 'number' ? `${fontSize}px` : fontSize;
   }};
-  color: ${({ fontColor }) => fontColor};
-  cursor: pointer;
-  background-color: ${({ backgroundColor }) => backgroundColor};
-  border: none;
-  border-radius: ${({ width }) => {
+  --font-color: ${({ fontColor }) => fontColor};
+  --background-color: ${({ backgroundColor }) => backgroundColor};
+  --border-radius: ${({ width }) => {
     if (typeof width === 'number') {
       return width < 250 ? '12px' : '16px';
     } else {
       return '16px';
     }
   }};
+
+  box-sizing: border-box;
+  display: block;
+  width: var(--width);
+  height: var(--height);
+  padding: 8px 6px;
+  font-size: var(--font-size);
+  color: var(--font-color);
+  cursor: pointer;
+  background-color: var(--background-color);
+  border: none;
+  border-radius: var(--border-radius);
   outline: none;
 
   &:hover {
@@ -37,7 +44,7 @@ const StyledButton = styled.button`
   }
 
   &:active {
-    border: solid 2px ${({ fontColor }) => fontColor};
+    border: solid 2px var(--font-color);
   }
 `;
 
