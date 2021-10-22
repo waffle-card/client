@@ -1,13 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import styled from '@emotion/styled';
+
+const StyledSpacer = styled.div`
+  display: ${({ type }) => (type === 'vertical' ? 'block' : 'inline-block')};
+  vertical-align: ${({ type }) =>
+    type === 'horizontal' ? 'middle' : undefined};
+`;
 
 const Spacer = ({ children, type = 'horizontal', size = 8, ...props }) => {
-  const spacerStyle = {
-    ...props.style,
-    display: type === 'vertical' ? 'block' : 'inline-block',
-    vertical: type === 'horizontal' ? 'middle' : undefined,
-  };
-
   const nodes = React.Children.toArray(children)
     .filter(element => React.isValidElement(element))
     .map((element, index, elements) => {
@@ -28,9 +29,9 @@ const Spacer = ({ children, type = 'horizontal', size = 8, ...props }) => {
     });
 
   return (
-    <div style={spacerStyle} {...props}>
+    <StyledSpacer type={type} {...props}>
       {nodes}
-    </div>
+    </StyledSpacer>
   );
 };
 
