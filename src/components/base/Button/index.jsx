@@ -58,9 +58,12 @@ const Button = ({
   onClick,
   ...props
 }) => {
-  const handleClick = useCallback(() => {
-    onClick && onClick();
-  }, [onClick]);
+  const handleClick = useCallback(
+    event => {
+      onClick && onClick(event);
+    },
+    [onClick],
+  );
 
   return (
     <StyledButton
