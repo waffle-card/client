@@ -3,15 +3,11 @@ import { useCallback } from 'react';
 import PropTypes from 'prop-types';
 
 const StyledButton = styled.button`
-  --width: ${({ width }) => {
-    return typeof width === 'number' ? `${width}px` : width;
-  }};
-  --height: ${({ height }) => {
-    return typeof height === 'number' ? `${height}px` : height;
-  }};
-  --font-size: ${({ fontSize }) => {
-    return typeof fontSize === 'number' ? `${fontSize}px` : fontSize;
-  }};
+  --width: ${({ width }) => (typeof width === 'number' ? `${width}px` : width)};
+  --height: ${({ height }) =>
+    typeof height === 'number' ? `${height}px` : height};
+  --font-size: ${({ fontSize }) =>
+    typeof fontSize === 'number' ? `${fontSize}px` : fontSize};
   --font-color: ${({ fontColor }) => fontColor};
   --background-color: ${({ backgroundColor }) => backgroundColor};
   --border-radius: ${({ width }) => {
