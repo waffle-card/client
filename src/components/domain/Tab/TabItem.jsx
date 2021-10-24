@@ -20,6 +20,7 @@ const TabItemTitle = styled.span`
     active ? Common.fontWeight.bold : Common.fontWeight.regular};
   color: ${({ active, pointColor }) =>
     active ? pointColor : rgba(pointColor, 0.35)};
+  transition: color 0.2s ease-out;
   z-index: 1;
 `;
 
