@@ -18,14 +18,14 @@ const Text = ({
     weight = weight < 100 ? 100 : weight > 900 ? 900 : weight;
   }
 
-  if (del) {
+  if (!underline && del) {
     children = <del>{children}</del>;
   }
 
   const fontStyle = {
     fontSize: typeof size === 'number' ? `${size}px` : size,
     fontWeight: weight,
-    textDecoration: underline ? 'underline' : undefined,
+    textDecoration: !del && underline ? 'underline' : undefined,
     color,
   };
 
