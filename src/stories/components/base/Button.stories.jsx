@@ -3,29 +3,6 @@ import Button from '@components/base/Button';
 export default {
   title: 'Component/Base/Button',
   component: Button,
-  argTypes: {
-    width: {
-      defaultValue: 300,
-      control: { type: 'number' },
-    },
-    height: {
-      defaultValue: 44,
-      control: { type: 'number' },
-    },
-    fontColor: {
-      defaultValue: 'white',
-      control: { type: 'color' },
-    },
-    backgroundColor: {
-      defaultValue: 'royalblue',
-      control: { type: 'color' },
-    },
-    fontSize: {
-      defaultValue: 12,
-      control: { type: 'number' },
-    },
-    onClick: { action: 'onClick' },
-  },
 };
 
 export const Default = () => {
@@ -47,8 +24,31 @@ export const Custom = args => {
     </>
   );
 };
+Custom.argTypes = {
+  width: {
+    defaultValue: 300,
+    control: { type: 'number' },
+  },
+  height: {
+    defaultValue: 44,
+    control: { type: 'number' },
+  },
+  fontColor: {
+    defaultValue: 'white',
+    control: { type: 'color' },
+  },
+  backgroundColor: {
+    defaultValue: 'royalblue',
+    control: { type: 'color' },
+  },
+  fontSize: {
+    defaultValue: 12,
+    control: { type: 'number' },
+  },
+  onClick: { action: 'onClick' },
+};
 
-export const Test = () => {
+export const Usage = () => {
   const buttonOptions = {
     fontColor: 'white',
     backgroundColor: '#FFD039',
