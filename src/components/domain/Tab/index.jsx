@@ -23,7 +23,8 @@ const TabItemPointer = styled.div`
   transform: ${({ activeItemIndex }) =>
     activeItemIndex && `translate(${activeItemIndex * 100}%, 0)`};
   width: calc(100% / 3);
-  height: 47px;
+  height: ${({ height }) =>
+    typeof height === 'number' ? `${height}px` : height};
   border: ${({ pointColor }) => `1px solid ${pointColor}`};
   border-radius: 50px;
   background-color: ${({ backgroundColor }) => rgba(backgroundColor, 0.2)};
@@ -49,6 +50,7 @@ const childrenToArray = (children, types) => {
 const Tab = ({
   children,
   activeItemIndex,
+  height = 47,
   backgroundColor,
   pointColor,
   shadowStyle,
@@ -70,6 +72,7 @@ const Tab = ({
         ...element.props,
         key: element.props.index,
         active: element.props.index === currentActive,
+        height,
         pointColor,
         fontSize,
         onClick: () => {
@@ -77,7 +80,7 @@ const Tab = ({
         },
       });
     });
-  }, [children, currentActive, fontSize, pointColor]);
+  }, [children, currentActive, fontSize, height, pointColor]);
 
   return (
     <TabItemContainer
@@ -86,6 +89,7 @@ const Tab = ({
       {items}
       <TabItemPointer
         activeItemIndex={currentActive}
+        height={height}
         backgroundColor={backgroundColor}
         shadowStyle={shadowStyle}
         pointColor={pointColor}></TabItemPointer>
@@ -98,6 +102,7 @@ Tab.Item = TabItem;
 Tab.propTypes = {
   children: PropTypes.node.isRequired,
   activeItemIndex: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  height: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   backgroundColor: PropTypes.string.isRequired,
   pointColor: PropTypes.string.isRequired,
   shadowStyle: PropTypes.string,

@@ -9,6 +9,10 @@ export default {
       defaultValue: Common.colors.background_menu,
       control: { type: 'color' },
     },
+    height: {
+      defaultValue: 47,
+      control: { type: 'number' },
+    },
     pointColor: {
       defaultValue: Common.colors.primary,
       control: { type: 'color' },

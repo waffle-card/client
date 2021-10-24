@@ -8,7 +8,8 @@ const TabItemWrapper = styled.div`
   align-items: center;
   justify-content: center;
   width: calc(100% / 3);
-  height: 47px;
+  height: ${({ height }) =>
+    typeof height === 'number' ? `${height}px` : height};
   cursor: pointer;
 `;
 
@@ -22,10 +23,18 @@ const TabItemTitle = styled.span`
   z-index: 1;
 `;
 
-const TabItem = ({ title, index, active, pointColor, fontSize, ...props }) => {
+const TabItem = ({
+  title,
+  index,
+  active,
+  height,
+  pointColor,
+  fontSize,
+  ...props
+}) => {
   return (
     // 여기에 클릭 이벤트로 메뉴 별 페이지 라우터 달면 된다
-    <TabItemWrapper active={active} {...props}>
+    <TabItemWrapper active={active} {...props} height={height}>
       <TabItemTitle active={active} pointColor={pointColor} fontSize={fontSize}>
         {title}
       </TabItemTitle>
