@@ -1,7 +1,7 @@
 import { ColorPalette } from '@components';
 
 export default {
-  title: 'Component/ColorPalette',
+  title: 'Component/Base/ColorPalette',
 };
 
 export const Default = args => {
