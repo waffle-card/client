@@ -19,7 +19,6 @@ const StyledButton = styled.button`
       return tmpWidth < 250 ? '12px' : '16px';
     }
   }};
-
   box-sizing: border-box;
   display: block;
   width: var(--width);
@@ -36,16 +35,13 @@ const StyledButton = styled.button`
   border: none;
   border-radius: var(--border-radius);
   outline: none;
-
   &:hover {
     opacity: 0.8;
   }
-
   &:disabled {
     opacity: 0.5;
     cursor: default;
   }
-
   &:active {
     border: solid 2px var(--font-color);
   }
