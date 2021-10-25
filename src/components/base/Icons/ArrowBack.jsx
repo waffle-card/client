@@ -1,4 +1,4 @@
-import Icon from '@mui/material/Icon';
+import Icon from '@material-ui/core/Icon';
 import styled from '@emotion/styled';
 import PropTypes from 'prop-types';
 import { useCallback } from 'react';

@@ -36,12 +36,7 @@ export const FilledCard = args => {
     <div style={{ display: 'inline-flex' }}>
       <Card width="265px" backgroundColor="blue" {...args} />
       <Card width="265px" backgroundColor="red" {...args} />
-      <Card
-        width="265px"
-        height="400px"
-        backgroundColor="royalblue"
-        {...args}
-      />
+      <Card width="265px" backgroundColor="royalblue" {...args} />
     </div>
   );
 };
