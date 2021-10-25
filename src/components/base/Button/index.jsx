@@ -1,31 +1,40 @@
 import styled from '@emotion/styled';
 import { useCallback } from 'react';
 import PropTypes from 'prop-types';
+import Common from '@styles';
 
 const StyledButton = styled.button`
-  box-sizing: border-box;
-  display: block;
-  width: ${({ width }) => {
-    return typeof width === 'number' ? `${width}px` : width;
-  }};
-  height: ${({ height }) => {
-    return typeof height === 'number' ? `${height}px` : height;
-  }};
-  padding: 8px 6px;
-  font-size: ${({ fontsize }) => {
-    return typeof fontsize === 'number' ? `${fontsize}px` : fontsize;
-  }};
-  color: ${({ fontcolor }) => fontcolor};
-  cursor: pointer;
-  background-color: ${({ backgroundcolor }) => backgroundcolor};
-  border: none;
-  border-radius: ${({ width }) => {
+  --width: ${({ width }) => (typeof width === 'number' ? `${width}px` : width)};
+  --height: ${({ height }) =>
+    typeof height === 'number' ? `${height}px` : height};
+  --font-size: ${({ fontSize }) =>
+    typeof fontSize === 'number' ? `${fontSize}px` : fontSize};
+  --font-color: ${({ fontColor }) => fontColor};
+  --background-color: ${({ backgroundColor }) => backgroundColor};
+  --border-radius: ${({ width }) => {
     if (typeof width === 'number') {
       return width < 250 ? '12px' : '16px';
     } else {
-      return '16px';
+      const tmpWidth = parseInt(width, 10);
+      return tmpWidth < 250 ? '12px' : '16px';
     }
   }};
+
+  box-sizing: border-box;
+  display: block;
+  width: var(--width);
+  min-width: 80px;
+  max-width: 550px;
+  height: var(--height);
+  min-height: 40px;
+  max-height: 56px;
+  padding: 8px 6px;
+  font-size: var(--font-size);
+  color: var(--font-color);
+  cursor: pointer;
+  background-color: var(--background-color);
+  border: none;
+  border-radius: var(--border-radius);
   outline: none;
 
   &:hover {
@@ -33,11 +42,12 @@ const StyledButton = styled.button`
   }
 
   &:disabled {
-    background-color: #888;
+    opacity: 0.5;
+    cursor: default;
   }
 
   &:active {
-    border: solid 2px ${({ fontcolor }) => fontcolor};
+    border: solid 2px var(--font-color);
   }
 `;
 
@@ -48,22 +58,27 @@ const Button = ({
   backgroundColor,
   fontColor,
   fontSize,
+  disabled = false,
   onClick,
   ...props
 }) => {
-  const handleClick = useCallback(() => {
-    onClick && onClick();
-  }, [onClick]);
+  const handleClick = useCallback(
+    event => {
+      onClick && onClick(event);
+    },
+    [onClick],
+  );
 
   return (
     <StyledButton
-      {...props}
+      onClick={handleClick}
       width={width}
       height={height}
-      backgroundcolor={backgroundColor}
-      fontcolor={fontColor}
-      fontsize={fontSize}
-      onClick={handleClick}>
+      backgroundColor={backgroundColor}
+      fontSize={fontSize}
+      fontColor={fontColor}
+      disabled={disabled}
+      {...props}>
       {children}
     </StyledButton>
   );
@@ -71,13 +86,20 @@ const Button = ({
 
 Button.propTypes = {
   children: PropTypes.string,
-  width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
-  height: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
-  backgroundColor: PropTypes.string.isRequired,
-  fontColor: PropTypes.string.isRequired,
-  fontSize: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
-    .isRequired,
+  width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  height: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  backgroundColor: PropTypes.string,
+  fontColor: PropTypes.string,
+  fontSize: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   onClick: PropTypes.func,
+};
+
+Button.defaultProps = {
+  width: 550,
+  height: 56,
+  backgroundColor: Common.colors.point,
+  fontColor: Common.colors.primary,
+  fontSize: Common.fontSize.base,
 };
 
 export default Button;
