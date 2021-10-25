@@ -28,14 +28,7 @@ const ModalContainer = styled.div`
   box-sizing: border-box;
 `;
 
-const Modal = ({
-  children,
-  width,
-  height,
-  visible = false,
-  onClose,
-  ...props
-}) => {
+const Modal = ({ children, width, height, visible, onClose, ...props }) => {
   const ref = useClickAway(() => {
     onClose && onClose();
   });
