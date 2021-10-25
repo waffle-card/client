@@ -45,6 +45,10 @@ Custom.argTypes = {
     defaultValue: 12,
     control: { type: 'number' },
   },
+  disabled: {
+    defaultValue: false,
+    control: { type: 'boolean' },
+  },
   onClick: { action: 'onClick' },
 };
 
