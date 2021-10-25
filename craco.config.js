@@ -10,6 +10,7 @@ module.exports = {
       '@hooks': path.resolve(__dirname, 'src/hooks'),
       '@contexts': path.resolve(__dirname, 'src/contexts'),
       '@pages': path.resolve(__dirname, 'src/pages'),
+      '@styles': path.resolve(__dirname, 'src/styles'),
     },
   },
 };

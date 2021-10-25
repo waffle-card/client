@@ -18,6 +18,7 @@ module.exports = {
       '../src/contexts',
     );
     config.resolve.alias['@pages'] = path.resolve(__dirname, '../src/pages');
+    config.resolve.alias['@styles'] = path.resolve(__dirname, '../src/styles');
     return config;
   },
 };
