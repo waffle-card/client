@@ -14,7 +14,8 @@ const StyledButton = styled.button`
     if (typeof width === 'number') {
       return width < 250 ? '12px' : '16px';
     } else {
-      return '16px';
+      const tmpWidth = parseInt(width, 10);
+      return tmpWidth < 250 ? '12px' : '16px';
     }
   }};
 
