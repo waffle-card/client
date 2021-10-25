@@ -2,7 +2,7 @@ import Tab from '@components/domain/Tab';
 import Common from '@styles';
 
 export default {
-  title: 'Component/Tab',
+  title: 'Component/Domain/Tab',
   component: Tab,
   argTypes: {
     backgroundColor: {
