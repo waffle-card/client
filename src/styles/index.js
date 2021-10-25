@@ -1,4 +1,4 @@
-export const Common = {
+export default {
   colors: {
     point: 'rgba(255, 208, 57, 1)',
 

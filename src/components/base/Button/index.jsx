@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 import { useCallback } from 'react';
 import PropTypes from 'prop-types';
+import Common from '@styles';
 
 const StyledButton = styled.button`
   --width: ${({ width }) => (typeof width === 'number' ? `${width}px` : width)};
@@ -41,7 +42,8 @@ const StyledButton = styled.button`
   }
 
   &:disabled {
-    background-color: #888;
+    opacity: 0.5;
+    cursor: default;
   }
 
   &:active {
@@ -56,6 +58,7 @@ const Button = ({
   backgroundColor,
   fontColor,
   fontSize,
+  disabled = false,
   onClick,
   ...props
 }) => {
@@ -74,6 +77,7 @@ const Button = ({
       backgroundColor={backgroundColor}
       fontSize={fontSize}
       fontColor={fontColor}
+      disabled={disabled}
       {...props}>
       {children}
     </StyledButton>
@@ -93,9 +97,9 @@ Button.propTypes = {
 Button.defaultProps = {
   width: 550,
   height: 56,
-  backgroundColor: '#FFD039',
-  fontColor: '#fff',
-  fontSize: '18px',
+  backgroundColor: Common.colors.point,
+  fontColor: Common.colors.primary,
+  fontSize: Common.fontSize.base,
 };
 
 export default Button;
