@@ -8,7 +8,7 @@ const Anchor = styled.a`
   text-decoration: none;
 `;
 
-const Edit = ({ fontSize, color, href }) => {
+const Edit = ({ fontSize = '24px', color = 'white', href, onClick }) => {
   const iconStyle = {
     fontSize,
     color,
@@ -16,7 +16,8 @@ const Edit = ({ fontSize, color, href }) => {
 
   const handleClick = useCallback(() => {
     console.log('Edit Icon Clicked!');
-  }, []);
+    onClick && onClick();
+  }, [onClick]);
 
   return (
     <Anchor href={href}>
@@ -31,6 +32,7 @@ Edit.propTypes = {
   fontSize: PropTypes.string.isRequired,
   color: PropTypes.string.isRequired,
   href: PropTypes.string,
+  onClick: PropTypes.func,
 };
 
 export default Edit;

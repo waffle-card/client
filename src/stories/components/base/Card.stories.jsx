@@ -26,6 +26,7 @@ export const EmptyCard = args => {
       <Icons backgroundColor="none">
         <Icons.Add fontSize="50px" color="black" />
       </Icons>
+      <div>카드 추가!</div>
     </Card>
   );
 };

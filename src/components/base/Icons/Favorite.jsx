@@ -2,7 +2,12 @@ import Icon from '@mui/material/Icon';
 import PropTypes from 'prop-types';
 import useToggle from '@hooks/useToggle';
 
-const Favorite = ({ fontSize, color, active = false, onClick }) => {
+const Favorite = ({
+  fontSize = '24px',
+  color = 'white',
+  active = false,
+  onClick,
+}) => {
   const iconStyle = {
     fontSize,
     color,
@@ -27,6 +32,7 @@ Favorite.propTypes = {
   fontSize: PropTypes.string.isRequired,
   color: PropTypes.string.isRequired,
   active: PropTypes.bool,
+  onClick: PropTypes.func,
 };
 
 export default Favorite;

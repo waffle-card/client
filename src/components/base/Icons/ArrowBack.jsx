@@ -8,7 +8,7 @@ const Anchor = styled.a`
   text-decoration: none;
 `;
 
-const ArrowBack = ({ fontSize, color, href, onClick }) => {
+const ArrowBack = ({ fontSize = '24px', color = 'white', href, onClick }) => {
   const iconStyle = {
     fontSize,
     color,
@@ -16,7 +16,8 @@ const ArrowBack = ({ fontSize, color, href, onClick }) => {
 
   const handleClick = useCallback(() => {
     console.log('ArrowBack Icon Clicked!');
-  }, []);
+    onClick && onClick();
+  }, [onClick]);
 
   return (
     <Anchor href={href}>
@@ -31,6 +32,7 @@ ArrowBack.propTypes = {
   fontSize: PropTypes.string.isRequired,
   color: PropTypes.string.isRequired,
   href: PropTypes.string,
+  onClick: PropTypes.func,
 };
 
 export default ArrowBack;

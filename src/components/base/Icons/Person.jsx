@@ -1,22 +1,14 @@
 import Icon from '@mui/material/Icon';
 import PropTypes from 'prop-types';
-import { useCallback } from 'react';
 
-const Person = ({ fontSize, color }) => {
+const Person = ({ fontSize = '24px', color = 'white' }) => {
   const iconStyle = {
     fontSize,
     color,
+    cursor: 'default',
   };
 
-  const handleClick = useCallback(() => {
-    console.log('Person Icon Clicked!');
-  }, []);
-
-  return (
-    <Icon style={{ ...iconStyle }} onClick={handleClick}>
-      person
-    </Icon>
-  );
+  return <Icon style={{ ...iconStyle }}>person</Icon>;
 };
 
 Person.propTypes = {

@@ -1,9 +1,13 @@
 import Icon from '@mui/material/Icon';
 import PropTypes from 'prop-types';
-import { useCallback } from 'react';
 import useToggle from '@hooks/useToggle';
 
-const Like = ({ fontSize, color, active = false, onClick }) => {
+const Like = ({
+  fontSize = '24px',
+  color = 'white',
+  active = false,
+  onClick,
+}) => {
   const iconStyle = {
     fontSize,
     color,
@@ -28,6 +32,7 @@ Like.propTypes = {
   fontSize: PropTypes.string.isRequired,
   color: PropTypes.string.isRequired,
   active: PropTypes.bool,
+  onClick: PropTypes.func,
 };
 
 export default Like;

@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 
 const CardStyle = styled.div`
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   width: ${({ width }) =>
@@ -23,8 +24,8 @@ const CardStyle = styled.div`
 
 const Card = ({
   children,
-  width,
-  height,
+  width = 265,
+  height = 400,
   backgroundColor,
   borderColor,
   href,
@@ -33,7 +34,8 @@ const Card = ({
 }) => {
   const handleClick = useCallback(() => {
     console.log('Clicked!');
-  }, []);
+    onClick && onClick();
+  }, [onClick]);
 
   return (
     <CardStyle

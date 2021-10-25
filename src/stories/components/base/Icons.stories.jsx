@@ -9,7 +9,7 @@ export default {
       control: 'color',
     },
     fontSize: {
-      defaultValue: '80px',
+      defaultValue: '24px',
       control: 'number',
     },
   },
