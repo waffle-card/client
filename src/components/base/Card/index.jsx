@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 
 const CardStyle = styled.div`
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   width: ${({ width }) =>
@@ -48,7 +49,7 @@ const Card = ({
 };
 
 Card.propTypes = {
-  children: PropTypes.object,
+  children: PropTypes.array,
   width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
   height: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
   backgroundColor: PropTypes.string,

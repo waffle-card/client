@@ -2,7 +2,7 @@ import Card from '@components/base/Card';
 import Icons from '@components/base/Icons';
 
 export default {
-  title: 'Component/Card',
+  title: 'Component/Base/Card',
   component: { Card, Icons },
   argTypes: {
     width: {
