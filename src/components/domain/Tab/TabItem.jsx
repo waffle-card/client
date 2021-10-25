@@ -10,6 +10,7 @@ const TabItemWrapper = styled.div`
   width: calc(100% / 3);
   height: ${({ height }) =>
     typeof height === 'number' ? `${height}px` : height};
+  min-height: 25px;
   cursor: pointer;
 `;
 

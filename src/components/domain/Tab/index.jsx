@@ -12,6 +12,7 @@ const TabItemContainer = styled.div`
   justify-content: space-between;
   align-items: center;
   max-width: 740px;
+  min-width: 280px;
   border-radius: 50px;
   background-color: ${({ backgroundColor }) => backgroundColor};
   box-shadow: ${({ shadowStyle }) => shadowStyle};
@@ -25,6 +26,7 @@ const TabItemPointer = styled.div`
   width: calc(100% / 3);
   height: ${({ height }) =>
     typeof height === 'number' ? `${height}px` : height};
+  min-height: 25px;
   border: ${({ pointColor }) => `1px solid ${pointColor}`};
   border-radius: 50px;
   background-color: ${({ backgroundColor }) => rgba(backgroundColor, 0.2)};
@@ -51,9 +53,9 @@ const Tab = ({
   children,
   activeItemIndex,
   height = 47,
-  backgroundColor,
-  pointColor,
-  shadowStyle,
+  backgroundColor = Common.colors.background_menu,
+  pointColor = Common.colors.primary,
+  shadowStyle = Common.shadow.menu,
   fontSize = Common.fontSize.medium,
   ...props
 }) => {
