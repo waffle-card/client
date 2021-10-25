@@ -1,34 +1,21 @@
-import Button from '@components/base/Button';
+import { Button } from '@components';
 
 export default {
   title: 'Component/Base/Button',
   component: Button,
-  argTypes: {
-    width: {
-      defaultValue: 550,
-      control: { type: 'number' },
-    },
-    height: {
-      defaultValue: 56,
-      control: { type: 'number' },
-    },
-    fontColor: {
-      defaultValue: 'white',
-      control: { type: 'color' },
-    },
-    backgroundColor: {
-      defaultValue: '#FFD039',
-      control: { type: 'color' },
-    },
-    fontSize: {
-      defaultValue: 18,
-      control: { type: 'number' },
-    },
-    onClick: { action: 'onClick' },
-  },
 };
 
-export const Default = args => {
+export const Default = () => {
+  return (
+    <>
+      <Button>가입하기</Button>
+      <br />
+      <Button>입장하기</Button>
+    </>
+  );
+};
+
+export const Custom = args => {
   return (
     <>
       <Button {...args}>가입하기</Button>
@@ -37,8 +24,35 @@ export const Default = args => {
     </>
   );
 };
+Custom.argTypes = {
+  width: {
+    defaultValue: 300,
+    control: { type: 'number' },
+  },
+  height: {
+    defaultValue: 44,
+    control: { type: 'number' },
+  },
+  fontColor: {
+    defaultValue: 'white',
+    control: { type: 'color' },
+  },
+  backgroundColor: {
+    defaultValue: 'royalblue',
+    control: { type: 'color' },
+  },
+  fontSize: {
+    defaultValue: 12,
+    control: { type: 'number' },
+  },
+  disabled: {
+    defaultValue: false,
+    control: { type: 'boolean' },
+  },
+  onClick: { action: 'onClick' },
+};
 
-export const Test = () => {
+export const Usage = () => {
   const buttonOptions = {
     fontColor: 'white',
     backgroundColor: '#FFD039',
