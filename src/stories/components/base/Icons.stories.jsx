@@ -1,7 +1,7 @@
 import Icons from '@components/base/Icons';
 
 export default {
-  title: 'component/Icons',
+  title: 'Component/Base/Icons',
   component: Icons,
   argTypes: {
     color: {
