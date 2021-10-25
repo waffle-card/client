@@ -1,5 +1,5 @@
 import Tab from '@components/domain/Tab';
-import { Common } from '../../../style/common';
+import Common from '@styles';
 
 export default {
   title: 'Component/Tab',

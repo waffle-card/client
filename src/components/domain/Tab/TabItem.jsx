@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import PropTypes from 'prop-types';
-import { Common } from '../../../style/common';
+import Common from '@styles';
 import { rgba } from 'polished';
 
 const TabItemWrapper = styled.div`

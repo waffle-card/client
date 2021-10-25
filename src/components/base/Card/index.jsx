@@ -4,10 +4,6 @@ import PropTypes from 'prop-types';
 
 const CardStyle = styled.div`
   display: flex;
-<<<<<<< HEAD
-=======
-  flex-direction: column;
->>>>>>> 96d6fa1f7eab394790d02f0075e7ceb89d4550be
   justify-content: center;
   align-items: center;
   width: ${({ width }) =>
@@ -27,13 +23,8 @@ const CardStyle = styled.div`
 
 const Card = ({
   children,
-<<<<<<< HEAD
   width,
   height,
-=======
-  width = 265,
-  height = 400,
->>>>>>> 96d6fa1f7eab394790d02f0075e7ceb89d4550be
   backgroundColor,
   borderColor,
   href,
@@ -42,12 +33,7 @@ const Card = ({
 }) => {
   const handleClick = useCallback(() => {
     console.log('Clicked!');
-<<<<<<< HEAD
   }, []);
-=======
-    onClick && onClick();
-  }, [onClick]);
->>>>>>> 96d6fa1f7eab394790d02f0075e7ceb89d4550be
 
   return (
     <CardStyle

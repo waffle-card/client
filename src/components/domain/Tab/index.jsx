@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 import TabItem from './TabItem';
 import { rgba } from 'polished';
-import { Common } from '../../../style/common';
+import Common from '@styles';
 
 const TabItemContainer = styled.div`
   position: relative;
