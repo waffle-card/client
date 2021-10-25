@@ -23,17 +23,26 @@ const ModalContainer = styled.div`
   padding: 8px;
   border-radius: 16px;
   box-shadow: ${Common.shadow.modal};
-  background-color: ${Common.colors.background_modal};
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
   box-sizing: border-box;
 `;
 
-const Modal = ({ children, width, height, visible, onClose, ...props }) => {
+const Modal = ({
+  children,
+  visible,
+  width,
+  height,
+  backgroundColor,
+  onClose,
+  ...props
+}) => {
   const ref = useClickAway(() => {
     onClose && onClose();
   });
 
-  const containerStyle = useMemo(() => ({ width, height }), [width, height]);
+  const containerStyle = useMemo(
+    () => ({ width, height, backgroundColor }),
+    [width, height, backgroundColor],
+  );
 
   const element = useMemo(() => document.createElement('div'), []);
   useEffect(() => {
@@ -57,15 +66,18 @@ const Modal = ({ children, width, height, visible, onClose, ...props }) => {
 };
 
 Modal.propTypes = {
+  visible: PropTypes.bool,
   width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   height: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  visible: PropTypes.bool,
+  background: PropTypes.string,
+  onClose: PropTypes.func,
 };
 
 Modal.defaultProps = {
+  visible: false,
   width: 400,
   height: 400,
-  visible: false,
+  background: Common.colors.background_modal,
 };
 
 export default Modal;

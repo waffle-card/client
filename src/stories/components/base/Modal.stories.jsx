@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Modal, Text, Card } from '@components';
 import styled from '@emotion/styled';
+import Common from '@styles';
 
 export default {
   title: 'Component/Base/Modal',
@@ -24,6 +25,10 @@ export const Default = args => {
   );
 };
 Default.argTypes = {
+  visible: {
+    defaultValue: false,
+    control: { type: 'boolean' },
+  },
   width: {
     defaultValue: 400,
     control: { type: 'number' },
@@ -32,9 +37,9 @@ Default.argTypes = {
     defaultValue: 400,
     control: { type: 'number' },
   },
-  visible: {
-    defaultValue: false,
-    control: { type: 'boolean' },
+  backgroundColor: {
+    defaultValue: Common.colors.background_modal,
+    control: { type: 'color' },
   },
   onClose: {
     control: { action: 'onClose' },
