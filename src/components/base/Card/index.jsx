@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 import { useCallback } from 'react';
 import PropTypes from 'prop-types';
+import styles from '@styles';
 
 const CardStyle = styled.div`
   display: flex;
@@ -9,8 +10,10 @@ const CardStyle = styled.div`
   align-items: center;
   width: ${({ width }) =>
     typeof width === 'number' ? `${width - 10}px` : `calc(${width} - 10px)`};
-  height: ${({ height }) =>
-    typeof height === 'number' ? `${height - 10}px` : `calc(${height} - 10px)`};
+  height: ${({ width }) =>
+    typeof width === 'number'
+      ? `${(width - 10) * 1.56}px`
+      : `calc((${width} - 10px) * 1.56)`};
   border: ${({ backgroundColor }) =>
     backgroundColor ? undefined : `5px dashed`};
   background-color: ${({ backgroundColor }) =>
@@ -20,12 +23,13 @@ const CardStyle = styled.div`
   padding: ${({ backgroundColor }) => (backgroundColor ? '5px' : undefined)};
   cursor: pointer;
   border-color: ${({ borderColor }) => borderColor};
+  box-shadow: ${({ backgroundColor }) =>
+    backgroundColor ? styles.shadow.card : undefined};
 `;
 
 const Card = ({
   children,
   width = 265,
-  height = 400,
   backgroundColor,
   borderColor,
   href,
@@ -40,7 +44,6 @@ const Card = ({
   return (
     <CardStyle
       width={width}
-      height={height}
       borderColor={borderColor}
       backgroundColor={backgroundColor}
       onClick={handleClick}>

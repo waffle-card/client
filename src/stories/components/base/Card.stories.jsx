@@ -22,7 +22,7 @@ export default {
 
 export const EmptyCard = args => {
   return (
-    <Card width="265px" height="400px" {...args}>
+    <Card width="265px" {...args}>
       <Icons backgroundColor="none">
         <Icons.Add fontSize="50px" color="black" />
       </Icons>
@@ -34,8 +34,8 @@ export const EmptyCard = args => {
 export const FilledCard = args => {
   return (
     <div style={{ display: 'inline-flex' }}>
-      <Card width="265px" height="400px" backgroundColor="blue" {...args} />
-      <Card width="265px" height="400px" backgroundColor="red" {...args} />
+      <Card width="265px" backgroundColor="blue" {...args} />
+      <Card width="265px" backgroundColor="red" {...args} />
       <Card
         width="265px"
         height="400px"
