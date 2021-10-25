@@ -1,14 +1,15 @@
 import PropTypes from 'prop-types';
+import { Common } from '../../../style/common';
 
 const Text = ({
   children,
-  block,
-  paragraph,
-  size,
-  weight,
-  underline,
-  delete: del,
-  color,
+  block = false,
+  paragraph = true,
+  size = Common.fontSize.base,
+  weight = Common.fontWeight.medium,
+  underline = false,
+  delete: del = false,
+  color = Common.colors.primary,
   ...props
 }) => {
   const Tag = block ? 'div' : paragraph ? 'p' : 'span';
