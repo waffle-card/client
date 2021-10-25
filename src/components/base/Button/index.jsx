@@ -21,7 +21,11 @@ const StyledButton = styled.button`
   box-sizing: border-box;
   display: block;
   width: var(--width);
+  min-width: 80px;
+  max-width: 550px;
   height: var(--height);
+  min-height: 40px;
+  max-height: 56px;
   padding: 8px 6px;
   font-size: var(--font-size);
   color: var(--font-color);
