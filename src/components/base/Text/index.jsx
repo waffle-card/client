@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { Common } from '../../../style/common';
+import Common from '@styles';
 
 const Text = ({
   children,
