@@ -17,7 +17,7 @@ const StyledModal = styled(Modal)`
 export const Default = args => {
   return (
     <div>
-      <StyledModal {...args}>
+      <StyledModal visible {...args}>
         <Text>모달</Text>
         <Card width={200} height={300} backgroundColor="royalblue" />
       </StyledModal>
