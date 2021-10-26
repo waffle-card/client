@@ -23,7 +23,7 @@ const EmojiInput = styled.input`
   display: none;
 `;
 
-const EmojiPicker = ({ disabled, onChange, ...props }) => {
+const EmojiPicker = ({ disabled, id, name, onChange, ...props }) => {
   const [showEmojiPicker, togglePicker] = useState(() => false);
   const ref = useRef();
   const toggleEmojiPicker = () => togglePicker(prev => !prev);
@@ -38,7 +38,7 @@ const EmojiPicker = ({ disabled, onChange, ...props }) => {
   );
 
   return (
-    <Container htmlFor="emoji" {...props}>
+    <Container htmlFor={id} {...props}>
       <Button
         width={88}
         height={40}
@@ -47,7 +47,7 @@ const EmojiPicker = ({ disabled, onChange, ...props }) => {
         onClick={toggleEmojiPicker}>
         선택
       </Button>
-      <EmojiInput type="text" id="emoji" name="emoji" ref={ref} />
+      <EmojiInput type="text" id={id} name={name} ref={ref} />
       {showEmojiPicker && (
         <PickerWrapper>
           <Picker onEmojiClick={handleEmojiClick} />
@@ -59,11 +59,15 @@ const EmojiPicker = ({ disabled, onChange, ...props }) => {
 
 EmojiPicker.protoTypes = {
   disabled: PropTypes.bool,
+  id: PropTypes.string,
+  name: PropTypes.string,
   onChange: PropTypes.func,
 };
 
 EmojiPicker.defaultProps = {
   disabled: false,
+  id: 'emoji',
+  name: 'emoji',
 };
 
 export default EmojiPicker;
