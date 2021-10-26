@@ -17,7 +17,7 @@ const Like = ({
 
   const handleClick = e => {
     toggle();
-    onClick && onClick();
+    onClick && onClick(e);
     console.log('Like Icon Clicked!');
   };
 

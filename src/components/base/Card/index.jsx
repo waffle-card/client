@@ -10,10 +10,17 @@ const CardStyle = styled.div`
   align-items: center;
   width: ${({ width }) =>
     typeof width === 'number' ? `${width - 10}px` : `calc(${width} - 10px)`};
-  height: ${({ width }) =>
-    typeof width === 'number'
-      ? `${(width - 10) * 1.56}px`
-      : `calc((${width} - 10px) * 1.56)`};
+  height: ${({ width, height }) => {
+    if (height) {
+      return typeof height === 'number'
+        ? `${height - 10}px`
+        : `calc(${height} - 10px)`;
+    } else {
+      return typeof width === 'number'
+        ? `${(width - 10) * 1.56}px`
+        : `calc((${width} - 10px) * 1.56)`;
+    }
+  }};
   border: ${({ backgroundColor }) =>
     backgroundColor ? undefined : `5px dashed`};
   background-color: ${({ backgroundColor }) =>
@@ -22,31 +29,33 @@ const CardStyle = styled.div`
   margin: 8px;
   padding: ${({ backgroundColor }) => (backgroundColor ? '5px' : undefined)};
   cursor: pointer;
-  border-color: ${({ borderColor }) => borderColor};
   box-shadow: ${({ backgroundColor }) =>
     backgroundColor ? styles.shadow.card : undefined};
+  box-sizing: border-box;
 `;
 
 const Card = ({
   children,
-  width = 265,
+  width,
+  height,
   backgroundColor,
-  borderColor,
-  href,
   onClick,
   ...props
 }) => {
-  const handleClick = useCallback(() => {
-    console.log('Clicked!');
-    onClick && onClick();
-  }, [onClick]);
+  const handleClick = useCallback(
+    e => {
+      onClick && onClick(e);
+    },
+    [onClick],
+  );
 
   return (
     <CardStyle
       width={width}
-      borderColor={borderColor}
+      height={height}
       backgroundColor={backgroundColor}
-      onClick={handleClick}>
+      onClick={handleClick}
+      {...props}>
       {children}
     </CardStyle>
   );
@@ -54,12 +63,14 @@ const Card = ({
 
 Card.propTypes = {
   children: PropTypes.array,
-  width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
-  height: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
+  width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  height: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   backgroundColor: PropTypes.string,
-  borderColor: PropTypes.string,
-  href: PropTypes.string,
   onClick: PropTypes.func,
+};
+
+Card.defaultProps = {
+  width: 256,
 };
 
 export default Card;
