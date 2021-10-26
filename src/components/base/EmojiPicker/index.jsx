@@ -38,7 +38,7 @@ const EmojiPicker = ({ disabled, onChange, ...props }) => {
   );
 
   return (
-    <Container for="emoji" {...props}>
+    <Container htmlFor="emoji" {...props}>
       <Button
         width={88}
         height={40}
