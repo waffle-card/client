@@ -31,10 +31,10 @@ const ColorInput = styled.input`
   }
 `;
 
-const ColorItem = ({ color, ...props }) => {
+const ColorItem = ({ color, name, ...props }) => {
   return (
     <Container {...props}>
-      <ColorInput type="radio" name="color" value={color} />
+      <ColorInput type="radio" name={name} id={color} value={color} />
       <ColorBox color={color} />
     </Container>
   );
@@ -42,10 +42,12 @@ const ColorItem = ({ color, ...props }) => {
 
 ColorItem.defaultProps = {
   color: Common.colors.yellow,
+  name: 'color',
 };
 
 ColorItem.propTypes = {
   color: PropTypes.string,
+  name: PropTypes.string,
 };
 
 export default ColorItem;

@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import ColorItem from './ColorItem';
 import styled from '@emotion/styled';
 import Common from '@styles';
@@ -13,7 +13,9 @@ const Container = styled.div`
   max-width: 400px;
 `;
 
-const ColorPalette = ({ colors, onChange, ...props }) => {
+const ColorPalette = ({ colors, name, onChange, ...props }) => {
+  const pureColors = useMemo(() => [...new Set(colors)], [colors]);
+
   const handleChange = useCallback(
     ({ target }) => {
       onChange && onChange(target.value);
@@ -23,8 +25,13 @@ const ColorPalette = ({ colors, onChange, ...props }) => {
 
   return (
     <Container {...props}>
-      {colors.map(color => (
-        <ColorItem color={color} key={color} onChange={handleChange} />
+      {pureColors.map(color => (
+        <ColorItem
+          color={color}
+          name={name}
+          key={color}
+          onChange={handleChange}
+        />
       ))}
     </Container>
   );
@@ -32,10 +39,12 @@ const ColorPalette = ({ colors, onChange, ...props }) => {
 
 ColorPalette.defaultProps = {
   colors: Object.values(Common.colors).slice(1, 13),
+  name: 'color',
 };
 
 ColorPalette.propTypes = {
   colors: PropTypes.array,
+  name: PropTypes.string,
 };
 
 ColorPalette.ColorItem = ColorItem;
