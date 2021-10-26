@@ -5,7 +5,7 @@ import Common from '@styles';
 import Picker from 'emoji-picker-react';
 import PropTypes from 'prop-types';
 
-const Container = styled.div`
+const Container = styled.label`
   display: inline-block;
   position: relative;
   margin: 0;
@@ -38,7 +38,7 @@ const EmojiPicker = ({ disabled, onChange, ...props }) => {
   );
 
   return (
-    <Container {...props}>
+    <Container for="emoji" {...props}>
       <Button
         width={88}
         height={40}
@@ -47,7 +47,7 @@ const EmojiPicker = ({ disabled, onChange, ...props }) => {
         onClick={toggleEmojiPicker}>
         선택
       </Button>
-      <EmojiInput type="text" name="emoji" ref={ref} />
+      <EmojiInput type="text" id="emoji" name="emoji" ref={ref} />
       {showEmojiPicker && (
         <PickerWrapper>
           <Picker onEmojiClick={handleEmojiClick} />
