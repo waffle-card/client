@@ -7,6 +7,7 @@ const Favorite = ({
   color = 'white',
   active = false,
   onClick,
+  ...props
 }) => {
   const iconStyle = {
     fontSize,
@@ -17,20 +18,22 @@ const Favorite = ({
 
   const handleClick = e => {
     toggle();
-    onClick && onClick();
-    console.log('Favorite Icon Clicked!');
+    onClick && onClick(e);
   };
 
   return (
-    <Icon style={{ ...iconStyle }} onClick={handleClick}>
+    <Icon
+      style={{ ...iconStyle, ...props.style }}
+      onClick={handleClick}
+      {...props}>
       {favorited ? `star` : `star_border`}
     </Icon>
   );
 };
 
 Favorite.propTypes = {
-  fontSize: PropTypes.string.isRequired,
-  color: PropTypes.string.isRequired,
+  fontSize: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  color: PropTypes.string,
   active: PropTypes.bool,
   onClick: PropTypes.func,
 };
