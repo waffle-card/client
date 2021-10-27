@@ -26,7 +26,7 @@ const Add = ({ fontSize = '24px', color = 'white', onClick, ...props }) => {
 };
 
 Add.propTypes = {
-  fontSize: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  fontSize: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   color: PropTypes.string,
   onClick: PropTypes.func,
 };

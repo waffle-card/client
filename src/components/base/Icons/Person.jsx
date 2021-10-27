@@ -16,7 +16,7 @@ const Person = ({ fontSize = '24px', color = 'white', ...props }) => {
 };
 
 Person.propTypes = {
-  fontSize: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  fontSize: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   color: PropTypes.string,
 };
 

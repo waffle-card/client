@@ -38,7 +38,7 @@ Default.argTypes = {
     control: { type: 'number' },
   },
   backgroundColor: {
-    defaultValue: Common.colors.background_modal,
+    defaultValue: Common.colors.speech_bubble,
     control: { type: 'color' },
   },
   onClose: {

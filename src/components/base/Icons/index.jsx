@@ -11,16 +11,17 @@ import styled from '@emotion/styled';
 const Container = styled.div`
   display: inline-flex;
   cursor: pointer;
-  background-color: ${({ backgroundColor }) => backgroundColor};
+  background-color: ${({ backgroundColor }) =>
+    backgroundColor ? backgroundColor : `transparent`};
   margin: 10px;
   &:hover {
     background-color: none;
   }
 `;
 
-const Icons = ({ children, ...props }) => {
+const Icons = ({ children, backgroundColor, ...props }) => {
   return (
-    <Container style={{ ...props.style }} {...props}>
+    <Container backgroundColor={backgroundColor} {...props}>
       {children}
     </Container>
   );

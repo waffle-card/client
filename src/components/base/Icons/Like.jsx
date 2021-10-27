@@ -32,7 +32,7 @@ const Like = ({
 };
 
 Like.propTypes = {
-  fontSize: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  fontSize: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   color: PropTypes.string,
   active: PropTypes.bool,
   onClick: PropTypes.func,

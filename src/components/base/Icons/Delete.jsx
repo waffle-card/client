@@ -31,7 +31,10 @@ const Delete = ({
 
   return (
     <Anchor href={href}>
-      <Icon style={{ ...iconStyle, ...props }} onClick={handleClick} {...props}>
+      <Icon
+        style={{ ...iconStyle, ...props.style }}
+        onClick={handleClick}
+        {...props}>
         clear
       </Icon>
     </Anchor>
@@ -39,7 +42,7 @@ const Delete = ({
 };
 
 Delete.propTypes = {
-  fontSize: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  fontSize: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   color: PropTypes.string,
   href: PropTypes.string,
   onClick: PropTypes.func,
