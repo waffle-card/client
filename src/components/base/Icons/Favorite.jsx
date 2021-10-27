@@ -17,8 +17,7 @@ const Favorite = ({
 
   const handleClick = e => {
     toggle();
-    onClick && onClick();
-    console.log('Favorite Icon Clicked!');
+    onClick && onClick(e);
   };
 
   return (
