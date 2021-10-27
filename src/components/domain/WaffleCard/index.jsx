@@ -3,6 +3,7 @@ import Common from '@styles';
 import PropTypes from 'prop-types';
 import { Card, Text, Icons } from '@components';
 import styled from '@emotion/styled';
+import { useHover } from '@hooks';
 
 const countDaysFromToday = date => {
   date = typeof date === 'string' ? new Date(date) : date;
@@ -77,6 +78,7 @@ const WaffleCard = ({
   onClickFavoriteIcon,
   ...props
 }) => {
+  const [ref, hover] = useHover();
   const {
     id = 'edit',
     emoji = '🧇',
