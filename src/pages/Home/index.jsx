@@ -2,6 +2,7 @@ import Icons from '@components/base/Icons';
 import Tab from '@components/domain/Tab';
 import styled from '@emotion/styled';
 import Common from '@styles';
+import WaffleCard from '@components/domain/WaffleCard';
 // import Text from '@components/base/Text';
 
 const HomeContainer = styled.div`
@@ -58,12 +59,8 @@ const CardContainer = styled.section`
   }
 `;
 
-const Card = styled.div`
+const StyledCard = styled(WaffleCard)`
   flex: 0 0 auto;
-  width: 265px;
-  height: 400px;
-  margin: 0 10px;
-  background-color: aqua;
   @media ${Common.media.md} {
     width: 218.33px;
     height: 329.55px;
@@ -103,15 +100,18 @@ const Home = () => {
             fontSize={Common.fontSize.large}
           />
         </Icons>
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
+        <StyledCard />
+        <StyledCard />
+        <StyledCard />
+        <StyledCard />
+        <StyledCard />
+        <StyledCard />
+        <StyledCard />
+        <StyledCard />
+        <StyledCard />
+        <StyledCard />
+        <StyledCard />
+        <StyledCard />
         <Icons backgroundColor={'rgba(0, 0, 0, 0)'}>
           <Icons.ArrowBack
             color={Common.colors.point}

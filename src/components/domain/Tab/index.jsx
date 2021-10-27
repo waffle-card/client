@@ -23,7 +23,7 @@ const TabItemPointer = styled.div`
   position: absolute;
   top: 0;
   transform: ${({ activeItemIndex }) =>
-    activeItemIndex && `translate(${activeItemIndex * 100}%, 0)`};
+    activeItemIndex && `translate(${activeItemIndex * 99}%, 0)`};
   width: calc(100% / 3);
   height: ${({ height }) => `${height}px`};
   min-height: 25px;
