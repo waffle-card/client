@@ -13,6 +13,7 @@ const TabItemContainer = styled.div`
   align-items: center;
   max-width: 740px;
   min-width: 280px;
+  margin: 0 auto;
   border-radius: 50px;
   background-color: ${({ backgroundColor }) => backgroundColor};
   box-shadow: ${({ shadowStyle }) => shadowStyle};
@@ -24,14 +25,16 @@ const TabItemPointer = styled.div`
   transform: ${({ activeItemIndex }) =>
     activeItemIndex && `translate(${activeItemIndex * 100}%, 0)`};
   width: calc(100% / 3);
-  height: ${({ height }) =>
-    typeof height === 'number' ? `${height}px` : height};
+  height: ${({ height }) => `${height}px`};
   min-height: 25px;
   border: ${({ pointColor }) => `1px solid ${pointColor}`};
   border-radius: 50px;
   background-color: ${({ backgroundColor }) => rgba(backgroundColor, 0.2)};
   box-shadow: ${({ shadowStyle }) => shadowStyle};
   transition: transform 0.2s ease-out;
+  @media ${Common.media.sm} {
+    height: ${({ height }) => `${height * 0.68}px`};
+  }
 `;
 
 const childrenToArray = (children, types) => {
@@ -71,6 +74,7 @@ const Tab = ({
   const items = useMemo(() => {
     return childrenToArray(children, 'Tab.Item').map(element => {
       return React.cloneElement(element, {
+        ...props,
         ...element.props,
         key: element.props.index,
         active: element.props.index === currentActive,
@@ -82,19 +86,21 @@ const Tab = ({
         },
       });
     });
-  }, [children, currentActive, fontSize, height, pointColor]);
+  }, [children, currentActive, fontSize, height, pointColor, props]);
 
   return (
     <TabItemContainer
       backgroundColor={backgroundColor}
-      shadowStyle={shadowStyle}>
+      shadowStyle={shadowStyle}
+      {...props}>
       {items}
       <TabItemPointer
         activeItemIndex={currentActive}
         height={height}
         backgroundColor={backgroundColor}
         shadowStyle={shadowStyle}
-        pointColor={pointColor}></TabItemPointer>
+        pointColor={pointColor}
+        {...props}></TabItemPointer>
     </TabItemContainer>
   );
 };
@@ -104,7 +110,7 @@ Tab.Item = TabItem;
 Tab.propTypes = {
   children: PropTypes.node.isRequired,
   activeItemIndex: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  height: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  height: PropTypes.number,
   backgroundColor: PropTypes.string.isRequired,
   pointColor: PropTypes.string.isRequired,
   shadowStyle: PropTypes.string,
