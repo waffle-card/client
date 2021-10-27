@@ -16,8 +16,6 @@ const StyledCard = styled(Card)`
   box-sizing: border-box;
   padding: 18px;
   cursor: pointer;
-  @media screen and (max-width: 1024px) {
-  }
 `;
 
 const StyledEditBox = styled(EditBox)`
@@ -87,7 +85,7 @@ const WaffleCard = ({
 }) => {
   const [ref, hover] = useHover();
   const {
-    id = 'edit',
+    id = 'null',
     emoji = '🧇',
     cardColor = Common.colors.yellow,
     createdAt = new Date(),
