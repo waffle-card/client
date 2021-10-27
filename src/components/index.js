@@ -1,4 +1,5 @@
 export { default as Button } from './base/Button';
+export { default as EmojiPicker } from './base/EmojiPicker';
 export { default as ColorPalette } from './base/ColorPalette';
 export { default as Modal } from './base/Modal';
 export { default as Spacer } from './base/Spacer';
