@@ -31,6 +31,14 @@ export const ArrowBack = args => {
   );
 };
 
+export const ArrowFront = args => {
+  return (
+    <Icons>
+      <Icons.ArrowFront {...args} />
+    </Icons>
+  );
+};
+
 export const Delete = args => {
   return (
     <Icons>
