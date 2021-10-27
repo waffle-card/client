@@ -1,7 +1,7 @@
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback, useEffect, useMemo } from 'react';
 import Common from '@styles';
 import PropTypes from 'prop-types';
-import { Card, Text, Icons } from '@components';
+import { Card, Text, Icons, EditBox } from '@components';
 import styled from '@emotion/styled';
 import { useHover } from '@hooks';
 
@@ -12,11 +12,18 @@ const countDaysFromToday = date => {
 };
 
 const StyledCard = styled(Card)`
+  position: relative;
   box-sizing: border-box;
   padding: 18px;
   cursor: pointer;
   @media screen and (max-width: 1024px) {
   }
+`;
+
+const StyledEditBox = styled(EditBox)`
+  position: absolute;
+  top: -20px;
+  right: 10px;
 `;
 
 const InfoContainer = styled.div`
@@ -92,6 +99,10 @@ const WaffleCard = ({
   } = card;
   const days = useMemo(() => countDaysFromToday(createdAt), [createdAt]);
 
+  useEffect(() => {
+    console.log('호버!', hover);
+  }, [hover]);
+
   const handleClickCard = useCallback(
     e => {
       const cardId = e.target.closest('[data-id]').dataset.id;
@@ -124,7 +135,8 @@ const WaffleCard = ({
       height={height}
       onClick={handleClickCard}
       {...props}>
-      <InfoContainer>
+      {type === 'my' && hover ? <StyledEditBox cardId={id} /> : null}
+      <InfoContainer ref={ref}>
         <Text block>{days === 0 ? '오늘' : `${days}일 전`}</Text>
         <IconWrapper size={8}>
           <Icons.Like
@@ -144,7 +156,7 @@ const WaffleCard = ({
       <EmojiText block size={70}>
         {emoji}
       </EmojiText>
-      <HashTagWrapper>
+      <HashTagWrapper ref={ref}>
         {hashTags.map((hashTag, index) => (
           <HashTag size={20} block key={index}>
             {`#${hashTag}`}
@@ -156,11 +168,13 @@ const WaffleCard = ({
 };
 
 WaffleCard.defaultProps = {
+  type: 'normal',
   card: {},
   width: 256,
 };
 
 WaffleCard.protoTypes = {
+  type: PropTypes.string,
   card: PropTypes.object,
   width: PropTypes.number,
   height: PropTypes.number,

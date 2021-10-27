@@ -2,7 +2,6 @@ import styled from '@emotion/styled';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Icons } from '@components';
-import Common from '@styles';
 
 const Container = styled.div`
   display: flex;
@@ -12,6 +11,7 @@ const Container = styled.div`
   height: 29px;
   background-color: ${({ backgroundColor }) => backgroundColor};
   border-radius: 8px;
+  opacity: 0.8;
 
   & > a {
     display: flex;
