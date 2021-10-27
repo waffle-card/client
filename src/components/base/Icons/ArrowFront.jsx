@@ -10,7 +10,7 @@ const Anchor = styled.a`
   text-decoration: none;
 `;
 
-const Edit = ({
+const ArrowBack = ({
   fontSize = '24px',
   color = 'white',
   href,
@@ -32,17 +32,17 @@ const Edit = ({
   return (
     <Anchor href={href}>
       <Icon style={{ ...iconStyle, ...props }} onClick={handleClick} {...props}>
-        edit
+        arrow_forward_ios
       </Icon>
     </Anchor>
   );
 };
 
-Edit.propTypes = {
+ArrowBack.propTypes = {
   fontSize: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   color: PropTypes.string,
   href: PropTypes.string,
   onClick: PropTypes.func,
 };
 
-export default Edit;
+export default ArrowBack;

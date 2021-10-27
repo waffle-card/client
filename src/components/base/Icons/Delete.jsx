@@ -4,24 +4,34 @@ import PropTypes from 'prop-types';
 import { useCallback } from 'react';
 
 const Anchor = styled.a`
+  display: flex;
+  justify-content: center;
   color: inherit;
   text-decoration: none;
 `;
 
-const Delete = ({ fontSize = '24px', color = 'white', href, onClick }) => {
+const Delete = ({
+  fontSize = '24px',
+  color = 'white',
+  href,
+  onClick,
+  ...props
+}) => {
   const iconStyle = {
     fontSize,
     color,
   };
 
-  const handleClick = useCallback(() => {
-    console.log('Delete Icon Clicked!');
-    onClick && onClick();
-  }, [onClick]);
+  const handleClick = useCallback(
+    e => {
+      onClick && onClick(e);
+    },
+    [onClick],
+  );
 
   return (
     <Anchor href={href}>
-      <Icon style={{ ...iconStyle }} onClick={handleClick}>
+      <Icon style={{ ...iconStyle, ...props }} onClick={handleClick} {...props}>
         clear
       </Icon>
     </Anchor>
@@ -29,8 +39,8 @@ const Delete = ({ fontSize = '24px', color = 'white', href, onClick }) => {
 };
 
 Delete.propTypes = {
-  fontSize: PropTypes.string.isRequired,
-  color: PropTypes.string.isRequired,
+  fontSize: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  color: PropTypes.string,
   href: PropTypes.string,
   onClick: PropTypes.func,
 };
