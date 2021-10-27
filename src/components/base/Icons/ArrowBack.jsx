@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 import { useCallback } from 'react';
 
 const Anchor = styled.a`
+  display: flex;
+  justify-content: center;
   color: inherit;
   text-decoration: none;
 `;

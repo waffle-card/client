@@ -6,11 +6,11 @@ export default {
   component: { Card, Icons },
   argTypes: {
     width: {
-      defaultValue: '265px',
+      defaultValue: 265,
       control: 'number',
     },
     height: {
-      defaultValue: '400px',
+      defaultValue: null,
       control: 'number',
     },
     backgroundColor: {

@@ -1,6 +1,7 @@
 import Like from './Like';
 import Favorite from './Favorite';
 import ArrowBack from './ArrowBack';
+import ArrowFront from './ArrowFront';
 import Edit from './Edit';
 import Delete from './Delete';
 import Person from './Person';
@@ -27,6 +28,7 @@ const Icons = ({ children, backgroundColor, ...props }) => {
 };
 
 Icons.ArrowBack = ArrowBack;
+Icons.ArrowFront = ArrowFront;
 Icons.Edit = Edit;
 Icons.Delete = Delete;
 Icons.Favorite = Favorite;

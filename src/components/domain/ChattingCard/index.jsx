@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 import Modal from '@components/base/Modal';
 import Icons from '@components/base/Icons';
 import Text from '@components/base/Text';
+import Common from '@styles';
 
 const Header = styled.div`
   height: 200px;
@@ -52,7 +53,7 @@ const Body = styled.div`
   background-color: transparent;
   border-bottom-left-radius: 16px;
   border-bottom-right-radius: 16px;
-  overflow-y: scroll;
+  overflow-y: auto;
 `;
 
 const Image = styled.img`
@@ -63,15 +64,22 @@ const Image = styled.img`
 
 const ChatContainer = styled.div`
   display: flex;
-  border-radius: 16px;
   background-color: transparent;
-  min-width: 170px;
-  max-width: 550px;
+  justify-content: ${({ isMine }) => (isMine ? 'end' : 'start')};
+  margin-left: ${({ isMine }) => (isMine ? '0' : '20px')};
+  margin-right: ${({ isMine }) => (isMine ? '20px' : '0')};
+  margin-top: 10px;
+  margin-bottom: 10px;
 `;
 
-const MyChat = styled.div`
+const ChatBox = styled.div`
   display: flex;
-  justify-content: end;
+  background-color: ${Common.colors.background_pointer};
+  border-radius: 16px;
+  min-width: 170px;
+  max-width: 550px;
+  padding-left: 20px;
+  padding-right: 20px;
 `;
 
 const ChattingCard = ({
@@ -85,26 +93,32 @@ const ChattingCard = ({
   const getChatLog = () => [
     {
       id: 1,
+      name: 'A',
       chat: '안녕하세요~',
     },
     {
       id: 2,
+      name: 'B',
       chat: '안녕하세요! 만나서 반갑습니다!',
     },
     {
       id: 3,
+      name: 'C',
       chat: '반가워요~',
     },
     {
       id: 1,
+      name: 'A',
       chat: '오늘 저녁 뭐 드실건가요?',
     },
     {
       id: 2,
+      name: 'B',
       chat: '다이어트 중이에요~',
     },
     {
       id: 3,
+      name: 'C',
       chat: '전 김치볶음밥이요!',
     },
   ];
@@ -112,10 +126,15 @@ const ChattingCard = ({
   const myId = 1;
 
   const showChat = logs => {
-    logs.map(log => {
-      if (log.id === myId) {
-      }
-    });
+    return logs.map((log, index) => (
+      <ChatContainer isMine={log.id === myId} key={index}>
+        <ChatBox>
+          <Text>
+            {log.name}: {log.chat}
+          </Text>
+        </ChatBox>
+      </ChatContainer>
+    ));
   };
 
   return (
@@ -161,7 +180,7 @@ const ChattingCard = ({
           <div>#최대한길게길게갑시다</div>
         </SecondHashtags>
       </Header>
-      <Body></Body>
+      <Body>{showChat(getChatLog())}</Body>
     </Modal>
   );
 };

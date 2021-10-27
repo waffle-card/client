@@ -1,5 +1,5 @@
-import styled from '@emotion/styled';
 import Icon from '@material-ui/core/Icon';
+import styled from '@emotion/styled';
 import PropTypes from 'prop-types';
 import { useCallback } from 'react';
 
@@ -10,7 +10,7 @@ const Anchor = styled.a`
   text-decoration: none;
 `;
 
-const Delete = ({
+const ArrowBack = ({
   fontSize = '24px',
   color = 'white',
   href,
@@ -31,21 +31,18 @@ const Delete = ({
 
   return (
     <Anchor href={href}>
-      <Icon
-        style={{ ...iconStyle, ...props.style }}
-        onClick={handleClick}
-        {...props}>
-        clear
+      <Icon style={{ ...iconStyle, ...props }} onClick={handleClick} {...props}>
+        arrow_forward_ios
       </Icon>
     </Anchor>
   );
 };
 
-Delete.propTypes = {
-  fontSize: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+ArrowBack.propTypes = {
+  fontSize: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   color: PropTypes.string,
   href: PropTypes.string,
   onClick: PropTypes.func,
 };
 
-export default Delete;
+export default ArrowBack;
