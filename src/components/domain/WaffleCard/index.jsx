@@ -134,8 +134,9 @@ const WaffleCard = ({
       width={width}
       height={height}
       onClick={handleClickCard}
+      ref={ref}
       {...props}>
-      {type === 'my' && hover ? <StyledEditBox cardId={id} /> : null}
+      {type === 'my' && hover ? <StyledEditBox ref={ref} cardId={id} /> : null}
       <InfoContainer ref={ref}>
         <Text block>{days === 0 ? '오늘' : `${days}일 전`}</Text>
         <IconWrapper size={8}>
