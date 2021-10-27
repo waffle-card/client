@@ -76,7 +76,7 @@ const Home = () => {
     <HomeContainer>
       <Header>
         <Logo>
-          <a href="#">
+          <a>
             <img src={require('./images/logo.png').default} alt="logo" />
           </a>
         </Logo>
@@ -95,10 +95,7 @@ const Home = () => {
       </Nav>
       <CardContainer>
         <Icons backgroundColor={'rgba(0, 0, 0, 0)'}>
-          <Icons.ArrowBack
-            color={Common.colors.point}
-            fontSize={Common.fontSize.large}
-          />
+          <Icons.ArrowBack color={Common.colors.primary} fontSize={'30px'} />
         </Icons>
         <StyledCard />
         <StyledCard />
@@ -113,10 +110,7 @@ const Home = () => {
         <StyledCard />
         <StyledCard />
         <Icons backgroundColor={'rgba(0, 0, 0, 0)'}>
-          <Icons.ArrowBack
-            color={Common.colors.point}
-            fontSize={Common.fontSize.large}
-          />
+          <Icons.ArrowFront color={Common.colors.primary} fontSize={'30px'} />
         </Icons>
       </CardContainer>
     </HomeContainer>
