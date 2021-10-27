@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import Common from '@styles';
 import PropTypes from 'prop-types';
 import { Card, Text, Icons, EditBox } from '@components';
@@ -83,7 +83,6 @@ const WaffleCard = ({
   onClickFavoriteIcon,
   ...props
 }) => {
-  const [ref, hover] = useHover();
   const {
     id = 'null',
     emoji = '🧇',
@@ -95,14 +94,17 @@ const WaffleCard = ({
     likeCount = 0,
     hashTags = [],
   } = card;
+  const [cardRef, cardHover] = useHover(null);
+  const [editBoxHover, setEditBoxHover] = useState(false);
   const days = useMemo(() => countDaysFromToday(createdAt), [createdAt]);
 
-  useEffect(() => {
-    console.log('호버!', hover);
-  }, [hover]);
+  const handleEditBoxHover = useCallback(hover => {
+    setEditBoxHover(hover);
+  }, []);
 
   const handleClickCard = useCallback(
     e => {
+      console.log('handleClickCard');
       const cardId = e.target.closest('[data-id]').dataset.id;
       onClickCard && onClickCard(cardId);
     },
@@ -132,11 +134,13 @@ const WaffleCard = ({
       width={width}
       height={height}
       onClick={handleClickCard}
-      ref={ref}
+      ref={cardRef}
       {...props}>
-      {type === 'my' && hover ? <StyledEditBox ref={ref} cardId={id} /> : null}
-      <InfoContainer ref={ref}>
-        <Text block>{days === 0 ? '오늘' : `${days}일 전`}</Text>
+      {type === 'my' && (cardHover || editBoxHover) ? (
+        <StyledEditBox onHover={handleEditBoxHover} cardId={id} />
+      ) : null}
+      <InfoContainer>
+        <Text block>{days <= 0 ? '오늘' : `${days}일 전`}</Text>
         <IconWrapper size={8}>
           <Icons.Like
             fontSize={'20px'}
@@ -155,7 +159,7 @@ const WaffleCard = ({
       <EmojiText block size={70}>
         {emoji}
       </EmojiText>
-      <HashTagWrapper ref={ref}>
+      <HashTagWrapper>
         {hashTags.map((hashTag, index) => (
           <HashTag size={20} block key={index}>
             {`#${hashTag}`}

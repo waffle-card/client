@@ -1,3 +1,4 @@
+import React from 'react';
 import styled from '@emotion/styled';
 import { useCallback } from 'react';
 import PropTypes from 'prop-types';
@@ -34,32 +35,28 @@ const CardStyle = styled.div`
   box-sizing: border-box;
 `;
 
-const Card = ({
-  children,
-  width,
-  height,
-  backgroundColor,
-  onClick,
-  ...props
-}) => {
-  const handleClick = useCallback(
-    e => {
-      onClick && onClick(e);
-    },
-    [onClick],
-  );
+const Card = React.forwardRef(
+  ({ children, width, height, backgroundColor, onClick, ...props }, ref) => {
+    const handleClick = useCallback(
+      e => {
+        onClick && onClick(e);
+      },
+      [onClick],
+    );
 
-  return (
-    <CardStyle
-      width={width}
-      height={height}
-      backgroundColor={backgroundColor}
-      onClick={handleClick}
-      {...props}>
-      {children}
-    </CardStyle>
-  );
-};
+    return (
+      <CardStyle
+        width={width}
+        height={height}
+        backgroundColor={backgroundColor}
+        onClick={handleClick}
+        ref={ref}
+        {...props}>
+        {children}
+      </CardStyle>
+    );
+  },
+);
 
 Card.propTypes = {
   children: PropTypes.array,

@@ -1,7 +1,8 @@
 import styled from '@emotion/styled';
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Icons } from '@components';
+import { useHover } from '@hooks';
 
 const Container = styled.div`
   display: flex;
@@ -24,11 +25,19 @@ const Container = styled.div`
   }
 `;
 
-const EditBox = ({ cardId, backgroundColor, fontColor, ...props }) => {
+const EditBox = ({ cardId, backgroundColor, fontColor, onHover, ...props }) => {
+  const [ref, hover] = useHover(null);
+
+  useEffect(() => {
+    console.log('editBox hover 변경!');
+    onHover && onHover(hover);
+  }, [hover, onHover]);
+
   return (
     <Container
       backgroundColor={backgroundColor}
       fontColor={fontColor}
+      ref={ref}
       {...props}>
       <Icons.Edit
         fontSize="1.25rem"
