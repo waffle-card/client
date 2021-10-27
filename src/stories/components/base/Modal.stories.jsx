@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Modal, Text, Card } from '@components';
 import styled from '@emotion/styled';
-import Common from '@styles';
+// import Common from '@styles';
 
 export default {
   title: 'Component/Base/Modal',
@@ -17,7 +17,7 @@ const StyledModal = styled(Modal)`
 export const Default = args => {
   return (
     <div>
-      <StyledModal visible {...args}>
+      <StyledModal {...args}>
         <Text>모달</Text>
         <Card width={200} height={300} backgroundColor="royalblue" />
       </StyledModal>
@@ -30,15 +30,15 @@ Default.argTypes = {
     control: { type: 'boolean' },
   },
   width: {
-    defaultValue: 400,
-    control: { type: 'number' },
+    defaultValue: '80vw',
+    control: { type: 'text' },
   },
   height: {
-    defaultValue: 400,
-    control: { type: 'number' },
+    defaultValue: '80vh',
+    control: { type: 'text' },
   },
   backgroundColor: {
-    defaultValue: Common.colors.speech_bubble,
+    // defaultValue: Common.colors.speech_bubble,
     control: { type: 'color' },
   },
   onClose: {
@@ -52,7 +52,10 @@ export const Usage = args => {
   return (
     <div>
       <button onClick={() => setVisible(true)}>Show Modal</button>
-      <StyledModal visible={visible} onClose={() => setVisible(false)}>
+      <StyledModal
+        visible={visible}
+        onClose={() => setVisible(false)}
+        {...args}>
         <Text>모달</Text>
         <Card width={200} height={300} backgroundColor="royalblue" />
       </StyledModal>
