@@ -7,9 +7,10 @@ import Common from '@styles';
 const Header = styled.div`
   height: 200px;
   padding: 15px 40px 0 40px;
-  background-color: ${({ backgroundColor }) => backgroundColor};
+  background-color: royalblue;
   border-top-left-radius: 16px;
   border-top-right-radius: 16px;
+  box-shadow: ${Common.shadow.chattingHeader};
 `;
 
 const Top = styled.div`
@@ -48,11 +49,12 @@ const SecondHashtags = styled.div`
 const Body = styled.div`
   display: flex;
   flex-direction: column;
-  height: 500px;
+  height: 570px;
   padding: 10px;
   background-color: transparent;
   border-bottom-left-radius: 16px;
   border-bottom-right-radius: 16px;
+  background-color: ${Common.colors.background_modal};
   overflow-y: auto;
 `;
 
@@ -74,7 +76,7 @@ const ChatContainer = styled.div`
 
 const ChatBox = styled.div`
   display: flex;
-  background-color: ${Common.colors.background_pointer};
+  background-color: ${Common.colors.speech_bubble};
   border-radius: 16px;
   min-width: 170px;
   max-width: 550px;
