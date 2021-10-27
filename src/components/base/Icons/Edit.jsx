@@ -1,27 +1,40 @@
-import Icon from '@mui/material/Icon';
+import Icon from '@material-ui/core/Icon';
 import styled from '@emotion/styled';
 import PropTypes from 'prop-types';
 import { useCallback } from 'react';
 
 const Anchor = styled.a`
+  display: flex;
+  justify-content: center;
   color: inherit;
   text-decoration: none;
 `;
 
-const Edit = ({ fontSize = '24px', color = 'white', href, onClick }) => {
+const Edit = ({
+  fontSize = '24px',
+  color = 'white',
+  href,
+  onClick,
+  ...props
+}) => {
   const iconStyle = {
     fontSize,
     color,
   };
 
-  const handleClick = useCallback(() => {
-    console.log('Edit Icon Clicked!');
-    onClick && onClick();
-  }, [onClick]);
+  const handleClick = useCallback(
+    e => {
+      onClick && onClick(e);
+    },
+    [onClick],
+  );
 
   return (
     <Anchor href={href}>
-      <Icon style={{ ...iconStyle }} onClick={handleClick}>
+      <Icon
+        style={{ ...iconStyle, ...props.style }}
+        onClick={handleClick}
+        {...props}>
         edit
       </Icon>
     </Anchor>
@@ -29,8 +42,8 @@ const Edit = ({ fontSize = '24px', color = 'white', href, onClick }) => {
 };
 
 Edit.propTypes = {
-  fontSize: PropTypes.string.isRequired,
-  color: PropTypes.string.isRequired,
+  fontSize: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  color: PropTypes.string,
   href: PropTypes.string,
   onClick: PropTypes.func,
 };

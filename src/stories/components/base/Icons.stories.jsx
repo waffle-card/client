@@ -1,7 +1,7 @@
 import Icons from '@components/base/Icons';
 
 export default {
-  title: 'component/Icons',
+  title: 'Component/Base/Icons',
   component: Icons,
   argTypes: {
     color: {
@@ -27,6 +27,14 @@ export const ArrowBack = args => {
   return (
     <Icons>
       <Icons.ArrowBack {...args} />
+    </Icons>
+  );
+};
+
+export const ArrowFront = args => {
+  return (
+    <Icons>
+      <Icons.ArrowFront {...args} />
     </Icons>
   );
 };

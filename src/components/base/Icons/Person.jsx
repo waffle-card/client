@@ -1,19 +1,23 @@
-import Icon from '@mui/material/Icon';
+import Icon from '@material-ui/core/Icon';
 import PropTypes from 'prop-types';
 
-const Person = ({ fontSize = '24px', color = 'white' }) => {
+const Person = ({ fontSize = '24px', color = 'white', ...props }) => {
   const iconStyle = {
     fontSize,
     color,
     cursor: 'default',
   };
 
-  return <Icon style={{ ...iconStyle }}>person</Icon>;
+  return (
+    <Icon style={{ ...iconStyle, ...props.style }} {...props}>
+      person
+    </Icon>
+  );
 };
 
 Person.propTypes = {
-  fontSize: PropTypes.string.isRequired,
-  color: PropTypes.string.isRequired,
+  fontSize: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  color: PropTypes.string,
 };
 
 export default Person;

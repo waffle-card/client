@@ -21,6 +21,8 @@ export default {
     background_modal: 'rgba(43, 51, 63, 1)',
     border: 'rgba(255, 255, 255, 0.5)',
 
+    speech_bubble: 'rgba(62, 72, 87, 0.8)',
+
     primary: 'rgba(255, 255, 255, 1)',
     secondary: 'rgba(255, 255, 255, 0.6)',
     tertiary: 'rgba(255, 255, 255, 0.35)',

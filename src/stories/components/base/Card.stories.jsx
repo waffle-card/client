@@ -6,11 +6,11 @@ export default {
   component: { Card, Icons },
   argTypes: {
     width: {
-      defaultValue: '265px',
+      defaultValue: 265,
       control: 'number',
     },
     height: {
-      defaultValue: '400px',
+      defaultValue: null,
       control: 'number',
     },
     backgroundColor: {
@@ -22,7 +22,7 @@ export default {
 
 export const EmptyCard = args => {
   return (
-    <Card width="265px" height="400px" {...args}>
+    <Card width="265px" {...args}>
       <Icons backgroundColor="none">
         <Icons.Add fontSize="50px" color="black" />
       </Icons>
@@ -34,14 +34,9 @@ export const EmptyCard = args => {
 export const FilledCard = args => {
   return (
     <div style={{ display: 'inline-flex' }}>
-      <Card width="265px" height="400px" backgroundColor="blue" {...args} />
-      <Card width="265px" height="400px" backgroundColor="red" {...args} />
-      <Card
-        width="265px"
-        height="400px"
-        backgroundColor="royalblue"
-        {...args}
-      />
+      <Card width="265px" backgroundColor="blue" {...args} />
+      <Card width="265px" backgroundColor="red" {...args} />
+      <Card width="265px" backgroundColor="royalblue" {...args} />
     </div>
   );
 };
