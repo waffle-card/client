@@ -27,16 +27,17 @@ const InfoContainer = styled.div`
 
 const IconWrapper = styled.div`
   display: flex;
+  justify-content: flex-end;
   align-items: center;
   width: 100px;
-  & :nth-child(1) {
+  & span:nth-of-type(1) {
     margin-right: 6px;
   }
-  & :nth-child(2) {
-    margin-right: 12px;
+  & div:nth-of-type(1) {
+    margin-right: 8px;
   }
-  & :nth-child(3) {
-    margin-right: 2px;
+  & span:nth-of-type(2) {
+    margin-right: 4px;
   }
 `;
 
@@ -67,6 +68,7 @@ const HashTag = styled(Text)`
 `;
 
 const WaffleCard = ({
+  type,
   card,
   width,
   height,
@@ -76,15 +78,15 @@ const WaffleCard = ({
   ...props
 }) => {
   const {
-    id,
-    emoji,
-    cardColor,
-    createdAt,
-    favoriteToggle,
-    favoriteCount,
-    likeToggle,
-    likeCount,
-    hashTags,
+    id = 'edit',
+    emoji = '🧇',
+    cardColor = Common.colors.yellow,
+    createdAt = new Date(),
+    favoriteToggle = false,
+    favoriteCount = 0,
+    likeToggle = false,
+    likeCount = 0,
+    hashTags = [],
   } = card;
   const days = useMemo(() => countDaysFromToday(createdAt), [createdAt]);
 
@@ -152,23 +154,7 @@ const WaffleCard = ({
 };
 
 WaffleCard.defaultProps = {
-  card: {
-    id: '6172145b54db072125ad91de',
-    emoji: '👽',
-    cardColor: Common.colors.indigo,
-    createdAt: '2021-10-26T00:33:31.554Z',
-    favoriteToggle: false,
-    favoriteCount: 12,
-    likeToggle: true,
-    likeCount: 27,
-    hashTags: [
-      '지우개방',
-      '쏟아내고가',
-      'ㄴr는 ㄱr끔',
-      '눈물을 흘린ㄷr',
-      '이 해시태그는매우긴해시태그입니다.',
-    ],
-  },
+  card: {},
   width: 256,
 };
 
