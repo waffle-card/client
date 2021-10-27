@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import Common from '@styles';
 import PropTypes from 'prop-types';
 import { Card, Text, Icons, EditBox } from '@components';
@@ -20,7 +20,7 @@ const StyledCard = styled(Card)`
 
 const StyledEditBox = styled(EditBox)`
   position: absolute;
-  top: -20px;
+  bottom: 10px;
   right: 10px;
 `;
 
@@ -94,17 +94,11 @@ const WaffleCard = ({
     likeCount = 0,
     hashTags = [],
   } = card;
-  const [cardRef, cardHover] = useHover(null);
-  const [editBoxHover, setEditBoxHover] = useState(false);
+  const [ref, hover] = useHover(null);
   const days = useMemo(() => countDaysFromToday(createdAt), [createdAt]);
-
-  const handleEditBoxHover = useCallback(hover => {
-    setEditBoxHover(hover);
-  }, []);
 
   const handleClickCard = useCallback(
     e => {
-      console.log('handleClickCard');
       const cardId = e.target.closest('[data-id]').dataset.id;
       onClickCard && onClickCard(cardId);
     },
@@ -134,10 +128,15 @@ const WaffleCard = ({
       width={width}
       height={height}
       onClick={handleClickCard}
-      ref={cardRef}
+      ref={ref}
       {...props}>
-      {type === 'my' && (cardHover || editBoxHover) ? (
-        <StyledEditBox onHover={handleEditBoxHover} cardId={id} />
+      {type === 'my' && hover ? (
+        <StyledEditBox
+          onClick={() => {
+            console.log('온클릭!');
+          }}
+          cardId={id}
+        />
       ) : null}
       <InfoContainer>
         <Text block>{days <= 0 ? '오늘' : `${days}일 전`}</Text>

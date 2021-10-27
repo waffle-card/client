@@ -73,6 +73,17 @@ export const MyCard = args => {
   };
   return <WaffleCard type="my" card={card} {...args} />;
 };
+MyCard.argTypes = {
+  onClickCard: {
+    action: 'onClickCard',
+  },
+  onClickLikeIcon: {
+    action: 'onClickLikeIcon',
+  },
+  onClickFavoriteIcon: {
+    action: 'onClickFavoriteIcon',
+  },
+};
 
 export const TodayCards = args => {
   const card = {
