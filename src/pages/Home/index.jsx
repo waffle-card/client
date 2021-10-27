@@ -6,6 +6,7 @@ import Common from '@styles';
 
 const HomeContainer = styled.div`
   max-width: 1690px;
+  height: 100vh;
   margin: 0 auto;
 `;
 
@@ -34,7 +35,7 @@ const Logo = styled.h1`
 
 // ----------------------nav------------------------- //
 const Nav = styled.nav`
-  margin-top: 174px;
+  margin-top: 140px;
   @media ${Common.media.sm} {
     margin-top: 30px;
   }
@@ -68,8 +69,8 @@ const Card = styled.div`
     height: 329.55px;
   }
   @media ${Common.media.sm} {
-    width: 133.82px;
-    height: 202px;
+    width: 185px;
+    height: 271.7px;
   }
 `;
 
