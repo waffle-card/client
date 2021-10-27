@@ -7,6 +7,7 @@ const Like = ({
   color = 'white',
   active = false,
   onClick,
+  ...props
 }) => {
   const iconStyle = {
     fontSize,
@@ -21,15 +22,18 @@ const Like = ({
   };
 
   return (
-    <Icon style={{ ...iconStyle }} onClick={handleClick}>
+    <Icon
+      style={{ ...iconStyle, ...props.style }}
+      onClick={handleClick}
+      {...props}>
       {liked ? `favorite` : `favorite_border`}
     </Icon>
   );
 };
 
 Like.propTypes = {
-  fontSize: PropTypes.string.isRequired,
-  color: PropTypes.string.isRequired,
+  fontSize: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  color: PropTypes.string,
   active: PropTypes.bool,
   onClick: PropTypes.func,
 };

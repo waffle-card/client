@@ -1,6 +1,7 @@
 import Like from './Like';
 import Favorite from './Favorite';
 import ArrowBack from './ArrowBack';
+import ArrowFront from './ArrowFront';
 import Edit from './Edit';
 import Delete from './Delete';
 import Person from './Person';
@@ -10,8 +11,7 @@ import styled from '@emotion/styled';
 const Container = styled.div`
   display: inline-flex;
   cursor: pointer;
-  background-color: ${({ backgroundColor }) =>
-    backgroundColor ? backgroundColor : `rgba(0, 0, 0, 0.1)`};
+  background-color: ${({ backgroundColor }) => backgroundColor};
   margin: 10px;
   &:hover {
     background-color: none;
@@ -19,10 +19,15 @@ const Container = styled.div`
 `;
 
 const Icons = ({ children, ...props }) => {
-  return <Container {...props}>{children}</Container>;
+  return (
+    <Container style={{ ...props.style }} {...props}>
+      {children}
+    </Container>
+  );
 };
 
 Icons.ArrowBack = ArrowBack;
+Icons.ArrowFront = ArrowFront;
 Icons.Edit = Edit;
 Icons.Delete = Delete;
 Icons.Favorite = Favorite;
