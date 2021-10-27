@@ -7,3 +7,4 @@ export { default as Card } from './base/Card';
 export { default as Icons } from './base/Icons';
 export { default as EditBox } from './domain/EditBox';
 export { default as WaffleCard } from './domain/WaffleCard';
+export { default as CardEditForm } from './domain/CardEditForm';
