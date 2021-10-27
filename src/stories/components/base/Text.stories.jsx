@@ -9,12 +9,12 @@ export default {
     size: { control: 'number' },
     weight: { control: 'number' },
     underline: { control: 'boolean' },
-    delete: { control: 'boolean' },
+    del: { control: 'boolean' },
     color: { control: 'color' },
   },
 };
 
-export const Template = args => {
+export const Default = args => {
   return (
     <>
       <Text {...args}>Text</Text>
