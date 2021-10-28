@@ -4,8 +4,8 @@ import Common from '@styles';
 
 const Text = ({
   children,
-  block = true,
-  paragraph = false,
+  block = false,
+  paragraph = true,
   size = Common.fontSize.base,
   weight = Common.fontWeight.medium,
   color = Common.colors.primary,
