@@ -1,5 +1,5 @@
 import Common from '@styles';
-import Text from '@components/text';
+import Text from '@components/base/Text';
 
 const Register = () => {
   return (
