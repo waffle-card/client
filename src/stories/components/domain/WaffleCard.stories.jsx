@@ -13,9 +13,9 @@ export const Custom = args => {
   return <WaffleCard {...args} />;
 };
 Custom.argTypes = {
-  type: {
-    defaultValue: 'normal',
-    control: { type: 'text' },
+  myCard: {
+    defaultValue: false,
+    control: { type: 'boolean' },
   },
   cardData: {
     defaultValue: {
@@ -71,7 +71,7 @@ export const MyCard = args => {
     likeCount: 13,
     hashTags: ['나의카드', '마우스 호버', 'EditBox', '생겨요!'],
   };
-  return <WaffleCard type="my" cardData={card} {...args} />;
+  return <WaffleCard myCard cardData={card} {...args} />;
 };
 MyCard.argTypes = {
   onClickCard: {

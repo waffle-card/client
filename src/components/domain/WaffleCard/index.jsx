@@ -101,7 +101,7 @@ const HashTag = styled(Text)`
 `;
 
 const WaffleCard = ({
-  type,
+  myCard,
   cardData,
   width,
   height,
@@ -171,7 +171,7 @@ const WaffleCard = ({
       onClick={handleClickCard}
       // ref={ref}
       {...props}>
-      {/* {type === 'my' && hover ? (
+      {/* {myCard && hover ? (
         <StyledEditBox
           onClick={() => {
             console.log('온클릭!');
@@ -179,7 +179,7 @@ const WaffleCard = ({
           cardId={id}
         />
       ) : null} */}
-      {type === 'my' ? (
+      {myCard ? (
         <StyledEditBox
           cardId={id}
           onEditIconClick={handleClickEditIcon}
@@ -218,13 +218,13 @@ const WaffleCard = ({
 };
 
 WaffleCard.defaultProps = {
-  type: 'normal',
+  myCard: false,
   cardData: {},
   width: 256,
 };
 
 WaffleCard.protoTypes = {
-  type: PropTypes.string,
+  myCard: PropTypes.bool,
   cardData: PropTypes.object,
   width: PropTypes.number,
   height: PropTypes.number,
