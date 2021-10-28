@@ -14,19 +14,28 @@ const countDaysFromToday = date => {
 const StyledCard = styled(Card)`
   position: relative;
   box-sizing: border-box;
-  padding: 18px;
+  padding: 18px; // TODO: 반응형 리팩토링
   cursor: pointer;
+  @media ${Common.media.sm} {
+    font-size: ${Common.fontSize.micro};
+  }
+  @media ${Common.media.md} {
+    font-size: ${Common.fontSize.small};
+  }
+  @media ${Common.media.lg} {
+    font-size: ${Common.fontSize.base};
+  }
 `;
 
 const StyledEditBox = styled(EditBox)`
   position: absolute;
-  bottom: 10px;
-  right: 10px;
+  bottom: 10px; // TODO: 반응형 리팩토링
+  right: 10px; // TODO: 반응형 리팩토링
 `;
 
 const InfoContainer = styled.div`
   width: 100%;
-  height: 18px;
+  height: 18px; // TODO: 반응형 리팩토링
   display: flex;
   justify-content: space-between;
 `;
@@ -35,8 +44,8 @@ const IconWrapper = styled.div`
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  width: 100px;
   & span:nth-of-type(1) {
+    // TODO: 반응형 리팩토링
     margin-right: 6px;
   }
   & div:nth-of-type(1) {
@@ -48,7 +57,16 @@ const IconWrapper = styled.div`
 `;
 
 const EmojiText = styled(Text)`
-  margin: 18px;
+  margin: 18px; // TODO: 리팩토링
+  & span:nth-of-type(1) {
+    margin-right: 6px;
+  }
+  & div:nth-of-type(1) {
+    margin-right: 8px;
+  }
+  & span:nth-of-type(2) {
+    margin-right: 4px;
+  }
 `;
 
 const HashTagWrapper = styled.div`
@@ -65,12 +83,22 @@ const HashTagWrapper = styled.div`
 
 const HashTag = styled(Text)`
   width: 90%;
-  padding: 0 8px;
+  padding: 0 8px; // TODO: 반응형 리팩토링
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
   box-sizing: border-box;
   text-align: center;
+  @media ${Common.media.sm} {
+    // TODO: 반응형 리팩토링
+    font-size: 30px;
+  }
+  @media ${Common.media.md} {
+    font-size: 50px;
+  }
+  @media ${Common.media.lg} {
+    font-size: 70px;
+  }
 `;
 
 const WaffleCard = ({
