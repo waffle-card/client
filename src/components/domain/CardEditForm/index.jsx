@@ -7,7 +7,7 @@ import {
   Text,
   Modal,
   EmojiPickerActiveButton,
-  MultipleInput,
+  HashTagInput,
 } from '@components';
 import Common from '@styles';
 
@@ -127,7 +127,7 @@ const CardEditForm = ({
             </Wrapper>
             <Wrapper>
               <Text>해시태그</Text>
-              <MultipleInput
+              <HashTagInput
                 color="white"
                 onChange={handleChangeMultipleInput}
               />

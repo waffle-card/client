@@ -26,7 +26,7 @@ const Input = styled.input`
   box-sizing: border-box;
 `;
 
-const MultipleInput = ({ color, onChange, ...props }) => {
+const HashTagInput = ({ color, onChange, ...props }) => {
   const [values, setValue] = useState({
     first: '',
     second: '',
@@ -67,4 +67,4 @@ const MultipleInput = ({ color, onChange, ...props }) => {
   );
 };
 
-export default MultipleInput;
+export default HashTagInput;

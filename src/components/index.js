@@ -8,5 +8,5 @@ export { default as Icons } from './base/Icons';
 export { default as EditBox } from './domain/EditBox';
 export { default as WaffleCard } from './domain/WaffleCard';
 export { default as CardEditForm } from './domain/CardEditForm';
-export { default as MultipleInput } from './domain/CardEditForm/MultipleInput';
+export { default as HashTagInput } from './domain/CardEditForm/HashTagInput';
 export { default as EmojiPickerActiveButton } from './domain/CardEditForm/EmojiPickerActiveButton';

@@ -1,7 +1,7 @@
 import {
   Button,
   CardEditForm,
-  MultipleInput,
+  HashTagInput,
   EmojiPickerActiveButton,
 } from '@components';
 
@@ -22,7 +22,7 @@ Default.argTypes = {
 };
 
 export const Inputs = args => {
-  return <MultipleInput {...args} />;
+  return <HashTagInput {...args} />;
 };
 Inputs.argTypes = {
   onChange: { action: 'onChange' },
