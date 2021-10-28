@@ -12,17 +12,26 @@ import Common from '@styles';
 
 const StyledModal = styled(Modal)`
   display: flex;
-  height: 90vh;
   flex-direction: column;
   justify-content: space-around;
-  padding: 48px;
+  padding: 16px;
   box-sizing: border-box;
+  @media ${Common.media.sm} {
+  }
+  @media ${Common.media.md} {
+  }
+  @media ${Common.media.lg} {
+  }
 `;
 
 const CardEditContainer = styled.div`
   display: flex;
   justify-content: space-around;
   align-items: center;
+  margin: 16px 0;
+  @media ${Common.media.sm} {
+    flex-direction: column;
+  }
 `;
 
 const EditFormContainer = styled.form``;
@@ -37,7 +46,15 @@ const InputContainer = styled.div`
 
 const ButtonContainer = styled.div`
   display: flex;
+  margin: 16px 0;
   justify-content: space-around;
+  @media ${Common.media.sm} {
+    flex-direction: column-reverse;
+  }
+`;
+
+const StyledButton = styled(Button)`
+  margin: 8px;
 `;
 
 const Input = styled.input`
@@ -60,7 +77,7 @@ const CardEditForm = ({ ...props }) => {
 
   return (
     <StyledModal visible backgroundColor="rgba(43, 51, 63, 1)" {...props}>
-      <CardEditContainer>
+      <CardEditContainer onSubmit={handleSubmit}>
         <WaffleCard />
         <EditFormContainer>
           <Text>이모지</Text>
@@ -78,13 +95,12 @@ const CardEditForm = ({ ...props }) => {
         </EditFormContainer>
       </CardEditContainer>
       <ButtonContainer>
-        <Button
-          width={339}
+        <StyledButton
           backgroundColor={Common.colors.primary}
           fontColor={Common.colors.point}>
           취소하기
-        </Button>
-        <Button width={339}>생성하기</Button>
+        </StyledButton>
+        <StyledButton type="submit">생성하기</StyledButton>
       </ButtonContainer>
     </StyledModal>
   );
