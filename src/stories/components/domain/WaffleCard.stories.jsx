@@ -17,7 +17,7 @@ Custom.argTypes = {
     defaultValue: 'normal',
     control: { type: 'text' },
   },
-  card: {
+  cardData: {
     defaultValue: {
       id: '6172145b54db072125ad91de',
       emoji: '👿',
@@ -82,6 +82,12 @@ MyCard.argTypes = {
   },
   onClickFavoriteIcon: {
     action: 'onClickFavoriteIcon',
+  },
+  onClickEditIcon: {
+    action: 'onClickEditIcon',
+  },
+  onClickDeleteIcon: {
+    action: 'onClickDeleteIcon',
   },
 };
 

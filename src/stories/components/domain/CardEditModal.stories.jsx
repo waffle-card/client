@@ -1,16 +1,16 @@
 import {
   Button,
-  CardEditForm,
+  CardEditModal,
   HashTagInput,
   EmojiPickerActiveButton,
 } from '@components';
 
 export default {
-  title: 'Component/Domain/CardEditForm',
+  title: 'Component/Domain/CardEditModal',
 };
 
 export const Default = args => {
-  return <CardEditForm {...args} />;
+  return <CardEditModal {...args} />;
 };
 Default.argTypes = {
   visible: {

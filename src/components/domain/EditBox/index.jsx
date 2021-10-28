@@ -35,7 +35,6 @@ const EditBox = ({
   const handleClickEditIcon = useCallback(
     e => {
       e.preventDefault();
-      console.log('edit icon', e);
       onEditIconClick && onEditIconClick(e);
     },
     [onEditIconClick],
@@ -44,7 +43,6 @@ const EditBox = ({
   const handleClickDeleteIcon = useCallback(
     e => {
       e.preventDefault();
-      console.log('delete icon', e);
       onDeleteIconClick && onDeleteIconClick(e);
     },
     [onDeleteIconClick],

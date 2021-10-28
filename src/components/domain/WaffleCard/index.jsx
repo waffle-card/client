@@ -3,7 +3,7 @@ import Common from '@styles';
 import PropTypes from 'prop-types';
 import { Card, Text, Icons, EditBox } from '@components';
 import styled from '@emotion/styled';
-import { useHover } from '@hooks';
+// import { useHover } from '@hooks';
 
 const countDaysFromToday = date => {
   date = typeof date === 'string' ? new Date(date) : date;
@@ -29,7 +29,7 @@ const StyledCard = styled(Card)`
 
 const StyledEditBox = styled(EditBox)`
   position: absolute;
-  bottom: 10px;
+  top: -15px;
   right: 10px;
 `;
 
@@ -108,8 +108,11 @@ const WaffleCard = ({
   onClickCard,
   onClickLikeIcon,
   onClickFavoriteIcon,
+  onClickEditIcon,
+  onClickDeleteIcon,
   ...props
 }) => {
+  console.log('와플카드 렌더링');
   const {
     id = 'null',
     emoji = '🧇',
@@ -120,8 +123,9 @@ const WaffleCard = ({
     likeToggle = false,
     likeCount = 0,
     hashTags = [],
-  } = cardData;
-  const [ref, hover] = useHover(null);
+  } = cardData || {};
+
+  // const [ref, hover] = useHover(null);
   const days = useMemo(() => countDaysFromToday(createdAt), [createdAt]);
 
   const handleClickCard = useCallback(
@@ -148,6 +152,16 @@ const WaffleCard = ({
     [onClickFavoriteIcon],
   );
 
+  const handleClickEditIcon = e => {
+    console.log('수정');
+    onClickEditIcon && onClickEditIcon(e);
+  };
+
+  const handleClickDeleteIcon = e => {
+    console.log('삭제');
+    onClickDeleteIcon && onClickDeleteIcon(e);
+  };
+
   return (
     <StyledCard
       data-id={id}
@@ -155,14 +169,21 @@ const WaffleCard = ({
       width={width}
       height={height}
       onClick={handleClickCard}
-      ref={ref}
+      // ref={ref}
       {...props}>
-      {type === 'my' && hover ? (
+      {/* {type === 'my' && hover ? (
         <StyledEditBox
           onClick={() => {
             console.log('온클릭!');
           }}
           cardId={id}
+        />
+      ) : null} */}
+      {type === 'my' ? (
+        <StyledEditBox
+          cardId={id}
+          onEditIconClick={handleClickEditIcon}
+          onDeleteIconClick={handleClickDeleteIcon}
         />
       ) : null}
       <InfoContainer>
@@ -198,13 +219,13 @@ const WaffleCard = ({
 
 WaffleCard.defaultProps = {
   type: 'normal',
-  card: {},
+  cardData: {},
   width: 256,
 };
 
 WaffleCard.protoTypes = {
   type: PropTypes.string,
-  card: PropTypes.object,
+  cardData: PropTypes.object,
   width: PropTypes.number,
   height: PropTypes.number,
   onClickCard: PropTypes.func,
