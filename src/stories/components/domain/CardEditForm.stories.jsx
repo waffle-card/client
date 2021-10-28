@@ -13,6 +13,10 @@ export const Default = args => {
   return <CardEditForm {...args} />;
 };
 Default.argTypes = {
+  visible: {
+    defaultValue: true,
+    control: { type: 'boolean' },
+  },
   initialCardData: {
     defaultValue: { id: '', emoji: '🦁' },
     control: { type: 'object' },
