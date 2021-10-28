@@ -15,6 +15,7 @@ const Container = styled.div`
   border: 5px dashed black;
   border-radius: 16px;
   box-sizing: border-box;
+  cursor: pointer;
   @media ${Common.media.sm} {
     width: 180px;
     height: calc(180px * 1.56);
@@ -48,15 +49,12 @@ const Empty = ({ fontSize, iconSize, onClick, ...props }) => {
 };
 
 Empty.propTypes = {
-  width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  height: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   fontSize: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   iconSize: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   onClick: PropTypes.func,
 };
 
 Empty.defaultProps = {
-  width: '265px',
   iconSize: '4rem',
 };
 

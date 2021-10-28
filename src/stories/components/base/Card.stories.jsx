@@ -9,13 +9,6 @@ export const EmptyCard = args => {
   return <Card.Empty {...args} />;
 };
 EmptyCard.argTypes = {
-  width: {
-    defaultValue: `265px`,
-    control: 'text',
-  },
-  backgroundColor: {
-    control: 'color',
-  },
   onClick: { action: 'onClick' },
 };
 
@@ -31,4 +24,10 @@ export const FilledCard = args => {
       <StyledCard width="265px" backgroundColor="royalblue" {...args} />
     </div>
   );
+};
+FilledCard.argTypes = {
+  backgroundColor: {
+    control: 'color',
+  },
+  onClick: { action: 'onClick' },
 };
