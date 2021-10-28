@@ -9,6 +9,7 @@ import {
   EmojiPicker,
 } from '@components';
 import Common from '@styles';
+import { useForm } from '@hooks';
 
 const StyledModal = styled(Modal)`
   display: flex;
@@ -17,6 +18,8 @@ const StyledModal = styled(Modal)`
   padding: 16px;
   box-sizing: border-box;
 `;
+
+const FormContainer = styled.form``;
 
 const CardEditContainer = styled.div`
   display: flex;
@@ -32,7 +35,7 @@ const StyledWaffleCard = styled(WaffleCard)`
   margin: 16px;
 `;
 
-const EditFormContainer = styled.form`
+const EditContainer = styled.div`
   margin: 16px;
 `;
 
@@ -87,10 +90,39 @@ const Input = styled.input`
   box-sizing: border-box;
 `;
 
+const sleep = () => {
+  return new Promise(resolve => {
+    setTimeout(() => resolve(), 2000);
+  });
+};
+
 const CardEditForm = ({ ...props }) => {
-  const handleSubmit = e => {
-    console.log(e);
-  };
+  const { isLoading, errors, handleChange, handleSubmit } = useForm({
+    initialValue: {
+      emoji: '',
+      cardColor: '',
+      hashTags: [],
+    },
+    onSubmit: async values => {
+      await sleep();
+      alert(JSON.stringify(values));
+    },
+    validate: ({ emoji, cardColor }) => {
+      const errors = {};
+      // if (!emoji) errors.emoji = '이모지를 선택해주세요';
+      if (!cardColor) errors.cardColor = '카드 색상을 선택해주세요';
+      return errors;
+    },
+  });
+
+  // const handleSubmit = e => {
+  //   const [name, value] = e.target;
+  //   console.log('name: ', name);
+  //   console.log('value: ', value);
+  //   e.preventDefault();
+  //   console.log('서브밋!!');
+  //   console.log(e.target);
+  // };
 
   const card = {
     id: 'tmp',
@@ -107,37 +139,44 @@ const CardEditForm = ({ ...props }) => {
 
   return (
     <StyledModal visible backgroundColor="rgba(43, 51, 63, 1)" {...props}>
-      <CardEditContainer onSubmit={handleSubmit}>
-        <StyledWaffleCard card={card} />
-        <EditFormContainer>
-          <Wrapper>
-            <Text>이모지</Text>
-            <EmojiPicker type="button" />
-          </Wrapper>
-          <Wrapper>
-            <Text>배경색</Text>
-            <ColorPalette />
-          </Wrapper>
-          <Wrapper>
-            <Text>해시태그</Text>
-            <InputContainer>
-              <Input />
-              <Input />
-              <Input />
-              <Input />
-              <Input />
-            </InputContainer>
-          </Wrapper>
-        </EditFormContainer>
-      </CardEditContainer>
-      <ButtonContainer>
-        <StyledButton
-          backgroundColor={Common.colors.primary}
-          fontColor={Common.colors.point}>
-          취소하기
-        </StyledButton>
-        <StyledButton type="submit">생성하기</StyledButton>
-      </ButtonContainer>
+      <FormContainer onSubmit={handleSubmit} id="cardForm">
+        <CardEditContainer>
+          <StyledWaffleCard card={card} />
+          <EditContainer>
+            <Wrapper>
+              <Text block>이모지</Text>
+              <EmojiPicker name="emoji" type="button" onChange={handleChange} />
+              {errors.emoji}
+            </Wrapper>
+            <Wrapper>
+              <Text block>배경색</Text>
+              <ColorPalette name="cardColor" onChange={handleChange} />
+              {errors.cardColor}
+            </Wrapper>
+            <Wrapper>
+              <Text block>해시태그</Text>
+              <InputContainer>
+                <Input />
+                <Input />
+                <Input />
+                <Input />
+                <Input />
+              </InputContainer>
+            </Wrapper>
+          </EditContainer>
+        </CardEditContainer>
+        <ButtonContainer>
+          <StyledButton
+            type="button"
+            backgroundColor={Common.colors.primary}
+            fontColor={Common.colors.point}>
+            취소하기
+          </StyledButton>
+          <StyledButton type="submit" form="cardForm">
+            {isLoading ? '생성중...' : '생성하기'}
+          </StyledButton>
+        </ButtonContainer>
+      </FormContainer>
     </StyledModal>
   );
 };

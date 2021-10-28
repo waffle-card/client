@@ -17,8 +17,8 @@ const ColorPalette = ({ colors, name, onChange, ...props }) => {
   const pureColors = useMemo(() => [...new Set(colors)], [colors]);
 
   const handleChange = useCallback(
-    ({ target }) => {
-      onChange && onChange(target.value);
+    e => {
+      onChange && onChange(e);
     },
     [onChange],
   );

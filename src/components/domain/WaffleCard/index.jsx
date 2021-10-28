@@ -14,7 +14,7 @@ const countDaysFromToday = date => {
 const StyledCard = styled(Card)`
   position: relative;
   box-sizing: border-box;
-  padding: 18px; // TODO: 반응형 리팩토링
+  padding: 18px;
   cursor: pointer;
   @media ${Common.media.sm} {
     font-size: ${Common.fontSize.micro};
@@ -29,13 +29,13 @@ const StyledCard = styled(Card)`
 
 const StyledEditBox = styled(EditBox)`
   position: absolute;
-  bottom: 10px; // TODO: 반응형 리팩토링
-  right: 10px; // TODO: 반응형 리팩토링
+  bottom: 10px;
+  right: 10px;
 `;
 
 const InfoContainer = styled.div`
   width: 100%;
-  height: 18px; // TODO: 반응형 리팩토링
+  height: 18px;
   display: flex;
   justify-content: space-between;
 `;
@@ -45,7 +45,6 @@ const IconWrapper = styled.div`
   justify-content: flex-end;
   align-items: center;
   & span:nth-of-type(1) {
-    // TODO: 반응형 리팩토링
     margin-right: 6px;
   }
   & div:nth-of-type(1) {
@@ -83,21 +82,21 @@ const HashTagWrapper = styled.div`
 
 const HashTag = styled(Text)`
   width: 90%;
-  padding: 0 8px; // TODO: 반응형 리팩토링
+  padding: 0 8px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
   box-sizing: border-box;
   text-align: center;
+  font-size: 1rem;
   @media ${Common.media.sm} {
-    // TODO: 반응형 리팩토링
-    font-size: 30px;
+    font-size: ${Common.fontSize.small};
   }
   @media ${Common.media.md} {
-    font-size: 50px;
+    font-size: ${Common.fontSize.base};
   }
   @media ${Common.media.lg} {
-    font-size: 70px;
+    font-size: ${Common.fontSize.medium};
   }
 `;
 

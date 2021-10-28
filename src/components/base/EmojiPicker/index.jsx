@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Button } from '@components';
 import Common from '@styles';
 import Picker from 'emoji-picker-react';
@@ -28,11 +28,22 @@ const EmojiPicker = ({ disabled, id, name, type, onChange, ...props }) => {
   const ref = useRef();
   const toggleEmojiPicker = () => togglePicker(prev => !prev);
 
-  const handleEmojiClick = useCallback(
-    (_, emojiObject) => {
-      ref.current.value = emojiObject.emoji;
-      onChange && onChange(emojiObject.emoji);
-      toggleEmojiPicker();
+  console.log('렌더링!!!!');
+
+  const handleEmojiClick = useCallback((e, emojiObject) => {
+    ref.current.value = emojiObject.emoji;
+    // toggleEmojiPicker();
+    console.log(ref.current);
+    const $input = document.querySelector(`input[name="${id}"]`);
+    console.log($input);
+    // ref.current.dispatchEvent(new Event('onChange'));
+    $input.dispatchEvent(new Event('onChange'));
+  }, []);
+
+  const handleChange = useCallback(
+    e => {
+      console.log('이모지피커', e);
+      onChange && onChange(e);
     },
     [onChange],
   );
@@ -48,7 +59,13 @@ const EmojiPicker = ({ disabled, id, name, type, onChange, ...props }) => {
         onClick={toggleEmojiPicker}>
         선택
       </Button>
-      <EmojiInput type="text" id={id} name={name} ref={ref} />
+      <EmojiInput
+        type="text"
+        id={id}
+        name={name}
+        ref={ref}
+        onChange={handleChange}
+      />
       {showEmojiPicker && (
         <PickerWrapper>
           <Picker onEmojiClick={handleEmojiClick} />
