@@ -36,6 +36,10 @@ const EditFormContainer = styled.form`
   margin: 16px;
 `;
 
+const Wrapper = styled.div`
+  margin: 16px 0;
+`;
+
 const InputContainer = styled.div`
   display: grid;
   justify-items: center;
@@ -88,23 +92,42 @@ const CardEditForm = ({ ...props }) => {
     console.log(e);
   };
 
+  const card = {
+    id: 'tmp',
+    emoji: '👽',
+    cardColor: 'rgba(92, 107, 192, 1)',
+    hashTags: [
+      '지우개방',
+      '쏟아내고가',
+      'ㄴr는 ㄱr끔',
+      '눈물을 흘린ㄷr',
+      '이 해시태그는매우긴해시태그입니다.',
+    ],
+  };
+
   return (
     <StyledModal visible backgroundColor="rgba(43, 51, 63, 1)" {...props}>
       <CardEditContainer onSubmit={handleSubmit}>
-        <StyledWaffleCard />
+        <StyledWaffleCard card={card} />
         <EditFormContainer>
-          <Text>이모지</Text>
-          <EmojiPicker type="button" />
-          <Text>배경색</Text>
-          <ColorPalette />
-          <Text>해시태그</Text>
-          <InputContainer>
-            <Input />
-            <Input />
-            <Input />
-            <Input />
-            <Input />
-          </InputContainer>
+          <Wrapper>
+            <Text>이모지</Text>
+            <EmojiPicker type="button" />
+          </Wrapper>
+          <Wrapper>
+            <Text>배경색</Text>
+            <ColorPalette />
+          </Wrapper>
+          <Wrapper>
+            <Text>해시태그</Text>
+            <InputContainer>
+              <Input />
+              <Input />
+              <Input />
+              <Input />
+              <Input />
+            </InputContainer>
+          </Wrapper>
         </EditFormContainer>
       </CardEditContainer>
       <ButtonContainer>
