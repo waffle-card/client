@@ -71,7 +71,7 @@ export const MyCard = args => {
     likeCount: 13,
     hashTags: ['나의카드', '마우스 호버', 'EditBox', '생겨요!'],
   };
-  return <WaffleCard type="my" card={card} {...args} />;
+  return <WaffleCard type="my" cardData={card} {...args} />;
 };
 MyCard.argTypes = {
   onClickCard: {
@@ -103,5 +103,5 @@ export const TodayCards = args => {
       '이 해시태그는매우긴해시태그입니다.',
     ],
   };
-  return <WaffleCard card={card} {...args} />;
+  return <WaffleCard cardData={card} {...args} />;
 };

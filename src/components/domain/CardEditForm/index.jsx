@@ -75,24 +75,24 @@ const CardEditForm = ({
   onSubmit,
   ...props
 }) => {
-  const [card, setCard] = useState(initialCardData);
+  const [cardData, setCard] = useState(initialCardData);
 
   const handleEmojiClick = useCallback(emoji => {
-    setCard(card => {
-      return { ...card, emoji };
+    setCard(cardData => {
+      return { ...cardData, emoji };
     });
   }, []);
 
   const handleChangeCardColor = e => {
     const { name, value } = e.target;
-    setCard(card => {
-      return { ...card, [name]: value };
+    setCard(cardData => {
+      return { ...cardData, [name]: value };
     });
   };
 
   const handleChangeMultipleInput = values => {
-    setCard(card => {
-      return { ...card, hashTags: values };
+    setCard(cardData => {
+      return { ...cardData, hashTags: values };
     });
   };
 
@@ -111,7 +111,7 @@ const CardEditForm = ({
     <StyledModal visible backgroundColor="rgba(43, 51, 63, 1)" {...props}>
       <FormContainer onSubmit={handleSubmit} id="cardForm">
         <CardEditContainer>
-          <StyledWaffleCard card={card} />
+          <StyledWaffleCard cardData={cardData} />
           <EditContainer>
             <Wrapper>
               <Text>이모지</Text>

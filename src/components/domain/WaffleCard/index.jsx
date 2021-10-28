@@ -102,7 +102,7 @@ const HashTag = styled(Text)`
 
 const WaffleCard = ({
   type,
-  card,
+  cardData,
   width,
   height,
   onClickCard,
@@ -120,7 +120,7 @@ const WaffleCard = ({
     likeToggle = false,
     likeCount = 0,
     hashTags = [],
-  } = card;
+  } = cardData;
   const [ref, hover] = useHover(null);
   const days = useMemo(() => countDaysFromToday(createdAt), [createdAt]);
 
