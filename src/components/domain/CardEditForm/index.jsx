@@ -16,12 +16,6 @@ const StyledModal = styled(Modal)`
   justify-content: space-around;
   padding: 16px;
   box-sizing: border-box;
-  @media ${Common.media.sm} {
-  }
-  @media ${Common.media.md} {
-  }
-  @media ${Common.media.lg} {
-  }
 `;
 
 const CardEditContainer = styled.div`
@@ -34,7 +28,13 @@ const CardEditContainer = styled.div`
   }
 `;
 
-const EditFormContainer = styled.form``;
+const StyledWaffleCard = styled(WaffleCard)`
+  margin: 16px;
+`;
+
+const EditFormContainer = styled.form`
+  margin: 16px;
+`;
 
 const InputContainer = styled.div`
   display: grid;
@@ -42,12 +42,16 @@ const InputContainer = styled.div`
   align-items: center;
   grid-gap: 8px;
   grid-template-columns: repeat(3, 1fr);
+  @media ${Common.media.sm} {
+    grid-template-columns: repeat(2, 1fr);
+  }
 `;
 
 const ButtonContainer = styled.div`
   display: flex;
   margin: 16px 0;
   justify-content: space-around;
+  align-items: center;
   @media ${Common.media.sm} {
     flex-direction: column-reverse;
   }
@@ -55,6 +59,15 @@ const ButtonContainer = styled.div`
 
 const StyledButton = styled(Button)`
   margin: 8px;
+  @media ${Common.media.sm} {
+    width: 290px;
+  }
+  @media ${Common.media.md} {
+    width: 272px;
+  }
+  @media ${Common.media.lg} {
+    width: 340px;
+  }
 `;
 
 const Input = styled.input`
@@ -78,7 +91,7 @@ const CardEditForm = ({ ...props }) => {
   return (
     <StyledModal visible backgroundColor="rgba(43, 51, 63, 1)" {...props}>
       <CardEditContainer onSubmit={handleSubmit}>
-        <WaffleCard />
+        <StyledWaffleCard />
         <EditFormContainer>
           <Text>이모지</Text>
           <EmojiPicker type="button" />
