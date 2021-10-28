@@ -33,6 +33,7 @@ const TabItemTitle = styled.span`
 const TabItem = ({
   title,
   index,
+  param,
   active,
   height,
   pointColor,
