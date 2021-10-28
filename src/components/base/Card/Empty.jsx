@@ -2,29 +2,34 @@ import styled from '@emotion/styled';
 import React, { useCallback } from 'react';
 import { Icons, Text } from '@components';
 import PropTypes from 'prop-types';
+import Common from '@styles';
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: ${({ width }) => (typeof width === 'number' ? `${width}px` : width)};
-  height: ${({ width, height }) => {
-    if (height) {
-      return typeof height === 'number' ? `${height}px` : height;
-    } else {
-      return typeof width === 'number'
-        ? `${width * 1.56}px`
-        : `calc(${width} * 1.56)`;
-    }
-  }};
+  max-width: 265px;
+  min-width: 180px;
   background-color: ${({ backgroundColor }) => backgroundColor};
   border: 5px dashed black;
   border-radius: 16px;
   box-sizing: border-box;
+  @media ${Common.media.sm} {
+    width: 180px;
+    height: calc(180px * 1.56);
+  }
+  @media ${Common.media.md} {
+    width: 216px;
+    height: calc(216px * 1.56);
+  }
+  @media ${Common.media.lg} {
+    width: 265px;
+    height: calc(265px * 1.56);
+  }
 `;
 
-const Empty = ({ width, height, fontSize, iconSize, onClick, ...props }) => {
+const Empty = ({ fontSize, iconSize, onClick, ...props }) => {
   const handleClick = useCallback(
     e => {
       onClick && onClick(e);
@@ -33,7 +38,7 @@ const Empty = ({ width, height, fontSize, iconSize, onClick, ...props }) => {
   );
 
   return (
-    <Container width={width} onClick={handleClick} {...props}>
+    <Container onClick={handleClick} {...props}>
       <Icons.Add fontSize={iconSize} color="black" />
       <Text size={fontSize} color="black">
         카드 만들기
@@ -51,7 +56,7 @@ Empty.propTypes = {
 };
 
 Empty.defaultProps = {
-  width: '256px',
+  width: '265px',
   iconSize: '4rem',
 };
 
