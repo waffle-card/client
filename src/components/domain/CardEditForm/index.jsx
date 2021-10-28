@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import styled from '@emotion/styled';
 import {
   WaffleCard,
@@ -90,51 +90,33 @@ const Input = styled.input`
   box-sizing: border-box;
 `;
 
-const sleep = () => {
-  return new Promise(resolve => {
-    setTimeout(() => resolve(), 2000);
-  });
-};
-
 const CardEditForm = ({ ...props }) => {
-  const { isLoading, errors, handleChange, handleSubmit } = useForm({
-    initialValue: {
-      emoji: '',
-      cardColor: '',
-      hashTags: [],
-    },
-    onSubmit: async values => {
-      await sleep();
-      alert(JSON.stringify(values));
-    },
-    validate: ({ emoji, cardColor }) => {
-      const errors = {};
-      // if (!emoji) errors.emoji = '이모지를 선택해주세요';
-      if (!cardColor) errors.cardColor = '카드 색상을 선택해주세요';
-      return errors;
-    },
-  });
+  const [card, setCard] = useState({ id: '' });
 
-  // const handleSubmit = e => {
-  //   const [name, value] = e.target;
-  //   console.log('name: ', name);
-  //   console.log('value: ', value);
-  //   e.preventDefault();
-  //   console.log('서브밋!!');
-  //   console.log(e.target);
-  // };
+  const handleChange = e => {
+    const { name, value } = e.target;
+    console.log(name, value);
 
-  const card = {
-    id: 'tmp',
-    emoji: '👽',
-    cardColor: 'rgba(92, 107, 192, 1)',
-    hashTags: [
-      '지우개방',
-      '쏟아내고가',
-      'ㄴr는 ㄱr끔',
-      '눈물을 흘린ㄷr',
-      '이 해시태그는매우긴해시태그입니다.',
-    ],
+    if (name.includes('hashTag')) {
+      setCard(card => {
+        const hashTag = { ...card.hashTag, [name]: value };
+        return { ...card, hashTag };
+      });
+    }
+    setCard(card => {
+      return { ...card, [name]: value };
+    });
+    console.log(card);
+  };
+
+  const handleEmojiClick = useCallback(emoji => {
+    setCard(card => {
+      return { ...card, emoji };
+    });
+  }, []);
+
+  const handleSubmit = e => {
+    console.log('제출!');
   };
 
   return (
@@ -144,23 +126,25 @@ const CardEditForm = ({ ...props }) => {
           <StyledWaffleCard card={card} />
           <EditContainer>
             <Wrapper>
-              <Text block>이모지</Text>
-              <EmojiPicker name="emoji" type="button" onChange={handleChange} />
-              {errors.emoji}
+              <Text>이모지</Text>
+              <EmojiPicker
+                name="emoji"
+                type="button"
+                onEmojiClick={handleEmojiClick}
+              />
             </Wrapper>
             <Wrapper>
-              <Text block>배경색</Text>
+              <Text>배경색</Text>
               <ColorPalette name="cardColor" onChange={handleChange} />
-              {errors.cardColor}
             </Wrapper>
             <Wrapper>
-              <Text block>해시태그</Text>
+              <Text>해시태그</Text>
               <InputContainer>
-                <Input />
-                <Input />
-                <Input />
-                <Input />
-                <Input />
+                <Input name="hashTag-first" onChange={handleChange} />
+                <Input name="hashTag-second" onChange={handleChange} />
+                <Input name="hashTag-third" onChange={handleChange} />
+                <Input name="hashTag-fourth" onChange={handleChange} />
+                <Input name="hashTag-fifth" onChange={handleChange} />
               </InputContainer>
             </Wrapper>
           </EditContainer>
@@ -173,7 +157,7 @@ const CardEditForm = ({ ...props }) => {
             취소하기
           </StyledButton>
           <StyledButton type="submit" form="cardForm">
-            {isLoading ? '생성중...' : '생성하기'}
+            생성하기
           </StyledButton>
         </ButtonContainer>
       </FormContainer>
@@ -182,3 +166,16 @@ const CardEditForm = ({ ...props }) => {
 };
 
 export default CardEditForm;
+
+// const card = {
+//   id: 'tmp',
+//   emoji: '👽',
+//   cardColor: 'rgba(92, 107, 192, 1)',
+//   hashTags: [
+//     '지우개방',
+//     '쏟아내고가',
+//     'ㄴr는 ㄱr끔',
+//     '눈물을 흘린ㄷr',
+//     '이 해시태그는매우긴해시태그입니다.',
+//   ],
+// };

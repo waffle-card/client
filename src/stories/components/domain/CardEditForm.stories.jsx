@@ -1,4 +1,4 @@
-import { CardEditForm } from '@components';
+import { CardEditForm, HashTagInput } from '@components';
 
 export default {
   title: 'Component/Domain/CardEditForm',
@@ -6,4 +6,11 @@ export default {
 
 export const Default = () => {
   return <CardEditForm />;
+};
+
+export const HashTag = args => {
+  return <HashTagInput {...args} />;
+};
+HashTag.argTypes = {
+  onChange: { action: 'onChange' },
 };
