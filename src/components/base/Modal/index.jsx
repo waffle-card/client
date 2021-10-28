@@ -16,7 +16,6 @@ const BackgroundDim = styled.div`
 `;
 
 const ModalContainer = styled.div`
-  display: inline-block;
   position: fixed;
   top: 50%;
   left: 50%;
@@ -27,7 +26,6 @@ const ModalContainer = styled.div`
   max-width: 1000px;
   min-height: 100px;
   transform: translate(-50%, -50%);
-  padding: 8px;
   border-radius: 16px;
   background-color: ${({ backgroundColor }) => backgroundColor};
   box-shadow: ${Common.shadow.modal};
@@ -80,8 +78,6 @@ Modal.propTypes = {
 
 Modal.defaultProps = {
   visible: false,
-  width: 400,
-  height: 400,
   backgroundColor: Common.colors.background_modal,
 };
 

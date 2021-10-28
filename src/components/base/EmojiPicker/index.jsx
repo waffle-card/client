@@ -23,7 +23,7 @@ const EmojiInput = styled.input`
   display: none;
 `;
 
-const EmojiPicker = ({ disabled, id, name, onChange, ...props }) => {
+const EmojiPicker = ({ disabled, id, name, type, onChange, ...props }) => {
   const [showEmojiPicker, togglePicker] = useState(() => false);
   const ref = useRef();
   const toggleEmojiPicker = () => togglePicker(prev => !prev);
@@ -40,6 +40,7 @@ const EmojiPicker = ({ disabled, id, name, onChange, ...props }) => {
   return (
     <Container htmlFor={id} {...props}>
       <Button
+        type={type}
         width={88}
         height={40}
         fontSize={Common.fontSize.small}

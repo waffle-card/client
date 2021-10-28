@@ -12,10 +12,9 @@ import Common from '@styles';
 
 const StyledModal = styled(Modal)`
   display: flex;
+  height: 90vh;
   flex-direction: column;
   justify-content: space-around;
-  width: 918px;
-  height: 769px;
   padding: 48px;
   box-sizing: border-box;
 `;
@@ -60,19 +59,12 @@ const CardEditForm = ({ ...props }) => {
   };
 
   return (
-    <StyledModal
-      visible
-      backgroundColor="rgba(43, 51, 63, 1)"
-      width={918}
-      height={769}
-      {...props}>
+    <StyledModal visible backgroundColor="rgba(43, 51, 63, 1)" {...props}>
       <CardEditContainer>
         <WaffleCard />
-        <EditFormContainer submit={handleSubmit}>
+        <EditFormContainer>
           <Text>이모지</Text>
-          <Button width={88} height={40}>
-            생성하기
-          </Button>
+          <EmojiPicker type="button" />
           <Text>배경색</Text>
           <ColorPalette />
           <Text>해시태그</Text>
@@ -92,9 +84,7 @@ const CardEditForm = ({ ...props }) => {
           fontColor={Common.colors.point}>
           취소하기
         </Button>
-        <Button type="submit" width={339}>
-          생성하기
-        </Button>
+        <Button width={339}>생성하기</Button>
       </ButtonContainer>
     </StyledModal>
   );
