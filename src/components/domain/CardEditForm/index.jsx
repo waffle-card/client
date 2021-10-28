@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import styled from '@emotion/styled';
 import {
   WaffleCard,
@@ -6,10 +6,10 @@ import {
   ColorPalette,
   Text,
   Modal,
-  EmojiPicker,
+  EmojiPickerActiveButton,
+  MultipleInput,
 } from '@components';
 import Common from '@styles';
-import { useForm } from '@hooks';
 
 const StyledModal = styled(Modal)`
   display: flex;
@@ -43,17 +43,6 @@ const Wrapper = styled.div`
   margin: 16px 0;
 `;
 
-const InputContainer = styled.div`
-  display: grid;
-  justify-items: center;
-  align-items: center;
-  grid-gap: 8px;
-  grid-template-columns: repeat(3, 1fr);
-  @media ${Common.media.sm} {
-    grid-template-columns: repeat(2, 1fr);
-  }
-`;
-
 const ButtonContainer = styled.div`
   display: flex;
   margin: 16px 0;
@@ -77,37 +66,8 @@ const StyledButton = styled(Button)`
   }
 `;
 
-const Input = styled.input`
-  display: block;
-  padding: 6px, 8px;
-  width: 114px;
-  height: 40px;
-  font-size: 14px;
-  color: white;
-  border-radius: 4px;
-  border: 2px solid white;
-  background-color: transparent;
-  box-sizing: border-box;
-`;
-
-const CardEditForm = ({ ...props }) => {
-  const [card, setCard] = useState({ id: '' });
-
-  const handleChange = e => {
-    const { name, value } = e.target;
-    console.log(name, value);
-
-    if (name.includes('hashTag')) {
-      setCard(card => {
-        const hashTag = { ...card.hashTag, [name]: value };
-        return { ...card, hashTag };
-      });
-    }
-    setCard(card => {
-      return { ...card, [name]: value };
-    });
-    console.log(card);
-  };
+const CardEditForm = ({ initialCardData = { id: '' }, ...props }) => {
+  const [card, setCard] = useState(initialCardData);
 
   const handleEmojiClick = useCallback(emoji => {
     setCard(card => {
@@ -115,7 +75,21 @@ const CardEditForm = ({ ...props }) => {
     });
   }, []);
 
+  const handleChangeCardColor = e => {
+    const { name, value } = e.target;
+    setCard(card => {
+      return { ...card, [name]: value };
+    });
+  };
+
+  const handleChangeMultipleInput = values => {
+    setCard(card => {
+      return { ...card, hashTags: values };
+    });
+  };
+
   const handleSubmit = e => {
+    e.preventDefault();
     console.log('제출!');
   };
 
@@ -127,7 +101,7 @@ const CardEditForm = ({ ...props }) => {
           <EditContainer>
             <Wrapper>
               <Text>이모지</Text>
-              <EmojiPicker
+              <EmojiPickerActiveButton
                 name="emoji"
                 type="button"
                 onEmojiClick={handleEmojiClick}
@@ -135,17 +109,14 @@ const CardEditForm = ({ ...props }) => {
             </Wrapper>
             <Wrapper>
               <Text>배경색</Text>
-              <ColorPalette name="cardColor" onChange={handleChange} />
+              <ColorPalette name="cardColor" onChange={handleChangeCardColor} />
             </Wrapper>
             <Wrapper>
               <Text>해시태그</Text>
-              <InputContainer>
-                <Input name="hashTag-first" onChange={handleChange} />
-                <Input name="hashTag-second" onChange={handleChange} />
-                <Input name="hashTag-third" onChange={handleChange} />
-                <Input name="hashTag-fourth" onChange={handleChange} />
-                <Input name="hashTag-fifth" onChange={handleChange} />
-              </InputContainer>
+              <MultipleInput
+                color="white"
+                onChange={handleChangeMultipleInput}
+              />
             </Wrapper>
           </EditContainer>
         </CardEditContainer>

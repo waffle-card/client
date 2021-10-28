@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { Button } from '@components';
 import Common from '@styles';
 import Picker from 'emoji-picker-react';
@@ -19,13 +19,15 @@ const PickerWrapper = styled.div`
   animation: fadeIn 0.5s ease-in forwards;
 `;
 
-const EmojiInput = styled.input`
-  display: none;
-`;
-
-const EmojiPicker = ({ disabled, id, name, type, onEmojiClick, ...props }) => {
+const EmojiPickerActiveButton = ({
+  disabled,
+  id,
+  name,
+  type,
+  onEmojiClick,
+  ...props
+}) => {
   const [showEmojiPicker, togglePicker] = useState(() => false);
-  const ref = useRef();
   const toggleEmojiPicker = () => togglePicker(prev => !prev);
 
   const handleEmojiClick = useCallback(
@@ -48,7 +50,6 @@ const EmojiPicker = ({ disabled, id, name, type, onEmojiClick, ...props }) => {
         onClick={toggleEmojiPicker}>
         선택
       </Button>
-      <EmojiInput type="text" id={id} name={name} ref={ref} />
       {showEmojiPicker && (
         <PickerWrapper>
           <Picker onEmojiClick={handleEmojiClick} />
@@ -58,17 +59,17 @@ const EmojiPicker = ({ disabled, id, name, type, onEmojiClick, ...props }) => {
   );
 };
 
-EmojiPicker.protoTypes = {
+EmojiPickerActiveButton.protoTypes = {
   disabled: PropTypes.bool,
   id: PropTypes.string,
   name: PropTypes.string,
   onChange: PropTypes.func,
 };
 
-EmojiPicker.defaultProps = {
+EmojiPickerActiveButton.defaultProps = {
   disabled: false,
   id: 'emoji',
   name: 'emoji',
 };
 
-export default EmojiPicker;
+export default EmojiPickerActiveButton;
