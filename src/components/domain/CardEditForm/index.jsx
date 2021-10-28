@@ -57,12 +57,15 @@ const StyledButton = styled(Button)`
   margin: 8px;
   @media ${Common.media.sm} {
     width: 290px;
+    height: 40px;
   }
   @media ${Common.media.md} {
     width: 272px;
+    height: 56px;
   }
   @media ${Common.media.lg} {
     width: 340px;
+    height: 56px;
   }
 `;
 
