@@ -1,6 +1,13 @@
 import React from 'react';
 import styled from '@emotion/styled';
-import { WaffleCard, Button, ColorPalette, Text, Modal } from '@components';
+import {
+  WaffleCard,
+  Button,
+  ColorPalette,
+  Text,
+  Modal,
+  EmojiPicker,
+} from '@components';
 import Common from '@styles';
 
 const StyledModal = styled(Modal)`

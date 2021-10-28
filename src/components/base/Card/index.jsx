@@ -3,6 +3,7 @@ import styled from '@emotion/styled';
 import { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import styles from '@styles';
+import Empty from './Empty';
 
 const CardStyle = styled.div`
   display: flex;
@@ -11,27 +12,22 @@ const CardStyle = styled.div`
   align-items: center;
   width: ${({ width }) =>
     typeof width === 'number' ? `${width - 10}px` : `calc(${width} - 10px)`};
+  min-width: 134px;
   height: ${({ width, height }) => {
     if (height) {
-      return typeof height === 'number'
-        ? `${height - 10}px`
-        : `calc(${height} - 10px)`;
+      return typeof height === 'number' ? `${height}px` : height;
     } else {
       return typeof width === 'number'
-        ? `${(width - 10) * 1.56}px`
-        : `calc((${width} - 10px) * 1.56)`;
+        ? `${width * 1.56}px`
+        : `calc(${width} * 1.56)`;
     }
   }};
-  border: ${({ backgroundColor }) =>
-    backgroundColor ? undefined : `5px dashed`};
-  background-color: ${({ backgroundColor }) =>
-    backgroundColor ? backgroundColor : 'transparent'};
+  background-color: ${({ backgroundColor }) => backgroundColor};
   border-radius: 16px;
   margin: 8px;
-  padding: ${({ backgroundColor }) => (backgroundColor ? '5px' : undefined)};
+  padding: 5px;
   cursor: pointer;
-  box-shadow: ${({ backgroundColor }) =>
-    backgroundColor ? styles.shadow.card : undefined};
+  box-shadow: ${styles.shadow.card};
   box-sizing: border-box;
 `;
 
@@ -68,6 +64,9 @@ Card.propTypes = {
 
 Card.defaultProps = {
   width: 256,
+  backgroundColor: styles.colors.indigo,
 };
+
+Card.Empty = Empty;
 
 export default Card;

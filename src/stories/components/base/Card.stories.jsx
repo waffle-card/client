@@ -1,34 +1,21 @@
 import Card from '@components/base/Card';
-import Icons from '@components/base/Icons';
 
 export default {
   title: 'Component/Base/Card',
-  component: { Card, Icons },
-  argTypes: {
-    width: {
-      defaultValue: 265,
-      control: 'number',
-    },
-    height: {
-      defaultValue: null,
-      control: 'number',
-    },
-    backgroundColor: {
-      control: 'color',
-    },
-    onClick: { action: 'onClick' },
-  },
 };
 
 export const EmptyCard = args => {
-  return (
-    <Card width="265px" {...args}>
-      <Icons backgroundColor="none">
-        <Icons.Add fontSize="50px" color="black" />
-      </Icons>
-      <div>카드 추가!</div>
-    </Card>
-  );
+  return <Card.Empty {...args} />;
+};
+EmptyCard.argTypes = {
+  width: {
+    defaultValue: `265px`,
+    control: 'text',
+  },
+  backgroundColor: {
+    control: 'color',
+  },
+  onClick: { action: 'onClick' },
 };
 
 export const FilledCard = args => {
