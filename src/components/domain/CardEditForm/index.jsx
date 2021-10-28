@@ -69,7 +69,12 @@ const StyledButton = styled(Button)`
   }
 `;
 
-const CardEditForm = ({ initialCardData = { id: '' }, ...props }) => {
+const CardEditForm = ({
+  initialCardData = { id: '' },
+  onClose,
+  onSubmit,
+  ...props
+}) => {
   const [card, setCard] = useState(initialCardData);
 
   const handleEmojiClick = useCallback(emoji => {
@@ -91,9 +96,15 @@ const CardEditForm = ({ initialCardData = { id: '' }, ...props }) => {
     });
   };
 
+  const handleClose = e => {
+    console.log('닫기!');
+    onClose && onClose(e);
+  };
+
   const handleSubmit = e => {
     e.preventDefault();
     console.log('제출!');
+    onSubmit && onSubmit(e);
   };
 
   return (
@@ -127,7 +138,8 @@ const CardEditForm = ({ initialCardData = { id: '' }, ...props }) => {
           <StyledButton
             type="button"
             backgroundColor={Common.colors.primary}
-            fontColor={Common.colors.point}>
+            fontColor={Common.colors.point}
+            onClick={handleClose}>
             취소하기
           </StyledButton>
           <StyledButton type="submit" form="cardForm">

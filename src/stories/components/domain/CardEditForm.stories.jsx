@@ -9,8 +9,16 @@ export default {
   title: 'Component/Domain/CardEditForm',
 };
 
-export const Default = () => {
-  return <CardEditForm />;
+export const Default = args => {
+  return <CardEditForm {...args} />;
+};
+Default.argTypes = {
+  initialCardData: {
+    defaultValue: { id: '', emoji: '🦁' },
+    control: { type: 'object' },
+  },
+  onClose: { action: 'onClose' },
+  onSubmit: { action: 'onSubmit' },
 };
 
 export const Inputs = args => {
