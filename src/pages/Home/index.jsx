@@ -4,9 +4,7 @@ import styled from '@emotion/styled';
 import Common from '@styles';
 import WaffleCard from '@components/domain/WaffleCard';
 import Text from '@components/base/Text';
-import { Route, Link } from 'react-router-dom';
-import { CardEditForm } from '@components';
-import ChattingCard from '@components/domain/ChattingCard';
+import { Link } from 'react-router-dom';
 
 const HomeContainer = styled.div`
   max-width: 1690px;
@@ -38,10 +36,15 @@ const Logo = styled.h1`
   }
 `;
 
-const StyledIcon = styled(Icons.Person)`
+const StyledIconPerson = styled(Icons.Person)`
+  cursor: pointer;
   @media ${Common.media.sm} {
     font-size: 18px;
   }
+`;
+
+const StyleTextLogin = styled(Text)`
+  cursor: pointer;
 `;
 
 const Nav = styled.nav`
@@ -88,13 +91,17 @@ const Home = () => {
             <img src={require('./images/logo.png').default} alt="logo" />
           </Link>
         </Logo>
-        <StyledIcon color={Common.colors.point} />
-        <Text
-          color={Common.colors.point}
-          size={Common.fontSize.regular}
-          weight={Common.fontWeight.regular}>
-          로그인
-        </Text>
+        <Link to="/my-page">
+          <StyledIconPerson color={Common.colors.point} />
+        </Link>
+        <Link to="/login">
+          <StyleTextLogin
+            color={Common.colors.point}
+            size={Common.fontSize.regular}
+            weight={Common.fontWeight.regular}>
+            로그인
+          </StyleTextLogin>
+        </Link>
       </Header>
       <Nav>
         <Tab>
