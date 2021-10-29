@@ -35,6 +35,7 @@ const EditBox = ({
   const handleClickEditIcon = useCallback(
     e => {
       e.preventDefault();
+      e.stopPropagation();
       onEditIconClick && onEditIconClick(e);
     },
     [onEditIconClick],
@@ -43,6 +44,7 @@ const EditBox = ({
   const handleClickDeleteIcon = useCallback(
     e => {
       e.preventDefault();
+      e.stopPropagation();
       onDeleteIconClick && onDeleteIconClick(e);
     },
     [onDeleteIconClick],

@@ -3,7 +3,7 @@ import Common from '@styles';
 import PropTypes from 'prop-types';
 import { Card, Text, Icons, EditBox } from '@components';
 import styled from '@emotion/styled';
-// import { useHover } from '@hooks';
+import { useHover } from '@hooks';
 
 const countDaysFromToday = date => {
   date = typeof date === 'string' ? new Date(date) : date;
@@ -125,7 +125,7 @@ const WaffleCard = ({
     hashTags = [],
   } = cardData || {};
 
-  // const [ref, hover] = useHover(null);
+  const [ref, hover] = useHover(null);
   const days = useMemo(() => countDaysFromToday(createdAt), [createdAt]);
 
   const handleClickCard = useCallback(
@@ -169,23 +169,22 @@ const WaffleCard = ({
       width={width}
       height={height}
       onClick={handleClickCard}
-      // ref={ref}
+      ref={ref}
       {...props}>
-      {/* {myCard && hover ? (
-        <StyledEditBox
-          onClick={() => {
-            console.log('온클릭!');
-          }}
-          cardId={id}
-        />
-      ) : null} */}
-      {myCard ? (
+      {myCard && hover ? (
         <StyledEditBox
           cardId={id}
           onEditIconClick={handleClickEditIcon}
           onDeleteIconClick={handleClickDeleteIcon}
         />
       ) : null}
+      {/* {myCard ? (
+        <StyledEditBox
+          cardId={id}
+          onEditIconClick={handleClickEditIcon}
+          onDeleteIconClick={handleClickDeleteIcon}
+        />
+      ) : null} */}
       <InfoContainer>
         <Text block>{days <= 0 ? '오늘' : `${days}일 전`}</Text>
         <IconWrapper size={8}>
