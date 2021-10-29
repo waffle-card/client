@@ -2,9 +2,9 @@ import React from 'react';
 import { useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
-import TabItem from './TabItem';
 import { rgba } from 'polished';
 import Common from '@styles';
+import TabItem from './TabItem';
 
 const TabItemContainer = styled.div`
   position: relative;

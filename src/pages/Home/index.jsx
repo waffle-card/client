@@ -1,10 +1,11 @@
-import Icons from '@components/base/Icons';
-import Tab from '@components/domain/Tab';
 import styled from '@emotion/styled';
 import Common from '@styles';
-import WaffleCard from '@components/domain/WaffleCard';
-import Text from '@components/base/Text';
 import { Link } from 'react-router-dom';
+
+import Header from '@components/domain/Header';
+import Icons from '@components/base/Icons';
+import Tab from '@components/domain/Tab';
+import WaffleCard from '@components/domain/WaffleCard';
 
 const HomeContainer = styled.div`
   max-width: 1690px;
@@ -12,39 +13,6 @@ const HomeContainer = styled.div`
   height: 100vh;
   margin: 0 auto;
   background-color: rgba(26, 31, 39, 1);
-`;
-
-const Header = styled.header`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  height: 55px;
-`;
-
-const Logo = styled.h1`
-  margin: 0;
-  font-size: 0;
-  a {
-    display: block;
-    img {
-      width: auto;
-      height: 24px;
-      @media ${Common.media.sm} {
-        height: 18px;
-      }
-    }
-  }
-`;
-
-const StyledIconPerson = styled(Icons.Person)`
-  cursor: pointer;
-  @media ${Common.media.sm} {
-    font-size: 18px;
-  }
-`;
-
-const StyleTextLogin = styled(Text)`
-  cursor: pointer;
 `;
 
 const Nav = styled.nav`
@@ -85,24 +53,7 @@ const StyledCard = styled(WaffleCard)`
 const Home = () => {
   return (
     <HomeContainer>
-      <Header>
-        <Logo>
-          <Link to="/">
-            <img src={require('./images/logo.png').default} alt="logo" />
-          </Link>
-        </Logo>
-        <Link to="/my-page">
-          <StyledIconPerson color={Common.colors.point} />
-        </Link>
-        <Link to="/login">
-          <StyleTextLogin
-            color={Common.colors.point}
-            size={Common.fontSize.regular}
-            weight={Common.fontWeight.regular}>
-            로그인
-          </StyleTextLogin>
-        </Link>
-      </Header>
+      <Header />
       <Nav>
         <Tab>
           <Tab.Item title="오늘의 카드" index="0" param="today"></Tab.Item>
