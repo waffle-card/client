@@ -105,10 +105,7 @@ const CardEditModal = ({
   };
 
   return (
-    <StyledModal
-      visible={visible}
-      backgroundColor="rgba(43, 51, 63, 1)"
-      {...props}>
+    <StyledModal visible={visible} {...props}>
       <FormContainer onSubmit={handleSubmit} id="cardForm">
         <CardEditContainer>
           <StyledWaffleCard cardData={cardData} />
