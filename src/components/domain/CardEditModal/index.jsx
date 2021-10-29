@@ -127,6 +127,7 @@ const CardEditModal = ({
             </Wrapper>
             <Wrapper>
               <Text>해시태그</Text>
+              {/* 아래 input이 왜 포커스 아웃이 될까...? */}
               <input
                 type="text"
                 onChange={e => {
