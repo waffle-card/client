@@ -2,21 +2,26 @@ import styled from '@emotion/styled';
 import PropTypes from 'prop-types';
 import Common from '@styles';
 import { rgba } from 'polished';
+import { Link } from 'react-router-dom';
 
 const TabItemWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
   width: calc(100% / 3);
-  height: ${({ height }) => `${height}px`};
   min-height: 25px;
   cursor: pointer;
-  @media ${Common.media.sm} {
-    height: ${({ height }) => `${height * 0.68}px`};
-  }
 `;
 
 const TabItemTitle = styled.span`
+  display: flex;
+  width: 100%;
+  height: ${({ height }) => `${height}px`};
+  @media ${Common.media.sm} {
+    height: ${({ height }) => `${height * 0.68}px`};
+  }
+  justify-content: center;
+  align-items: center;
   font-size: ${({ fontSize }) =>
     typeof fontSize === 'number' ? `${fontSize}px` : fontSize};
   font-weight: ${({ active }) =>
@@ -28,6 +33,11 @@ const TabItemTitle = styled.span`
   @media ${Common.media.sm} {
     font-size: ${Common.fontSize.micro};
   }
+`;
+
+const StyledLink = styled(Link)`
+  display: block;
+  width: 100%;
 `;
 
 const TabItem = ({
@@ -42,14 +52,17 @@ const TabItem = ({
 }) => {
   return (
     // 여기에 클릭 이벤트로 메뉴 별 페이지 라우터 달면 된다
-    <TabItemWrapper active={active} height={height} {...props}>
-      <TabItemTitle
-        active={active}
-        pointColor={pointColor}
-        fontSize={fontSize}
-        {...props}>
-        {title}
-      </TabItemTitle>
+    <TabItemWrapper active={active} {...props}>
+      <StyledLink to={`/cards/${param}`}>
+        <TabItemTitle
+          active={active}
+          pointColor={pointColor}
+          fontSize={fontSize}
+          height={height}
+          {...props}>
+          {title}
+        </TabItemTitle>
+      </StyledLink>
     </TabItemWrapper>
   );
 };
