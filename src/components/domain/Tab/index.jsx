@@ -83,7 +83,6 @@ const Tab = ({
         fontSize,
         onClick: () => {
           setCurrentActive(element.props.index);
-          console.log(element.props.index);
         },
       });
     });
@@ -112,8 +111,8 @@ Tab.propTypes = {
   children: PropTypes.node.isRequired,
   activeItemIndex: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   height: PropTypes.number,
-  backgroundColor: PropTypes.string.isRequired,
-  pointColor: PropTypes.string.isRequired,
+  backgroundColor: PropTypes.string,
+  pointColor: PropTypes.string,
   shadowStyle: PropTypes.string,
   fontSize: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 };

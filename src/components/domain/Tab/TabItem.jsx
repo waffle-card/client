@@ -51,7 +51,6 @@ const TabItem = ({
   ...props
 }) => {
   return (
-    // 여기에 클릭 이벤트로 메뉴 별 페이지 라우터 달면 된다
     <TabItemWrapper active={active} {...props}>
       <StyledLink to={`/cards/${param}`}>
         <TabItemTitle
