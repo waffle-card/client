@@ -27,7 +27,7 @@ const Input = styled.input`
 `;
 
 const HashTagInput = React.memo(({ color, onChange, ...props }) => {
-  const [values, setValue] = useState({
+  const [values, setValues] = useState({
     first: '',
     second: '',
     third: '',
@@ -40,7 +40,7 @@ const HashTagInput = React.memo(({ color, onChange, ...props }) => {
   const handleChange = useCallback(
     e => {
       const { name, value } = e.target;
-      setValue(values => {
+      setValues(values => {
         return { ...values, [name]: value };
       });
       const result = Object.values(values).filter(value => value !== '');

@@ -78,7 +78,7 @@ const CardEditModal = ({
   ...props
 }) => {
   const [cardData, setCard] = useState(initialCardData);
-  const [state, setState] = useState('');
+  const [inputValue, setInputValue] = useState('');
 
   const handleEmojiClick = useCallback(emoji => {
     setCard(cardData => {
@@ -130,10 +130,10 @@ const CardEditModal = ({
               <input
                 type="text"
                 onChange={e => {
-                  setState(e.target.value);
+                  setInputValue(e.target.value);
                 }}
               />
-              <p>{state}</p>
+              <p>{inputValue}</p>
             </Wrapper>
           </EditContainer>
         </CardEditContainer>
