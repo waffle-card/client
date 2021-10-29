@@ -1,10 +1,12 @@
 import styled from '@emotion/styled';
 import Common from '@styles';
-import { Link } from 'react-router-dom';
+import { Route, Link } from 'react-router-dom';
 
 import Icons from '@components/base/Icons';
 import Tab from '@components/domain/Tab';
 import WaffleCard from '@components/domain/WaffleCard';
+import { CardEditForm } from '@components';
+import ChattingCard from '@components/domain/ChattingCard';
 
 const HomeContainer = styled.div`
   max-width: 1690px;
@@ -103,6 +105,9 @@ const Home = () => {
           <Icons.ArrowFront color={Common.colors.primary} fontSize={'30px'} />
         </Icons>
       </CardContainer>
+      <Route path="/card/create" component={CardEditForm} />
+      <Route path="/card/chat:cardId" component={ChattingCard} />
+      <Route path="/card/update:cardId" component={CardEditForm} />
     </HomeContainer>
   );
 };
