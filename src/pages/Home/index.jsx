@@ -2,15 +2,14 @@ import styled from '@emotion/styled';
 import Common from '@styles';
 import { Link } from 'react-router-dom';
 
-import Header from '@components/domain/Header';
 import Icons from '@components/base/Icons';
 import Tab from '@components/domain/Tab';
 import WaffleCard from '@components/domain/WaffleCard';
 
 const HomeContainer = styled.div`
   max-width: 1690px;
-  padding: 20px 50px;
-  height: 100vh;
+  padding: 10px 50px;
+  height: calc(100vh - 60px);
   margin: 0 auto;
   background-color: rgba(26, 31, 39, 1);
 `;
@@ -27,7 +26,7 @@ const CardContainer = styled.section`
   flex-wrap: nowrap;
   justify-content: flex-start;
   align-items: center;
-  margin-top: 93px;
+  margin-top: 80px;
   overflow-x: scroll;
   -ms-overflow-style: none;
   &::-webkit-scrollbar {
@@ -53,7 +52,6 @@ const StyledCard = styled(WaffleCard)`
 const Home = () => {
   return (
     <HomeContainer>
-      <Header />
       <Nav>
         <Tab>
           <Tab.Item title="오늘의 카드" index="0" param="today"></Tab.Item>

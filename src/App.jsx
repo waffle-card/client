@@ -1,16 +1,18 @@
 import { Route, Switch } from 'react-router-dom';
-import DefaultTemplate from '@pages/template/DefaultTemplate';
 import Home from '@pages/Home';
 import NotFoundPage from '@pages/NotFoundPage';
 import Login from '@pages/Login';
 import Register from '@pages/Register';
 import './App.css';
+
+import Header from '@components/domain/Header';
 // import { CardEditForm } from '@components';
 // import ChattingCard from '@components/domain/ChattingCard';
 
 function App() {
   return (
     <div className="App">
+      <Header />
       <Switch>
         <Route path="/" exact component={Home} />
         <Route path="/login" component={Login} />

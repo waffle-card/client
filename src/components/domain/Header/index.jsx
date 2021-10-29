@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 import Common from '@styles';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 import Icons from '@components/base/Icons';
 import Text from '@components/base/Text';
@@ -9,7 +10,9 @@ const HeaderTag = styled.header`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 55px;
+  height: 60px;
+  padding: 0 50px;
+  background-color: ${({ backgroundColor }) => backgroundColor};
 `;
 
 const Logo = styled.h1`
@@ -38,9 +41,9 @@ const StyleTextLogin = styled(Text)`
   cursor: pointer;
 `;
 
-const Header = () => {
+const Header = ({ backgroundColor = Common.colors.background, ...props }) => {
   return (
-    <HeaderTag>
+    <HeaderTag backgroundColor={backgroundColor}>
       <Logo>
         <Link to="/">
           <img src={require('./logo.png').default} alt="logo" />
@@ -49,16 +52,20 @@ const Header = () => {
       <Link to="/my-page">
         <StyledIconPerson color={Common.colors.point} />
       </Link>
-      <Link to="/login">
+      {/* <Link to="/login">
         <StyleTextLogin
           color={Common.colors.point}
           size={Common.fontSize.regular}
           weight={Common.fontWeight.regular}>
           로그인
         </StyleTextLogin>
-      </Link>
+      </Link> */}
     </HeaderTag>
   );
+};
+
+Header.propTypes = {
+  backgroundColor: PropTypes.string,
 };
 
 export default Header;
