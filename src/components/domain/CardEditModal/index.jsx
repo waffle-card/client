@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useState } from 'react';
 import styled from '@emotion/styled';
 import {
   WaffleCard,
@@ -7,10 +7,8 @@ import {
   Text,
   Modal,
   EmojiPickerActiveButton,
-  HashTagInput,
 } from '@components';
 import Common from '@styles';
-import { useDebounce } from '@hooks';
 
 const StyledModal = styled(Modal)`
   display: flex;
