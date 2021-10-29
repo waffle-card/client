@@ -69,7 +69,7 @@ const StyledButton = styled(Button)`
   }
 `;
 
-const CardEditForm = ({
+const CardEditModal = ({
   visible,
   initialCardData = { id: '' },
   onClose,
@@ -91,11 +91,11 @@ const CardEditForm = ({
     });
   };
 
-  const handleChangeMultipleInput = values => {
+  const handleChangeMultipleInput = useCallback(values => {
     setCard(cardData => {
       return { ...cardData, hashTags: values };
     });
-  };
+  }, []);
 
   const handleClose = e => {
     console.log('닫기!');
@@ -155,7 +155,7 @@ const CardEditForm = ({
   );
 };
 
-export default CardEditForm;
+export default CardEditModal;
 
 // const card = {
 //   id: 'tmp',

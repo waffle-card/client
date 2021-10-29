@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import styled from '@emotion/styled';
 import Common from '@styles';
 
@@ -26,7 +26,7 @@ const Input = styled.input`
   box-sizing: border-box;
 `;
 
-const HashTagInput = ({ color, onChange, ...props }) => {
+const HashTagInput = React.memo(({ color, onChange, ...props }) => {
   const [values, setValue] = useState({
     first: '',
     second: '',
@@ -37,14 +37,17 @@ const HashTagInput = ({ color, onChange, ...props }) => {
 
   const { first, second, third, fourth, fifth } = values;
 
-  const handleChange = e => {
-    const { name, value } = e.target;
-    setValue(values => {
-      return { ...values, [name]: value };
-    });
-    const result = Object.values(values).filter(value => value !== '');
-    onChange && onChange(result);
-  };
+  const handleChange = useCallback(
+    e => {
+      const { name, value } = e.target;
+      setValue(values => {
+        return { ...values, [name]: value };
+      });
+      const result = Object.values(values).filter(value => value !== '');
+      onChange && onChange(result);
+    },
+    [values, onChange],
+  );
 
   return (
     <InputContainer {...props}>
@@ -65,6 +68,6 @@ const HashTagInput = ({ color, onChange, ...props }) => {
       <Input name="fifth" onChange={handleChange} value={fifth} color={color} />
     </InputContainer>
   );
-};
+});
 
 export default HashTagInput;
