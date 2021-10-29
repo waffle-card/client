@@ -49,16 +49,52 @@ Default.argTypes = {
 export const Usage = args => {
   const [visible, setVisible] = useState(false);
 
+  const handleClose = () => {
+    setVisible(false);
+  };
+
   return (
     <div>
       <button onClick={() => setVisible(true)}>Show Modal</button>
-      <StyledModal
-        visible={visible}
-        onClose={() => setVisible(false)}
-        {...args}>
+      <StyledModal visible={visible} onClose={handleClose} {...args}>
         <Text>모달</Text>
         <Card width={200} height={300} backgroundColor="royalblue" />
       </StyledModal>
+    </div>
+  );
+};
+
+export const Test = args => {
+  const [state, setState] = useState('');
+
+  return (
+    <div>
+      <Modal visible {...args}>
+        <Text>모달</Text>
+        <input
+          type="text"
+          onChange={e => {
+            setState(e.target.value);
+          }}
+        />
+        <p>{state}</p>
+      </Modal>
+    </div>
+  );
+};
+
+export const Test2 = args => {
+  const [state, setState] = useState('');
+
+  return (
+    <div>
+      <input
+        type="text"
+        onChange={e => {
+          setState(e.target.value);
+        }}
+      />
+      <p>{state}</p>
     </div>
   );
 };

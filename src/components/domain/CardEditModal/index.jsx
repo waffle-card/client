@@ -7,6 +7,7 @@ import {
   Text,
   Modal,
   EmojiPickerActiveButton,
+  HashTagInput,
 } from '@components';
 import Common from '@styles';
 
@@ -76,7 +77,7 @@ const CardEditModal = ({
   ...props
 }) => {
   const [cardData, setCard] = useState(initialCardData);
-  const [inputValue, setInputValue] = useState('');
+  // const [inputValue, setInputValue] = useState('');
 
   const handleEmojiClick = emoji => {
     setCard(cardData => {
@@ -89,6 +90,13 @@ const CardEditModal = ({
     setCard(cardData => {
       return { ...cardData, [name]: value };
     });
+  };
+
+  const handleChangeHashTagInput = values => {
+    setCard(cardData => {
+      return { ...cardData, hashTags: values };
+    });
+    console.log(cardData);
   };
 
   const handleClose = e => {
@@ -122,14 +130,10 @@ const CardEditModal = ({
             </Wrapper>
             <Wrapper>
               <Text>해시태그</Text>
-              {/* 아래 input이 왜 포커스 아웃이 될까...? */}
-              <input
-                type="text"
-                onChange={e => {
-                  setInputValue(e.target.value);
-                }}
-              />
-              <p>{inputValue}</p>
+              <HashTagInput
+                color="white"
+                onChange={handleChangeHashTagInput}
+              />{' '}
             </Wrapper>
           </EditContainer>
         </CardEditContainer>

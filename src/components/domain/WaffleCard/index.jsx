@@ -112,7 +112,6 @@ const WaffleCard = ({
   onClickDeleteIcon,
   ...props
 }) => {
-  console.log('와플카드 렌더링');
   const {
     id = 'null',
     emoji = '🧇',
@@ -178,13 +177,6 @@ const WaffleCard = ({
           onDeleteIconClick={handleClickDeleteIcon}
         />
       ) : null}
-      {/* {myCard ? (
-        <StyledEditBox
-          cardId={id}
-          onEditIconClick={handleClickEditIcon}
-          onDeleteIconClick={handleClickDeleteIcon}
-        />
-      ) : null} */}
       <InfoContainer>
         <Text block>{days <= 0 ? '오늘' : `${days}일 전`}</Text>
         <IconWrapper size={8}>

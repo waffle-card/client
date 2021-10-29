@@ -1,6 +1,4 @@
-import ReactDom from 'react-dom';
 import styled from '@emotion/styled';
-import { useEffect, useMemo } from 'react';
 import { useClickAway } from '@hooks';
 import PropTypes from 'prop-types';
 import Common from '@styles';
@@ -45,15 +43,7 @@ const Modal = ({
     onClose && onClose();
   });
 
-  const element = useMemo(() => document.createElement('div'), []);
-  useEffect(() => {
-    document.body.appendChild(element);
-    return () => {
-      document.body.removeChild(element);
-    };
-  });
-
-  return ReactDom.createPortal(
+  return (
     <BackgroundDim style={{ display: visible ? 'block' : 'none' }}>
       <ModalContainer
         width={width}
@@ -63,8 +53,7 @@ const Modal = ({
         {...props}>
         {children}
       </ModalContainer>
-    </BackgroundDim>,
-    element,
+    </BackgroundDim>
   );
 };
 
