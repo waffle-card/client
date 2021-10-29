@@ -80,11 +80,11 @@ const CardEditModal = ({
   const [cardData, setCard] = useState(initialCardData);
   const [inputValue, setInputValue] = useState('');
 
-  const handleEmojiClick = useCallback(emoji => {
+  const handleEmojiClick = emoji => {
     setCard(cardData => {
       return { ...cardData, emoji };
     });
-  }, []);
+  };
 
   const handleChangeCardColor = e => {
     const { name, value } = e.target;
