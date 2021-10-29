@@ -96,7 +96,7 @@ const CardEditModal = ({
     setCard(cardData => {
       return { ...cardData, hashTags: values };
     });
-    console.log(cardData);
+    // console.log(cardData);
   };
 
   const handleClose = e => {
@@ -107,7 +107,7 @@ const CardEditModal = ({
   const handleSubmit = e => {
     e.preventDefault();
     console.log('제출!');
-    onSubmit && onSubmit(e);
+    onSubmit && onSubmit(cardData);
   };
 
   return (

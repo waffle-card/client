@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useState } from 'react';
 import styled from '@emotion/styled';
 import Common from '@styles';
 
@@ -27,45 +27,23 @@ const Input = styled.input`
 `;
 
 const HashTagInput = React.memo(({ color, onChange, ...props }) => {
-  const [values, setValues] = useState({
-    first: '',
-    second: '',
-    third: '',
-    fourth: '',
-    fifth: '',
-  });
+  const [values, setValue] = useState({});
 
-  const { first, second, third, fourth, fifth } = values;
-
-  const handleChange = useCallback(
-    e => {
-      const { name, value } = e.target;
-      setValues(values => {
-        return { ...values, [name]: value };
-      });
-      const result = Object.values(values).filter(value => value !== '');
-      onChange && onChange(result);
-    },
-    [values, onChange],
-  );
+  const handleChange = e => {
+    const { name, value } = e.target;
+    const newValues = { ...values, [name]: value };
+    setValue(newValues);
+    const result = Object.values(newValues).filter(value => value !== '');
+    onChange && onChange(result);
+  };
 
   return (
     <InputContainer {...props}>
-      <Input name="first" onChange={handleChange} value={first} color={color} />
-      <Input
-        name="second"
-        onChange={handleChange}
-        value={second}
-        color={color}
-      />
-      <Input name="third" onChange={handleChange} value={third} color={color} />
-      <Input
-        name="fourth"
-        onChange={handleChange}
-        value={fourth}
-        color={color}
-      />
-      <Input name="fifth" onChange={handleChange} value={fifth} color={color} />
+      <Input name="first" onChange={handleChange} color={color} />
+      <Input name="second" onChange={handleChange} color={color} />
+      <Input name="third" onChange={handleChange} color={color} />
+      <Input name="fourth" onChange={handleChange} color={color} />
+      <Input name="fifth" onChange={handleChange} color={color} />
     </InputContainer>
   );
 });
