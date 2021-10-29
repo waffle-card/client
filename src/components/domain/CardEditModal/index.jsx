@@ -10,6 +10,7 @@ import {
   HashTagInput,
 } from '@components';
 import Common from '@styles';
+import { useDebounce } from '@hooks';
 
 const StyledModal = styled(Modal)`
   display: flex;
@@ -77,6 +78,7 @@ const CardEditModal = ({
   ...props
 }) => {
   const [cardData, setCard] = useState(initialCardData);
+  const [state, setState] = useState('');
 
   const handleEmojiClick = useCallback(emoji => {
     setCard(cardData => {
@@ -90,12 +92,6 @@ const CardEditModal = ({
       return { ...cardData, [name]: value };
     });
   };
-
-  const handleChangeMultipleInput = useCallback(values => {
-    setCard(cardData => {
-      return { ...cardData, hashTags: values };
-    });
-  }, []);
 
   const handleClose = e => {
     console.log('닫기!');
@@ -131,10 +127,13 @@ const CardEditModal = ({
             </Wrapper>
             <Wrapper>
               <Text>해시태그</Text>
-              <HashTagInput
-                color="white"
-                onChange={handleChangeMultipleInput}
+              <input
+                type="text"
+                onChange={e => {
+                  setState(e.target.value);
+                }}
               />
+              <p>{state}</p>
             </Wrapper>
           </EditContainer>
         </CardEditContainer>
