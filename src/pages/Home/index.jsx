@@ -5,7 +5,7 @@ import { Route, Link } from 'react-router-dom';
 import Icons from '@components/base/Icons';
 import Tab from '@components/domain/Tab';
 import WaffleCard from '@components/domain/WaffleCard';
-import { CardEditModal } from '@components';
+// import { CardEditModal } from '@components';
 import ChattingCard from '@components/domain/ChattingCard';
 
 const HomeContainer = styled.div`
@@ -13,7 +13,6 @@ const HomeContainer = styled.div`
   padding: 10px 50px;
   height: calc(100vh - 60px);
   margin: 0 auto;
-  background-color: rgba(26, 31, 39, 1);
 `;
 
 const Nav = styled.nav`
@@ -41,14 +40,7 @@ const CardContainer = styled.section`
 
 const StyledCard = styled(WaffleCard)`
   flex: 0 0 auto;
-  @media ${Common.media.md} {
-    width: 218.33px;
-    height: 329.55px;
-  }
-  @media ${Common.media.sm} {
-    width: 185px;
-    height: 271.7px;
-  }
+  margin: 0 10px;
 `;
 
 const Home = () => {
@@ -105,9 +97,9 @@ const Home = () => {
           <Icons.ArrowFront color={Common.colors.primary} fontSize={'30px'} />
         </Icons>
       </CardContainer>
-      <Route path="/card/create" component={CardEditModal} />
+      {/* <Route path="/card/create" component={CardEditModal} /> */}
       <Route path="/card/chat:cardId" component={ChattingCard} />
-      <Route path="/card/update:cardId" component={CardEditModal} />
+      {/* <Route path="/card/update:cardId" component={CardEditModal} /> */}
     </HomeContainer>
   );
 };
