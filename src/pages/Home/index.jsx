@@ -2,11 +2,13 @@ import styled from '@emotion/styled';
 import Common from '@styles';
 import { Route, Link } from 'react-router-dom';
 
-import { Icons } from '@components';
-import { Tab } from '@components';
-import { WaffleCard } from '@components';
-import { CardEditModal } from '@components';
-import { ChattingCard } from '@components';
+import {
+  Icons,
+  Tab,
+  WaffleCard,
+  CardEditModal,
+  ChattingCard,
+} from '@components';
 
 const HomeContainer = styled.div`
   max-width: 1690px;
