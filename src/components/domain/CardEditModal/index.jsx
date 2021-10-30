@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import styled from '@emotion/styled';
+import Common from '@styles';
+import PropTypes from 'prop-types';
 import {
   WaffleCard,
   Button,
@@ -9,7 +11,6 @@ import {
   EmojiPickerActiveButton,
   HashTagInput,
 } from '@components';
-import Common from '@styles';
 
 const StyledModal = styled(Modal)`
   display: flex;
@@ -71,13 +72,12 @@ const StyledButton = styled(Button)`
 
 const CardEditModal = ({
   visible,
-  initialCardData = { id: '' },
+  initialCardData,
   onClose,
   onSubmit,
   ...props
 }) => {
   const [cardData, setCard] = useState(initialCardData);
-  // const [inputValue, setInputValue] = useState('');
 
   const handleEmojiClick = emoji => {
     setCard(cardData => {
@@ -96,22 +96,19 @@ const CardEditModal = ({
     setCard(cardData => {
       return { ...cardData, hashTags: values };
     });
-    // console.log(cardData);
   };
 
   const handleClose = e => {
-    console.log('닫기!');
     onClose && onClose(e);
   };
 
   const handleSubmit = e => {
     e.preventDefault();
-    console.log('제출!');
     onSubmit && onSubmit(cardData);
   };
 
   return (
-    <StyledModal visible={visible} {...props}>
+    <StyledModal visible={visible} onClose={onClose} {...props}>
       <FormContainer onSubmit={handleSubmit} id="cardForm">
         <CardEditContainer>
           <StyledWaffleCard cardData={cardData} />
@@ -154,17 +151,15 @@ const CardEditModal = ({
   );
 };
 
-export default CardEditModal;
+CardEditModal.propTypes = {
+  visible: PropTypes.bool,
+  initialCardData: PropTypes.object,
+  onClose: PropTypes.func,
+  onSubmit: PropTypes.func,
+};
 
-// const card = {
-//   id: 'tmp',
-//   emoji: '👽',
-//   cardColor: 'rgba(92, 107, 192, 1)',
-//   hashTags: [
-//     '지우개방',
-//     '쏟아내고가',
-//     'ㄴr는 ㄱr끔',
-//     '눈물을 흘린ㄷr',
-//     '이 해시태그는매우긴해시태그입니다.',
-//   ],
-// };
+CardEditModal.defaultProps = {
+  visible: false,
+};
+
+export default CardEditModal;

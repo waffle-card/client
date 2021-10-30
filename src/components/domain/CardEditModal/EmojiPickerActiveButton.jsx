@@ -32,7 +32,6 @@ const EmojiPickerActiveButton = ({
 
   const handleEmojiClick = useCallback(
     (e, emojiObject) => {
-      console.log('이모지피커', e);
       onEmojiClick && onEmojiClick(emojiObject.emoji);
       toggleEmojiPicker();
     },

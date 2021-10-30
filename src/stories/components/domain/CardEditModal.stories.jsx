@@ -4,6 +4,7 @@ import {
   HashTagInput,
   EmojiPickerActiveButton,
 } from '@components';
+import { useState } from 'react';
 
 export default {
   title: 'Component/Domain/CardEditModal',
@@ -23,6 +24,23 @@ Default.argTypes = {
   },
   onClose: { action: 'onClose' },
   onSubmit: { action: 'onSubmit' },
+};
+
+export const Usage = () => {
+  const [visible, setVisible] = useState(false);
+
+  const handleClose = () => {
+    setVisible(false);
+  };
+
+  return (
+    <>
+      <button type="button" onClick={() => setVisible(true)}>
+        Show CardEditModal
+      </button>
+      <CardEditModal visible={visible} onClose={handleClose} />
+    </>
+  );
 };
 
 export const Inputs = args => {
