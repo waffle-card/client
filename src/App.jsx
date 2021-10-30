@@ -3,7 +3,6 @@ import Home from '@pages/Home';
 import NotFoundPage from '@pages/NotFoundPage';
 import Login from '@pages/Login';
 import Register from '@pages/Register';
-import './App.css';
 import { Header } from '@components';
 
 function App() {
