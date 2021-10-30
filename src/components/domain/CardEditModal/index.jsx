@@ -44,6 +44,10 @@ const Wrapper = styled.div`
   margin: 16px 0;
 `;
 
+const StyledText = styled(Text)`
+  margin: 16px 0;
+`;
+
 const ButtonContainer = styled.div`
   display: flex;
   margin: 16px;
@@ -115,7 +119,7 @@ const CardEditModal = ({
           <StyledWaffleCard cardData={cardData} />
           <EditContainer>
             <Wrapper>
-              <Text>이모지</Text>
+              <StyledText>이모지</StyledText>
               <EmojiPickerActiveButton
                 name="emoji"
                 type="button"
@@ -123,11 +127,11 @@ const CardEditModal = ({
               />
             </Wrapper>
             <Wrapper>
-              <Text>배경색</Text>
+              <StyledText>배경색</StyledText>
               <ColorPalette name="cardColor" onChange={handleChangeCardColor} />
             </Wrapper>
             <Wrapper>
-              <Text>해시태그</Text>
+              <StyledText>해시태그</StyledText>
               <HashTagInput
                 color="white"
                 onChange={handleChangeHashTagInput}
