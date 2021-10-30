@@ -64,7 +64,7 @@ export const Usage = args => {
   );
 };
 
-export const Test = args => {
+export const TestInputInModal = args => {
   const [state, setState] = useState('');
 
   return (
@@ -83,7 +83,7 @@ export const Test = args => {
   );
 };
 
-export const Test2 = args => {
+export const TestInput = args => {
   const [state, setState] = useState('');
 
   return (

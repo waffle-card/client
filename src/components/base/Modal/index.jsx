@@ -46,10 +46,10 @@ const Modal = ({
   return (
     <BackgroundDim style={{ display: visible ? 'block' : 'none' }}>
       <ModalContainer
+        ref={ref}
         width={width}
         height={height}
         backgroundColor={backgroundColor}
-        ref={ref}
         {...props}>
         {children}
       </ModalContainer>
@@ -58,11 +58,14 @@ const Modal = ({
 };
 
 Modal.propTypes = {
+  children: PropTypes.node,
   visible: PropTypes.bool,
   width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   height: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   backgroundColor: PropTypes.string,
-  onClose: PropTypes.func,
+  // TODO: 아래 onClose prop을 func로 타입검사를 넣으면 onClose가 동작을 안한다. 왜 일까?
+  // TODO: onClose에 전달받는것은 화살표 함수인데 화살표 함수도 함수로 인식할텐데... 객체로 테스트해봐도 안된다.
+  // onClose: PropTypes.func,
 };
 
 Modal.defaultProps = {
