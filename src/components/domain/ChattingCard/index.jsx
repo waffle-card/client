@@ -31,25 +31,28 @@ const HeaderContainer = styled.div`
   max-width: 740px;
   min-height: 120px;
   max-height: 195px;
-  padding: 15px 40px 0 40px;
   background-color: royalblue;
   border-top-left-radius: 16px;
   border-top-right-radius: 16px;
   box-shadow: ${Common.shadow.chattingHeader};
+  box-sizing: border-box;
 
   @media ${Common.media.sm} {
     width: 290px;
     height: 120px;
+    padding: 5px;
   }
 
   @media ${Common.media.md} {
     width: 688px;
     height: 195px;
+    padding: 15px 30px 0 30px;
   }
 
   @media ${Common.media.lg} {
     width: 740px;
     height: 195px;
+    padding: 15px 40px 0 40px;
   }
 `;
 
@@ -65,10 +68,6 @@ const FirstHashtags = styled.div`
   justify-content: space-between;
   color: white;
   margin-top: 12px;
-
-  @media ${Common.media.sm} {
-    font-size: ${Common.fontSize.small};
-  }
 `;
 
 const SecondHashtags = styled.div`
@@ -78,15 +77,44 @@ const SecondHashtags = styled.div`
   margin-top: 12px;
 `;
 
+const StyleText = styled(Text)`
+  @media ${Common.media.sm} {
+    font-size: ${Common.fontSize.micro};
+  }
+
+  @media ${Common.media.md} {
+    font-size: ${Common.fontSize.md};
+  }
+
+  @media ${Common.media.lg} {
+    font-size: ${Common.fontSize.lg};
+  }
+`;
+
 const BodyContainer = styled.div`
   display: flex;
   flex-direction: column;
   min-height: 98px;
   max-height: 400px;
-  padding: 10px;
   background-color: transparent;
   background-color: ${Common.colors.background_modal};
   overflow-y: auto;
+  box-sizing: border-box;
+
+  @media ${Common.media.sm} {
+    width: 290px;
+    padding: 20px 0 0 0;
+  }
+
+  @media ${Common.media.md} {
+    width: 688px;
+    padding: 20px 10px 10px 10px;
+  }
+
+  @media ${Common.media.lg} {
+    width: 740px;
+    padding: 20px 10px 10px 10px;
+  }
 `;
 
 const ChatContainer = styled.div`
@@ -99,6 +127,19 @@ const ChatContainer = styled.div`
   margin-right: ${({ isMine }) => (isMine ? '20px' : '0')};
   margin-top: 10px;
   margin-bottom: 10px;
+  box-sizing: border-box;
+
+  @media ${Common.media.sm} {
+    padding: 0;
+  }
+
+  @media ${Common.media.md} {
+    padding: 20px 10px 10px 10px;
+  }
+
+  @media ${Common.media.lg} {
+    padding: 20px 10px 10px 10px;
+  }
 `;
 
 const Footer = styled.div`
@@ -172,9 +213,9 @@ const ChattingCard = ({
     logs.map((log, index) => (
       <ChatContainer isMine={log.id === myId} key={index}>
         <Message logId={log.id} key={index} myId={myId}>
-          <Text>
+          <StyleText>
             {log.name}: {log.chat}
-          </Text>
+          </StyleText>
         </Message>
       </ChatContainer>
     ));
@@ -186,7 +227,8 @@ const ChattingCard = ({
   ];
   const secondHashtags = ['#해쉬태그를만들어봐요', '#최대한길게길게갑시다'];
 
-  const hashtagsDiv = hashtags => hashtags.map(hashtag => <div>{hashtag}</div>);
+  const hashtagsDiv = hashtags =>
+    hashtags.map(hashtag => <StyleText block>{hashtag}</StyleText>);
 
   return (
     <StyledModal

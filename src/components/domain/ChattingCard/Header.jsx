@@ -19,7 +19,10 @@ const Title = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+`;
 
+const StyleText = styled(Text)`
+  white-space: nowrap;
   @media ${Common.media.sm} {
     font-size: ${Common.fontSize.small};
   }
@@ -39,13 +42,13 @@ const Header = ({ height, backgroundColor, ...props }) => {
   return (
     <Top>
       <Icons style={{ width: '120px' }}>
-        <Icons.ArrowBack fontSize={32} color="white"></Icons.ArrowBack>
+        <Icons.ArrowBack></Icons.ArrowBack>
       </Icons>
       <Title style={{ width: '120px' }}>
         <Image src={'https://picsum.photos/200'} />
-        <Text>{title}</Text>
+        <StyleText block>{title}</StyleText>
       </Title>
-      <Icons style={{ width: '120px' }}>
+      <Icons style={{ width: '120px', justifyContent: 'end' }}>
         <Like />
         <Favorite />
       </Icons>

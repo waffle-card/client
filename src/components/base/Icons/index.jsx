@@ -21,7 +21,10 @@ const Container = styled.div`
 
 const Icons = ({ children, backgroundColor, ...props }) => {
   return (
-    <Container backgroundColor={backgroundColor} {...props}>
+    <Container
+      backgroundColor={backgroundColor}
+      style={{ ...props.style }}
+      {...props}>
       {children}
     </Container>
   );

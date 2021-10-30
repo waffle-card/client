@@ -13,6 +13,20 @@ const ChatBox = styled.div`
   min-height: 50px;
   max-height: 150px;
   padding: 10px 20px 10px 20px;
+
+  @media ${Common.media.sm} {
+    min-width: 160px;
+    max-width: 190px;
+  }
+
+  @media ${Common.media.md} {
+    min-width: 190px;
+    max-width: 240px;
+  }
+
+  @media ${Common.media.lg} {
+    min-width: 240px;
+  }
 `;
 
 const EditBoxContainer = styled.div`

@@ -21,15 +21,12 @@ const Favorite = () => {
     <>
       <Icons.Favorite
         style={{
-          fontSize: '32px',
-          color: 'white',
           marginRight: '5px',
         }}
         onClick={handleFavoriteClick}></Icons.Favorite>
       <Text
+        block
         style={{
-          color: 'white',
-          marginRight: '5px',
           paddingTop: '3px',
         }}>
         {favoriteCount}

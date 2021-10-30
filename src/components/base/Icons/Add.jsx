@@ -1,13 +1,16 @@
 import Icon from '@material-ui/core/Icon';
 import { useCallback } from 'react';
 import PropTypes from 'prop-types';
+import styled from '@emotion/styled';
+import Common from '@styles';
+
+const StyleIcon = styled(Icon)`
+  font-size: ${({ fontSize }) =>
+    typeof fontSize === 'number' ? `${fontSize}px` : { fontSize }};
+  color: ${({ color }) => color};
+`;
 
 const Add = ({ fontSize = '24px', color = 'white', onClick, ...props }) => {
-  const iconStyle = {
-    fontSize,
-    color,
-  };
-
   const handleClick = useCallback(
     e => {
       onClick && onClick(e);
@@ -16,12 +19,14 @@ const Add = ({ fontSize = '24px', color = 'white', onClick, ...props }) => {
   );
 
   return (
-    <Icon
-      style={{ ...iconStyle, ...props.style }}
+    <StyleIcon
+      fontSize={fontSize}
+      color={color}
+      style={{ ...props.style }}
       onClick={handleClick}
       {...props}>
       add
-    </Icon>
+    </StyleIcon>
   );
 };
 

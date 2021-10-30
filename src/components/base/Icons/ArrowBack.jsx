@@ -2,6 +2,7 @@ import Icon from '@material-ui/core/Icon';
 import styled from '@emotion/styled';
 import PropTypes from 'prop-types';
 import { useCallback } from 'react';
+import Common from '@styles';
 
 const StyleIcon = styled(Icon)`
   font-size: ${({ fontSize }) =>
@@ -35,6 +36,7 @@ const ArrowBack = ({
       <StyleIcon
         fontSize={fontSize}
         color={color}
+        style={{ ...props.style }}
         onClick={handleClick}
         {...props}>
         arrow_back_ios

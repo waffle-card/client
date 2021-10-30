@@ -21,12 +21,11 @@ const Like = () => {
     <>
       <Icons.Like
         style={{
-          fontSize: '32px',
-          color: 'white',
           marginRight: '5px',
         }}
         onClick={handleLikeClick}></Icons.Like>
       <Text
+        block
         style={{
           color: 'white',
           marginRight: '5px',
