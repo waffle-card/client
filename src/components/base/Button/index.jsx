@@ -35,6 +35,7 @@ const StyledButton = styled.button`
   border: none;
   border-radius: var(--border-radius);
   outline: none;
+
   &:hover {
     opacity: 0.8;
   }

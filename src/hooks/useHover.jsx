@@ -10,12 +10,12 @@ const useHover = () => {
   useEffect(() => {
     const element = ref.current;
     if (element) {
-      element.addEventListener('mouseover', handleMouseOver);
-      element.addEventListener('mouseout', handleMouseOut);
+      element.addEventListener('mouseenter', handleMouseOver);
+      element.addEventListener('mouseleave', handleMouseOut);
 
       return () => {
-        element.removeEventListener('mouseover', handleMouseOver);
-        element.removeEventListener('mouseout', handleMouseOut);
+        element.removeEventListener('mouseenter', handleMouseOver);
+        element.removeEventListener('mouseleave', handleMouseOut);
       };
     }
   }, [ref, handleMouseOver, handleMouseOut]);

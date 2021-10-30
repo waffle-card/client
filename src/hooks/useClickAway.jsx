@@ -14,18 +14,19 @@ const useClickAway = handler => {
     const element = ref.current;
     if (!element) return;
 
-    const handleEvent = event => {
-      !element.contains(event.target) && savedHandler.current(event);
+    const handleEvent = e => {
+      e.stopPropagation();
+      !element.contains(e.target) && savedHandler.current(e);
     };
 
-    events.forEach(eventName => {
+    for (const eventName of events) {
       document.addEventListener(eventName, handleEvent);
-    });
+    }
 
     return () => {
-      events.forEach(eventName => {
+      for (const eventName of events) {
         document.removeEventListener(eventName, handleEvent);
-      });
+      }
     };
   }, [ref]);
 

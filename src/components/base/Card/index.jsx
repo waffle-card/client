@@ -2,41 +2,37 @@ import React from 'react';
 import styled from '@emotion/styled';
 import { useCallback } from 'react';
 import PropTypes from 'prop-types';
-import styles from '@styles';
+import Common from '@styles';
+import Empty from './Empty';
 
 const CardStyle = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: ${({ width }) =>
-    typeof width === 'number' ? `${width - 10}px` : `calc(${width} - 10px)`};
-  height: ${({ width, height }) => {
-    if (height) {
-      return typeof height === 'number'
-        ? `${height - 10}px`
-        : `calc(${height} - 10px)`;
-    } else {
-      return typeof width === 'number'
-        ? `${(width - 10) * 1.56}px`
-        : `calc((${width} - 10px) * 1.56)`;
-    }
-  }};
-  border: ${({ backgroundColor }) =>
-    backgroundColor ? undefined : `5px dashed`};
-  background-color: ${({ backgroundColor }) =>
-    backgroundColor ? backgroundColor : 'transparent'};
+  max-width: 265px;
+  min-width: 180px;
+  background-color: ${({ backgroundColor }) => backgroundColor};
   border-radius: 16px;
-  margin: 8px;
-  padding: ${({ backgroundColor }) => (backgroundColor ? '5px' : undefined)};
-  cursor: pointer;
-  box-shadow: ${({ backgroundColor }) =>
-    backgroundColor ? styles.shadow.card : undefined};
+  box-shadow: ${Common.shadow.card};
   box-sizing: border-box;
+  cursor: pointer;
+  @media ${Common.media.sm} {
+    width: 180px;
+    height: calc(180px * 1.56);
+  }
+  @media ${Common.media.md} {
+    width: 216px;
+    height: calc(216px * 1.56);
+  }
+  @media ${Common.media.lg} {
+    width: 265px;
+    height: calc(265px * 1.56);
+  }
 `;
 
 const Card = React.forwardRef(
-  ({ children, width, height, backgroundColor, onClick, ...props }, ref) => {
+  ({ children, backgroundColor, onClick, ...props }, ref) => {
     const handleClick = useCallback(
       e => {
         onClick && onClick(e);
@@ -46,8 +42,6 @@ const Card = React.forwardRef(
 
     return (
       <CardStyle
-        width={width}
-        height={height}
         backgroundColor={backgroundColor}
         onClick={handleClick}
         ref={ref}
@@ -60,14 +54,14 @@ const Card = React.forwardRef(
 
 Card.propTypes = {
   children: PropTypes.array,
-  width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  height: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   backgroundColor: PropTypes.string,
   onClick: PropTypes.func,
 };
 
 Card.defaultProps = {
-  width: 256,
+  backgroundColor: Common.colors.indigo,
 };
+
+Card.Empty = Empty;
 
 export default Card;

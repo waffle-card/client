@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import Common from '@styles';
 import PropTypes from 'prop-types';
 import { Card, Text, Icons, EditBox } from '@components';
@@ -16,11 +16,20 @@ const StyledCard = styled(Card)`
   box-sizing: border-box;
   padding: 18px;
   cursor: pointer;
+  @media ${Common.media.sm} {
+    font-size: ${Common.fontSize.micro};
+  }
+  @media ${Common.media.md} {
+    font-size: ${Common.fontSize.small};
+  }
+  @media ${Common.media.lg} {
+    font-size: ${Common.fontSize.base};
+  }
 `;
 
 const StyledEditBox = styled(EditBox)`
   position: absolute;
-  top: -20px;
+  top: -15px;
   right: 10px;
 `;
 
@@ -35,7 +44,6 @@ const IconWrapper = styled.div`
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  width: 100px;
   & span:nth-of-type(1) {
     margin-right: 6px;
   }
@@ -48,7 +56,16 @@ const IconWrapper = styled.div`
 `;
 
 const EmojiText = styled(Text)`
-  margin: 18px;
+  margin: 18px; // TODO: 리팩토링
+  & span:nth-of-type(1) {
+    margin-right: 6px;
+  }
+  & div:nth-of-type(1) {
+    margin-right: 8px;
+  }
+  & span:nth-of-type(2) {
+    margin-right: 4px;
+  }
 `;
 
 const HashTagWrapper = styled.div`
@@ -71,16 +88,28 @@ const HashTag = styled(Text)`
   white-space: nowrap;
   box-sizing: border-box;
   text-align: center;
+  font-size: 1rem;
+  @media ${Common.media.sm} {
+    font-size: ${Common.fontSize.small};
+  }
+  @media ${Common.media.md} {
+    font-size: ${Common.fontSize.base};
+  }
+  @media ${Common.media.lg} {
+    font-size: ${Common.fontSize.large};
+  }
 `;
 
 const WaffleCard = ({
-  type,
-  card,
+  myCard,
+  cardData,
   width,
   height,
   onClickCard,
   onClickLikeIcon,
   onClickFavoriteIcon,
+  onClickEditIcon,
+  onClickDeleteIcon,
   ...props
 }) => {
   const {
@@ -93,18 +122,13 @@ const WaffleCard = ({
     likeToggle = false,
     likeCount = 0,
     hashTags = [],
-  } = card;
-  const [cardRef, cardHover] = useHover(null);
-  const [editBoxHover, setEditBoxHover] = useState(false);
-  const days = useMemo(() => countDaysFromToday(createdAt), [createdAt]);
+  } = cardData || {};
 
-  const handleEditBoxHover = useCallback(hover => {
-    setEditBoxHover(hover);
-  }, []);
+  const [ref, hover] = useHover(null);
+  const days = useMemo(() => countDaysFromToday(createdAt), [createdAt]);
 
   const handleClickCard = useCallback(
     e => {
-      console.log('handleClickCard');
       const cardId = e.target.closest('[data-id]').dataset.id;
       onClickCard && onClickCard(cardId);
     },
@@ -127,6 +151,16 @@ const WaffleCard = ({
     [onClickFavoriteIcon],
   );
 
+  const handleClickEditIcon = e => {
+    console.log('수정');
+    onClickEditIcon && onClickEditIcon(e);
+  };
+
+  const handleClickDeleteIcon = e => {
+    console.log('삭제');
+    onClickDeleteIcon && onClickDeleteIcon(e);
+  };
+
   return (
     <StyledCard
       data-id={id}
@@ -134,10 +168,14 @@ const WaffleCard = ({
       width={width}
       height={height}
       onClick={handleClickCard}
-      ref={cardRef}
+      ref={ref}
       {...props}>
-      {type === 'my' && (cardHover || editBoxHover) ? (
-        <StyledEditBox onHover={handleEditBoxHover} cardId={id} />
+      {myCard && hover ? (
+        <StyledEditBox
+          cardId={id}
+          onEditIconClick={handleClickEditIcon}
+          onDeleteIconClick={handleClickDeleteIcon}
+        />
       ) : null}
       <InfoContainer>
         <Text block>{days <= 0 ? '오늘' : `${days}일 전`}</Text>
@@ -171,14 +209,14 @@ const WaffleCard = ({
 };
 
 WaffleCard.defaultProps = {
-  type: 'normal',
-  card: {},
+  myCard: false,
+  cardData: {},
   width: 256,
 };
 
 WaffleCard.protoTypes = {
-  type: PropTypes.string,
-  card: PropTypes.object,
+  myCard: PropTypes.bool,
+  cardData: PropTypes.object,
   width: PropTypes.number,
   height: PropTypes.number,
   onClickCard: PropTypes.func,
