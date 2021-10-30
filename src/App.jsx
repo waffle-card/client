@@ -4,7 +4,7 @@ import NotFoundPage from '@pages/NotFoundPage';
 import Login from '@pages/Login';
 import Register from '@pages/Register';
 import './App.css';
-import Header from '@components/domain/Header';
+import { Header } from '@components';
 
 function App() {
   return (

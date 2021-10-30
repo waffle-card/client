@@ -65,7 +65,11 @@ const Tab = ({
   const currentParam = urlArr[urlArr.length - 1];
 
   const [currentActive, setCurrentActive] = useState(() => {
-    if (currentParam) {
+    if (
+      currentParam === 'today' ||
+      currentParam === 'my' ||
+      currentParam === 'favorite'
+    ) {
       const currentActiveElement = childrenToArray(children, 'Tab.Item').filter(
         element => element.props.param === currentParam,
       );

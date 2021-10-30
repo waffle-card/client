@@ -2,11 +2,11 @@ import styled from '@emotion/styled';
 import Common from '@styles';
 import { Route, Link } from 'react-router-dom';
 
-import Icons from '@components/base/Icons';
-import Tab from '@components/domain/Tab';
-import WaffleCard from '@components/domain/WaffleCard';
-// import { CardEditModal } from '@components';
-import ChattingCard from '@components/domain/ChattingCard';
+import { Icons } from '@components';
+import { Tab } from '@components';
+import { WaffleCard } from '@components';
+import { CardEditModal } from '@components';
+import { ChattingCard } from '@components';
 
 const HomeContainer = styled.div`
   max-width: 1690px;
@@ -16,9 +16,12 @@ const HomeContainer = styled.div`
 `;
 
 const Nav = styled.nav`
-  margin-top: 140px;
+  margin-top: 152px;
   @media ${Common.media.sm} {
-    margin-top: 30px;
+    margin-top: 80px;
+  }
+  @media ${Common.media.md} {
+    margin-top: 72px;
   }
 `;
 
@@ -27,14 +30,17 @@ const CardContainer = styled.section`
   flex-wrap: nowrap;
   justify-content: flex-start;
   align-items: center;
-  margin-top: 80px;
+  margin-top: 120px;
   overflow-x: scroll;
   -ms-overflow-style: none;
   &::-webkit-scrollbar {
     display: none;
   }
   @media ${Common.media.sm} {
-    margin-top: 60px;
+    margin-top: 80px;
+  }
+  @media ${Common.media.md} {
+    margin-top: 72px;
   }
 `;
 
@@ -97,9 +103,12 @@ const Home = () => {
           <Icons.ArrowFront color={Common.colors.primary} fontSize={'30px'} />
         </Icons>
       </CardContainer>
-      {/* <Route path="/card/create" component={CardEditModal} /> */}
+      <Route path="/card/create" render={() => <CardEditModal visible />} />
+      <Route
+        path="/card/update:cardId"
+        render={() => <CardEditModal visible />}
+      />
       <Route path="/card/chat:cardId" component={ChattingCard} />
-      {/* <Route path="/card/update:cardId" component={CardEditModal} /> */}
     </HomeContainer>
   );
 };
