@@ -24,6 +24,9 @@ const Input = styled.input`
   border: 2px solid ${({ color }) => color};
   background-color: transparent;
   box-sizing: border-box;
+  @media ${Common.media.sm} {
+    width: 140px;
+  }
 `;
 
 const HashTagInput = React.memo(({ color, onChange, ...props }) => {

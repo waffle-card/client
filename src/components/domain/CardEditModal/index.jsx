@@ -46,7 +46,7 @@ const Wrapper = styled.div`
 
 const ButtonContainer = styled.div`
   display: flex;
-  margin: 16px 0;
+  margin: 16px;
   justify-content: space-around;
   align-items: center;
   @media ${Common.media.sm} {
@@ -59,9 +59,10 @@ const StyledButton = styled(Button)`
   @media ${Common.media.sm} {
     width: 290px;
     height: 40px;
+    border-radius: 12px;
   }
   @media ${Common.media.md} {
-    width: 272px;
+    width: 310px;
     height: 56px;
   }
   @media ${Common.media.lg} {
