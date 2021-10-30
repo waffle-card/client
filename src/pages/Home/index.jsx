@@ -3,15 +3,19 @@ import Tab from '@components/domain/Tab';
 import styled from '@emotion/styled';
 import Common from '@styles';
 import WaffleCard from '@components/domain/WaffleCard';
-// import Text from '@components/base/Text';
+import Text from '@components/base/Text';
+import { Route, Link } from 'react-router-dom';
+import { CardEditForm } from '@components';
+import ChattingCard from '@components/domain/ChattingCard';
 
 const HomeContainer = styled.div`
   max-width: 1690px;
+  padding: 20px 50px;
   height: 100vh;
   margin: 0 auto;
+  background-color: rgba(26, 31, 39, 1);
 `;
 
-// ----------------------header------------------------- //
 const Header = styled.header`
   display: flex;
   justify-content: space-between;
@@ -34,7 +38,12 @@ const Logo = styled.h1`
   }
 `;
 
-// ----------------------nav------------------------- //
+const StyledIcon = styled(Icons.Person)`
+  @media ${Common.media.sm} {
+    font-size: 18px;
+  }
+`;
+
 const Nav = styled.nav`
   margin-top: 140px;
   @media ${Common.media.sm} {
@@ -42,7 +51,6 @@ const Nav = styled.nav`
   }
 `;
 
-// ----------------------section------------------------- //
 const CardContainer = styled.section`
   display: flex;
   flex-wrap: nowrap;
@@ -76,39 +84,65 @@ const Home = () => {
     <HomeContainer>
       <Header>
         <Logo>
-          <a>
+          <Link to="/">
             <img src={require('./images/logo.png').default} alt="logo" />
-          </a>
+          </Link>
         </Logo>
-        <Icons.Person color={Common.colors.point} />
-        {/* 로그인 유무에 따라 보여주기 */}
-        {/* <Text color={Common.colors.point} size={Common.fontSize.medium}>
+        <StyledIcon color={Common.colors.point} />
+        <Text
+          color={Common.colors.point}
+          size={Common.fontSize.regular}
+          weight={Common.fontWeight.regular}>
           로그인
-        </Text> */}
+        </Text>
       </Header>
       <Nav>
         <Tab>
-          <Tab.Item title="오늘의 카드" index="0"></Tab.Item>
-          <Tab.Item title="나의 카드" index="1"></Tab.Item>
-          <Tab.Item title="즐겨찾기" index="2"></Tab.Item>
+          <Tab.Item title="오늘의 카드" index="0" param="today"></Tab.Item>
+          <Tab.Item title="나의 카드" index="1" param="my"></Tab.Item>
+          <Tab.Item title="즐겨 찾기" index="2" param="favorite"></Tab.Item>
         </Tab>
       </Nav>
       <CardContainer>
         <Icons backgroundColor={'rgba(0, 0, 0, 0)'}>
           <Icons.ArrowBack color={Common.colors.primary} fontSize={'30px'} />
         </Icons>
-        <StyledCard />
-        <StyledCard />
-        <StyledCard />
-        <StyledCard />
-        <StyledCard />
-        <StyledCard />
-        <StyledCard />
-        <StyledCard />
-        <StyledCard />
-        <StyledCard />
-        <StyledCard />
-        <StyledCard />
+        <Link to={`/card/chat:1`}>
+          <StyledCard />
+        </Link>
+        <Link to={`/card/chat:2`}>
+          <StyledCard />
+        </Link>
+        <Link to={`/card/chat:3`}>
+          <StyledCard />
+        </Link>
+        <Link to={`/card/chat:4`}>
+          <StyledCard />
+        </Link>
+        <Link to={`/card/chat:5`}>
+          <StyledCard />
+        </Link>
+        <Link to={`/card/chat:6`}>
+          <StyledCard />
+        </Link>
+        <Link to={`/card/chat:7`}>
+          <StyledCard />
+        </Link>
+        <Link to={`/card/chat:8`}>
+          <StyledCard />
+        </Link>
+        <Link to={`/card/chat:9`}>
+          <StyledCard />
+        </Link>
+        <Link to={`/card/chat:10`}>
+          <StyledCard />
+        </Link>
+        <Link to={`/card/chat:11`}>
+          <StyledCard />
+        </Link>
+        <Link to={`/card/chat:12`}>
+          <StyledCard />
+        </Link>
         <Icons backgroundColor={'rgba(0, 0, 0, 0)'}>
           <Icons.ArrowFront color={Common.colors.primary} fontSize={'30px'} />
         </Icons>

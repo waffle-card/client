@@ -83,6 +83,7 @@ const Tab = ({
         fontSize,
         onClick: () => {
           setCurrentActive(element.props.index);
+          console.log(element.props.index);
         },
       });
     });

@@ -13,11 +13,11 @@ export const Custom = args => {
   return <WaffleCard {...args} />;
 };
 Custom.argTypes = {
-  type: {
-    defaultValue: 'normal',
-    control: { type: 'text' },
+  myCard: {
+    defaultValue: false,
+    control: { type: 'boolean' },
   },
-  card: {
+  cardData: {
     defaultValue: {
       id: '6172145b54db072125ad91de',
       emoji: '👿',
@@ -71,7 +71,24 @@ export const MyCard = args => {
     likeCount: 13,
     hashTags: ['나의카드', '마우스 호버', 'EditBox', '생겨요!'],
   };
-  return <WaffleCard type="my" card={card} {...args} />;
+  return <WaffleCard myCard cardData={card} {...args} />;
+};
+MyCard.argTypes = {
+  onClickCard: {
+    action: 'onClickCard',
+  },
+  onClickLikeIcon: {
+    action: 'onClickLikeIcon',
+  },
+  onClickFavoriteIcon: {
+    action: 'onClickFavoriteIcon',
+  },
+  onClickEditIcon: {
+    action: 'onClickEditIcon',
+  },
+  onClickDeleteIcon: {
+    action: 'onClickDeleteIcon',
+  },
 };
 
 export const TodayCards = args => {
@@ -92,5 +109,5 @@ export const TodayCards = args => {
       '이 해시태그는매우긴해시태그입니다.',
     ],
   };
-  return <WaffleCard card={card} {...args} />;
+  return <WaffleCard cardData={card} {...args} />;
 };

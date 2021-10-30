@@ -27,7 +27,7 @@ const ColorInput = styled.input`
   display: none;
 
   &:checked + div {
-    border: 2px solid white;
+    border: 3px solid white;
   }
 `;
 
