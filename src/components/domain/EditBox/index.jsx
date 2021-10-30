@@ -1,8 +1,7 @@
 import styled from '@emotion/styled';
-import React, { useEffect } from 'react';
+import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { Icons } from '@components';
-import { useHover } from '@hooks';
 
 const Container = styled.div`
   display: flex;
@@ -25,26 +24,49 @@ const Container = styled.div`
   }
 `;
 
-const EditBox = ({ cardId, backgroundColor, fontColor, onHover, ...props }) => {
-  const [ref, hover] = useHover(null);
+const EditBox = ({
+  cardId,
+  backgroundColor,
+  fontColor,
+  onEditIconClick,
+  onDeleteIconClick,
+  ...props
+}) => {
+  const handleClickEditIcon = useCallback(
+    e => {
+      e.preventDefault();
+      e.stopPropagation();
+      onEditIconClick && onEditIconClick(e);
+    },
+    [onEditIconClick],
+  );
 
-  useEffect(() => {
-    console.log('editBox hover 변경!');
-    onHover && onHover(hover);
-  }, [hover, onHover]);
+  const handleClickDeleteIcon = useCallback(
+    e => {
+      e.preventDefault();
+      e.stopPropagation();
+      onDeleteIconClick && onDeleteIconClick(e);
+    },
+    [onDeleteIconClick],
+  );
 
   return (
     <Container
       backgroundColor={backgroundColor}
       fontColor={fontColor}
-      ref={ref}
       {...props}>
       <Icons.Edit
         fontSize="1.25rem"
         color={fontColor}
-        href={`/card/${cardId}/update`}
+        href="#"
+        onClick={handleClickEditIcon}
       />
-      <Icons.Delete fontSize="1.25rem" color={fontColor} href="/" />
+      <Icons.Delete
+        fontSize="1.25rem"
+        color={fontColor}
+        href="#"
+        onClick={handleClickDeleteIcon}
+      />
     </Container>
   );
 };
