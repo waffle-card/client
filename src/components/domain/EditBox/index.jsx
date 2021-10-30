@@ -26,18 +26,10 @@ const Container = styled.div`
 `;
 
 const EditBox = ({ cardId, backgroundColor, fontColor, onHover, ...props }) => {
-  const [ref, hover] = useHover(null);
-
-  useEffect(() => {
-    console.log('editBox hover 변경!');
-    onHover && onHover(hover);
-  }, [hover, onHover]);
-
   return (
     <Container
       backgroundColor={backgroundColor}
       fontColor={fontColor}
-      ref={ref}
       {...props}>
       <Icons.Edit
         fontSize="1.25rem"

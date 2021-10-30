@@ -78,8 +78,8 @@ Modal.propTypes = {
 
 Modal.defaultProps = {
   visible: false,
-  width: 400,
-  height: 400,
+  // width: 400,
+  // height: 400,
   background: Common.colors.background_modal,
 };
 

@@ -3,6 +3,12 @@ import styled from '@emotion/styled';
 import PropTypes from 'prop-types';
 import { useCallback } from 'react';
 
+const StyleIcon = styled(Icon)`
+  font-size: ${({ fontSize }) =>
+    typeof fontSize === 'number' ? `${fontSize}px` : fontSize};
+  color: ${({ color }) => color};
+`;
+
 const Anchor = styled.a`
   display: flex;
   justify-content: center;
@@ -17,11 +23,6 @@ const ArrowBack = ({
   onClick,
   ...props
 }) => {
-  const iconStyle = {
-    fontSize,
-    color,
-  };
-
   const handleClick = useCallback(
     e => {
       onClick && onClick(e);
@@ -31,12 +32,13 @@ const ArrowBack = ({
 
   return (
     <Anchor href={href}>
-      <Icon
-        style={{ ...iconStyle, ...props.style }}
+      <StyleIcon
+        fontSize={fontSize}
+        color={color}
         onClick={handleClick}
         {...props}>
         arrow_back_ios
-      </Icon>
+      </StyleIcon>
     </Anchor>
   );
 };
