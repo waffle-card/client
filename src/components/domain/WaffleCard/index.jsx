@@ -96,7 +96,7 @@ const HashTag = styled(Text)`
     font-size: ${Common.fontSize.base};
   }
   @media ${Common.media.lg} {
-    font-size: ${Common.fontSize.medium};
+    font-size: ${Common.fontSize.large};
   }
 `;
 
