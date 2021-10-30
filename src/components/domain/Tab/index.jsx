@@ -54,7 +54,6 @@ const childrenToArray = (children, types) => {
 
 const Tab = ({
   children,
-  activeItemIndex,
   height = 47,
   backgroundColor = Common.colors.background_menu,
   pointColor = Common.colors.primary,
@@ -62,9 +61,15 @@ const Tab = ({
   fontSize = Common.fontSize.medium,
   ...props
 }) => {
+  const urlArr = window.location.pathname.split('/');
+  const currentParam = urlArr[urlArr.length - 1];
+
   const [currentActive, setCurrentActive] = useState(() => {
-    if (activeItemIndex) {
-      return activeItemIndex;
+    if (currentParam) {
+      const currentActiveElement = childrenToArray(children, 'Tab.Item').filter(
+        element => element.props.param === currentParam,
+      );
+      return currentActiveElement[0].props.index;
     } else {
       const index = childrenToArray(children, 'Tab.Item')[0].props.index;
       return index;

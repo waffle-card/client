@@ -3,7 +3,6 @@ import styled from '@emotion/styled';
 import Common from '@styles';
 import PropTypes from 'prop-types';
 import {
-  WaffleCard,
   Button,
   ColorPalette,
   Text,
@@ -11,6 +10,7 @@ import {
   EmojiPickerActiveButton,
   HashTagInput,
 } from '@components';
+import WaffleCard from 'src/components/domain/WaffleCard';
 
 const StyledModal = styled(Modal)`
   display: flex;
