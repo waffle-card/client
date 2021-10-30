@@ -2,9 +2,9 @@ import React from 'react';
 import { useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
-import TabItem from './TabItem';
 import { rgba } from 'polished';
 import Common from '@styles';
+import TabItem from './TabItem';
 
 const TabItemContainer = styled.div`
   position: relative;
@@ -23,7 +23,7 @@ const TabItemPointer = styled.div`
   position: absolute;
   top: 0;
   transform: ${({ activeItemIndex }) =>
-    activeItemIndex && `translate(${activeItemIndex * 99}%, 0)`};
+    activeItemIndex && `translate(${activeItemIndex * 100}%, 0)`};
   width: calc(100% / 3);
   height: ${({ height }) => `${height}px`};
   min-height: 25px;
@@ -54,7 +54,6 @@ const childrenToArray = (children, types) => {
 
 const Tab = ({
   children,
-  activeItemIndex,
   height = 47,
   backgroundColor = Common.colors.background_menu,
   pointColor = Common.colors.primary,
@@ -62,9 +61,19 @@ const Tab = ({
   fontSize = Common.fontSize.medium,
   ...props
 }) => {
+  const urlArr = window.location.pathname.split('/');
+  const currentParam = urlArr[urlArr.length - 1];
+
   const [currentActive, setCurrentActive] = useState(() => {
-    if (activeItemIndex) {
-      return activeItemIndex;
+    if (
+      currentParam === 'today' ||
+      currentParam === 'my' ||
+      currentParam === 'favorite'
+    ) {
+      const currentActiveElement = childrenToArray(children, 'Tab.Item').filter(
+        element => element.props.param === currentParam,
+      );
+      return currentActiveElement[0].props.index;
     } else {
       const index = childrenToArray(children, 'Tab.Item')[0].props.index;
       return index;
@@ -83,7 +92,6 @@ const Tab = ({
         fontSize,
         onClick: () => {
           setCurrentActive(element.props.index);
-          console.log(element.props.index);
         },
       });
     });
@@ -112,8 +120,8 @@ Tab.propTypes = {
   children: PropTypes.node.isRequired,
   activeItemIndex: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   height: PropTypes.number,
-  backgroundColor: PropTypes.string.isRequired,
-  pointColor: PropTypes.string.isRequired,
+  backgroundColor: PropTypes.string,
+  pointColor: PropTypes.string,
   shadowStyle: PropTypes.string,
   fontSize: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 };
