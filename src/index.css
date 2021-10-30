@@ -16,6 +16,10 @@ body {
     'Helvetica Neue', sans-serif;
 }
 
+body {
+  background-color: rgba(26, 31, 39, 1);
+}
+
 a {
   color: inherit;
   text-decoration: none;
