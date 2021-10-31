@@ -85,10 +85,6 @@ const SignUpPage = ({ ...prop }) => {
     },
   });
 
-  const handleClickSignUpButton = () => {
-    history.push('/signup');
-  };
-
   return (
     <>
       <StyledBackButton />
@@ -113,9 +109,7 @@ const SignUpPage = ({ ...prop }) => {
             onChange={handleChange}
           />
           <StyledText color="red">{errors.passwordConfirm}&nbsp;</StyledText>
-          <StyledButton type="submit" onClick={handleClickSignUpButton}>
-            가입하기
-          </StyledButton>
+          <StyledButton type="submit">가입하기</StyledButton>
         </ContentContainer>
         <Spinner loading={isLoading} />
       </Container>
