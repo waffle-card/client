@@ -6,6 +6,7 @@ export { default as Text } from './base/Text';
 export { default as Card } from './base/Card';
 export { default as Icons } from './base/Icons';
 export { default as Portal } from './base/Portal';
+export { default as Input } from './base/Input';
 export { default as EditBox } from './domain/EditBox';
 export { default as WaffleCard } from './domain/WaffleCard';
 export { default as CardEditModal } from './domain/CardEditModal';
