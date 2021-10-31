@@ -1,8 +1,9 @@
+import React from 'react';
 import { Route, Switch } from 'react-router-dom';
-import Home from '@pages/Home';
+import HomePage from '@pages/HomePage';
 import NotFoundPage from '@pages/NotFoundPage';
-import Login from '@pages/Login';
-import Register from '@pages/Register';
+import LoginPage from '@pages/LoginPage';
+import SignUpPage from '@pages/SignUpPage';
 import { Header } from '@components';
 
 function App() {
@@ -10,11 +11,11 @@ function App() {
     <div className="App">
       <Header />
       <Switch>
-        <Route path="/" exact component={Home} />
-        <Route path="/card" component={Home} />
-        <Route path="/cards" component={Home} />
-        <Route path="/login" component={Login} />
-        <Route path="/signup" component={Register} />
+        <Route path="/" exact component={HomePage} />
+        <Route path="/card" component={HomePage} />
+        <Route path="/cards" component={HomePage} />
+        <Route path="/login" component={LoginPage} />
+        <Route path="/signup" component={SignUpPage} />
         <Route path="/my-page" />
         <Route component={NotFoundPage} />
       </Switch>

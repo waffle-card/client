@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom';
 
 import { Text, Icons } from '@components';
 
-const BackButtonComtainer = styled.div`
+const BackButtonContainer = styled.div`
   display: flex;
   width: 84px;
   justify-content: space-between;
@@ -12,16 +12,17 @@ const BackButtonComtainer = styled.div`
   cursor: pointer;
 `;
 
-const BackButton = () => {
+const BackButton = ({ ...props }) => {
   const history = useHistory();
   return (
-    <BackButtonComtainer
+    <BackButtonContainer
       onClick={() => {
         history.goBack();
-      }}>
+      }}
+      {...props}>
       <Icons.ArrowBack />
       <Text>뒤로가기</Text>
-    </BackButtonComtainer>
+    </BackButtonContainer>
   );
 };
 
