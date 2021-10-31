@@ -8,10 +8,18 @@ export const validateEmailForm = email => {
   return regExp.test(email);
 };
 
+export const validateNameEmpty = name => {
+  return name ? true : false;
+};
+
 export const validatePasswordEmpty = password => {
   return password ? true : false;
 };
 
 export const validatePasswordLength = password => {
-  return password.length > 8 ? true : false;
+  return password.length >= 8 ? true : false;
+};
+
+export const validatePasswordConfirm = (a, b) => {
+  return a === b;
 };
