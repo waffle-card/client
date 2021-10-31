@@ -102,7 +102,7 @@ const LoginPage = ({ ...prop }) => {
             type="button"
             onClick={handleClickSignUpButton}
             backgroundColor="white"
-            fontColor={Common.colors.point}>
+            fontColor={Common.colors.button_font_dark}>
             가입하기
           </StyledButton>
         </ContentContainer>
