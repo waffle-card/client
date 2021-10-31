@@ -13,6 +13,9 @@ const HeaderTag = styled.header`
   height: 60px;
   padding: 0 50px;
   background-color: ${({ backgroundColor }) => backgroundColor};
+  @media ${Common.media.sm} {
+    padding: 0 16px;
+  }
 `;
 
 const Logo = styled.h1`
