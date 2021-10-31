@@ -41,10 +41,14 @@ const StyleTextLogin = styled(Text)`
   cursor: pointer;
 `;
 
+const reloadPage = () => {
+  window.location.reload();
+};
+
 const Header = ({ backgroundColor = Common.colors.background, ...props }) => {
   return (
     <HeaderTag backgroundColor={backgroundColor}>
-      <Logo>
+      <Logo onClick={reloadPage}>
         <Link to="/">
           <img src={require('./logo.png').default} alt="logo" />
         </Link>
