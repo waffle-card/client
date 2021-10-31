@@ -51,7 +51,7 @@ const StyledCard = styled(WaffleCard)`
   margin: 0 10px;
 `;
 
-const Home = () => {
+const HomePage = () => {
   return (
     <HomeContainer>
       <Nav>
@@ -114,4 +114,4 @@ const Home = () => {
     </HomeContainer>
   );
 };
-export default Home;
+export default HomePage;
