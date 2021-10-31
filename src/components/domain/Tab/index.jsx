@@ -22,8 +22,8 @@ const TabItemContainer = styled.div`
 const TabItemPointer = styled.div`
   position: absolute;
   top: 0;
-  transform: ${({ activeItemIndex }) =>
-    activeItemIndex && `translate(${activeItemIndex * 100}%, 0)`};
+  transform: ${({ currentActive }) =>
+    currentActive && `translate(${currentActive * 100}%, 0)`};
   width: calc(100% / 3);
   height: ${({ height }) => `${height}px`};
   min-height: 25px;
@@ -61,17 +61,16 @@ const Tab = ({
   fontSize = Common.fontSize.medium,
   ...props
 }) => {
-  const urlArr = window.location.pathname.split('/');
-  const currentParam = urlArr[urlArr.length - 1];
+  const currentUrlArr = window.location.pathname.split('/');
 
   const [currentActive, setCurrentActive] = useState(() => {
     if (
-      currentParam === 'today' ||
-      currentParam === 'my' ||
-      currentParam === 'favorite'
+      currentUrlArr.includes('today') ||
+      currentUrlArr.includes('my') ||
+      currentUrlArr.includes('favorite')
     ) {
       const currentActiveElement = childrenToArray(children, 'Tab.Item').filter(
-        element => element.props.param === currentParam,
+        element => currentUrlArr.includes(element.props.param),
       );
       return currentActiveElement[0].props.index;
     } else {
@@ -104,7 +103,7 @@ const Tab = ({
       {...props}>
       {items}
       <TabItemPointer
-        activeItemIndex={currentActive}
+        currentActive={currentActive}
         height={height}
         backgroundColor={backgroundColor}
         shadowStyle={shadowStyle}
