@@ -106,7 +106,7 @@ const HomePage = () => {
         path="/card/update:cardId"
         render={() => <CardEditModal visible />}
       />
-      <Route path="/card/chat:cardId" component={ChattingCard} />
+      <Route path="/card/chat:cardId" render={() => <ChattingCard visible />} />
     </HomeContainer>
   );
 };
