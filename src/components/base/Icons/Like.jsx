@@ -10,8 +10,6 @@ const Like = ({ color = 'white', active = false, onClick, ...props }) => {
     onClick && onClick(e);
   };
 
-  console.log(props.style);
-
   return (
     <Icon
       style={{ fontSize: 'inherit', color, cursor: 'pointer', ...props.style }}

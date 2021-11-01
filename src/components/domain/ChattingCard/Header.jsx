@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import Icons from '@components/base/Icons';
 import Text from '@components/base/Text';
-import Favorite from './Favorite';
+import Bookmark from './Bookmark';
 import Like from './Like';
 import Common from '@styles';
 
@@ -71,7 +71,7 @@ const Header = ({ backgroundColor, ...props }) => {
       </Title>
       <Icons style={{ width: '120px', justifyContent: 'end' }}>
         <Like />
-        <Favorite />
+        <Bookmark />
       </Icons>
     </Top>
   );

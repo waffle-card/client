@@ -27,27 +27,27 @@ const StyleText = styled(Text)`
   }
 `;
 
-const Favorite = () => {
-  const getFavoriteCount = 0;
-  const [favoriteCount, setFavoriteCount] = useState(getFavoriteCount);
-  const [favorite, setFavorite] = useState(false);
+const Bookmark = () => {
+  const getBookmarkCount = 0;
+  const [bookmarkCount, setBookmarkCount] = useState(getBookmarkCount);
+  const [bookmark, setBookmark] = useState(false);
 
-  const handleFavoriteClick = () => {
-    if (favorite) {
-      setFavorite(false);
-      setFavoriteCount(favoriteCount - 1);
+  const handleBookmarkClick = () => {
+    if (Bookmark) {
+      setBookmark(false);
+      setBookmarkCount(bookmarkCount - 1);
     } else {
-      setFavorite(true);
-      setFavoriteCount(favoriteCount + 1);
+      setBookmark(true);
+      setBookmarkCount(bookmarkCount + 1);
     }
   };
 
   return (
     <>
-      <Icons.Favorite onClick={handleFavoriteClick}></Icons.Favorite>
-      <StyleText block>{favoriteCount}</StyleText>
+      <Icons.Bookmark onClick={handleBookmarkClick}></Icons.Bookmark>
+      <StyleText block>{bookmarkCount}</StyleText>
     </>
   );
 };
 
-export default Favorite;
+export default Bookmark;

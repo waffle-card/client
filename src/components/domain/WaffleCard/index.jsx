@@ -107,7 +107,7 @@ const WaffleCard = ({
   height,
   onClickCard,
   onClickLikeIcon,
-  onClickFavoriteIcon,
+  onClickBookmarkIcon,
   onClickEditIcon,
   onClickDeleteIcon,
   ...props
@@ -117,8 +117,8 @@ const WaffleCard = ({
     emoji = '🧇',
     cardColor = Common.colors.yellow,
     createdAt = new Date(),
-    favoriteToggle = false,
-    favoriteCount = 0,
+    bookmarkToggle = false,
+    bookmarkCount = 0,
     likeToggle = false,
     likeCount = 0,
     hashTags = [],
@@ -143,12 +143,12 @@ const WaffleCard = ({
     [onClickLikeIcon],
   );
 
-  const handleClickFavoriteIcon = useCallback(
+  const handleClickBookmarkIcon = useCallback(
     e => {
       e.stopPropagation();
-      onClickFavoriteIcon && onClickFavoriteIcon(e);
+      onClickBookmarkIcon && onClickBookmarkIcon(e);
     },
-    [onClickFavoriteIcon],
+    [onClickBookmarkIcon],
   );
 
   const handleClickEditIcon = e => {
@@ -185,11 +185,11 @@ const WaffleCard = ({
             active={likeToggle}
             onClick={handleClickLikeIcon}
           />
-          <Text block>{favoriteCount}</Text>
-          <Icons.Favorite
+          <Text block>{bookmarkCount}</Text>
+          <Icons.Bookmark
             fontSize={'20px'}
-            active={favoriteToggle}
-            onClick={handleClickFavoriteIcon}
+            active={bookmarkToggle}
+            onClick={handleClickBookmarkIcon}
           />
           <Text block>{likeCount}</Text>
         </IconWrapper>
@@ -221,7 +221,7 @@ WaffleCard.protoTypes = {
   height: PropTypes.number,
   onClickCard: PropTypes.func,
   onClickLikeIcon: PropTypes.func,
-  onClickFavoriteIcon: PropTypes.func,
+  onClickBookmarkIcon: PropTypes.func,
 };
 
 export default WaffleCard;

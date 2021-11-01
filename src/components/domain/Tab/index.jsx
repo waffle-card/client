@@ -68,7 +68,7 @@ const Tab = ({
     if (
       currentParam === 'today' ||
       currentParam === 'my' ||
-      currentParam === 'favorite'
+      currentParam === 'bookmark'
     ) {
       const currentActiveElement = childrenToArray(children, 'Tab.Item').filter(
         element => element.props.param === currentParam,

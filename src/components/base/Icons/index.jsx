@@ -1,5 +1,5 @@
 import Like from './Like';
-import Favorite from './Favorite';
+import Bookmark from './Bookmark';
 import ArrowBack from './ArrowBack';
 import ArrowFront from './ArrowFront';
 import Edit from './Edit';
@@ -42,7 +42,7 @@ Icons.ArrowBack = ArrowBack;
 Icons.ArrowFront = ArrowFront;
 Icons.Edit = Edit;
 Icons.Delete = Delete;
-Icons.Favorite = Favorite;
+Icons.Bookmark = Bookmark;
 Icons.Like = Like;
 Icons.Person = Person;
 Icons.Add = Add;

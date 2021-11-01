@@ -51,14 +51,14 @@ export const Edit = args => {
   );
 };
 
-export const Favorite = args => {
+export const Bookmark = args => {
   return (
     <>
       <Icons>
-        <Icons.Favorite {...args} />
+        <Icons.Bookmark {...args} />
       </Icons>
       <Icons>
-        <Icons.Favorite active {...args} />
+        <Icons.Bookmark active {...args} />
       </Icons>
     </>
   );

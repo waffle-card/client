@@ -4,6 +4,7 @@ import Header from './Header';
 import Message from './Message';
 import Text from '@components/base/Text';
 import Common from '@styles';
+import PropTypes from 'prop-types';
 
 const StyledModal = styled(Modal)`
   display: flex;
@@ -160,33 +161,60 @@ const InputBox = styled.div`
   background-color: ${Common.colors.speech_bubble};
   width: 100%;
   border-radius: 16px;
-  padding: 10px 20px 10px 20px;
   box-sizing: border-box;
-  color: white;
-  opacity: 0.5;
+  color: rgba(255, 255, 255, 0.5);
+  margin: 0 auto;
 
   @media ${Common.media.sm} {
     height: 30px;
     border-radius: 8px;
     font-size: 8px;
+    padding: 5px 10px 5px 10px;
   }
 
   @media ${Common.media.md} {
     height: 80px;
+    padding: 10px 20px 10px 20px;
   }
 
   @media ${Common.media.lg} {
     height: 80px;
+    padding: 10px 20px 10px 20px;
+  }
+`;
+
+const Input = styled.textarea`
+  background-color: transparent;
+  border: none;
+  outline: none;
+  resize: none;
+  color: white;
+
+  @media ${Common.media.sm} {
+    width: 100%;
+    font-size: 8px;
+  }
+
+  @media ${Common.media.md} {
+    width: 100%;
+    font-size: ${Common.fontSize.md};
+  }
+
+  @media ${Common.media.lg} {
+    width: 100%;
+    font-size: ${Common.fontSize.lg};
+  }
+
+  &::placeholder {
+    color: rgba(255, 255, 255, 0.7);
   }
 `;
 
 const ChattingCard = ({
   children,
-  width,
-  height,
   backgroundColor,
   cardData,
-  visible = false,
+  visible,
   ...props
 }) => {
   // API가 필요한 부분
@@ -318,10 +346,22 @@ const ChattingCard = ({
       </HeaderContainer>
       <BodyContainer>{showChat(logs)}</BodyContainer>
       <Footer>
-        <InputBox>메세지를 입력해주세요.</InputBox>
+        <InputBox>
+          <Input placeholder="메세지를 입력하세요." />
+        </InputBox>
       </Footer>
     </StyledModal>
   );
+};
+
+ChattingCard.propTypes = {
+  backgroundColor: PropTypes.string,
+  cardData: PropTypes.object,
+  visible: PropTypes.bool,
+};
+
+ChattingCard.defaultProps = {
+  visible: false,
 };
 
 export default ChattingCard;

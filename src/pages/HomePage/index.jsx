@@ -58,7 +58,7 @@ const HomePage = () => {
         <Tab>
           <Tab.Item title="오늘의 카드" index="0" param="today"></Tab.Item>
           <Tab.Item title="나의 카드" index="1" param="my"></Tab.Item>
-          <Tab.Item title="즐겨찾기" index="2" param="favorite"></Tab.Item>
+          <Tab.Item title="즐겨찾기" index="2" param="bookmark"></Tab.Item>
         </Tab>
       </Nav>
       <CardContainer>
