@@ -55,26 +55,26 @@ const userApi = {
     authRequest.put('settings/update-password', { password }),
 };
 
-const postApi = {
-  getUserPostList: (userId, params) =>
+const cardApi = {
+  getUserCardList: (userId, params) =>
     request.get(`posts/author/${userId}`, { params }),
-  getUserFavoritePostList: userId => {}, // TODO:  API 확인 후 리팩토링
-  getChannelPostList: params =>
+  getUserBookMarkCardList: userId => {}, // TODO:  API 확인 후 리팩토링
+  getChannelCardList: params =>
     request.get(`posts/channel/${CHANNEL_ID}`, { params }),
-  createPost: post =>
+  createCard: post =>
     authRequest.post('posts/create', { ...post, channelId: CHANNEL_ID }),
-  getPost: postId => request.post(`posts/${postId}`),
-  updatePost: post => authRequest.put('posts/update', post),
-  deletePost: postId => authRequest.delete('posts/delete', postId),
-  createPostLike: postId => authRequest.post('likes/create', postId),
-  deletePostLike: postId => authRequest.delete('likes/delete', postId),
-  createPostFavorite: postId => {}, // TODO:  API 확인 후 리팩토링
-  deletePostFavorite: postId => {}, // TODO:  API 확인 후 리팩토링
-  getPostComment: commentId => {}, // TODO:  API 확인 후 리팩토링
-  createPostComment: commentInfo =>
+  getCard: postId => request.post(`posts/${postId}`),
+  updateCard: post => authRequest.put('posts/update', post),
+  deleteCard: postId => authRequest.delete('posts/delete', postId),
+  createCardLike: postId => authRequest.post('likes/create', postId),
+  deleteCardLike: postId => authRequest.delete('likes/delete', postId),
+  createCardBookMark: postId => {}, // TODO:  API 확인 후 리팩토링
+  deleteCardBookMark: postId => {}, // TODO:  API 확인 후 리팩토링
+  getCardComment: commentId => {}, // TODO:  API 확인 후 리팩토링
+  createCardComment: commentInfo =>
     authRequest.post('comments/create', commentInfo),
-  deletePostComment: commentId =>
+  deleteCardComment: commentId =>
     authRequest.delete('comments/delete', commentId),
 };
 
-export { authApi, userApi, postApi, request, authRequest };
+export { authApi, userApi, cardApi, request, authRequest };
