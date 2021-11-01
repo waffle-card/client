@@ -11,20 +11,16 @@ import {
 } from '@components';
 
 const HomeContainer = styled.div`
-  max-width: 1690px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
   padding: 10px 50px;
+  @media ${Common.media.sm} {
+    padding: 10px 16px;
+  }
   height: calc(100vh - 60px);
   margin: 0 auto;
-`;
-
-const Nav = styled.nav`
-  margin-top: 152px;
-  @media ${Common.media.sm} {
-    margin-top: 80px;
-  }
-  @media ${Common.media.md} {
-    margin-top: 72px;
-  }
 `;
 
 const CardContainer = styled.section`
@@ -32,17 +28,17 @@ const CardContainer = styled.section`
   flex-wrap: nowrap;
   justify-content: flex-start;
   align-items: center;
-  margin-top: 120px;
+  margin-top: 112px;
   overflow-x: scroll;
   -ms-overflow-style: none;
   &::-webkit-scrollbar {
     display: none;
   }
   @media ${Common.media.sm} {
-    margin-top: 80px;
+    margin-top: 64px;
   }
   @media ${Common.media.md} {
-    margin-top: 72px;
+    margin-top: 88px;
   }
 `;
 
@@ -54,13 +50,13 @@ const StyledCard = styled(WaffleCard)`
 const HomePage = () => {
   return (
     <HomeContainer>
-      <Nav>
+      <nav>
         <Tab>
           <Tab.Item title="오늘의 카드" index="0" param="today"></Tab.Item>
           <Tab.Item title="나의 카드" index="1" param="my"></Tab.Item>
           <Tab.Item title="즐겨찾기" index="2" param="favorite"></Tab.Item>
         </Tab>
-      </Nav>
+      </nav>
       <CardContainer>
         <Icons backgroundColor={'rgba(0, 0, 0, 0)'}>
           <Icons.ArrowBack color={Common.colors.primary} fontSize={'30px'} />
