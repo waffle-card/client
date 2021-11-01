@@ -11,6 +11,7 @@ module.exports = {
       '@contexts': path.resolve(__dirname, 'src/contexts'),
       '@pages': path.resolve(__dirname, 'src/pages'),
       '@styles': path.resolve(__dirname, 'src/styles'),
+      '@validators': path.resolve(__dirname, 'src/validators'),
     },
   },
 };

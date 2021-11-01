@@ -19,6 +19,10 @@ module.exports = {
     );
     config.resolve.alias['@pages'] = path.resolve(__dirname, '../src/pages');
     config.resolve.alias['@styles'] = path.resolve(__dirname, '../src/styles');
+    config.resolve.alias['@validators'] = path.resolve(
+      __dirname,
+      '../src/validators',
+    );
     return config;
   },
 };
