@@ -2,7 +2,13 @@ import styled from '@emotion/styled';
 import Common from '@styles';
 import { useState } from 'react';
 
-import { Text, Button, BackButton, NameChangeModal } from '@components';
+import {
+  Text,
+  Button,
+  BackButton,
+  NameChangeModal,
+  PasswordChangeModal,
+} from '@components';
 
 const MyPageContainer = styled.div`
   padding: 40px 0;
@@ -56,18 +62,15 @@ const StyledButton = styled(Button)`
 `;
 
 const MyPage = ({ ...prop }) => {
-  const [visible, setVisible] = useState(false);
-
-  const handleClose = () => {
-    setVisible(false);
-  };
+  const [nameModalVisible, setNameModalVisible] = useState(false);
+  const [passWordModalVisible, setPassWordModalVisible] = useState(false);
 
   const handleClickChangeNameButton = () => {
-    setVisible(true);
+    setNameModalVisible(true);
   };
 
   const handleClickChangePasswordButton = () => {
-    console.log('ChangePassword!');
+    setPassWordModalVisible(true);
   };
 
   const handleClickLogoutButton = () => {
@@ -105,7 +108,18 @@ const MyPage = ({ ...prop }) => {
           </StyledButton>
         </ButtonContainer>
       </ContentContainer>
-      <NameChangeModal visible={visible} onClose={handleClose} />
+      <NameChangeModal
+        visible={nameModalVisible}
+        onClose={() => {
+          setNameModalVisible(false);
+        }}
+      />
+      <PasswordChangeModal
+        visible={passWordModalVisible}
+        onClose={() => {
+          setPassWordModalVisible(false);
+        }}
+      />
     </MyPageContainer>
   );
 };
