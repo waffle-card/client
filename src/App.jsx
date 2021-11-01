@@ -4,6 +4,7 @@ import HomePage from '@pages/HomePage';
 import NotFoundPage from '@pages/NotFoundPage';
 import LoginPage from '@pages/LoginPage';
 import SignUpPage from '@pages/SignUpPage';
+import MyPage from '@pages/MyPage';
 import { Header } from '@components';
 
 function App() {
@@ -16,7 +17,7 @@ function App() {
         <Route path="/cards" component={HomePage} />
         <Route path="/login" component={LoginPage} />
         <Route path="/signup" component={SignUpPage} />
-        <Route path="/my-page" />
+        <Route path="/my-page" component={MyPage} />
         <Route component={NotFoundPage} />
       </Switch>
     </div>

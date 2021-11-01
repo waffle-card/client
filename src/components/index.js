@@ -18,3 +18,5 @@ export { default as EmojiPickerActiveButton } from './domain/CardEditModal/Emoji
 export { default as Tab } from './domain/Tab';
 export { default as TabItem } from './domain/Tab/TabItem';
 export { default as Header } from './domain/Header';
+export { default as NameChangeModal } from './domain/NameChangeModal';
+export { default as PasswordChangeModal } from './domain/PasswordChangeModal';
