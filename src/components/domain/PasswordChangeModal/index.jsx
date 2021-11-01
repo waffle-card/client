@@ -4,7 +4,11 @@ import styled from '@emotion/styled';
 import { useForm } from '@hooks';
 import PropTypes from 'prop-types';
 import { Modal, Text, Button, Input, Spinner } from '@components';
-import { validatePasswordEmpty, validatePasswordLength } from '@validators';
+import {
+  validatePasswordEmpty,
+  validatePasswordLength,
+  validatePasswordConfirm,
+} from '@validators';
 
 const StyledModal = styled(Modal)`
   width: 100%;
@@ -107,11 +111,11 @@ const PasswordChangeModal = ({ visible, onClose, onSubmit, ...props }) => {
         errors.passwordConfirm = '비밀번호를 입력해주세요.';
       }
 
-      if (currentPassword === newPassword) {
+      if (validatePasswordConfirm(currentPassword, newPassword)) {
         errors.newPassword = '이전 비밀번호와 일치합니다.';
       }
 
-      if (newPassword !== passwordConfirm) {
+      if (!validatePasswordConfirm(newPassword, passwordConfirm)) {
         errors.passwordConfirm = '비밀번호가 일치하는지 확인해주세요.';
       }
 
