@@ -33,7 +33,7 @@ const Bookmark = () => {
   const [bookmark, setBookmark] = useState(false);
 
   const handleBookmarkClick = () => {
-    if (Bookmark) {
+    if (bookmark) {
       setBookmark(false);
       setBookmarkCount(bookmarkCount - 1);
     } else {

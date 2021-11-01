@@ -197,12 +197,12 @@ const Input = styled.textarea`
 
   @media ${Common.media.md} {
     width: 100%;
-    font-size: ${Common.fontSize.md};
+    font-size: ${Common.fontSize.base};
   }
 
   @media ${Common.media.lg} {
     width: 100%;
-    font-size: ${Common.fontSize.lg};
+    font-size: ${Common.fontSize.base};
   }
 
   &::placeholder {
