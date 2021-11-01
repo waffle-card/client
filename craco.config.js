@@ -12,6 +12,7 @@ module.exports = {
       '@pages': path.resolve(__dirname, 'src/pages'),
       '@styles': path.resolve(__dirname, 'src/styles'),
       '@validators': path.resolve(__dirname, 'src/validators'),
+      '@apis': path.resolve(__dirname, 'src/apis'),
     },
   },
 };

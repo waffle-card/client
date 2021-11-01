@@ -1,15 +1,15 @@
 import ChattingCard from '@components/domain/ChattingCard';
-import Common from '@styles';
 
 export default {
   title: 'Component/Domain/ChattingCard',
+  argTypes: {
+    visible: {
+      defaultValue: true,
+      control: { type: 'boolean' },
+    },
+  },
 };
 
-export const Default = () => {
-  return (
-    <ChattingCard
-      width="740px"
-      height="800px"
-      backgroundColor={Common.colors.background_modal}></ChattingCard>
-  );
+export const Default = args => {
+  return <ChattingCard {...args}></ChattingCard>;
 };

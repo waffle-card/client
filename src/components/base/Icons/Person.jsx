@@ -1,15 +1,11 @@
 import Icon from '@material-ui/core/Icon';
 import PropTypes from 'prop-types';
 
-const Person = ({ fontSize = '24px', color = 'white', ...props }) => {
-  const iconStyle = {
-    fontSize,
-    color,
-    cursor: 'default',
-  };
-
+const Person = ({ color = 'white', ...props }) => {
   return (
-    <Icon style={{ ...iconStyle, ...props.style }} {...props}>
+    <Icon
+      style={{ fontSize: 'inherit', color, cursor: 'pointer', ...props.style }}
+      {...props}>
       person
     </Icon>
   );
