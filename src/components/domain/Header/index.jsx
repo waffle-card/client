@@ -57,7 +57,9 @@ const Header = ({ backgroundColor = Common.colors.background, ...props }) => {
         </Link>
       </Logo>
       <Link to="/my-page">
-        <StyledIconPerson color={Common.colors.point} />
+        <Icons>
+          <StyledIconPerson color={Common.colors.point} />
+        </Icons>
       </Link>
       {/* <Link to="/login">
         <StyleTextLogin
