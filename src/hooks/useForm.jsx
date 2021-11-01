@@ -7,7 +7,11 @@ const useForm = ({ initialValues, onSubmit, validate }) => {
 
   const handleChange = event => {
     const { name, value } = event.target;
-    setValues({ ...values, [name]: value });
+    if (name.includes('password') || name.includes('Password')) {
+      setValues({ ...values, [name]: value });
+      return;
+    }
+    setValues({ ...values, [name]: value.trim() });
   };
 
   const handleSubmit = async event => {

@@ -12,6 +12,10 @@ export const validateNameEmpty = name => {
   return name ? true : false;
 };
 
+export const validateNameLength = name => {
+  return name.length <= 10 ? true : false;
+};
+
 export const validatePasswordEmpty = password => {
   return password ? true : false;
 };

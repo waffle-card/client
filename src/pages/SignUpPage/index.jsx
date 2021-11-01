@@ -8,6 +8,7 @@ import {
   validateEmailEmpty,
   validateEmailForm,
   validateNameEmpty,
+  validateNameLength,
   validatePasswordEmpty,
   validatePasswordLength,
   validatePasswordConfirm,
@@ -71,11 +72,13 @@ const SignUpPage = ({ ...prop }) => {
       }
       if (!validateEmailEmpty(email)) errors.email = '이메일을 입력해주세요.';
       if (!validateNameEmpty(name)) errors.name = '이름을 입력해주세요.';
+      if (!validateNameLength(name))
+        errors.name = '이름을 10글자 이내로 작성해주세요.';
       if (!validatePasswordLength(password)) {
         errors.password = '비밀번호를 8자 이상 작성해주세요.';
       }
       if (!validatePasswordEmpty(password)) {
-        errors.password = '비밀번호를 입력해주세요';
+        errors.password = '비밀번호를 입력해주세요.';
       }
       if (!validatePasswordConfirm(password, passwordConfirm)) {
         errors.passwordConfirm = '비밀번호가 일치하는지 확인해주세요.';
