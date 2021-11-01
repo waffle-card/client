@@ -1,50 +1,80 @@
 import axios from 'axios';
+import { useSessionStorage } from '@hooks';
 
 const API_END_POINT = 'http://13.209.30.200';
+const CHANNEL_ID = '616a204c22996f0bc94f6e17';
 
-// 지은 1팀 ID
-const TEAM_ID = '616a204c22996f0bc94f6e17';
+const setInterceptors = (instance, auth) => {
+  auth &&
+    instance.interceptors.request.use(
+      config => {
+        const TOKEN = JSON.parse(useSessionStorage('authUser'));
+        config.headers.Authorization = `bearer ${TOKEN}`;
+        return config;
+      },
+      error => {
+        return Promise.reject(error.response);
+      },
+    );
 
-export const GetAPI = async (url, params = {}) => {
-  try {
-    const result = axios.get(`${API_END_POINT}${url}`, params);
-
-    return result;
-  } catch (error) {
-    console.error(error);
-    return;
-  }
+  instance.interceptors.response.use(
+    response => {
+      return response;
+    },
+    error => {
+      return Promise.reject(error.response);
+    },
+  );
+  return instance;
 };
 
-export const PostAPI = async (url, params = {}) => {
-  try {
-    const result = axios.post(`${API_END_POINT}${url}`, params);
+const createInstance = options => {
+  const instance = axios.create({ baseURL: API_END_POINT, ...options });
+  return setInterceptors(instance);
+};
+const request = createInstance();
 
-    return result;
-  } catch (error) {
-    console.error(error);
-    return;
-  }
+const createInstanceWithAuth = options => {
+  const instance = axios.create({ baseURL: API_END_POINT, ...options });
+  return setInterceptors(instance, true);
+};
+const authRequest = createInstanceWithAuth();
+
+const authApi = {
+  getAuthUser: () => authRequest.get('/auth-user'),
+  signUp: userInfo => request.post('/signup', userInfo),
+  login: userInfo => request.post('/login', userInfo),
+  logout: () => request.post('/logout'),
 };
 
-export const PutAPI = async (url, params = {}) => {
-  try {
-    const result = axios.put(`${API_END_POINT}${url}`, params);
-
-    return result;
-  } catch (error) {
-    console.error(error);
-    return;
-  }
+const userApi = {
+  getUserInfo: userId => request.get(`users/${userId}`),
+  putUserName: userName =>
+    authRequest.put('settings/update-user', { username: userName }),
+  putUserPassword: password =>
+    authRequest.put('settings/update-password', { password }),
 };
 
-export const DeleteAPI = async (url, params = {}) => {
-  try {
-    const result = axios.post(`${API_END_POINT}${url}`, params);
-
-    return result;
-  } catch (error) {
-    console.error(error);
-    return;
-  }
+const cardApi = {
+  getUserCardList: (userId, params) =>
+    request.get(`posts/author/${userId}`, { params }),
+  getUserBookMarkCardList: userId => {}, // TODO:  API 확인 후 리팩토링
+  getChannelCardList: params =>
+    request.get(`posts/channel/${CHANNEL_ID}`, { params }),
+  createCard: post =>
+    authRequest.post('posts/create', { ...post, channelId: CHANNEL_ID }),
+  getCard: postId => request.post(`posts/${postId}`),
+  updateCard: post => authRequest.put('posts/update', post),
+  deleteCard: postId => authRequest.delete('posts/delete', postId),
+  createCardLike: postId => authRequest.post('likes/create', postId),
+  deleteCardLike: postId => authRequest.delete('likes/delete', postId),
+  createCardBookMark: postId => {}, // TODO:  API 확인 후 리팩토링
+  deleteCardBookMark: postId => {}, // TODO:  API 확인 후 리팩토링
+  getCardComment: commentId => {}, // TODO:  API 확인 후 리팩토링
+  createCardComment: commentInfo =>
+    authRequest.post('comments/create', commentInfo),
+  deleteCardComment: commentId =>
+    authRequest.delete('comments/delete', commentId),
 };
+
+export { authApi, userApi, cardApi, request, authRequest };
