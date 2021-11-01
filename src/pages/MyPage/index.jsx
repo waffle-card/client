@@ -1,9 +1,8 @@
 import styled from '@emotion/styled';
 import Common from '@styles';
+import { useState } from 'react';
 
-import { Text } from '@components';
-import { Button } from '@components';
-import { BackButton } from '@components';
+import { Text, Button, BackButton, NameChangeModal } from '@components';
 
 const MyPageContainer = styled.div`
   padding: 40px 0;
@@ -57,8 +56,14 @@ const StyledButton = styled(Button)`
 `;
 
 const MyPage = ({ ...prop }) => {
-  const handleClickChangeNicknameButton = () => {
-    console.log('ChangeNickname!');
+  const [visible, setVisible] = useState(false);
+
+  const handleClose = () => {
+    setVisible(false);
+  };
+
+  const handleClickChangeNameButton = () => {
+    setVisible(true);
   };
 
   const handleClickChangePasswordButton = () => {
@@ -85,7 +90,7 @@ const MyPage = ({ ...prop }) => {
           </InfoBox>
         </TextContainer>
         <ButtonContainer>
-          <StyledButton type="button" onClick={handleClickChangeNicknameButton}>
+          <StyledButton type="button" onClick={handleClickChangeNameButton}>
             닉네임 변경
           </StyledButton>
           <StyledButton type="button" onClick={handleClickChangePasswordButton}>
@@ -100,6 +105,7 @@ const MyPage = ({ ...prop }) => {
           </StyledButton>
         </ButtonContainer>
       </ContentContainer>
+      <NameChangeModal visible={visible} onClose={handleClose} />
     </MyPageContainer>
   );
 };
