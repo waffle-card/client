@@ -23,6 +23,7 @@ module.exports = {
       __dirname,
       '../src/validators',
     );
+    config.resolve.alias['@apis'] = path.resolve(__dirname, '../src/apis');
     return config;
   },
 };
