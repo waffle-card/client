@@ -18,12 +18,12 @@ const StyledModal = styled(Modal)`
 
   @media ${Common.media.md} {
     width: 688px;
-    height: 800px;
+    height: 650px;
   }
 
   @media ${Common.media.lg} {
     width: 740px;
-    height: 874px;
+    height: 700px;
   }
 `;
 
@@ -109,13 +109,13 @@ const BodyContainer = styled.div`
   @media ${Common.media.md} {
     width: 688px;
     padding: 10px 10px 10px 10px;
-    height: 535px;
+    height: 365px;
   }
 
   @media ${Common.media.lg} {
     width: 740px;
     padding: 10px 10px 10px 10px;
-    height: 568px;
+    height: 395px;
   }
 `;
 
