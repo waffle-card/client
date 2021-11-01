@@ -52,6 +52,7 @@ const StyledButton = styled(Button)`
 const StyledText = styled(Text)`
   margin: 16px 0;
 `;
+
 const LoginPage = ({ ...prop }) => {
   const { handleLogin } = useUserContext();
   const history = useHistory();

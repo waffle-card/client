@@ -10,18 +10,20 @@ import { UserProvider } from '@contexts';
 
 function App() {
   return (
-    <div className="App">
-      <Header />
-      <Switch>
-        <Route path="/" exact component={HomePage} />
-        <Route path="/card" component={HomePage} />
-        <Route path="/cards" component={HomePage} />
-        <Route path="/login" component={LoginPage} />
-        <Route path="/signup" component={SignUpPage} />
-        <Route path="/my-page" component={MyPage} />
-        <Route component={NotFoundPage} />
-      </Switch>
-    </div>
+    <UserProvider>
+      <div className="App">
+        <Header />
+        <Switch>
+          <Route path="/" exact component={HomePage} />
+          <Route path="/card" component={HomePage} />
+          <Route path="/cards" component={HomePage} />
+          <Route path="/login" component={LoginPage} />
+          <Route path="/signup" component={SignUpPage} />
+          <Route path="/my-page" component={MyPage} />
+          <Route component={NotFoundPage} />
+        </Switch>
+      </div>
+    </UserProvider>
   );
 }
 
