@@ -1,53 +1,29 @@
-import Icons from '@components/base/Icons';
-import Tab from '@components/domain/Tab';
 import styled from '@emotion/styled';
 import Common from '@styles';
-import WaffleCard from '@components/domain/WaffleCard';
-import Text from '@components/base/Text';
 import { Route, Link } from 'react-router-dom';
-import { CardEditForm } from '@components';
-import ChattingCard from '@components/domain/ChattingCard';
+
+import {
+  Icons,
+  Tab,
+  WaffleCard,
+  CardEditModal,
+  ChattingCard,
+} from '@components';
 
 const HomeContainer = styled.div`
   max-width: 1690px;
-  padding: 20px 50px;
-  height: 100vh;
+  padding: 10px 50px;
+  height: calc(100vh - 60px);
   margin: 0 auto;
-  background-color: rgba(26, 31, 39, 1);
-`;
-
-const Header = styled.header`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  height: 55px;
-`;
-
-const Logo = styled.h1`
-  margin: 0;
-  font-size: 0;
-  a {
-    display: block;
-    img {
-      width: auto;
-      height: 24px;
-      @media ${Common.media.sm} {
-        height: 18px;
-      }
-    }
-  }
-`;
-
-const StyledIcon = styled(Icons.Person)`
-  @media ${Common.media.sm} {
-    font-size: 18px;
-  }
 `;
 
 const Nav = styled.nav`
-  margin-top: 140px;
+  margin-top: 152px;
   @media ${Common.media.sm} {
-    margin-top: 30px;
+    margin-top: 80px;
+  }
+  @media ${Common.media.md} {
+    margin-top: 72px;
   }
 `;
 
@@ -56,51 +32,33 @@ const CardContainer = styled.section`
   flex-wrap: nowrap;
   justify-content: flex-start;
   align-items: center;
-  margin-top: 93px;
+  margin-top: 120px;
   overflow-x: scroll;
   -ms-overflow-style: none;
   &::-webkit-scrollbar {
     display: none;
   }
   @media ${Common.media.sm} {
-    margin-top: 60px;
+    margin-top: 80px;
+  }
+  @media ${Common.media.md} {
+    margin-top: 72px;
   }
 `;
 
 const StyledCard = styled(WaffleCard)`
   flex: 0 0 auto;
-  @media ${Common.media.md} {
-    width: 218.33px;
-    height: 329.55px;
-  }
-  @media ${Common.media.sm} {
-    width: 185px;
-    height: 271.7px;
-  }
+  margin: 0 10px;
 `;
 
-const Home = () => {
+const HomePage = () => {
   return (
     <HomeContainer>
-      <Header>
-        <Logo>
-          <Link to="/">
-            <img src={require('./images/logo.png').default} alt="logo" />
-          </Link>
-        </Logo>
-        <StyledIcon color={Common.colors.point} />
-        <Text
-          color={Common.colors.point}
-          size={Common.fontSize.regular}
-          weight={Common.fontWeight.regular}>
-          로그인
-        </Text>
-      </Header>
       <Nav>
         <Tab>
           <Tab.Item title="오늘의 카드" index="0" param="today"></Tab.Item>
           <Tab.Item title="나의 카드" index="1" param="my"></Tab.Item>
-          <Tab.Item title="즐겨 찾기" index="2" param="favorite"></Tab.Item>
+          <Tab.Item title="즐겨찾기" index="2" param="favorite"></Tab.Item>
         </Tab>
       </Nav>
       <CardContainer>
@@ -147,7 +105,13 @@ const Home = () => {
           <Icons.ArrowFront color={Common.colors.primary} fontSize={'30px'} />
         </Icons>
       </CardContainer>
+      <Route path="/card/create" render={() => <CardEditModal visible />} />
+      <Route
+        path="/card/update:cardId"
+        render={() => <CardEditModal visible />}
+      />
+      <Route path="/card/chat:cardId" component={ChattingCard} />
     </HomeContainer>
   );
 };
-export default Home;
+export default HomePage;

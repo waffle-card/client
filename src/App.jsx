@@ -1,29 +1,24 @@
-import { Route } from 'react-router-dom';
-import Home from '@pages/Home';
+import React from 'react';
+import { Route, Switch } from 'react-router-dom';
+import HomePage from '@pages/HomePage';
 import NotFoundPage from '@pages/NotFoundPage';
-import { CardEditForm } from '@components';
-import ChattingCard from '@components/domain/ChattingCard';
-
-import './App.css';
+import LoginPage from '@pages/LoginPage';
+import SignUpPage from '@pages/SignUpPage';
+import { Header } from '@components';
 
 function App() {
   return (
     <div className="App">
-      <Route path="/" exact={true} component={Home} />
-
-      {/* <Route path="/login" component={} />
-      <Route path="/signup" component={} />
-      <Route path="/my-page" component={} /> */}
-
-      <Route path="/cards/today" exact={true} component={Home} />
-      <Route path="/cards/my" exact={true} component={Home} />
-      <Route path="/cards/favorite" exact={true} component={Home} />
-
-      <Route path="/card/create" exact={true} component={CardEditForm} />
-      <Route path="/card/chat:cardId" exact={true} component={ChattingCard} />
-      <Route path="/card/update:cardId" exact={true} component={CardEditForm} />
-
-      <Route path="*" component={NotFoundPage} />
+      <Header />
+      <Switch>
+        <Route path="/" exact component={HomePage} />
+        <Route path="/card" component={HomePage} />
+        <Route path="/cards" component={HomePage} />
+        <Route path="/login" component={LoginPage} />
+        <Route path="/signup" component={SignUpPage} />
+        <Route path="/my-page" />
+        <Route component={NotFoundPage} />
+      </Switch>
     </div>
   );
 }
