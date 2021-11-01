@@ -3,12 +3,6 @@ import Icon from '@material-ui/core/Icon';
 import PropTypes from 'prop-types';
 import { useCallback } from 'react';
 
-const StyleIcon = styled(Icon)`
-  font-size: ${({ fontSize }) =>
-    typeof fontSize === 'number' ? `${fontSize}px` : { fontSize }};
-  color: ${({ color }) => color};
-`;
-
 const Anchor = styled.a`
   display: flex;
   justify-content: center;
@@ -16,13 +10,7 @@ const Anchor = styled.a`
   text-decoration: none;
 `;
 
-const Delete = ({
-  fontSize = '24px',
-  color = 'white',
-  href,
-  onClick,
-  ...props
-}) => {
+const Delete = ({ color = 'white', href, onClick, ...props }) => {
   const handleClick = useCallback(
     e => {
       onClick && onClick(e);
@@ -32,14 +20,17 @@ const Delete = ({
 
   return (
     <Anchor href={href}>
-      <StyleIcon
-        fontSize={fontSize}
-        color={color}
-        style={{ ...props.style }}
+      <Icon
+        style={{
+          fontSize: 'inherit',
+          color,
+          cursor: 'pointer',
+          ...props.style,
+        }}
         onClick={handleClick}
         {...props}>
         clear
-      </StyleIcon>
+      </Icon>
     </Anchor>
   );
 };

@@ -9,9 +9,20 @@ const Top = styled.div`
   display: flex;
   height: 50%;
   justify-content: space-between;
+  box-sizing: border-box;
 
   @media ${Common.media.sm} {
-    font-size: ${Common.fontSize.small};
+    max-height: 40px;
+  }
+
+  @media ${Common.media.md} {
+    min-height: 80px;
+    max-height: 90px;
+  }
+
+  @media ${Common.media.lg} {
+    min-height: 90px;
+    max-height: 120px;
   }
 `;
 
@@ -24,20 +35,30 @@ const Title = styled.div`
 const StyleText = styled(Text)`
   white-space: nowrap;
   @media ${Common.media.sm} {
-    font-size: ${Common.fontSize.small};
+    font-size: 10px;
   }
 `;
 
-const Image = styled.img`
-  min-width: 30px;
-  min-height: 30px;
-  max-width: 50px;
-  max-height: 50px;
-  src: ${({ src }) => src};
+const EmojiBox = styled(Text)`
+  @media ${Common.media.sm} {
+    font-size: 20px;
+    margin-bottom: 5px;
+  }
+
+  @media ${Common.media.md} {
+    font-size: 40px;
+    margin-bottom: 8px;
+  }
+
+  @media ${Common.media.lg} {
+    font-size: 50px;
+    margin-bottom: 10px;
+  }
 `;
 
-const Header = ({ height, backgroundColor, ...props }) => {
+const Header = ({ backgroundColor, ...props }) => {
   const title = '내이름은 제페토';
+  const Emoji = '🥱';
 
   return (
     <Top>
@@ -45,7 +66,7 @@ const Header = ({ height, backgroundColor, ...props }) => {
         <Icons.ArrowBack></Icons.ArrowBack>
       </Icons>
       <Title style={{ width: '120px' }}>
-        <Image src={'https://picsum.photos/200'} />
+        <EmojiBox>{Emoji}</EmojiBox>
         <StyleText block>{title}</StyleText>
       </Title>
       <Icons style={{ width: '120px', justifyContent: 'end' }}>

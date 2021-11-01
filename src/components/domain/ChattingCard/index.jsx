@@ -17,7 +17,7 @@ const StyledModal = styled(Modal)`
 
   @media ${Common.media.md} {
     width: 688px;
-    height: 874px;
+    height: 800px;
   }
 
   @media ${Common.media.lg} {
@@ -35,32 +35,32 @@ const HeaderContainer = styled.div`
   border-top-left-radius: 16px;
   border-top-right-radius: 16px;
   box-shadow: ${Common.shadow.chattingHeader};
-  box-sizing: border-box;
 
   @media ${Common.media.sm} {
     width: 290px;
     height: 120px;
-    padding: 5px;
+    padding: 15px 20px 0 20px;
   }
 
   @media ${Common.media.md} {
     width: 688px;
-    height: 195px;
+    height: 165px;
     padding: 15px 30px 0 30px;
   }
 
   @media ${Common.media.lg} {
     width: 740px;
-    height: 195px;
+    height: 185px;
     padding: 15px 40px 0 40px;
   }
 `;
 
 const Hr = styled.hr`
-  width: 90%;
+  width: 100%;
   border: none;
   border-bottom: 0.5px solid rgba(255, 255, 255, 0.5);
   border-radius: 50%;
+  margin: auto;
 `;
 
 const FirstHashtags = styled.div`
@@ -79,7 +79,7 @@ const SecondHashtags = styled.div`
 
 const StyleText = styled(Text)`
   @media ${Common.media.sm} {
-    font-size: ${Common.fontSize.micro};
+    font-size: 10px;
   }
 
   @media ${Common.media.md} {
@@ -94,26 +94,27 @@ const StyleText = styled(Text)`
 const BodyContainer = styled.div`
   display: flex;
   flex-direction: column;
-  min-height: 98px;
-  max-height: 400px;
+  height: 100%;
   background-color: transparent;
   background-color: ${Common.colors.background_modal};
   overflow-y: auto;
-  box-sizing: border-box;
 
   @media ${Common.media.sm} {
     width: 290px;
-    padding: 20px 0 0 0;
+    padding-top: 10px;
+    height: 800px;
   }
 
   @media ${Common.media.md} {
     width: 688px;
-    padding: 20px 10px 10px 10px;
+    padding: 10px 10px 10px 10px;
+    height: 535px;
   }
 
   @media ${Common.media.lg} {
     width: 740px;
-    padding: 20px 10px 10px 10px;
+    padding: 10px 10px 10px 10px;
+    height: 568px;
   }
 `;
 
@@ -123,8 +124,8 @@ const ChatContainer = styled.div`
   align-items: center;
   background-color: transparent;
   justify-content: ${({ isMine }) => (isMine ? 'end' : 'start')};
-  margin-left: ${({ isMine }) => (isMine ? '0' : '20px')};
-  margin-right: ${({ isMine }) => (isMine ? '20px' : '0')};
+  margin-left: ${({ isMine }) => (isMine ? '0' : '5px')};
+  margin-right: ${({ isMine }) => (isMine ? '5px' : '0')};
   margin-top: 10px;
   margin-bottom: 10px;
   box-sizing: border-box;
@@ -134,35 +135,49 @@ const ChatContainer = styled.div`
   }
 
   @media ${Common.media.md} {
-    padding: 20px 10px 10px 10px;
+    padding: 10px 0 10px 10px;
   }
 
   @media ${Common.media.lg} {
-    padding: 20px 10px 10px 10px;
+    padding: 10px 0 10px 10px;
   }
 `;
 
 const Footer = styled.div`
   display: flex;
   background-color: ${Common.colors.background_modal};
-  min-height: 180px;
-  max-height: 200px;
   border-bottom-left-radius: 16px;
   border-bottom-right-radius: 16px;
   justify-content: center;
   align-items: center;
   padding: 20px;
+  box-sizing: border-box;
+  height: auto;
 `;
 
 const InputBox = styled.div`
   display: flex;
   background-color: ${Common.colors.speech_bubble};
   width: 100%;
-  height: 144px;
-  min-height: 44px;
-  max-height: 144px;
   border-radius: 16px;
   padding: 10px 20px 10px 20px;
+  box-sizing: border-box;
+  color: white;
+  opacity: 0.5;
+
+  @media ${Common.media.sm} {
+    height: 30px;
+    border-radius: 8px;
+    font-size: 8px;
+  }
+
+  @media ${Common.media.md} {
+    height: 80px;
+  }
+
+  @media ${Common.media.lg} {
+    height: 80px;
+  }
 `;
 
 const ChattingCard = ({
@@ -171,6 +186,7 @@ const ChattingCard = ({
   height,
   backgroundColor,
   cardData,
+  visible = false,
   ...props
 }) => {
   // API가 필요한 부분
@@ -207,13 +223,73 @@ const ChattingCard = ({
       name: 'C',
       chat: '전 김치볶음밥이요!',
     },
+    {
+      id: 1,
+      name: 'A',
+      chat: '안녕하세요~',
+    },
+    {
+      id: 2,
+      name: 'B',
+      chat: '안녕하세요! 만나서 반갑습니다!',
+    },
+    {
+      id: 3,
+      name: 'C',
+      chat: '반가워요~',
+    },
+    {
+      id: 1,
+      name: 'A',
+      chat: '오늘 저녁 뭐 드실건가요?',
+    },
+    {
+      id: 2,
+      name: 'B',
+      chat: '다이어트 중이에요~',
+    },
+    {
+      id: 3,
+      name: 'C',
+      chat: '전 김치볶음밥이요!',
+    },
+    {
+      id: 1,
+      name: 'A',
+      chat: '안녕하세요~',
+    },
+    {
+      id: 2,
+      name: 'B',
+      chat: '안녕하세요! 만나서 반갑습니다!',
+    },
+    {
+      id: 3,
+      name: 'C',
+      chat: '반가워요~',
+    },
+    {
+      id: 1,
+      name: 'A',
+      chat: '오늘 저녁 뭐 드실건가요?',
+    },
+    {
+      id: 2,
+      name: 'B',
+      chat: '다이어트 중이에요~',
+    },
+    {
+      id: 3,
+      name: 'C',
+      chat: '전 김치볶음밥이요!',
+    },
   ];
 
   const showChat = logs =>
     logs.map((log, index) => (
       <ChatContainer isMine={log.id === myId} key={index}>
         <Message logId={log.id} key={index} myId={myId}>
-          <StyleText>
+          <StyleText block>
             {log.name}: {log.chat}
           </StyleText>
         </Message>
@@ -223,7 +299,7 @@ const ChattingCard = ({
   const firstHashtags = [
     '#안녕하세요반갑습니다',
     '#10글자로만들어봐요',
-    '우리모두함께놀아봐요',
+    '#우리모두함께놀아봐요',
   ];
   const secondHashtags = ['#해쉬태그를만들어봐요', '#최대한길게길게갑시다'];
 
@@ -232,8 +308,8 @@ const ChattingCard = ({
 
   return (
     <StyledModal
-      style={{ padding: 0, display: 'flex', flexDirection: 'column' }}
-      visible>
+      visible={visible}
+      style={{ padding: 0, display: 'flex', flexDirection: 'column' }}>
       <HeaderContainer backgroundColor={backgroundColor}>
         <Header />
         <Hr />
@@ -242,9 +318,7 @@ const ChattingCard = ({
       </HeaderContainer>
       <BodyContainer>{showChat(logs)}</BodyContainer>
       <Footer>
-        <InputBox>
-          <Text>메세지를 입력하세요</Text>
-        </InputBox>
+        <InputBox>메세지를 입력해주세요.</InputBox>
       </Footer>
     </StyledModal>
   );

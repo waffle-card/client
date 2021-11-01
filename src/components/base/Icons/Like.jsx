@@ -1,21 +1,8 @@
 import Icon from '@material-ui/core/Icon';
 import PropTypes from 'prop-types';
 import useToggle from '@hooks/useToggle';
-import styled from '@emotion/styled';
 
-const StyleIcon = styled(Icon)`
-  font-size: ${({ fontSize }) =>
-    typeof fontSize === 'number' ? `${fontSize}px` : { fontSize }};
-  color: ${({ color }) => color};
-`;
-
-const Like = ({
-  fontSize = '24px',
-  color = 'white',
-  active = false,
-  onClick,
-  ...props
-}) => {
+const Like = ({ color = 'white', active = false, onClick, ...props }) => {
   const [liked, toggle] = useToggle(active);
 
   const handleClick = e => {
@@ -23,15 +10,15 @@ const Like = ({
     onClick && onClick(e);
   };
 
+  console.log(props.style);
+
   return (
-    <StyleIcon
-      fontSize={fontSize}
-      color={color}
-      style={{ ...props.style }}
+    <Icon
+      style={{ fontSize: 'inherit', color, cursor: 'pointer', ...props.style }}
       onClick={handleClick}
       {...props}>
       {liked ? `favorite` : `favorite_border`}
-    </StyleIcon>
+    </Icon>
   );
 };
 

@@ -8,32 +8,48 @@ const ChatBox = styled.div`
   align-items: center;
   background-color: ${Common.colors.speech_bubble};
   border-radius: 16px;
-  min-width: 170px;
   max-width: 550px;
   min-height: 50px;
-  max-height: 150px;
-  padding: 10px 20px 10px 20px;
+  box-sizing: border-box;
 
   @media ${Common.media.sm} {
-    min-width: 160px;
-    max-width: 190px;
+    min-width: 80px;
+    max-width: 150px;
+    min-height: 25px;
+    border-radius: 8px;
+    padding: 10px;
   }
 
   @media ${Common.media.md} {
-    min-width: 190px;
-    max-width: 240px;
+    min-width: 150px;
+    max-width: 300px;
+    padding: 10px 20px 10px 20px;
   }
 
   @media ${Common.media.lg} {
-    min-width: 240px;
+    min-width: 150px;
+    max-width: 300px;
+    padding: 10px 20px 10px 20px;
   }
 `;
 
 const EditBoxContainer = styled.div`
   position: absolute;
-  top: -40%;
-  right: 0;
-  z-index: 1000;
+
+  @media ${Common.media.sm} {
+    top: -50%;
+    right: 0;
+  }
+
+  @media ${Common.media.md} {
+    top: -10%;
+    right: 0;
+  }
+
+  @media ${Common.media.lg} {
+    top: -10%;
+    right: 0;
+  }
 `;
 
 const Message = ({ children, logId, key, myId, ...props }) => {

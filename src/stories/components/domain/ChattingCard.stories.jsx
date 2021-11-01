@@ -3,13 +3,18 @@ import Common from '@styles';
 
 export default {
   title: 'Component/Domain/ChattingCard',
+  argTypes: {
+    visible: {
+      defaultValue: false,
+      control: { type: 'boolean' },
+    },
+  },
 };
 
-export const Default = () => {
+export const Default = args => {
   return (
     <ChattingCard
-      width="740px"
-      height="800px"
-      backgroundColor={Common.colors.background_modal}></ChattingCard>
+      backgroundColor={Common.colors.background_modal}
+      {...args}></ChattingCard>
   );
 };

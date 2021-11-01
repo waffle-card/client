@@ -2,25 +2,27 @@ import styled from '@emotion/styled';
 import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { Icons } from '@components';
+import Common from '@styles';
 
 const Container = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 62px;
-  height: 29px;
   background-color: ${({ backgroundColor }) => backgroundColor};
   border-radius: 8px;
   opacity: 0.8;
 
-  & > a {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  @media ${Common.media.sm} {
+    width: 40px;
+    height: 20px;
   }
-
-  & a:nth-of-type(1) {
-    margin-right: 4px;
+  @media ${Common.media.md} {
+    width: 50px;
+    height: 25px;
+  }
+  @media ${Common.media.lg} {
+    width: 60px;
+    height: 30px;
   }
 `;
 
@@ -55,18 +57,16 @@ const EditBox = ({
       backgroundColor={backgroundColor}
       fontColor={fontColor}
       {...props}>
-      <Icons.Edit
-        fontSize="1.25rem"
-        color={fontColor}
-        href="#"
-        onClick={handleClickEditIcon}
-      />
-      <Icons.Delete
-        fontSize="1.25rem"
-        color={fontColor}
-        href="#"
-        onClick={handleClickDeleteIcon}
-      />
+      <Icons>
+        <Icons.Edit color={fontColor} href="#" onClick={handleClickEditIcon} />
+      </Icons>
+      <Icons>
+        <Icons.Delete
+          color={fontColor}
+          href="#"
+          onClick={handleClickDeleteIcon}
+        />
+      </Icons>
     </Container>
   );
 };

@@ -7,15 +7,23 @@ import Delete from './Delete';
 import Person from './Person';
 import Add from './Add';
 import styled from '@emotion/styled';
+import Common from '@styles';
 
 const Container = styled.div`
-  display: inline-flex;
-  cursor: pointer;
-  background-color: ${({ backgroundColor }) =>
-    backgroundColor ? backgroundColor : `transparent`};
-  margin: 10px;
+  display: flex;
+  background-color: transparent;
   &:hover {
     background-color: none;
+  }
+
+  @media ${Common.media.sm} {
+    font-size: ${Common.fontSize.small};
+  }
+  @media ${Common.media.md} {
+    font-size: ${Common.fontSize.medium};
+  }
+  @media ${Common.media.lg} {
+    font-size: ${Common.fontSize.large};
   }
 `;
 

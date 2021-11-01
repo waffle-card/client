@@ -8,10 +8,6 @@ export default {
       defaultValue: 'white',
       control: 'color',
     },
-    fontSize: {
-      defaultValue: '24px',
-      control: 'number',
-    },
   },
 };
 
