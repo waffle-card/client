@@ -1,50 +1,72 @@
 import axios from 'axios';
+import { useSessionStorage } from '@hooks';
 
 const API_END_POINT = 'http://13.209.30.200';
-
-// 지은 1팀 ID
 const TEAM_ID = '616a204c22996f0bc94f6e17';
 
-export const GetAPI = async (url, params = {}) => {
-  try {
-    const result = axios.get(`${API_END_POINT}${url}`, params);
+const setInterceptors = (instance, auth) => {
+  auth &&
+    instance.interceptors.request.use(
+      config => {
+        const TOKEN = JSON.parse(useSessionStorage('authUser'));
+        config.headers.Authorization = `bearer ${TOKEN}`;
+        return config;
+      },
+      error => {
+        return Promise.reject(error.response);
+      },
+    );
 
-    return result;
-  } catch (error) {
-    console.error(error);
-    return;
-  }
+  instance.interceptors.response.use(
+    response => {
+      return response;
+    },
+    error => {
+      return Promise.reject(error.response);
+    },
+  );
+  return instance;
 };
 
-export const PostAPI = async (url, params = {}) => {
-  try {
-    const result = axios.post(`${API_END_POINT}${url}`, params);
+const createInstance = options => {
+  const instance = axios.create({ baseURL: API_END_POINT, ...options });
+  return setInterceptors(instance);
+};
+const instance = createInstance();
 
-    return result;
-  } catch (error) {
-    console.error(error);
-    return;
-  }
+const createInstanceWithAuth = options => {
+  const instance = axios.create({ baseURL: API_END_POINT, ...options });
+  return setInterceptors(instance, true);
+};
+const auth = createInstanceWithAuth();
+
+const authApi = {
+  getAuthUser: () => auth.get('/auth-user'),
+  signUp: userInfo => instance.post('/signup', userInfo),
+  login: userInfo => instance.post('/login', userInfo),
+  logout: () => instance.post('/logout'),
 };
 
-export const PutAPI = async (url, params = {}) => {
-  try {
-    const result = axios.put(`${API_END_POINT}${url}`, params);
-
-    return result;
-  } catch (error) {
-    console.error(error);
-    return;
-  }
+const userApi = {
+  getUserInfo: userId => instance.get(`users/${userId}`),
+  putUserName: userName => auth.put('settings/update-user', userName),
+  putUserPassword: userPassword =>
+    auth.put('settings/update-password', userPassword),
 };
 
-export const DeleteAPI = async (url, params = {}) => {
-  try {
-    const result = axios.post(`${API_END_POINT}${url}`, params);
-
-    return result;
-  } catch (error) {
-    console.error(error);
-    return;
-  }
+const postApi = {
+  getUserPostList: (userId, params) =>
+    instance.get(`posts/author/${userId}`, { params }),
+  getChannelPostList: (channelId, params) =>
+    instance.get(`posts/channel/${channelId}`, { params }),
+  createPost: post => auth.post('posts/create', post),
+  readPost: postId => instance.post(`posts/${postId}`),
+  updatePost: post => auth.put('posts/update', post),
+  deletePost: postId => auth.delete('posts/delete', postId),
+  createPostLike: postId => auth.post('likes/create', postId),
+  deletePostLike: postId => auth.delete('likes/delete', postId),
+  createPostComment: commentInfo => auth.post('comments/create', commentInfo),
+  deletePostComment: commentId => auth.delete('comments/delete', commentId),
 };
+
+export { authApi, userApi, postApi };

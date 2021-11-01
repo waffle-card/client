@@ -3,6 +3,7 @@ import Common from '@styles';
 import styled from '@emotion/styled';
 import { useForm } from '@hooks';
 import { useHistory } from 'react-router-dom';
+import { useUserContext } from '@contexts/UserProvider';
 import { Text, Button, Input, BackButton, Spinner } from '@components';
 import {
   validateEmailEmpty,
@@ -52,14 +53,15 @@ const StyledText = styled(Text)`
   margin: 16px 0;
 `;
 const LoginPage = ({ ...prop }) => {
+  const { handleLogin } = useUserContext();
   const history = useHistory();
   const { isLoading, errors, handleChange, handleSubmit } = useForm({
     initialValues: {
       email: '',
       password: '',
     },
-    onSubmit: async values => {
-      alert(JSON.stringify(values));
+    onSubmit: async ({ email, password }) => {
+      handleLogin({ email, password });
     },
     validate: ({ email, password }) => {
       const errors = {};
@@ -67,12 +69,12 @@ const LoginPage = ({ ...prop }) => {
       if (!validateEmailForm(email)) {
         errors.email = '올바른 이메일을 입력해주세요.';
       }
-      if (!validateEmailEmpty(email)) errors.email = '이메일을 입력해주세요';
+      if (!validateEmailEmpty(email)) errors.email = '이메일을 입력해주세요.';
       if (!validatePasswordLength(password)) {
         errors.password = '비밀번호를 8자 이상 작성해주세요.';
       }
       if (!validatePasswordEmpty(password)) {
-        errors.password = '비밀번호를 입력해주세요';
+        errors.password = '비밀번호를 입력해주세요.';
       }
 
       return errors;
