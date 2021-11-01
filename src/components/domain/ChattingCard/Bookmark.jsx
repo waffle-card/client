@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import React from 'react';
 import Icons from '@components/base/Icons';
 import Text from '@components/base/Text';
 import styled from '@emotion/styled';
