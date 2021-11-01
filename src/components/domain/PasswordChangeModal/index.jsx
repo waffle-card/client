@@ -90,25 +90,29 @@ const PasswordChangeModal = ({ visible, onClose, onSubmit, ...props }) => {
         errors.currentPassword = '비밀번호를 8자 이상 작성해주세요.';
       }
       if (!validatePasswordEmpty(currentPassword)) {
-        errors.currentPassword = '비밀번호를 입력해주세요';
+        errors.currentPassword = '비밀번호를 입력해주세요.';
       }
 
       if (!validatePasswordLength(newPassword)) {
         errors.newPassword = '비밀번호를 8자 이상 작성해주세요.';
       }
       if (!validatePasswordEmpty(newPassword)) {
-        errors.newPassword = '비밀번호를 입력해주세요';
+        errors.newPassword = '비밀번호를 입력해주세요.';
       }
 
       if (!validatePasswordLength(passwordConfirm)) {
         errors.passwordConfirm = '비밀번호를 8자 이상 작성해주세요.';
       }
       if (!validatePasswordEmpty(passwordConfirm)) {
-        errors.passwordConfirm = '비밀번호를 입력해주세요';
+        errors.passwordConfirm = '비밀번호를 입력해주세요.';
+      }
+
+      if (currentPassword === newPassword) {
+        errors.newPassword = '이전 비밀번호와 일치합니다.';
       }
 
       if (newPassword !== passwordConfirm) {
-        errors.passwordConfirm = '입력한 비밀번호가 다릅니다';
+        errors.passwordConfirm = '비밀번호가 일치하는지 확인해주세요.';
       }
 
       return errors;

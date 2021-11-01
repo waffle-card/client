@@ -4,7 +4,7 @@ import styled from '@emotion/styled';
 import { useForm } from '@hooks';
 import PropTypes from 'prop-types';
 import { Modal, Text, Button, Input, Spinner } from '@components';
-import { validateNameEmpty } from '@validators';
+import { validateNameEmpty, validateNameLength } from '@validators';
 
 const StyledModal = styled(Modal)`
   width: 100%;
@@ -66,6 +66,9 @@ const NameChangeModal = ({ visible, onClose, onSubmit, ...props }) => {
       const errors = {};
 
       if (!validateNameEmpty(name)) errors.name = '이름을 입력해주세요';
+
+      if (!validateNameLength(name))
+        errors.name = '이름을 10글자 이내로 작성해주세요';
 
       return errors;
     },

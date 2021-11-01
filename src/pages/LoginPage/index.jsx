@@ -67,12 +67,12 @@ const LoginPage = ({ ...prop }) => {
       if (!validateEmailForm(email)) {
         errors.email = '올바른 이메일을 입력해주세요.';
       }
-      if (!validateEmailEmpty(email)) errors.email = '이메일을 입력해주세요';
+      if (!validateEmailEmpty(email)) errors.email = '이메일을 입력해주세요.';
       if (!validatePasswordLength(password)) {
         errors.password = '비밀번호를 8자 이상 작성해주세요.';
       }
       if (!validatePasswordEmpty(password)) {
-        errors.password = '비밀번호를 입력해주세요';
+        errors.password = '비밀번호를 입력해주세요.';
       }
 
       return errors;
