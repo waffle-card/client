@@ -32,7 +32,7 @@ const Title = styled.div`
   align-items: center;
 `;
 
-const StyleText = styled(Text)`
+const StyledText = styled(Text)`
   white-space: nowrap;
   @media ${Common.media.sm} {
     font-size: 10px;
@@ -67,7 +67,7 @@ const Header = ({ backgroundColor, ...props }) => {
       </Icons>
       <Title style={{ width: '120px' }}>
         <EmojiBox>{Emoji}</EmojiBox>
-        <StyleText block>{title}</StyleText>
+        <StyledText block>{title}</StyledText>
       </Title>
       <Icons style={{ width: '120px', justifyContent: 'end' }}>
         <Like />

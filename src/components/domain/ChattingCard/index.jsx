@@ -78,7 +78,7 @@ const SecondHashtags = styled.div`
   margin-top: 12px;
 `;
 
-const StyleText = styled(Text)`
+const StyledText = styled(Text)`
   @media ${Common.media.sm} {
     font-size: 10px;
   }
@@ -317,9 +317,9 @@ const ChattingCard = ({
     logs.map((log, index) => (
       <ChatContainer isMine={log.id === myId} key={index}>
         <Message logId={log.id} key={index} myId={myId}>
-          <StyleText block>
+          <StyledText block>
             {log.name}: {log.chat}
-          </StyleText>
+          </StyledText>
         </Message>
       </ChatContainer>
     ));
@@ -332,7 +332,7 @@ const ChattingCard = ({
   const secondHashtags = ['#해쉬태그를만들어봐요', '#최대한길게길게갑시다'];
 
   const hashtagsDiv = hashtags =>
-    hashtags.map(hashtag => <StyleText block>{hashtag}</StyleText>);
+    hashtags.map(hashtag => <StyledText block>{hashtag}</StyledText>);
 
   return (
     <StyledModal

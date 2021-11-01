@@ -5,7 +5,7 @@ import Text from '@components/base/Text';
 import styled from '@emotion/styled';
 import Common from '@styles';
 
-const StyleText = styled(Text)`
+const StyledText = styled(Text)`
   @media ${Common.media.sm} {
     font-size: ${Common.fontSize.micro};
     padding-top: 0;
@@ -46,7 +46,7 @@ const Like = () => {
   return (
     <>
       <Icons.Like onClick={handleLikeClick}></Icons.Like>
-      <StyleText block>{likeCount}</StyleText>
+      <StyledText block>{likeCount}</StyledText>
     </>
   );
 };
