@@ -10,18 +10,7 @@ const Anchor = styled.a`
   text-decoration: none;
 `;
 
-const Delete = ({
-  fontSize = '24px',
-  color = 'white',
-  href,
-  onClick,
-  ...props
-}) => {
-  const iconStyle = {
-    fontSize,
-    color,
-  };
-
+const Delete = ({ color = 'white', href, onClick, ...props }) => {
   const handleClick = useCallback(
     e => {
       onClick && onClick(e);
@@ -32,7 +21,12 @@ const Delete = ({
   return (
     <Anchor href={href}>
       <Icon
-        style={{ ...iconStyle, ...props.style }}
+        style={{
+          fontSize: 'inherit',
+          color,
+          cursor: 'pointer',
+          ...props.style,
+        }}
         onClick={handleClick}
         {...props}>
         clear

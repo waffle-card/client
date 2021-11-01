@@ -2,19 +2,8 @@ import Icon from '@material-ui/core/Icon';
 import PropTypes from 'prop-types';
 import useToggle from '@hooks/useToggle';
 
-const Favorite = ({
-  fontSize = '24px',
-  color = 'white',
-  active = false,
-  onClick,
-  ...props
-}) => {
-  const iconStyle = {
-    fontSize,
-    color,
-  };
-
-  const [favorited, toggle] = useToggle(active);
+const Bookmark = ({ color = 'white', active = false, onClick, ...props }) => {
+  const [bookmarked, toggle] = useToggle(active);
 
   const handleClick = e => {
     toggle();
@@ -23,19 +12,19 @@ const Favorite = ({
 
   return (
     <Icon
-      style={{ ...iconStyle, ...props.style }}
+      style={{ fontSize: 'inherit', color, cursor: 'pointer', ...props.style }}
       onClick={handleClick}
       {...props}>
-      {favorited ? `star` : `star_border`}
+      {bookmarked ? `star` : `star_border`}
     </Icon>
   );
 };
 
-Favorite.propTypes = {
+Bookmark.propTypes = {
   fontSize: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   color: PropTypes.string,
   active: PropTypes.bool,
   onClick: PropTypes.func,
 };
 
-export default Favorite;
+export default Bookmark;

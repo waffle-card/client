@@ -23,8 +23,8 @@ Custom.argTypes = {
       emoji: '👿',
       cardColor: Common.colors.indigo,
       createdAt: '2021-10-23T00:33:31.554Z',
-      favoriteToggle: false,
-      favoriteCount: 12,
+      bookmarkToggle: false,
+      bookmarkCount: 12,
       likeToggle: true,
       likeCount: 27,
       hashTags: [
@@ -50,8 +50,8 @@ Custom.argTypes = {
   onClickLikeIcon: {
     action: 'onClickLikeIcon',
   },
-  onClickFavoriteIcon: {
-    action: 'onClickFavoriteIcon',
+  onClickBookmarkIcon: {
+    action: 'onClickBookmarkIcon',
   },
 };
 
@@ -65,8 +65,8 @@ export const MyCard = args => {
     emoji: '🦁',
     cardColor: Common.colors.purple,
     createdAt: '2021-10-23T00:33:31.554Z',
-    favoriteToggle: false,
-    favoriteCount: 7,
+    bookmarkToggle: false,
+    bookmarkCount: 7,
     likeToggle: true,
     likeCount: 13,
     hashTags: ['나의카드', '마우스 호버', 'EditBox', '생겨요!'],
@@ -80,8 +80,8 @@ MyCard.argTypes = {
   onClickLikeIcon: {
     action: 'onClickLikeIcon',
   },
-  onClickFavoriteIcon: {
-    action: 'onClickFavoriteIcon',
+  onClickBookmarkIcon: {
+    action: 'onClickBookmarkIcon',
   },
   onClickEditIcon: {
     action: 'onClickEditIcon',
@@ -97,8 +97,8 @@ export const TodayCards = args => {
     emoji: '👽',
     cardColor: Common.colors.indigo,
     createdAt: '2021-10-23T00:33:31.554Z',
-    favoriteToggle: false,
-    favoriteCount: 12,
+    bookmarkToggle: false,
+    bookmarkCount: 12,
     likeToggle: true,
     likeCount: 27,
     hashTags: [
