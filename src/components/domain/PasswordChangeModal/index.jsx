@@ -9,7 +9,7 @@ import {
   validatePasswordLength,
   validatePasswordConfirm,
 } from '@validators';
-import { authApi, userApi } from '@apis';
+import { userApi } from '@apis';
 import Swal from 'sweetalert2';
 import { useHistory } from 'react-router';
 

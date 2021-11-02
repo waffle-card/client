@@ -65,7 +65,7 @@ const cardApi = {
     request.get(`posts/channel/${CHANNEL_ID}`, { params }),
   createCard: post =>
     authRequest.post('posts/create', { ...post, channelId: CHANNEL_ID }),
-  getCard: postId => request.post(`posts/${postId}`),
+  getCard: postId => request.get(`posts/${postId}`),
   updateCard: post => authRequest.put('posts/update', post),
   deleteCard: postId => authRequest.delete('posts/delete', postId),
   createCardLike: postId => authRequest.post('likes/create', postId),
