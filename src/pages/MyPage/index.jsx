@@ -1,14 +1,17 @@
 import styled from '@emotion/styled';
 import Common from '@styles';
-import { useState } from 'react';
-
+import { useEffect, useState } from 'react';
+import { authApi } from '@apis';
 import {
   Text,
   Button,
+  Spinner,
   BackButton,
   NameChangeModal,
   PasswordChangeModal,
 } from '@components';
+import Swal from 'sweetalert2';
+import { useHistory } from 'react-router';
 
 const MyPageContainer = styled.div`
   padding: 40px 0;
@@ -62,8 +65,37 @@ const StyledButton = styled(Button)`
 `;
 
 const MyPage = ({ ...prop }) => {
+  const history = useHistory();
   const [nameModalVisible, setNameModalVisible] = useState(false);
   const [passWordModalVisible, setPassWordModalVisible] = useState(false);
+  const [userInfo, setUserInfo] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    const getUserInfo = async () => {
+      setIsLoading(true);
+      const response = await authApi.getAuthUser();
+      if (!response.data) {
+        Swal.fire({
+          title: '🤯',
+          text: '로그인을 하고 접근해주세요.',
+          confirmButtonColor: Common.colors.point,
+        }).then(() => {
+          history.push('/login');
+        });
+        setIsLoading(false);
+        return;
+      }
+      const userInfo = {
+        id: response.data._id,
+        userName: response.data.fullName,
+        email: response.data.email,
+      };
+      setUserInfo(userInfo);
+      setIsLoading(false);
+    };
+    getUserInfo();
+  }, [history]);
 
   const handleClickChangeNameButton = () => {
     setNameModalVisible(true);
@@ -73,8 +105,18 @@ const MyPage = ({ ...prop }) => {
     setPassWordModalVisible(true);
   };
 
-  const handleClickLogoutButton = () => {
-    console.log('Logout!');
+  const handleClickLogoutButton = async () => {
+    setIsLoading(false);
+    await authApi.logout();
+    sessionStorage.removeItem('WAFFLE_TOKEN');
+    setIsLoading(false);
+    Swal.fire({
+      title: '👋🏻',
+      text: '로그아웃되었습니다.',
+      confirmButtonColor: Common.colors.point,
+    }).then(() => {
+      history.push('/');
+    });
   };
 
   return (
@@ -85,11 +127,11 @@ const MyPage = ({ ...prop }) => {
         <TextContainer>
           <InfoBox>
             <Text>이메일</Text>
-            <Text size={Common.fontSize.large}>waffleCard@naver.com</Text>
+            <Text size={Common.fontSize.large}>{userInfo.email}&nbsp;</Text>
           </InfoBox>
           <InfoBox>
             <Text>이름(닉네임)</Text>
-            <Text size={Common.fontSize.large}>내이름은운영자</Text>
+            <Text size={Common.fontSize.large}>{userInfo.userName}&nbsp;</Text>
           </InfoBox>
         </TextContainer>
         <ButtonContainer>
@@ -120,6 +162,7 @@ const MyPage = ({ ...prop }) => {
           setPassWordModalVisible(false);
         }}
       />
+      <Spinner loading={isLoading} />
     </MyPageContainer>
   );
 };

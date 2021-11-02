@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { useSessionStorage } from '@hooks';
 
 const API_END_POINT = 'http://13.209.30.200';
 const CHANNEL_ID = '616a204c22996f0bc94f6e17';
@@ -8,7 +7,7 @@ const setInterceptors = (instance, auth) => {
   auth &&
     instance.interceptors.request.use(
       config => {
-        const TOKEN = JSON.parse(useSessionStorage('WAFFLE_TOKEN'));
+        const TOKEN = JSON.parse(sessionStorage.getItem('WAFFLE_TOKEN'));
         config.headers.Authorization = `bearer ${TOKEN}`;
         return config;
       },
@@ -50,7 +49,10 @@ const authApi = {
 const userApi = {
   getUserInfo: userId => request.get(`users/${userId}`),
   putUserName: userName =>
-    authRequest.put('settings/update-user', { username: userName }),
+    authRequest.put('settings/update-user', {
+      username: userName,
+      fullName: userName,
+    }),
   putUserPassword: password =>
     authRequest.put('settings/update-password', { password }),
 };

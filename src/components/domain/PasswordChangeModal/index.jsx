@@ -9,6 +9,9 @@ import {
   validatePasswordLength,
   validatePasswordConfirm,
 } from '@validators';
+import { authApi, userApi } from '@apis';
+import Swal from 'sweetalert2';
+import { useHistory } from 'react-router';
 
 const StyledModal = styled(Modal)`
   width: 100%;
@@ -28,17 +31,17 @@ const StyledText = styled(Text)`
 `;
 
 const ConfirmBox = styled.div`
-  &:nth-child(1) {
+  &:nth-of-type(1) {
     margin-bottom: 64px;
   }
-  &:nth-child(2) {
+  &:nth-of-type(2) {
     margin-bottom: 24px;
   }
   @media ${Common.media.sm} {
-    &:nth-child(1) {
+    &:nth-of-type(1) {
       margin-bottom: 48px;
     }
-    &:nth-child(2) {
+    &:nth-of-type(2) {
       margin-bottom: 16px;
     }
   }
@@ -78,25 +81,37 @@ const StyledButton = styled(Button)`
 `;
 
 const PasswordChangeModal = ({ visible, onClose, onSubmit, ...props }) => {
+  const history = useHistory();
   const { isLoading, errors, handleChange, handleSubmit } = useForm({
     initialValues: {
-      currentPassword: '',
       newPassword: '',
       passwordConfirm: '',
     },
-    onSubmit: async values => {
-      alert(JSON.stringify(values));
+    onSubmit: async ({ newPassword }) => {
+      try {
+        await userApi.putUserPassword(newPassword);
+        sessionStorage.removeItem('WAFFLE_TOKEN');
+        Swal.fire({
+          title: '😎',
+          text: '비밀번호 변경완료! 다시 로그인해주세요!',
+          confirmButtonColor: Common.colors.point,
+        }).then(() => {
+          history.push('/login');
+        });
+      } catch (error) {
+        Swal.fire({
+          title: '🥲',
+          text: error,
+          confirmButtonColor: Common.colors.point,
+        });
+      }
     },
-    validate: ({ currentPassword, newPassword, passwordConfirm }) => {
+    validate: ({ newPassword, passwordConfirm }) => {
       const errors = {};
 
-      if (!validatePasswordLength(currentPassword)) {
-        errors.currentPassword = '비밀번호를 8자 이상 작성해주세요.';
+      if (!validatePasswordEmpty(newPassword)) {
+        errors.newPassword = '비밀번호를 입력해주세요.';
       }
-      if (!validatePasswordEmpty(currentPassword)) {
-        errors.currentPassword = '비밀번호를 입력해주세요.';
-      }
-
       if (!validatePasswordLength(newPassword)) {
         errors.newPassword = '비밀번호를 8자 이상 작성해주세요.';
       }
@@ -104,15 +119,14 @@ const PasswordChangeModal = ({ visible, onClose, onSubmit, ...props }) => {
         errors.newPassword = '비밀번호를 입력해주세요.';
       }
 
+      if (!validatePasswordEmpty(passwordConfirm)) {
+        errors.newPassword = '비밀번호를 입력해주세요.';
+      }
       if (!validatePasswordLength(passwordConfirm)) {
         errors.passwordConfirm = '비밀번호를 8자 이상 작성해주세요.';
       }
       if (!validatePasswordEmpty(passwordConfirm)) {
         errors.passwordConfirm = '비밀번호를 입력해주세요.';
-      }
-
-      if (validatePasswordConfirm(currentPassword, newPassword)) {
-        errors.newPassword = '이전 비밀번호와 일치합니다.';
       }
 
       if (!validatePasswordConfirm(newPassword, passwordConfirm)) {
@@ -131,7 +145,7 @@ const PasswordChangeModal = ({ visible, onClose, onSubmit, ...props }) => {
     <>
       <StyledModal visible={visible} onClose={onClose} {...props}>
         <form onSubmit={handleSubmit}>
-          <ConfirmBox>
+          {/* <ConfirmBox>
             <StyledText>현재 비밀번호</StyledText>
             <InputContainer>
               <Input
@@ -141,7 +155,7 @@ const PasswordChangeModal = ({ visible, onClose, onSubmit, ...props }) => {
               />
               <ErrorText color="red">{errors.currentPassword}&nbsp;</ErrorText>
             </InputContainer>
-          </ConfirmBox>
+          </ConfirmBox> */}
           <ConfirmBox>
             <StyledText>새 비밀번호</StyledText>
             <InputContainer>
