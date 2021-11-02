@@ -80,8 +80,9 @@ const SignUpPage = ({ ...prop }) => {
           title: '🎉',
           text: '환영합니다! 이제 로그인을 해주세요!',
           confirmButtonColor: Common.colors.point,
+        }).then(() => {
+          history.push('/login');
         });
-        history.push('/login');
       } catch (error) {
         Swal.fire({
           title: '🥲',

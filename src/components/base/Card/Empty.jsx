@@ -3,6 +3,7 @@ import React, { useCallback } from 'react';
 import { Icons, Text } from '@components';
 import PropTypes from 'prop-types';
 import Common from '@styles';
+import { useHistory } from 'react-router-dom';
 
 const Container = styled.div`
   display: flex;
@@ -12,7 +13,7 @@ const Container = styled.div`
   max-width: 265px;
   min-width: 180px;
   background-color: ${({ backgroundColor }) => backgroundColor};
-  border: 5px dashed black;
+  border: 5px dashed ${Common.colors.secondary};
   border-radius: 16px;
   box-sizing: border-box;
   cursor: pointer;
@@ -31,17 +32,19 @@ const Container = styled.div`
 `;
 
 const Empty = ({ fontSize, iconSize, onClick, ...props }) => {
+  const history = useHistory();
   const handleClick = useCallback(
     e => {
       onClick && onClick(e);
+      history.push('/card/create');
     },
-    [onClick],
+    [onClick, history],
   );
 
   return (
     <Container onClick={handleClick} {...props}>
-      <Icons.Add fontSize={iconSize} color="black" />
-      <Text size={fontSize} color="black">
+      <Icons.Add fontSize={iconSize} color={Common.colors.secondary} />
+      <Text size={fontSize} color={Common.colors.secondary}>
         카드 만들기
       </Text>
     </Container>

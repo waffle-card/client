@@ -11,6 +11,7 @@ import {
   EmojiPickerActiveButton,
   HashTagInput,
 } from '@components';
+import { useHistory } from 'react-router-dom';
 
 const StyledModal = styled(Modal)`
   display: flex;
@@ -82,6 +83,7 @@ const CardEditModal = ({
   onSubmit,
   ...props
 }) => {
+  const history = useHistory();
   const [cardData, setCard] = useState(initialCardData);
 
   const handleEmojiClick = emoji => {
@@ -105,11 +107,13 @@ const CardEditModal = ({
 
   const handleClose = e => {
     onClose && onClose(e);
+    history.goBack();
   };
 
   const handleSubmit = e => {
     e.preventDefault();
     onSubmit && onSubmit(cardData);
+    history.push('cards/my');
   };
 
   return (

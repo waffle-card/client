@@ -3,6 +3,7 @@ import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { Icons } from '@components';
 import Common from '@styles';
+import { useHistory } from 'react-router-dom';
 
 const Container = styled.div`
   display: flex;
@@ -34,13 +35,15 @@ const EditBox = ({
   onDeleteIconClick,
   ...props
 }) => {
+  const history = useHistory();
   const handleClickEditIcon = useCallback(
     e => {
       e.preventDefault();
       e.stopPropagation();
+      history.push(`/card/update:${cardId}`);
       onEditIconClick && onEditIconClick(e);
     },
-    [onEditIconClick],
+    [onEditIconClick, history, cardId],
   );
 
   const handleClickDeleteIcon = useCallback(
