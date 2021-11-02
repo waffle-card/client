@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import Common from '@styles';
-import { Route, Link } from 'react-router-dom';
+import { Route, useHistory } from 'react-router-dom';
 
 import {
   Icons,
@@ -48,6 +48,7 @@ const StyledCard = styled(WaffleCard)`
 `;
 
 const HomePage = () => {
+  const history = useHistory();
   return (
     <HomeContainer>
       <nav>
@@ -61,42 +62,66 @@ const HomePage = () => {
         <Icons backgroundColor={'rgba(0, 0, 0, 0)'}>
           <Icons.ArrowBack color={Common.colors.primary} fontSize={'30px'} />
         </Icons>
-        <Link to={`/card/chat:1`}>
-          <StyledCard />
-        </Link>
-        <Link to={`/card/chat:2`}>
-          <StyledCard />
-        </Link>
-        <Link to={`/card/chat:3`}>
-          <StyledCard />
-        </Link>
-        <Link to={`/card/chat:4`}>
-          <StyledCard />
-        </Link>
-        <Link to={`/card/chat:5`}>
-          <StyledCard />
-        </Link>
-        <Link to={`/card/chat:6`}>
-          <StyledCard />
-        </Link>
-        <Link to={`/card/chat:7`}>
-          <StyledCard />
-        </Link>
-        <Link to={`/card/chat:8`}>
-          <StyledCard />
-        </Link>
-        <Link to={`/card/chat:9`}>
-          <StyledCard />
-        </Link>
-        <Link to={`/card/chat:10`}>
-          <StyledCard />
-        </Link>
-        <Link to={`/card/chat:11`}>
-          <StyledCard />
-        </Link>
-        <Link to={`/card/chat:12`}>
-          <StyledCard />
-        </Link>
+        <StyledCard
+          onClickCard={() => {
+            history.push('/card/chat:1');
+          }}
+        />
+        <StyledCard
+          onClickCard={() => {
+            history.push('/card/chat:2');
+          }}
+        />
+        <StyledCard
+          onClickCard={() => {
+            history.push('/card/chat:3');
+          }}
+        />
+        <StyledCard
+          onClickCard={() => {
+            history.push('/card/chat:4');
+          }}
+        />
+        <StyledCard
+          onClickCard={() => {
+            history.push('/card/chat:5');
+          }}
+        />
+        <StyledCard
+          onClickCard={() => {
+            history.push('/card/chat:6');
+          }}
+        />
+        <StyledCard
+          onClickCard={() => {
+            history.push('/card/chat:7');
+          }}
+        />
+        <StyledCard
+          onClickCard={() => {
+            history.push('/card/chat:8');
+          }}
+        />
+        <StyledCard
+          onClickCard={() => {
+            history.push('/card/chat:9');
+          }}
+        />
+        <StyledCard
+          onClickCard={() => {
+            history.push('/card/chat:10');
+          }}
+        />
+        <StyledCard
+          onClickCard={() => {
+            history.push('/card/chat:11');
+          }}
+        />
+        <StyledCard
+          onClickCard={() => {
+            history.push('/card/chat:12');
+          }}
+        />
         <Icons backgroundColor={'rgba(0, 0, 0, 0)'}>
           <Icons.ArrowFront color={Common.colors.primary} fontSize={'30px'} />
         </Icons>
