@@ -106,16 +106,30 @@ const MyPage = ({ ...prop }) => {
   };
 
   const handleClickLogoutButton = async () => {
-    setIsLoading(false);
-    await authApi.logout();
-    sessionStorage.removeItem('WAFFLE_TOKEN');
-    setIsLoading(false);
+    const logout = async () => {
+      setIsLoading(false);
+      await authApi.logout();
+      sessionStorage.removeItem('WAFFLE_TOKEN');
+      setIsLoading(false);
+      Swal.fire({
+        title: '👋🏻',
+        text: '로그아웃되었습니다.',
+        confirmButtonColor: Common.colors.point,
+      }).then(() => {
+        history.push('/');
+      });
+    };
     Swal.fire({
-      title: '👋🏻',
-      text: '로그아웃되었습니다.',
+      title: '🤔',
+      text: '정말 로그아웃 하시겠습니까?',
+      showCloseButton: true,
+      showCancelButton: true,
       confirmButtonColor: Common.colors.point,
-    }).then(() => {
-      history.push('/');
+      cancelButtonColor: 'red',
+    }).then(res => {
+      if (res.isConfirmed) {
+        logout();
+      }
     });
   };
 
