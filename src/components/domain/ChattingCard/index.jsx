@@ -3,7 +3,13 @@ import { Text, Modal, Spinner } from '@components';
 import Common from '@styles';
 import PropTypes from 'prop-types';
 import { authApi, cardApi } from '@apis';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from 'react';
 import { useHistory, useLocation } from 'react-router';
 import Swal from 'sweetalert2';
 import Header from './Header';
@@ -233,7 +239,6 @@ const ChattingCard = ({ children, backgroundColor, visible, ...props }) => {
   const [title, setTitle] = useState('');
   const [comments, setComments] = useState([]);
   const [author, setAuthor] = useState('');
-  const [meta, setMeta] = useState({});
   const [cardColor, setCardColor] = useState('');
   const [hashTags, setHashTags] = useState([]);
 
@@ -241,7 +246,7 @@ const ChattingCard = ({ children, backgroundColor, visible, ...props }) => {
   // const postId = useLocation().state.postId;
   const postId = '618147ff7924de107cd3ea2d';
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const getCardData = async () => {
       setIsLoading(true);
       // const response = useLocation().state.cardData;
@@ -264,7 +269,8 @@ const ChattingCard = ({ children, backgroundColor, visible, ...props }) => {
         title: response.data.title,
         comments: response.data.comments,
         author: response.data.author,
-        meta: response.data.meta,
+        cardColor: JSON.parse(response.data.meta).cardColor,
+        hashTags: JSON.parse(response.data.meta).hashTags,
       };
 
       setCardData(cardData);
@@ -276,18 +282,24 @@ const ChattingCard = ({ children, backgroundColor, visible, ...props }) => {
   // const handleInsert = useCallback();
 
   useEffect(() => {
-    setTitle(cardData?.title);
+    setTitle(cardData.title);
   }, [cardData.title]);
 
   useEffect(() => {
-    setComments(cardData?.comments);
+    setComments(cardData.comments);
   }, [cardData.comments]);
 
   useEffect(() => {
-    setAuthor(cardData?.author);
+    setAuthor(cardData.author);
   }, [cardData.author]);
 
-  console.log(author);
+  useEffect(() => {
+    setCardColor(cardData.cardColor);
+  }, [cardData.cardColor]);
+
+  useEffect(() => {
+    setHashTags(cardData.hashTags);
+  }, [cardData.hashTags]);
 
   const firstHashtags = [
     '#안녕하세요반갑습니다',
@@ -310,17 +322,18 @@ const ChattingCard = ({ children, backgroundColor, visible, ...props }) => {
         <SecondHashtags>{hashtagsDiv(secondHashtags)}</SecondHashtags>
       </HeaderContainer>
       <BodyContainer>
-        {comments?.map(comment => (
-          <ChatContainer
-            isMine={comment.author._id === userId}
-            key={comment._id}>
-            <Message isMine={comment.author._id === userId}>
-              <StyledText block>
-                {comment.author.fullName} : {comment.comment}
-              </StyledText>
-            </Message>
-          </ChatContainer>
-        ))}
+        {comments &&
+          comments?.map(comment => (
+            <ChatContainer
+              isMine={comment.author._id === userId}
+              key={comment._id}>
+              <Message isMine={comment.author._id === userId}>
+                <StyledText block>
+                  {comment.author.fullName} : {comment.comment}
+                </StyledText>
+              </Message>
+            </ChatContainer>
+          ))}
       </BodyContainer>
       <Footer>
         <InputBox>
