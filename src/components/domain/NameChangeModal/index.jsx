@@ -57,7 +57,13 @@ const StyledButton = styled(Button)`
   }
 `;
 
-const NameChangeModal = ({ visible, onClose, onSubmit, ...props }) => {
+const NameChangeModal = ({
+  visible,
+  onChangeUserName,
+  onClose,
+  onSubmit,
+  ...props
+}) => {
   const history = useHistory();
   const [initLoading, setInitLoading] = useState(false);
   const [userName, setUserName] = useState('');
@@ -68,6 +74,7 @@ const NameChangeModal = ({ visible, onClose, onSubmit, ...props }) => {
     onSubmit: async ({ userName }) => {
       try {
         await userApi.putUserName(userName);
+        onChangeUserName(userName);
         Swal.fire({
           title: '😎',
           text: '닉네임 변경완료!',
@@ -78,7 +85,7 @@ const NameChangeModal = ({ visible, onClose, onSubmit, ...props }) => {
       } catch (error) {
         Swal.fire({
           title: '🥲',
-          text: error,
+          text: error.data,
           confirmButtonColor: Common.colors.point,
         });
       }

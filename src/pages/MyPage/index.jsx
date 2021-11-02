@@ -105,6 +105,10 @@ const MyPage = ({ ...prop }) => {
     setPassWordModalVisible(true);
   };
 
+  const handleChangeUserName = userName => {
+    setUserInfo({ ...userInfo, userName });
+  };
+
   const handleClickLogoutButton = async () => {
     const logout = async () => {
       setIsLoading(false);
@@ -166,6 +170,7 @@ const MyPage = ({ ...prop }) => {
       </ContentContainer>
       <NameChangeModal
         visible={nameModalVisible}
+        onChangeUserName={handleChangeUserName}
         onClose={() => {
           setNameModalVisible(false);
         }}
