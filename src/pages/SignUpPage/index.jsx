@@ -13,6 +13,8 @@ import {
   validatePasswordLength,
   validatePasswordConfirm,
 } from '@validators';
+import { authApi } from '@apis';
+import Swal from 'sweetalert2';
 
 const StyledBackButton = styled(BackButton)`
   position: relative;
@@ -57,23 +59,41 @@ const SignUpPage = ({ ...prop }) => {
   const { isLoading, errors, handleChange, handleSubmit } = useForm({
     initialValues: {
       email: '',
-      name: '',
+      userName: '',
       password: '',
       passwordConfirm: '',
     },
-    onSubmit: async values => {
-      alert(JSON.stringify(values));
+    onSubmit: async ({ email, userName, password }) => {
+      try {
+        await authApi.signUp({
+          email,
+          fullName: userName,
+          password,
+        });
+        Swal.fire({
+          title: '🎉',
+          text: '환영합니다! 이제 로그인을 해주세요!',
+          confirmButtonColor: Common.colors.point,
+        });
+        history.push('/login');
+      } catch (error) {
+        Swal.fire({
+          title: '🥲',
+          text: error.data,
+          confirmButtonColor: Common.colors.point,
+        });
+      }
     },
-    validate: ({ email, name, password, passwordConfirm }) => {
+    validate: ({ email, userName, password, passwordConfirm }) => {
       const errors = {};
-
       if (!validateEmailForm(email)) {
         errors.email = '올바른 이메일을 입력해주세요.';
       }
       if (!validateEmailEmpty(email)) errors.email = '이메일을 입력해주세요.';
-      if (!validateNameEmpty(name)) errors.name = '이름을 입력해주세요.';
-      if (!validateNameLength(name))
-        errors.name = '이름을 10글자 이내로 작성해주세요.';
+      if (!validateNameEmpty(userName))
+        errors.userName = '이름을 입력해주세요.';
+      if (!validateNameLength(userName))
+        errors.userName = '이름을 10글자 이내로 작성해주세요.';
       if (!validatePasswordLength(password)) {
         errors.password = '비밀번호를 8자 이상 작성해주세요.';
       }
@@ -100,8 +120,8 @@ const SignUpPage = ({ ...prop }) => {
           <Input name="email" type="email" onChange={handleChange} />
           <StyledText color="red">{errors.email}&nbsp;</StyledText>
           <StyledText>이름(닉네임)</StyledText>
-          <Input name="name" type="name" onChange={handleChange} />
-          <StyledText color="red">{errors.name}&nbsp;</StyledText>
+          <Input name="userName" type="text" onChange={handleChange} />
+          <StyledText color="red">{errors.userName}&nbsp;</StyledText>
           <StyledText>비밀번호</StyledText>
           <Input name="password" type="password" onChange={handleChange} />
           <StyledText color="red">{errors.password}&nbsp;</StyledText>
