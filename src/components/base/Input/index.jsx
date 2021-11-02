@@ -21,6 +21,12 @@ const Input = styled.input`
     height: 56px;
     font-size: ${Common.fontSize.large};
   }
+
+  &:focus {
+    border: 2px solid;
+    border-color: ${Common.colors.point};
+    outline-width: 0;
+  }
 `;
 
 export default Input;
