@@ -52,12 +52,12 @@ const EditBoxContainer = styled.div`
   }
 `;
 
-const Message = ({ children, logId, key, myId, ...props }) => {
+const Message = ({ children, isMine, ...props }) => {
   const [ref, state] = useHover(null);
 
   return (
-    <ChatBox ref={ref} key={key}>
-      {logId === myId && state ? (
+    <ChatBox ref={ref}>
+      {isMine && state ? (
         <EditBoxContainer>
           <EditBox />
         </EditBoxContainer>

@@ -56,18 +56,15 @@ const EmojiBox = styled(Text)`
   }
 `;
 
-const Header = ({ backgroundColor, ...props }) => {
-  const title = '내이름은 제페토';
-  const Emoji = '🥱';
-
+const Header = ({ backgroundColor, title, authorName, ...props }) => {
   return (
     <Top>
       <Icons style={{ width: '120px' }}>
         <Icons.ArrowBack></Icons.ArrowBack>
       </Icons>
       <Title style={{ width: '120px' }}>
-        <EmojiBox>{Emoji}</EmojiBox>
-        <StyledText block>{title}</StyledText>
+        <EmojiBox>{title}</EmojiBox>
+        <StyledText block>{authorName}</StyledText>
       </Title>
       <Icons style={{ width: '120px', justifyContent: 'end' }}>
         <Like />
