@@ -52,8 +52,9 @@ const UserProvider = ({ children, initialUserInfo }) => {
           title: '🥳',
           text: '로그인 되었습니다!',
           confirmButtonColor: Common.colors.point,
+        }).then(() => {
+          history.push('/');
         });
-        history.push('/');
       } catch (error) {
         Swal.fire({
           title: '🥲',
