@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import Common from '@styles';
 import Swal from 'sweetalert2';
 import { authApi, cardApi } from '@apis';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 // import { useAuthUser } from '@hooks';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import {
   Text,
   Modal,
@@ -81,51 +81,76 @@ const StyledButton = styled(Button)`
 `;
 
 const CardEditModal = ({
-  Edit,
+  editMode,
   initialCardData = {},
   onClose,
   onSubmit,
   ...props
 }) => {
   const history = useHistory();
+  const location = useLocation();
   const [isLoading, setIsLoading] = useState(false);
-  const [cardData, setCard] = useState(initialCardData);
+  const [cardData, setCardData] = useState(initialCardData);
 
-  useEffect(() => {
-    const getUserInfo = async () => {
-      setIsLoading(true);
-      const response = await authApi.getAuthUser();
-      if (!response.data) {
-        Swal.fire({
-          title: '🤯',
-          text: '로그인을 하고 접근해주세요.',
-          confirmButtonColor: Common.colors.point,
-        }).then(() => {
-          history.push('/login');
-        });
-        setIsLoading(false);
-        return;
-      }
+  const checkLoggedIn = useCallback(async () => {
+    setIsLoading(true);
+    const response = await authApi.getAuthUser();
+    if (!response.data) {
+      Swal.fire({
+        title: '🤯',
+        text: '로그인을 하고 접근해주세요.',
+        confirmButtonColor: Common.colors.point,
+      }).then(() => {
+        history.push('/login');
+      });
       setIsLoading(false);
-    };
-    getUserInfo();
+      return;
+    }
+    setIsLoading(false);
   }, [history]);
 
+  const initEditCardData = useCallback(async cardId => {
+    try {
+      const response = await cardApi.getCard(cardId);
+      const { cardColor, hashTags } = JSON.parse(response.data.meta);
+      const newCardData = {
+        emoji: response.data.title,
+        cardColor,
+        hashTags,
+      };
+      setCardData(newCardData);
+    } catch (error) {
+      Swal.fire({
+        title: '😱',
+        text: error,
+        confirmButtonColor: Common.colors.point,
+      });
+    }
+  }, []);
+
+  useEffect(() => {
+    checkLoggedIn();
+    if (editMode) {
+      const cardId = location.state.cardId;
+      initEditCardData(cardId);
+    }
+  }, [checkLoggedIn, editMode, initEditCardData, location.state]);
+
   const handleEmojiClick = emoji => {
-    setCard(cardData => {
+    setCardData(cardData => {
       return { ...cardData, emoji };
     });
   };
 
   const handleChangeCardColor = e => {
     const { name, value } = e.target;
-    setCard(cardData => {
+    setCardData(cardData => {
       return { ...cardData, [name]: value };
     });
   };
 
   const handleChangeHashTagInput = values => {
-    setCard(cardData => {
+    setCardData(cardData => {
       return { ...cardData, hashTags: values };
     });
   };
@@ -183,7 +208,7 @@ const CardEditModal = ({
       });
       return;
     }
-    Edit ? editCard() : createCard();
+    editMode ? editCard() : createCard();
 
     onSubmit && onSubmit(cardData);
   };
