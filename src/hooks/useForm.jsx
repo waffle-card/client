@@ -15,7 +15,7 @@ const useForm = ({ initialValues, onSubmit, validate }) => {
   };
 
   useEffect(() => {
-    return () => setIsLoading(false); // cleanup function을 이용
+    return () => setIsLoading(false);
   }, []);
 
   const handleSubmit = async event => {
