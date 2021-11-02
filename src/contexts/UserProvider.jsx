@@ -7,6 +7,9 @@ import Common from '@styles';
 
 const userReducer = (state, { type, payload }) => {
   switch (type) {
+    case 'INIT_USER': {
+      return payload;
+    }
     case 'SET_USER':
       return {
         id: payload.username,
@@ -23,13 +26,13 @@ const userReducer = (state, { type, payload }) => {
 const UserContext = createContext();
 export const useUserContext = () => useContext(UserContext);
 
-const UserProvider = ({ children, initialUserInfo = {} }) => {
+const UserProvider = ({ children, initialUserInfo }) => {
   const [userInfo, dispatch] = useReducer(userReducer, initialUserInfo);
 
   const history = useHistory();
 
   useEffect(() => {
-    dispatch({ type: 'GET_USER', payload: initialUserInfo });
+    dispatch({ type: 'INIT_USER', payload: initialUserInfo || {} });
   }, [initialUserInfo]);
 
   const handleLogin = useCallback(

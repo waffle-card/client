@@ -13,29 +13,37 @@ import {
   validatePasswordLength,
   validatePasswordConfirm,
 } from '@validators';
+import { authApi } from '@apis';
+import Swal from 'sweetalert2';
 
 const StyledBackButton = styled(BackButton)`
-  position: relative;
-  top: 32px;
-  left: 32px;
+  margin: 0 0 32px 50px;
   @media ${Common.media.sm} {
-    left: 16px;
+    margin-left: 16px;
   }
 `;
 
 const Container = styled.div`
-  position: absolute;
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  padding: 40px 0;
+  @media ${Common.media.sm} {
+    padding: 20px 0;
+  }
 `;
 
 const ContentContainer = styled.form`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   width: 100%;
   max-width: 550px;
+  margin: 0 auto;
+  @media ${Common.media.sm} {
+    padding: 0 16px;
+  }
+`;
+
+const InputWrapper = styled.div`
+  width: 100%;
 `;
 
 const Header = styled(Text)`
@@ -57,23 +65,41 @@ const SignUpPage = ({ ...prop }) => {
   const { isLoading, errors, handleChange, handleSubmit } = useForm({
     initialValues: {
       email: '',
-      name: '',
+      userName: '',
       password: '',
       passwordConfirm: '',
     },
-    onSubmit: async values => {
-      alert(JSON.stringify(values));
+    onSubmit: async ({ email, userName, password }) => {
+      try {
+        await authApi.signUp({
+          email,
+          fullName: userName,
+          password,
+        });
+        Swal.fire({
+          title: '🎉',
+          text: '환영합니다! 이제 로그인을 해주세요!',
+          confirmButtonColor: Common.colors.point,
+        });
+        history.push('/login');
+      } catch (error) {
+        Swal.fire({
+          title: '🥲',
+          text: error.data,
+          confirmButtonColor: Common.colors.point,
+        });
+      }
     },
-    validate: ({ email, name, password, passwordConfirm }) => {
+    validate: ({ email, userName, password, passwordConfirm }) => {
       const errors = {};
-
       if (!validateEmailForm(email)) {
         errors.email = '올바른 이메일을 입력해주세요.';
       }
       if (!validateEmailEmpty(email)) errors.email = '이메일을 입력해주세요.';
-      if (!validateNameEmpty(name)) errors.name = '이름을 입력해주세요.';
-      if (!validateNameLength(name))
-        errors.name = '이름을 10글자 이내로 작성해주세요.';
+      if (!validateNameEmpty(userName))
+        errors.userName = '이름을 입력해주세요.';
+      if (!validateNameLength(userName))
+        errors.userName = '이름을 10글자 이내로 작성해주세요.';
       if (!validatePasswordLength(password)) {
         errors.password = '비밀번호를 8자 이상 작성해주세요.';
       }
@@ -89,19 +115,19 @@ const SignUpPage = ({ ...prop }) => {
   });
 
   return (
-    <>
+    <Container>
       <StyledBackButton />
-      <Container>
-        <ContentContainer onSubmit={handleSubmit}>
-          <Header size={Common.fontSize.large}>
-            회원가입하고 와플카드 만들러가요!
-          </Header>
+      <ContentContainer onSubmit={handleSubmit}>
+        <Header size={Common.fontSize.large}>
+          회원가입하고 와플카드 만들러가요!
+        </Header>
+        <InputWrapper>
           <StyledText>이메일</StyledText>
           <Input name="email" type="email" onChange={handleChange} />
           <StyledText color="red">{errors.email}&nbsp;</StyledText>
           <StyledText>이름(닉네임)</StyledText>
-          <Input name="name" type="name" onChange={handleChange} />
-          <StyledText color="red">{errors.name}&nbsp;</StyledText>
+          <Input name="userName" type="text" onChange={handleChange} />
+          <StyledText color="red">{errors.userName}&nbsp;</StyledText>
           <StyledText>비밀번호</StyledText>
           <Input name="password" type="password" onChange={handleChange} />
           <StyledText color="red">{errors.password}&nbsp;</StyledText>
@@ -111,12 +137,12 @@ const SignUpPage = ({ ...prop }) => {
             type="password"
             onChange={handleChange}
           />
-          <StyledText color="red">{errors.passwordConfirm}&nbsp;</StyledText>
-          <StyledButton type="submit">가입하기</StyledButton>
-        </ContentContainer>
-        <Spinner loading={isLoading} />
-      </Container>
-    </>
+        </InputWrapper>
+        <StyledText color="red">{errors.passwordConfirm}&nbsp;</StyledText>
+        <StyledButton type="submit">가입하기</StyledButton>
+      </ContentContainer>
+      <Spinner loading={isLoading} />
+    </Container>
   );
 };
 
