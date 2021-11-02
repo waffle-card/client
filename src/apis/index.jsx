@@ -8,7 +8,7 @@ const setInterceptors = (instance, auth) => {
   auth &&
     instance.interceptors.request.use(
       config => {
-        const TOKEN = JSON.parse(useSessionStorage('authUser'));
+        const TOKEN = JSON.parse(useSessionStorage('WAFFLE_TOKEN'));
         config.headers.Authorization = `bearer ${TOKEN}`;
         return config;
       },

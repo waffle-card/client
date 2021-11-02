@@ -44,7 +44,7 @@ const UserProvider = ({ children, initialUserInfo }) => {
           email: response.data.user.email,
         };
         sessionStorage.setItem(
-          'waffleCardUserToken',
+          'WAFFLE_TOKEN',
           JSON.stringify(response.data.token),
         );
         dispatch({ type: 'SET_USER', payload: userInfo });
@@ -75,7 +75,7 @@ const UserProvider = ({ children, initialUserInfo }) => {
       confirmButtonColor: Common.colors.point,
     });
     history.push('/');
-    sessionStorage.removeItem('userInfo');
+    sessionStorage.removeItem('WAFFLE_TOKEN');
     dispatch({ type: 'DELETE_USER' });
   }, [history]);
 
