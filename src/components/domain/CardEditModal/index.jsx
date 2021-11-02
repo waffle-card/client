@@ -81,7 +81,7 @@ const StyledButton = styled(Button)`
 `;
 
 const CardEditModal = ({
-  Edit,
+  editMode,
   initialCardData = {},
   onClose,
   onSubmit,
@@ -130,7 +130,7 @@ const CardEditModal = ({
 
   useEffect(() => {
     checkLoggedIn();
-    if (Edit) {
+    if (editMode) {
       const cardId = location.state.cardId;
       initEditCardData(cardId);
     }
@@ -208,7 +208,7 @@ const CardEditModal = ({
       });
       return;
     }
-    Edit ? editCard() : createCard();
+    editMode ? editCard() : createCard();
 
     onSubmit && onSubmit(cardData);
   };
