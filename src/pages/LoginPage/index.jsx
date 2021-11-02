@@ -17,12 +17,6 @@ const StyledBackButton = styled(BackButton)`
   @media ${Common.media.sm} {
     margin-left: 16px;
   }
-  /* position: relative;
-  top: 32px;
-  left: 32px;
-  @media ${Common.media.sm} {
-    left: 16px;
-  } */
 `;
 
 const Container = styled.div`
