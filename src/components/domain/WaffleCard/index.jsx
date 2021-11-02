@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { Card, Text, Icons, EditBox } from '@components';
 import styled from '@emotion/styled';
 import { useHover } from '@hooks';
+import { useHistory } from 'react-router-dom';
 
 const countDaysFromToday = date => {
   date = typeof date === 'string' ? new Date(date) : date;
@@ -116,7 +117,7 @@ const WaffleCard = ({
   ...props
 }) => {
   const {
-    id = 'null',
+    cardId = 'null',
     emoji = '🧇',
     cardColor = Common.colors.yellow,
     createdAt = new Date(),
@@ -126,7 +127,7 @@ const WaffleCard = ({
     likeCount = 0,
     hashTags = [],
   } = cardData || {};
-
+  const history = useHistory();
   const [ref, hover] = useHover(null);
   const days = useMemo(() => countDaysFromToday(createdAt), [createdAt]);
 
@@ -155,18 +156,18 @@ const WaffleCard = ({
   );
 
   const handleClickEditIcon = e => {
-    console.log('수정');
+    history.push(`/card/update/${cardId}`);
     onClickEditIcon && onClickEditIcon(e);
   };
 
   const handleClickDeleteIcon = e => {
-    console.log('삭제');
+    history.push(`/`);
     onClickDeleteIcon && onClickDeleteIcon(e);
   };
 
   return (
     <StyledCard
-      data-id={id}
+      data-id={cardId}
       backgroundColor={cardColor}
       width={width}
       height={height}
@@ -175,7 +176,6 @@ const WaffleCard = ({
       {...props}>
       {myCard && hover ? (
         <StyledEditBox
-          cardId={id}
           onEditIconClick={handleClickEditIcon}
           onDeleteIconClick={handleClickDeleteIcon}
         />
@@ -217,7 +217,17 @@ const WaffleCard = ({
 
 WaffleCard.defaultProps = {
   myCard: false,
-  cardData: {},
+  cardData: {
+    cardId: 'null',
+    emoji: '🧇',
+    cardColor: Common.colors.yellow,
+    createdAt: new Date(),
+    bookmarkToggle: false,
+    bookmarkCount: 0,
+    likeToggle: false,
+    likeCount: 0,
+    hashTags: [],
+  },
   width: 256,
 };
 

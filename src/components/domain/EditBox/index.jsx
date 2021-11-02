@@ -3,7 +3,6 @@ import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { Icons } from '@components';
 import Common from '@styles';
-import { useHistory } from 'react-router-dom';
 
 const Container = styled.div`
   display: flex;
@@ -28,22 +27,19 @@ const Container = styled.div`
 `;
 
 const EditBox = ({
-  cardId,
   backgroundColor,
   fontColor,
   onEditIconClick,
   onDeleteIconClick,
   ...props
 }) => {
-  const history = useHistory();
   const handleClickEditIcon = useCallback(
     e => {
       e.preventDefault();
       e.stopPropagation();
-      history.push(`/card/update:${cardId}`);
       onEditIconClick && onEditIconClick(e);
     },
-    [onEditIconClick, history, cardId],
+    [onEditIconClick],
   );
 
   const handleClickDeleteIcon = useCallback(
@@ -75,7 +71,6 @@ const EditBox = ({
 };
 
 EditBox.propTypes = {
-  cardId: PropTypes.string.isRequired,
   backgroundColor: PropTypes.string,
   fontColor: PropTypes.string,
 };

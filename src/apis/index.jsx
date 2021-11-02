@@ -63,10 +63,36 @@ const cardApi = {
   getUserBookMarkCardList: userId => {}, // TODO:  API 확인 후 리팩토링
   getChannelCardList: params =>
     request.get(`posts/channel/${CHANNEL_ID}`, { params }),
-  createCard: post =>
-    authRequest.post('posts/create', { ...post, channelId: CHANNEL_ID }),
+  createCard: ({ emoji, cardColor, hashTags }) => {
+    const cardFormData = new FormData();
+    cardFormData.append('title', emoji);
+    cardFormData.append('image', null);
+    cardFormData.append('channelId', CHANNEL_ID);
+    cardFormData.append(
+      'meta',
+      JSON.stringify({
+        cardColor,
+        hashTags,
+      }),
+    );
+    authRequest.post('posts/create', cardFormData);
+  },
   getCard: postId => request.get(`posts/${postId}`),
-  updateCard: post => authRequest.put('posts/update', post),
+  updateCard: ({ cardId, emoji, cardColor, hashTags }) => {
+    const cardFormData = new FormData();
+    cardFormData.append('postId', cardId);
+    cardFormData.append('title', emoji);
+    cardFormData.append('image', null);
+    cardFormData.append('channelId', CHANNEL_ID);
+    cardFormData.append(
+      'meta',
+      JSON.stringify({
+        cardColor,
+        hashTags,
+      }),
+    );
+    authRequest.put('posts/update', cardFormData);
+  },
   deleteCard: postId => authRequest.delete('posts/delete', postId),
   createCardLike: postId => authRequest.post('likes/create', postId),
   deleteCardLike: postId => authRequest.delete('likes/delete', postId),

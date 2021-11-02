@@ -1,17 +1,21 @@
-import React, { useState } from 'react';
-import styled from '@emotion/styled';
+import React, { useEffect, useState } from 'react';
 import Common from '@styles';
+import Swal from 'sweetalert2';
+import { authApi, cardApi } from '@apis';
 import PropTypes from 'prop-types';
+import styled from '@emotion/styled';
+// import { useAuthUser } from '@hooks';
+import { useHistory } from 'react-router-dom';
 import {
-  WaffleCard,
-  Button,
-  ColorPalette,
   Text,
   Modal,
-  EmojiPickerActiveButton,
+  Button,
+  Spinner,
+  WaffleCard,
   HashTagInput,
+  ColorPalette,
+  EmojiPickerActiveButton,
 } from '@components';
-import { useHistory } from 'react-router-dom';
 
 const StyledModal = styled(Modal)`
   display: flex;
@@ -77,14 +81,35 @@ const StyledButton = styled(Button)`
 `;
 
 const CardEditModal = ({
-  visible,
-  initialCardData,
+  Edit,
+  initialCardData = {},
   onClose,
   onSubmit,
   ...props
 }) => {
   const history = useHistory();
+  const [isLoading, setIsLoading] = useState(false);
   const [cardData, setCard] = useState(initialCardData);
+
+  useEffect(() => {
+    const getUserInfo = async () => {
+      setIsLoading(true);
+      const response = await authApi.getAuthUser();
+      if (!response.data) {
+        Swal.fire({
+          title: '🤯',
+          text: '로그인을 하고 접근해주세요.',
+          confirmButtonColor: Common.colors.point,
+        }).then(() => {
+          history.push('/login');
+        });
+        setIsLoading(false);
+        return;
+      }
+      setIsLoading(false);
+    };
+    getUserInfo();
+  }, [history]);
 
   const handleEmojiClick = emoji => {
     setCard(cardData => {
@@ -110,14 +135,61 @@ const CardEditModal = ({
     history.goBack();
   };
 
-  const handleSubmit = e => {
+  const createCard = async () => {
+    try {
+      await cardApi.createCard(cardData);
+      Swal.fire({
+        title: '🥳',
+        text: '당신의 와플카드가 생성되었어요!',
+        confirmButtonColor: Common.colors.point,
+      }).then(() => {
+        history.push('/cards/my');
+      });
+    } catch (error) {
+      Swal.fire({
+        title: '😱',
+        text: error,
+        confirmButtonColor: Common.colors.point,
+      });
+    }
+  };
+
+  const editCard = async () => {
+    try {
+      await cardApi.updateCard(cardData);
+      Swal.fire({
+        title: '😎',
+        text: '당신의 와플카드가 수정되었어요!',
+        confirmButtonColor: Common.colors.point,
+      }).then(() => {
+        history.push('/cards/my');
+      });
+    } catch (error) {
+      Swal.fire({
+        title: '😱',
+        text: error,
+        confirmButtonColor: Common.colors.point,
+      });
+    }
+  };
+
+  const handleSubmit = async e => {
     e.preventDefault();
+    if (cardData.hashTags.length <= 0) {
+      Swal.fire({
+        title: '😱',
+        text: '최소 1개 이상의 해시태그를 작성해주세요.',
+        confirmButtonColor: Common.colors.point,
+      });
+      return;
+    }
+    Edit ? editCard() : createCard();
+
     onSubmit && onSubmit(cardData);
-    history.push('cards/my');
   };
 
   return (
-    <StyledModal visible={visible} onClose={onClose} {...props}>
+    <StyledModal visible onClose={onClose} {...props}>
       <FormContainer onSubmit={handleSubmit} id="cardForm">
         <CardEditContainer>
           <StyledWaffleCard cardData={cardData} />
@@ -140,6 +212,12 @@ const CardEditModal = ({
                 color="white"
                 onChange={handleChangeHashTagInput}
               />{' '}
+              <StyledText size={14} color="red">
+                {cardData.hashTags.length <= 0
+                  ? '최소 1개 이상의 해시태그를 작성해주세요.'
+                  : null}
+                &nbsp;
+              </StyledText>
             </Wrapper>
           </EditContainer>
         </CardEditContainer>
@@ -156,6 +234,7 @@ const CardEditModal = ({
           </StyledButton>
         </ButtonContainer>
       </FormContainer>
+      <Spinner loading={isLoading} />
     </StyledModal>
   );
 };
@@ -169,6 +248,12 @@ CardEditModal.propTypes = {
 
 CardEditModal.defaultProps = {
   visible: false,
+  initialCardData: {
+    cardId: 'test',
+    emoji: '🧇',
+    cardColor: Common.colors.yellow,
+    hashTags: [],
+  },
 };
 
 export default CardEditModal;
