@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const useForm = ({ initialValues, onSubmit, validate }) => {
   const [values, setValues] = useState(initialValues);
@@ -13,6 +13,10 @@ const useForm = ({ initialValues, onSubmit, validate }) => {
     }
     setValues({ ...values, [name]: value.trim() });
   };
+
+  useEffect(() => {
+    return () => setIsLoading(false); // cleanup function을 이용
+  }, []);
 
   const handleSubmit = async event => {
     setIsLoading(true);

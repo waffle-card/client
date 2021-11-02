@@ -138,7 +138,6 @@ const SignUpPage = ({ ...prop }) => {
             onChange={handleChange}
           />
         </InputWrapper>
-
         <StyledText color="red">{errors.passwordConfirm}&nbsp;</StyledText>
         <StyledButton type="submit">가입하기</StyledButton>
       </ContentContainer>
