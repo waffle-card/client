@@ -85,8 +85,8 @@ export default {
   },
 
   media: {
-    sm: '(max-width: 768px)',
-    md: '(min-width : 769px) and (max-width : 1200px)',
+    sm: '(max-width: 767px)',
+    md: '(min-width : 768px) and (max-width : 1200px)',
     lg: '(min-width: 1201px)',
   },
 };

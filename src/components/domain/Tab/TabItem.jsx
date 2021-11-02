@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import PropTypes from 'prop-types';
 import Common from '@styles';
 import { rgba } from 'polished';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 const TabItemWrapper = styled.div`
   display: flex;
@@ -35,7 +35,7 @@ const TabItemTitle = styled.span`
   }
 `;
 
-const StyledLink = styled(Link)`
+const LinkBox = styled.div`
   display: block;
   width: 100%;
 `;
@@ -50,9 +50,13 @@ const TabItem = ({
   fontSize,
   ...props
 }) => {
+  const history = useHistory();
   return (
     <TabItemWrapper active={active} {...props}>
-      <StyledLink to={`/cards/${param}`}>
+      <LinkBox
+        onClick={() => {
+          history.push(`/cards/${param}`);
+        }}>
         <TabItemTitle
           active={active}
           pointColor={pointColor}
@@ -61,7 +65,7 @@ const TabItem = ({
           {...props}>
           {title}
         </TabItemTitle>
-      </StyledLink>
+      </LinkBox>
     </TabItemWrapper>
   );
 };

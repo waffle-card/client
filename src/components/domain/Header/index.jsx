@@ -1,10 +1,8 @@
 import styled from '@emotion/styled';
 import Common from '@styles';
-import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-
-import Icons from '@components/base/Icons';
-import Text from '@components/base/Text';
+import { useHistory } from 'react-router-dom';
+import { Icons, Text } from '@components';
 
 const HeaderTag = styled.header`
   display: flex;
@@ -21,14 +19,11 @@ const HeaderTag = styled.header`
 const Logo = styled.h1`
   margin: 0;
   font-size: 0;
-  a {
-    display: block;
-    img {
-      width: auto;
-      height: 24px;
-      @media ${Common.media.sm} {
-        height: 18px;
-      }
+  img {
+    width: auto;
+    height: 24px;
+    @media ${Common.media.sm} {
+      height: 18px;
     }
   }
 `;
@@ -38,26 +33,31 @@ const StyleTextLogin = styled(Text)`
 `;
 
 const Header = ({ backgroundColor = Common.colors.background, ...props }) => {
+  const history = useHistory();
   return (
     <HeaderTag backgroundColor={backgroundColor}>
-      <Logo>
-        <Link to="/">
-          <img src={require('./logo.png').default} alt="logo" />
-        </Link>
+      <Logo
+        onClick={() => {
+          history.push('/');
+          window.location.reload();
+        }}>
+        <img src={require('./logo.png').default} alt="logo" />
       </Logo>
-      <Link to="/my-page">
-        <Icons>
-          <Icons.Person color={Common.colors.point} />
-        </Icons>
-      </Link>
-      {/* <Link to="/login">
-        <StyleTextLogin
-          color={Common.colors.point}
-          size={Common.fontSize.regular}
-          weight={Common.fontWeight.regular}>
-          로그인
-        </StyleTextLogin>
-      </Link> */}
+      <Icons
+        onClick={() => {
+          history.push('/my-page');
+        }}>
+        <Icons.Person color={Common.colors.point} />
+      </Icons>
+      <StyleTextLogin
+        color={Common.colors.point}
+        size={Common.fontSize.regular}
+        weight={Common.fontWeight.regular}
+        onClick={() => {
+          history.push('/login');
+        }}>
+        로그인
+      </StyleTextLogin>
     </HeaderTag>
   );
 };
