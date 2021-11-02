@@ -134,7 +134,7 @@ const CardEditModal = ({
       const cardId = location.state.cardId;
       initEditCardData(cardId);
     }
-  }, [checkLoggedIn, Edit, initEditCardData, location.state]);
+  }, [checkLoggedIn, editMode, initEditCardData, location.state]);
 
   const handleEmojiClick = emoji => {
     setCardData(cardData => {
