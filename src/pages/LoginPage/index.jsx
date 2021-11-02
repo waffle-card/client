@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Common from '@styles';
 import styled from '@emotion/styled';
 import { useForm } from '@hooks';
@@ -11,6 +11,8 @@ import {
   validatePasswordEmpty,
   validatePasswordLength,
 } from '@validators';
+import { authApi } from '@apis';
+import Swal from 'sweetalert2';
 
 const StyledBackButton = styled(BackButton)`
   margin: 0 0 32px 50px;
@@ -62,6 +64,7 @@ const StyledText = styled(Text)`
 const LoginPage = ({ ...prop }) => {
   const { handleLogin } = useUserContext();
   const history = useHistory();
+  const [initLoading, setInitLoading] = useState(false);
   const { isLoading, errors, handleChange, handleSubmit } = useForm({
     initialValues: {
       email: '',
@@ -87,6 +90,26 @@ const LoginPage = ({ ...prop }) => {
       return errors;
     },
   });
+
+  useEffect(() => {
+    const getUserInfo = async () => {
+      setInitLoading(true);
+      const response = await authApi.getAuthUser();
+      if (response.data._id) {
+        Swal.fire({
+          title: '🤯',
+          text: '이미 로그인 되어있습니다.',
+          confirmButtonColor: Common.colors.point,
+        }).then(() => {
+          history.push('/');
+        });
+        setInitLoading(false);
+        return;
+      }
+      setInitLoading(false);
+    };
+    getUserInfo();
+  }, [history]);
 
   const handleClickSignUpButton = () => {
     history.push('/signup');
@@ -116,7 +139,7 @@ const LoginPage = ({ ...prop }) => {
           가입하기
         </StyledButton>
       </ContentContainer>
-      <Spinner loading={isLoading} />
+      <Spinner loading={isLoading || initLoading} />
     </Container>
   );
 };

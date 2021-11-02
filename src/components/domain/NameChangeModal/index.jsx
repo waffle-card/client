@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Common from '@styles';
 import styled from '@emotion/styled';
 import { useForm } from '@hooks';
 import PropTypes from 'prop-types';
 import { Modal, Text, Button, Input, Spinner } from '@components';
 import { validateNameEmpty, validateNameLength } from '@validators';
+import { authApi, userApi } from '@apis';
+import Swal from 'sweetalert2';
+import { useHistory } from 'react-router';
 
 const StyledModal = styled(Modal)`
   width: 100%;
@@ -55,24 +58,64 @@ const StyledButton = styled(Button)`
 `;
 
 const NameChangeModal = ({ visible, onClose, onSubmit, ...props }) => {
+  const history = useHistory();
+  const [initLoading, setInitLoading] = useState(false);
+  const [userName, setUserName] = useState('');
   const { isLoading, errors, handleChange, handleSubmit } = useForm({
     initialValues: {
-      name: '',
+      userName: '',
     },
-    onSubmit: async values => {
-      alert(JSON.stringify(values));
+    onSubmit: async ({ userName }) => {
+      try {
+        await userApi.putUserName(userName);
+        Swal.fire({
+          title: '😎',
+          text: '닉네임 변경완료!',
+          confirmButtonColor: Common.colors.point,
+        }).then(() => {
+          history.push('/my-page');
+        });
+      } catch (error) {
+        Swal.fire({
+          title: '🥲',
+          text: error,
+          confirmButtonColor: Common.colors.point,
+        });
+      }
     },
-    validate: ({ name }) => {
+    validate: ({ userName }) => {
       const errors = {};
 
-      if (!validateNameEmpty(name)) errors.name = '이름을 입력해주세요';
+      if (!validateNameEmpty(userName)) errors.userName = '이름을 입력해주세요';
 
-      if (!validateNameLength(name))
-        errors.name = '이름을 10글자 이내로 작성해주세요';
+      if (!validateNameLength(userName))
+        errors.userName = '이름을 10글자 이내로 작성해주세요';
 
       return errors;
     },
   });
+
+  useEffect(() => {
+    const getUserInfo = async () => {
+      setInitLoading(false);
+      const response = await authApi.getAuthUser();
+      if (!response.data) {
+        Swal.fire({
+          title: '🤯',
+          text: '로그인을 하고 접근해주세요.',
+          confirmButtonColor: Common.colors.point,
+        }).then(() => {
+          history.push('/login');
+        });
+        setInitLoading(false);
+        return;
+      }
+      const userName = response.data.fullName;
+      setUserName(userName);
+      setInitLoading(false);
+    };
+    getUserInfo();
+  }, [history]);
 
   const handleClose = e => {
     onClose && onClose(e);
@@ -84,8 +127,13 @@ const NameChangeModal = ({ visible, onClose, onSubmit, ...props }) => {
         <form onSubmit={handleSubmit}>
           <StyledText>이름(닉네임)</StyledText>
           <InputContainer>
-            <Input name="name" type="text" onChange={handleChange} />
-            <ErrorText color="red">{errors.name}&nbsp;</ErrorText>
+            <Input
+              name="userName"
+              type="text"
+              placeholder={userName}
+              onChange={handleChange}
+            />
+            <ErrorText color="red">{errors.userName}&nbsp;</ErrorText>
           </InputContainer>
           <StyledButton type="submit">변경하기</StyledButton>
           <StyledButton
@@ -97,7 +145,7 @@ const NameChangeModal = ({ visible, onClose, onSubmit, ...props }) => {
           </StyledButton>
         </form>
       </StyledModal>
-      <Spinner loading={isLoading} />
+      <Spinner loading={isLoading || initLoading} />
     </>
   );
 };
