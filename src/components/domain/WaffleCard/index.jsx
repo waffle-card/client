@@ -156,7 +156,10 @@ const WaffleCard = ({
   );
 
   const handleClickEditIcon = e => {
-    history.push(`/card/update/${cardId}`);
+    history.push({
+      pathname: `/card/update/${cardId}`,
+      state: { cardId: cardId },
+    });
     onClickEditIcon && onClickEditIcon(e);
   };
 
