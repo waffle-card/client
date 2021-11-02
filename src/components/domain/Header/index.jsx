@@ -33,13 +33,6 @@ const Logo = styled.h1`
   }
 `;
 
-const StyledIconPerson = styled(Icons.Person)`
-  cursor: pointer;
-  @media ${Common.media.sm} {
-    font-size: 18px;
-  }
-`;
-
 const StyleTextLogin = styled(Text)`
   cursor: pointer;
 `;
@@ -53,7 +46,9 @@ const Header = ({ backgroundColor = Common.colors.background, ...props }) => {
         </Link>
       </Logo>
       <Link to="/my-page">
-        <StyledIconPerson color={Common.colors.point} />
+        <Icons>
+          <Icons.Person color={Common.colors.point} />
+        </Icons>
       </Link>
       {/* <Link to="/login">
         <StyleTextLogin
