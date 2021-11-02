@@ -17,27 +17,33 @@ import { authApi } from '@apis';
 import Swal from 'sweetalert2';
 
 const StyledBackButton = styled(BackButton)`
-  position: relative;
-  top: 32px;
-  left: 32px;
+  margin: 0 0 32px 50px;
   @media ${Common.media.sm} {
-    left: 16px;
+    margin-left: 16px;
   }
 `;
 
 const Container = styled.div`
-  position: absolute;
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  padding: 40px 0;
+  @media ${Common.media.sm} {
+    padding: 20px 0;
+  }
 `;
 
 const ContentContainer = styled.form`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   width: 100%;
   max-width: 550px;
+  margin: 0 auto;
+  @media ${Common.media.sm} {
+    padding: 0 16px;
+  }
+`;
+
+const InputWrapper = styled.div`
+  width: 100%;
 `;
 
 const Header = styled(Text)`
@@ -109,13 +115,13 @@ const SignUpPage = ({ ...prop }) => {
   });
 
   return (
-    <>
+    <Container>
       <StyledBackButton />
-      <Container>
-        <ContentContainer onSubmit={handleSubmit}>
-          <Header size={Common.fontSize.large}>
-            회원가입하고 와플카드 만들러가요!
-          </Header>
+      <ContentContainer onSubmit={handleSubmit}>
+        <Header size={Common.fontSize.large}>
+          회원가입하고 와플카드 만들러가요!
+        </Header>
+        <InputWrapper>
           <StyledText>이메일</StyledText>
           <Input name="email" type="email" onChange={handleChange} />
           <StyledText color="red">{errors.email}&nbsp;</StyledText>
@@ -131,12 +137,13 @@ const SignUpPage = ({ ...prop }) => {
             type="password"
             onChange={handleChange}
           />
-          <StyledText color="red">{errors.passwordConfirm}&nbsp;</StyledText>
-          <StyledButton type="submit">가입하기</StyledButton>
-        </ContentContainer>
-        <Spinner loading={isLoading} />
-      </Container>
-    </>
+        </InputWrapper>
+
+        <StyledText color="red">{errors.passwordConfirm}&nbsp;</StyledText>
+        <StyledButton type="submit">가입하기</StyledButton>
+      </ContentContainer>
+      <Spinner loading={isLoading} />
+    </Container>
   );
 };
 
