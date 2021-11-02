@@ -44,14 +44,17 @@ const IconWrapper = styled.div`
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  & span:nth-of-type(1) {
-    margin-right: 6px;
+`;
+
+const StyledText = styled(Text)`
+  @media ${Common.media.sm} {
+    font-size: ${Common.fontSize.small};
   }
-  & div:nth-of-type(1) {
-    margin-right: 8px;
+  @media ${Common.media.md} {
+    font-size: ${Common.fontSize.base};
   }
-  & span:nth-of-type(2) {
-    margin-right: 4px;
+  @media ${Common.media.lg} {
+    font-size: ${Common.fontSize.medium};
   }
 `;
 
@@ -90,7 +93,7 @@ const HashTag = styled(Text)`
   text-align: center;
   font-size: 1rem;
   @media ${Common.media.sm} {
-    font-size: ${Common.fontSize.small};
+    font-size: ${Common.fontSize.micro};
   }
   @media ${Common.media.md} {
     font-size: ${Common.fontSize.base};
@@ -178,20 +181,24 @@ const WaffleCard = ({
         />
       ) : null}
       <InfoContainer>
-        <Text block>{days <= 0 ? '오늘' : `${days}일 전`}</Text>
-        <IconWrapper size={8}>
-          <Icons.Like
-            fontSize={'20px'}
-            active={likeToggle}
-            onClick={handleClickLikeIcon}
-          />
-          <Text block>{bookmarkCount}</Text>
-          <Icons.Bookmark
-            fontSize={'20px'}
-            active={bookmarkToggle}
-            onClick={handleClickBookmarkIcon}
-          />
-          <Text block>{likeCount}</Text>
+        <StyledText block>{days <= 0 ? '오늘' : `${days}일 전`}</StyledText>
+        <IconWrapper>
+          <Icons>
+            <Icons.Like
+              fontSize={'20px'}
+              active={likeToggle}
+              onClick={handleClickLikeIcon}
+            />
+          </Icons>
+          <StyledText block>{bookmarkCount}</StyledText>
+          <Icons>
+            <Icons.Bookmark
+              fontSize={'20px'}
+              active={bookmarkToggle}
+              onClick={handleClickBookmarkIcon}
+            />
+          </Icons>
+          <StyledText block>{likeCount}</StyledText>
         </IconWrapper>
       </InfoContainer>
       <EmojiText block size={70}>
