@@ -11,8 +11,8 @@ const Container = styled.section`
   justify-content: center;
   align-items: center;
   min-height: 413px;
-  padding: 20px 0;
-  margin-top: 92px;
+  padding: 35px 0;
+  margin-top: 77px;
   overflow-x: scroll;
   -ms-overflow-style: none;
   &::-webkit-scrollbar {
@@ -45,6 +45,10 @@ const GuideWrap = styled.div`
 const StyledCard = styled(WaffleCard)`
   flex: 0 0 auto;
   margin: 0 10px;
+  &:hover {
+    transform: translateY(-18px);
+  }
+  transition: all 250ms ease-out;
 `;
 
 const StyledText = styled(Text)`
