@@ -4,13 +4,7 @@ import Common from '@styles';
 import PropTypes from 'prop-types';
 import { cardApi } from '@apis';
 import { getUserInfoByToken } from '@utils';
-import {
-  useCallback,
-  useEffect,
-  useLayoutEffect,
-  useRef,
-  useState,
-} from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useHistory, useLocation } from 'react-router';
 import Swal from 'sweetalert2';
 import Header from './Header';
@@ -234,7 +228,7 @@ const ChattingCard = ({ children, backgroundColor, visible, ...props }) => {
   const [hashTags, setHashTags] = useState([]);
 
   // API가 필요한 부분
-  const postId = useLocation().state.cardData._id;
+  const postId = useLocation().state.cardData.id;
 
   useEffect(() => {
     const getCardData = async () => {
@@ -348,6 +342,10 @@ const ChattingCard = ({ children, backgroundColor, visible, ...props }) => {
     }
   };
 
+  const handleRemove = commentId => {
+    setComments(comments.filter(comment => comment._id !== commentId));
+  };
+
   const hashtagsDiv = (begin, end) =>
     hashTags &&
     hashTags.slice(begin, end).map((hashtag, index) => (
@@ -368,10 +366,12 @@ const ChattingCard = ({ children, backgroundColor, visible, ...props }) => {
       </HeaderContainer>
       <BodyContainer>
         {comments &&
-          comments?.map(comment => (
+          comments.map(comment => (
             <ChatContainer
               isMine={userInfo && comment.author._id === userInfo.id}>
               <Message
+                commentId={comment._id}
+                onRemove={handleRemove}
                 isMine={userInfo && comment.author._id === userInfo.id}
                 key={comment._id}>
                 <StyledText block>
