@@ -70,7 +70,8 @@ const Hr = styled.hr`
 
 const FirstHashtags = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: ${({ length }) =>
+    length === 1 ? 'center' : length === 2 ? 'space-evenly' : 'space-between'};
   color: white;
   margin-top: 12px;
   white-space: pre-wrap;
@@ -78,24 +79,11 @@ const FirstHashtags = styled.div`
 
 const SecondHashtags = styled.div`
   display: flex;
-  justify-content: space-evenly;
+  justify-content: ${({ length }) =>
+    length === 1 ? 'center' : 'space-evenly'};
   color: white;
   margin-top: 12px;
   white-space: pre-wrap;
-`;
-
-const StyledText = styled(Text)`
-  @media ${Common.media.sm} {
-    font-size: 10px;
-  }
-
-  @media ${Common.media.md} {
-    font-size: ${Common.fontSize.md};
-  }
-
-  @media ${Common.media.lg} {
-    font-size: ${Common.fontSize.lg};
-  }
 `;
 
 const BodyContainer = styled.div`
@@ -147,6 +135,20 @@ const ChatContainer = styled.div`
 
   @media ${Common.media.lg} {
     padding: 10px 0 10px 10px;
+  }
+`;
+
+const StyledText = styled(Text)`
+  @media ${Common.media.sm} {
+    font-size: 10px;
+  }
+
+  @media ${Common.media.md} {
+    font-size: ${Common.fontSize.md};
+  }
+
+  @media ${Common.media.lg} {
+    font-size: ${Common.fontSize.lg};
   }
 `;
 
@@ -358,8 +360,12 @@ const ChattingCard = ({ children, backgroundColor, visible, ...props }) => {
       <HeaderContainer backgroundColor={cardColor}>
         <Header title={title} authorName={author?.fullName} />
         <Hr />
-        <FirstHashtags>{hashtagsDiv(0, 3)}</FirstHashtags>
-        <SecondHashtags>{hashtagsDiv(3, 5)}</SecondHashtags>
+        <FirstHashtags length={hashtagsDiv(0, 3).length}>
+          {hashtagsDiv(0, 3)}
+        </FirstHashtags>
+        <SecondHashtags length={hashtagsDiv(0, 3).length}>
+          {hashtagsDiv(3, 5)}
+        </SecondHashtags>
       </HeaderContainer>
       <BodyContainer>
         {comments &&
@@ -367,14 +373,10 @@ const ChattingCard = ({ children, backgroundColor, visible, ...props }) => {
             <ChatContainer
               isMine={userInfo && comment.author._id === userInfo.id}>
               <Message
-                commentId={comment._id}
+                comment={comment}
                 onRemove={handleRemove}
                 isMine={userInfo && comment.author._id === userInfo.id}
-                key={comment._id}>
-                <StyledText block>
-                  {comment.author.fullName} : {comment.comment}
-                </StyledText>
-              </Message>
+                key={comment._id}></Message>
             </ChatContainer>
           ))}
         <ScrollToBottom />
