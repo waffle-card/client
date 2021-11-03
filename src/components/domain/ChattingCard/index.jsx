@@ -360,10 +360,10 @@ const ChattingCard = ({ children, backgroundColor, visible, ...props }) => {
       <HeaderContainer backgroundColor={cardColor}>
         <Header title={title} authorName={author?.fullName} />
         <Hr />
-        <FirstHashtags length={hashtagsDiv(0, 3).length}>
+        <FirstHashtags length={hashtagsDiv(0, 3)?.length}>
           {hashtagsDiv(0, 3)}
         </FirstHashtags>
-        <SecondHashtags length={hashtagsDiv(0, 3).length}>
+        <SecondHashtags length={hashtagsDiv(0, 3)?.length}>
           {hashtagsDiv(3, 5)}
         </SecondHashtags>
       </HeaderContainer>
