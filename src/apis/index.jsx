@@ -99,7 +99,14 @@ const cardApi = {
   },
   createCardLike: postId => authRequest.post('likes/create', postId),
   deleteCardLike: postId => authRequest.delete('likes/delete', postId),
-  createCardBookMark: postId => {}, // TODO:  API 확인 후 리팩토링
+  addCardBookMark: (userId, cardId) => {
+    const userInfo = userApi.getUserInfo(userId);
+    authRequest.put('settings/update-user', {
+      // username: userName,
+      // fullName: userName,
+      // meta,
+    });
+  },
   deleteCardBookMark: postId => {}, // TODO:  API 확인 후 리팩토링
   getCardComment: commentId => {}, // TODO:  API 확인 후 리팩토링
   createCardComment: commentInfo =>
