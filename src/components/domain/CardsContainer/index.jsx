@@ -94,7 +94,7 @@ const CardsContainer = ({ myCard, cardList, userInfo, currentParam }) => {
       </Icons> */}
       {cardList.length === 0 ? (
         myCard ? (
-          <EmptyCard />
+          <EmptyCard fontSize={'16px'} />
         ) : (
           <GuideWrap>
             <StyledText>

@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import React, { useCallback } from 'react';
-import { Icons, Text } from '@components';
+import { Text } from '@components';
 import PropTypes from 'prop-types';
 import Common from '@styles';
 import { useHistory } from 'react-router-dom';
@@ -17,6 +17,14 @@ const Container = styled.div`
   border-radius: 16px;
   box-sizing: border-box;
   cursor: pointer;
+  transition: all 200ms ease-out;
+  &:hover {
+    border: 5px dashed ${Common.colors.point};
+    p {
+      transition: all 200ms ease-out;
+      color: ${Common.colors.point};
+    }
+  }
   @media ${Common.media.sm} {
     width: 180px;
     height: calc(180px * 1.56);
@@ -31,6 +39,10 @@ const Container = styled.div`
   }
 `;
 
+const IconText = styled(Text)`
+  margin-bottom: 6px;
+`;
+
 const Empty = ({ fontSize, iconSize, onClick, ...props }) => {
   const history = useHistory();
   const handleClick = useCallback(
@@ -43,7 +55,9 @@ const Empty = ({ fontSize, iconSize, onClick, ...props }) => {
 
   return (
     <Container onClick={handleClick} {...props}>
-      <Icons.Add fontSize={iconSize} color={Common.colors.secondary} />
+      <IconText size={'75px'} color={Common.colors.secondary}>
+        +
+      </IconText>
       <Text size={fontSize} color={Common.colors.secondary}>
         카드 만들기
       </Text>
