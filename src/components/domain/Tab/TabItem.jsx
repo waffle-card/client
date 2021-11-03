@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import PropTypes from 'prop-types';
 import Common from '@styles';
 import { rgba } from 'polished';
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 const TabItemWrapper = styled.div`
   display: flex;
