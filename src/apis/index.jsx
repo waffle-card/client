@@ -93,10 +93,8 @@ const cardApi = {
     );
     authRequest.put('posts/update', cardFormData);
   },
-  deleteCard: cardId => {
-    console.log('deleteCard - cardId', cardId);
-    authRequest.delete('/posts/delete', { id: cardId });
-  },
+  deleteCard: cardId =>
+    authRequest.delete('posts/delete', { data: { id: cardId } }),
   createCardLike: postId => authRequest.post('likes/create', postId),
   deleteCardLike: postId => authRequest.delete('likes/delete', postId),
   addCardBookMark: (userId, cardId) => {

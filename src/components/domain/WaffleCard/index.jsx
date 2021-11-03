@@ -168,12 +168,18 @@ const WaffleCard = ({
   const handleClickDeleteIcon = async e => {
     const deleteCard = async () => {
       await cardApi.deleteCard(cardId);
-      // window.location.reload();
+      Swal.fire({
+        title: '😝',
+        text: '와플카드가 삭제되었어요!',
+        confirmButtonColor: Common.colors.point,
+      }).then(() => {
+        window.location.reload();
+      });
     };
     try {
       Swal.fire({
         title: '🤔',
-        text: '정말 와플카드를 삭제하시겠습니까?',
+        text: '정말 와플카드를 삭제하실껀가요?',
         showCloseButton: true,
         showCancelButton: true,
         confirmButtonColor: Common.colors.point,
