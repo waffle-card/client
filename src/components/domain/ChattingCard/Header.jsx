@@ -4,6 +4,7 @@ import Text from '@components/base/Text';
 import Bookmark from './Bookmark';
 import Like from './Like';
 import Common from '@styles';
+import { useHistory } from 'react-router';
 
 const Top = styled.div`
   display: flex;
@@ -56,18 +57,17 @@ const EmojiBox = styled(Text)`
   }
 `;
 
-const Header = ({ backgroundColor, ...props }) => {
-  const title = '내이름은 제페토';
-  const Emoji = '🥱';
+const Header = ({ backgroundColor, title, authorName, ...props }) => {
+  const history = useHistory();
 
   return (
     <Top>
       <Icons style={{ width: '120px' }}>
-        <Icons.ArrowBack></Icons.ArrowBack>
+        <Icons.ArrowBack onClick={() => history.push('/')}></Icons.ArrowBack>
       </Icons>
       <Title style={{ width: '120px' }}>
-        <EmojiBox>{Emoji}</EmojiBox>
-        <StyledText block>{title}</StyledText>
+        <EmojiBox>{title}</EmojiBox>
+        <StyledText block>{authorName}</StyledText>
       </Title>
       <Icons style={{ width: '120px', justifyContent: 'end' }}>
         <Like />

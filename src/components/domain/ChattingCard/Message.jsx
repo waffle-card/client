@@ -1,7 +1,10 @@
 import styled from '@emotion/styled';
 import Common from '@styles';
-import EditBox from '@components/domain/EditBox';
+import { EditBox, Text } from '@components';
 import { useHover } from '@hooks';
+import { cardApi } from '@apis';
+import Swal from 'sweetalert2';
+import { useState } from 'react';
 
 const ChatBox = styled.div`
   display: flex;
@@ -33,6 +36,34 @@ const ChatBox = styled.div`
   }
 `;
 
+const StyledText = styled(Text)`
+  display: flex;
+  align-items: center;
+  white-space: pre-wrap;
+
+  @media ${Common.media.sm} {
+    font-size: 10px;
+  }
+
+  @media ${Common.media.md} {
+    font-size: ${Common.fontSize.md};
+  }
+
+  @media ${Common.media.lg} {
+    font-size: ${Common.fontSize.lg};
+  }
+`;
+
+const StyledDiv = styled.div`
+  -moz-appearance: ${({ isEditable }) => (isEditable ? 'textfield' : '')};
+  -webkit-appearance: ${({ isEditable }) => (isEditable ? 'textfield' : '')};
+  user-modify: ${({ isEditable }) => (isEditable ? 'read-write' : '')};
+  background-color: transparent;
+  border: none;
+  outline: none;
+  cursor: ${({ isEditable }) => (isEditable ? 'text' : 'default')};
+`;
+
 const EditBoxContainer = styled.div`
   position: absolute;
 
@@ -52,17 +83,54 @@ const EditBoxContainer = styled.div`
   }
 `;
 
-const Message = ({ children, logId, key, myId, ...props }) => {
+const Message = ({ comment, isMine, onRemove, ...props }) => {
   const [ref, state] = useHover(null);
+  const [isEditable, setIsEditable] = useState(false);
+
+  const handleClickEditIcon = async () => {
+    //
+  };
+
+  const handleClickDeleteIcon = async () => {
+    Swal.fire({
+      title: '😫',
+      text: '댓글을 삭제하시겠습니까?',
+      showCancelButton: true,
+      confirmButtonColor: Common.colors.point,
+      cancelButtonColor: Common.colors.red,
+      confirmButtonText: '예',
+      cancelButtonText: '아니오',
+    }).then(async res => {
+      if (res.isConfirmed) {
+        try {
+          const response = await cardApi.deleteCardComment({
+            data: { id: comment._id },
+          });
+
+          if (response.status === 200) {
+            onRemove(comment._id);
+          }
+        } catch (e) {
+          console.error(e);
+        }
+      }
+    });
+  };
 
   return (
-    <ChatBox ref={ref} key={key}>
-      {logId === myId && state ? (
+    <ChatBox ref={ref}>
+      {isMine && state ? (
         <EditBoxContainer>
-          <EditBox />
+          <EditBox
+            onEditIconClick={handleClickEditIcon}
+            onDeleteIconClick={handleClickDeleteIcon}
+          />
         </EditBoxContainer>
       ) : undefined}
-      {children}
+      <StyledText block>
+        {comment.author.fullName + ' : '}
+        <StyledDiv isEditable={isEditable}>{comment.comment}</StyledDiv>
+      </StyledText>
     </ChatBox>
   );
 };

@@ -1,10 +1,14 @@
 import styled from '@emotion/styled';
-import Modal from '@components/base/Modal';
-import Header from './Header';
-import Message from './Message';
-import Text from '@components/base/Text';
+import { Text, Modal, Spinner } from '@components';
 import Common from '@styles';
 import PropTypes from 'prop-types';
+import { cardApi } from '@apis';
+import { getUserInfoByToken } from '@utils';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { useHistory, useLocation } from 'react-router';
+import Swal from 'sweetalert2';
+import Header from './Header';
+import Message from './Message';
 
 const StyledModal = styled(Modal)`
   display: flex;
@@ -32,7 +36,7 @@ const HeaderContainer = styled.div`
   max-width: 740px;
   min-height: 120px;
   max-height: 195px;
-  background-color: royalblue;
+  background-color: ${({ backgroundColor }) => backgroundColor};
   border-top-left-radius: 16px;
   border-top-right-radius: 16px;
   box-shadow: ${Common.shadow.chattingHeader};
@@ -66,30 +70,20 @@ const Hr = styled.hr`
 
 const FirstHashtags = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: ${({ length }) =>
+    length === 1 ? 'center' : length === 2 ? 'space-evenly' : 'space-between'};
   color: white;
   margin-top: 12px;
+  white-space: pre-wrap;
 `;
 
 const SecondHashtags = styled.div`
   display: flex;
-  justify-content: space-evenly;
+  justify-content: ${({ length }) =>
+    length === 1 ? 'center' : 'space-evenly'};
   color: white;
   margin-top: 12px;
-`;
-
-const StyledText = styled(Text)`
-  @media ${Common.media.sm} {
-    font-size: 10px;
-  }
-
-  @media ${Common.media.md} {
-    font-size: ${Common.fontSize.md};
-  }
-
-  @media ${Common.media.lg} {
-    font-size: ${Common.fontSize.lg};
-  }
+  white-space: pre-wrap;
 `;
 
 const BodyContainer = styled.div`
@@ -141,6 +135,20 @@ const ChatContainer = styled.div`
 
   @media ${Common.media.lg} {
     padding: 10px 0 10px 10px;
+  }
+`;
+
+const StyledText = styled(Text)`
+  @media ${Common.media.sm} {
+    font-size: 10px;
+  }
+
+  @media ${Common.media.md} {
+    font-size: ${Common.fontSize.md};
+  }
+
+  @media ${Common.media.lg} {
+    font-size: ${Common.fontSize.lg};
   }
 `;
 
@@ -210,146 +218,175 @@ const Input = styled.textarea`
   }
 `;
 
-const ChattingCard = ({
-  children,
-  backgroundColor,
-  cardData,
-  visible,
-  ...props
-}) => {
+const ChattingCard = ({ children, backgroundColor, visible, ...props }) => {
+  const history = useHistory();
+  const [userInfo, setUserInfo] = useState(null);
+  const [cardData, setCardData] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
+  const [title, setTitle] = useState('');
+  const [comments, setComments] = useState([]);
+  const [author, setAuthor] = useState('');
+  const [cardColor, setCardColor] = useState('');
+  const [hashTags, setHashTags] = useState([]);
+
   // API가 필요한 부분
-  const myId = 1;
+  const postId = useLocation().state.cardData.id;
 
-  const logs = [
-    {
-      id: 1,
-      name: 'A',
-      chat: '안녕하세요~',
-    },
-    {
-      id: 2,
-      name: 'B',
-      chat: '안녕하세요! 만나서 반갑습니다!',
-    },
-    {
-      id: 3,
-      name: 'C',
-      chat: '반가워요~',
-    },
-    {
-      id: 1,
-      name: 'A',
-      chat: '오늘 저녁 뭐 드실건가요?',
-    },
-    {
-      id: 2,
-      name: 'B',
-      chat: '다이어트 중이에요~',
-    },
-    {
-      id: 3,
-      name: 'C',
-      chat: '전 김치볶음밥이요!',
-    },
-    {
-      id: 1,
-      name: 'A',
-      chat: '안녕하세요~',
-    },
-    {
-      id: 2,
-      name: 'B',
-      chat: '안녕하세요! 만나서 반갑습니다!',
-    },
-    {
-      id: 3,
-      name: 'C',
-      chat: '반가워요~',
-    },
-    {
-      id: 1,
-      name: 'A',
-      chat: '오늘 저녁 뭐 드실건가요?',
-    },
-    {
-      id: 2,
-      name: 'B',
-      chat: '다이어트 중이에요~',
-    },
-    {
-      id: 3,
-      name: 'C',
-      chat: '전 김치볶음밥이요!',
-    },
-    {
-      id: 1,
-      name: 'A',
-      chat: '안녕하세요~',
-    },
-    {
-      id: 2,
-      name: 'B',
-      chat: '안녕하세요! 만나서 반갑습니다!',
-    },
-    {
-      id: 3,
-      name: 'C',
-      chat: '반가워요~',
-    },
-    {
-      id: 1,
-      name: 'A',
-      chat: '오늘 저녁 뭐 드실건가요?',
-    },
-    {
-      id: 2,
-      name: 'B',
-      chat: '다이어트 중이에요~',
-    },
-    {
-      id: 3,
-      name: 'C',
-      chat: '전 김치볶음밥이요!',
-    },
-  ];
+  useEffect(() => {
+    const getCardData = async () => {
+      setIsLoading(true);
+      const response = await cardApi.getCard(postId);
+      const userInfo = await getUserInfoByToken();
 
-  const showChat = logs =>
-    logs.map((log, index) => (
-      <ChatContainer isMine={log.id === myId} key={index}>
-        <Message logId={log.id} key={index} myId={myId}>
-          <StyledText block>
-            {log.name}: {log.chat}
-          </StyledText>
-        </Message>
-      </ChatContainer>
+      if (!response.data) {
+        Swal.fire({
+          title: '😢',
+          text: '에러가 발생했습니다!',
+          confirmButtonColor: Common.colors.point,
+        }).then(() => {
+          history.push('/');
+        });
+        setIsLoading(false);
+        return;
+      }
+
+      const cardData = {
+        title: response.data.title,
+        comments: response.data.comments,
+        author: response.data.author,
+        cardColor: JSON.parse(response.data.meta).cardColor,
+        hashTags: JSON.parse(response.data.meta).hashTags,
+      };
+
+      setCardData(cardData);
+      setUserInfo(userInfo);
+      setIsLoading(false);
+    };
+
+    getCardData();
+  }, [history, postId]);
+
+  useEffect(() => {
+    setTitle(cardData.title);
+  }, [cardData.title]);
+
+  useEffect(() => {
+    setComments(cardData.comments);
+  }, [cardData.comments]);
+
+  useEffect(() => {
+    setAuthor(cardData.author);
+  }, [cardData.author]);
+
+  useEffect(() => {
+    setCardColor(cardData.cardColor);
+  }, [cardData.cardColor]);
+
+  // ESC 키로 채팅카드 모달 닫기
+  useEffect(() => {
+    setHashTags(cardData.hashTags);
+  }, [cardData.hashTags]);
+
+  const escFunction = useCallback(
+    e => {
+      if (e.keyCode === 27) {
+        history.push('/');
+      }
+    },
+    [history],
+  );
+
+  useEffect(() => {
+    document.addEventListener('keydown', escFunction, false);
+
+    return () => {
+      document.removeEventListener('keydown', escFunction, false);
+    };
+  }, [escFunction]);
+
+  // 스크롤 맨 하단으로 이동
+  const ScrollToBottom = () => {
+    const scrollRef = useRef();
+    useEffect(() => scrollRef.current.scrollIntoView());
+    return <div ref={scrollRef} />;
+  };
+
+  // enter 키 이벤트
+  const handleKeyUp = async e => {
+    if (!e.shiftKey && e.key === 'Enter') {
+      setIsLoading(true);
+
+      let tmpText = e.target.value;
+
+      if (tmpText.replace(/ /gi, '') !== 0) {
+        if (userInfo) {
+          const comment = await cardApi.createCardComment({
+            comment: e.target.value,
+            postId,
+          });
+          setComments([...comments, comment.data]);
+          setIsLoading(false);
+          e.target.value = '';
+        } else {
+          Swal.fire({
+            title: '😢',
+            text: '로그인이 필요합니다!',
+            confirmButtonColor: Common.colors.point,
+          }).then(() => (e.target.value = ''));
+          setIsLoading(false);
+
+          return;
+        }
+      }
+    }
+  };
+
+  const handleRemove = commentId => {
+    setComments(comments.filter(comment => comment._id !== commentId));
+  };
+
+  const hashtagsDiv = (begin, end) =>
+    hashTags &&
+    hashTags.slice(begin, end).map((hashtag, index) => (
+      <StyledText block key={index}>
+        {'#' + hashtag}
+      </StyledText>
     ));
-
-  const firstHashtags = [
-    '#안녕하세요반갑습니다',
-    '#10글자로만들어봐요',
-    '#우리모두함께놀아봐요',
-  ];
-  const secondHashtags = ['#해쉬태그를만들어봐요', '#최대한길게길게갑시다'];
-
-  const hashtagsDiv = hashtags =>
-    hashtags.map(hashtag => <StyledText block>{hashtag}</StyledText>);
 
   return (
     <StyledModal
       visible={visible}
       style={{ padding: 0, display: 'flex', flexDirection: 'column' }}>
-      <HeaderContainer backgroundColor={backgroundColor}>
-        <Header />
+      <HeaderContainer backgroundColor={cardColor}>
+        <Header title={title} authorName={author?.fullName} />
         <Hr />
-        <FirstHashtags>{hashtagsDiv(firstHashtags)}</FirstHashtags>
-        <SecondHashtags>{hashtagsDiv(secondHashtags)}</SecondHashtags>
+        <FirstHashtags length={hashtagsDiv(0, 3)?.length}>
+          {hashtagsDiv(0, 3)}
+        </FirstHashtags>
+        <SecondHashtags length={hashtagsDiv(0, 3)?.length}>
+          {hashtagsDiv(3, 5)}
+        </SecondHashtags>
       </HeaderContainer>
-      <BodyContainer>{showChat(logs)}</BodyContainer>
+      <BodyContainer>
+        {comments &&
+          comments.map(comment => (
+            <ChatContainer
+              isMine={userInfo && comment.author._id === userInfo.id}>
+              <Message
+                comment={comment}
+                onRemove={handleRemove}
+                isMine={userInfo && comment.author._id === userInfo.id}
+                key={comment._id}></Message>
+            </ChatContainer>
+          ))}
+        <ScrollToBottom />
+      </BodyContainer>
       <Footer>
         <InputBox>
-          <Input placeholder="메세지를 입력하세요." />
+          <Input placeholder="메세지를 입력하세요." onKeyUp={handleKeyUp} />
         </InputBox>
       </Footer>
+      <Spinner loading={isLoading} />
     </StyledModal>
   );
 };
