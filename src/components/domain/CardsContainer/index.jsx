@@ -26,13 +26,20 @@ const Container = styled.section`
   }
 `;
 
-const LoginGuideWrap = styled.div`
+const GuideWrap = styled.div`
   display: flex;
-  height: 100%;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  margin-top: 56px;
+  @media ${Common.media.sm} {
+    height: calc(180px * 1.56);
+  }
+  @media ${Common.media.md} {
+    height: calc(216px * 1.56);
+  }
+  @media ${Common.media.lg} {
+    height: calc(265px * 1.56);
+  }
 `;
 
 const StyledCard = styled(WaffleCard)`
@@ -62,7 +69,7 @@ const CardsContainer = ({ myCard, cardList, userInfo, currentParam }) => {
   if (!userInfo && (currentParam === 'my' || currentParam === 'bookmark')) {
     return (
       <Container>
-        <LoginGuideWrap>
+        <GuideWrap>
           <StyledText size={24}>와플카드 대화에 참여해보세요!</StyledText>
           <StyledButton
             width={250}
@@ -71,7 +78,7 @@ const CardsContainer = ({ myCard, cardList, userInfo, currentParam }) => {
             }}>
             로그인하러 가기
           </StyledButton>
-        </LoginGuideWrap>
+        </GuideWrap>
       </Container>
     );
   }
@@ -85,11 +92,13 @@ const CardsContainer = ({ myCard, cardList, userInfo, currentParam }) => {
         myCard ? (
           <EmptyCard />
         ) : (
-          <StyledText>
-            {currentParam === 'bookmark'
-              ? '즐겨찾기 한 카드가 없습니다'
-              : '등록된 카드가 없습니다'}
-          </StyledText>
+          <GuideWrap>
+            <StyledText>
+              {currentParam === 'bookmark'
+                ? '즐겨찾기 한 카드가 없습니다'
+                : '등록된 카드가 없습니다'}
+            </StyledText>
+          </GuideWrap>
         )
       ) : (
         cardList.map(card => {
