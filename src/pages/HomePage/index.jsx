@@ -157,7 +157,7 @@ const HomePage = () => {
       <Route path="/cards/my/create" render={() => <CardEditModal visible />} />
       <Route
         path="/cards/my/update/:cardId"
-        render={() => <CardEditModal visible />}
+        render={() => <CardEditModal visible editMode />}
       />
       <Route
         path="/card/detail/:Param/:cardId"

@@ -77,7 +77,7 @@ const cardApi = {
     );
     authRequest.post('posts/create', cardFormData);
   },
-  getCard: postId => request.get(`posts/${postId}`),
+  getCard: cardId => request.get(`posts/${cardId}`),
   updateCard: ({ cardId, emoji, cardColor, hashTags }) => {
     const cardFormData = new FormData();
     cardFormData.append('postId', cardId);
@@ -95,18 +95,68 @@ const cardApi = {
   },
   deleteCard: cardId =>
     authRequest.delete('posts/delete', { data: { id: cardId } }),
-  createCardLike: postId => authRequest.post('likes/create', postId),
-  deleteCardLike: postId => authRequest.delete('likes/delete', postId),
-  addCardBookMark: (userId, cardId) => {
-    const userInfo = userApi.getUserInfo(userId);
-    console.log(userInfo);
-    authRequest.put('settings/update-user', {
-      // username: userName,
-      // fullName: userName,
-      // meta,
-    });
+  // createCardLike: postId => authRequest.post('likes/create', postId),
+  // deleteCardLike: postId => authRequest.delete('likes/delete', postId),
+  addLikeCard: async cardId => {
+    const response = await cardApi.getCard(cardId);
+    const {
+      title: emoji,
+      cardColor,
+      hashTags,
+      likeUsers,
+      bookmarkUsers,
+    } = response.data;
+    const cardFormData = new FormData();
+    cardFormData.append('postId', cardId);
+    cardFormData.append('title', emoji);
+    cardFormData.append('image', null);
+    cardFormData.append('channelId', CHANNEL_ID);
+    cardFormData.append(
+      'meta',
+      JSON.stringify({
+        cardColor,
+        hashTags,
+        likeUsers: likeUsers,
+        bookmarkUsers: bookmarkUsers,
+      }),
+    );
+    authRequest.put('posts/update', cardFormData);
   },
-  deleteCardBookMark: postId => {}, // TODO:  API 확인 후 리팩토링
+  deleteLikeCard: postId => authRequest.delete('likes/delete', postId),
+  addBookMarkCard: async (userId, cardId) => {
+    const response = await userApi.getUserInfo(userId);
+    const { likeCardList = [], bookmarkCardList = [] } = JSON.parse(
+      response.data.meta,
+    );
+    if (!bookmarkCardList.includes(cardId)) {
+      bookmarkCardList.push(cardId);
+    }
+
+    const userInfo = {
+      fullName: response.data.fullName,
+      username: response.data.fullName,
+      meta: JSON.stringify({ likeCardList, bookmarkCardList }),
+    };
+    console.log(userInfo);
+    authRequest.put('settings/update-user', userInfo);
+  },
+  deleteBookMarkCard: async (userId, cardId) => {
+    const response = await userApi.getUserInfo(userId);
+    const { likeCardList = [], bookmarkCardList = [] } = JSON.parse(
+      response.data.meta,
+    );
+    if (bookmarkCardList.includes(cardId)) {
+      bookmarkCardList.splice(bookmarkCardList.indexOf(cardId), 1);
+    }
+
+    const userInfo = {
+      fullName: response.data.fullName,
+      username: response.data.fullName,
+      meta: JSON.stringify({ likeCardList, bookmarkCardList }),
+    };
+    console.log(userInfo);
+    authRequest.put('settings/update-user', userInfo);
+  },
   getCardComment: commentId => {}, // TODO:  API 확인 후 리팩토링
   createCardComment: commentInfo =>
     authRequest.post('comments/create', commentInfo),
