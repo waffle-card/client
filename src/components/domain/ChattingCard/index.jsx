@@ -221,11 +221,10 @@ const Input = styled.textarea`
 
 const ChattingCard = ({ children, backgroundColor, visible, ...props }) => {
   const history = useHistory();
-  const scrollRef = useRef();
+  const scrollRef = useRef(null);
+  // const []
   const [cardData, setCardData] = useState({});
   const [isLoading, setIsLoading] = useState(false);
-  // const [userId, setUserId] = useState('');
-  // const [postId, setPostId] = useState('');
   const [title, setTitle] = useState('');
   const [comments, setComments] = useState([]);
   const [author, setAuthor] = useState('');
@@ -236,12 +235,12 @@ const ChattingCard = ({ children, backgroundColor, visible, ...props }) => {
   // const postId = useLocation().state.postId;
   const postId = '618147ff7924de107cd3ea2d';
   const userId = '616d869182a78113d401bedc';
+  // const postId = useLocation().state.cardData._id;
+  // const userId = useLocation().state.userId;
 
   useLayoutEffect(() => {
     const getCardData = async () => {
       setIsLoading(true);
-      // const response = useLocation().state.cardData;
-      // const userId = useLocation().state.userId;
       const response = await cardApi.getCard(postId);
 
       if (!response.data) {
@@ -292,6 +291,10 @@ const ChattingCard = ({ children, backgroundColor, visible, ...props }) => {
   }, [cardData.hashTags]);
 
   // 댓글 관련 코드
+  useEffect(() => {
+    scrollRef.current.scrollIntoView({ behavior: 'smooth' });
+  }, []);
+
   const handleKeyUp = async e => {
     if (!e.shiftKey && e.key === 'Enter') {
       // 댓글달기
