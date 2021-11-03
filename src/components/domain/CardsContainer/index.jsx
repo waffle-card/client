@@ -11,8 +11,8 @@ const Container = styled.section`
   justify-content: center;
   align-items: center;
   min-height: 413px;
-  padding: 20px 0;
-  margin-top: 92px;
+  padding: 35px 0;
+  margin-top: 77px;
   overflow-x: scroll;
   -ms-overflow-style: none;
   &::-webkit-scrollbar {
