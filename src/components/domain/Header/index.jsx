@@ -1,8 +1,10 @@
+import React, { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import Common from '@styles';
 import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
 import { Icons, Text } from '@components';
+import { authApi } from '@apis';
 
 const HeaderTag = styled.header`
   display: flex;
@@ -34,6 +36,31 @@ const StyleTextLogin = styled(Text)`
 
 const Header = ({ backgroundColor = Common.colors.background, ...props }) => {
   const history = useHistory();
+  const [userInfo, setUserInfo] = useState({});
+  const [isloading, setIsLoading] = useState(false);
+
+  const getUserInfo = async () => {
+    setIsLoading(true);
+    const response = await authApi.getAuthUser();
+    if (!response.data) {
+      setUserInfo(false);
+      setIsLoading(true);
+      return;
+    }
+    const userInfo = {
+      id: response.data._id,
+      userName: response.data.fullName,
+      email: response.data.email,
+    };
+    setUserInfo(userInfo);
+    setIsLoading(false);
+    return;
+  };
+
+  useEffect(() => {
+    getUserInfo();
+  }, [userInfo]);
+
   return (
     <HeaderTag backgroundColor={backgroundColor}>
       <Logo
@@ -44,12 +71,14 @@ const Header = ({ backgroundColor = Common.colors.background, ...props }) => {
         <img src={require('./logo.png').default} alt="logo" />
       </Logo>
       <Icons
+        style={{ display: userInfo ? 'block' : 'none' }}
         onClick={() => {
           history.push('/my-page');
         }}>
         <Icons.Person color={Common.colors.point} />
       </Icons>
       <StyleTextLogin
+        style={{ display: !userInfo ? 'block' : 'none' }}
         color={Common.colors.point}
         size={Common.fontSize.regular}
         weight={Common.fontWeight.regular}
