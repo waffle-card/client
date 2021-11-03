@@ -36,7 +36,7 @@ const Empty = ({ fontSize, iconSize, onClick, ...props }) => {
   const handleClick = useCallback(
     e => {
       onClick && onClick(e);
-      history.push('/card/create');
+      history.push('/card/my/create');
     },
     [onClick, history],
   );

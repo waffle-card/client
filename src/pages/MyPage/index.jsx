@@ -117,6 +117,7 @@ const MyPage = ({ ...prop }) => {
         confirmButtonColor: Common.colors.point,
       }).then(() => {
         history.push('/');
+        window.location.reload();
       });
     };
     Swal.fire({

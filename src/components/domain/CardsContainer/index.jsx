@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 import Common from '@styles';
 import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
-import { Icons, EmptyCard, WaffleCard, Text, Button } from '@components';
+import { EmptyCard, WaffleCard, Text, Button } from '@components';
 
 const Container = styled.section`
   display: flex;
@@ -60,23 +60,22 @@ const CardsContainer = ({ myCard, cardList, userInfo, currentParam }) => {
           <Text>등록된 카드가 없습니다</Text>
         )
       ) : (
-        [...cardList.slice(0, 6)].map(card => {
-          const { cardColor, hashTags } = JSON.parse(card.meta);
+        cardList.map(card => {
           return (
             <StyledCard
               myCard={myCard}
-              key={card._id}
+              key={card.id}
               cardData={{
-                id: card._id,
-                emoji: card.title,
-                cardColor: cardColor,
-                hashTags: hashTags,
+                id: card.id,
+                emoji: card.emoji,
+                cardColor: card.cardColor,
+                hashTags: card.hashTags,
               }}
               onClickCard={() => {
                 history.push({
                   pathname: `/card/detail/${
                     currentParam ? currentParam : 'today'
-                  }/${card._id}`,
+                  }/${card.id}`,
                   state: {
                     cardData: card,
                     userId: userInfo ? userInfo.id : '',
