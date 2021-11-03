@@ -6,6 +6,7 @@ import Edit from './Edit';
 import Delete from './Delete';
 import Person from './Person';
 import Add from './Add';
+import Send from './Send';
 import styled from '@emotion/styled';
 import Common from '@styles';
 
@@ -46,5 +47,6 @@ Icons.Bookmark = Bookmark;
 Icons.Like = Like;
 Icons.Person = Person;
 Icons.Add = Add;
+Icons.Send = Send;
 
 export default Icons;

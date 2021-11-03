@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { Text, Modal, Spinner } from '@components';
+import { Text, Modal, Spinner, Icons } from '@components';
 import Common from '@styles';
 import PropTypes from 'prop-types';
 import { cardApi } from '@apis';
@@ -197,6 +197,7 @@ const Input = styled.textarea`
   outline: none;
   resize: none;
   color: white;
+  margin-right: 10px;
 
   @media ${Common.media.sm} {
     width: 100%;
@@ -384,6 +385,9 @@ const ChattingCard = ({ children, backgroundColor, visible, ...props }) => {
       <Footer>
         <InputBox>
           <Input placeholder="메세지를 입력하세요." onKeyUp={handleKeyUp} />
+          <Icons>
+            <Icons.Send onClick={() => alert('Send')} />
+          </Icons>
         </InputBox>
       </Footer>
       <Spinner loading={isLoading} />
