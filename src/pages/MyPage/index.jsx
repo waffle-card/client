@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 import Common from '@styles';
 import { useEffect, useState } from 'react';
 import { authApi } from '@apis';
+import { getUserInfoByToken } from '@utils';
 import {
   Text,
   Button,
@@ -74,8 +75,8 @@ const MyPage = ({ ...prop }) => {
   useEffect(() => {
     const getUserInfo = async () => {
       setIsLoading(true);
-      const response = await authApi.getAuthUser();
-      if (!response.data) {
+      const userInfo = await getUserInfoByToken();
+      if (!userInfo) {
         Swal.fire({
           title: '🤯',
           text: '로그인을 하고 접근해주세요.',
@@ -86,11 +87,6 @@ const MyPage = ({ ...prop }) => {
         setIsLoading(false);
         return;
       }
-      const userInfo = {
-        id: response.data._id,
-        userName: response.data.fullName,
-        email: response.data.email,
-      };
       setUserInfo(userInfo);
       setIsLoading(false);
     };

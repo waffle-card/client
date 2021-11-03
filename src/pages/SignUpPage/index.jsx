@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Common from '@styles';
 import styled from '@emotion/styled';
 import { useForm } from '@hooks';
@@ -13,6 +13,7 @@ import {
   validatePasswordLength,
   validatePasswordConfirm,
 } from '@validators';
+import { getUserInfoByToken } from '@utils';
 import { authApi } from '@apis';
 import Swal from 'sweetalert2';
 
@@ -114,6 +115,21 @@ const SignUpPage = ({ ...prop }) => {
       return errors;
     },
   });
+
+  useEffect(() => {
+    const getUserInfo = async () => {
+      if (await getUserInfoByToken()) {
+        Swal.fire({
+          title: '🤯',
+          text: '이미 로그인 되어있습니다.',
+          confirmButtonColor: Common.colors.point,
+        }).then(() => {
+          history.push('/');
+        });
+      }
+    };
+    getUserInfo();
+  }, [history]);
 
   return (
     <Container>
