@@ -3,7 +3,7 @@ import { authApi } from '@apis';
 export const getUserInfoByToken = async () => {
   const response = await authApi.getAuthUser();
   if (!response.data) {
-    return false;
+    return null;
   }
   if (response.data._id) {
     const userInfo = {
