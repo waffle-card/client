@@ -93,7 +93,10 @@ const cardApi = {
     );
     authRequest.put('posts/update', cardFormData);
   },
-  deleteCard: postId => authRequest.delete('posts/delete', postId),
+  deleteCard: cardId => {
+    console.log('deleteCard - cardId', cardId);
+    authRequest.delete('/posts/delete', { id: cardId });
+  },
   createCardLike: postId => authRequest.post('likes/create', postId),
   deleteCardLike: postId => authRequest.delete('likes/delete', postId),
   createCardBookMark: postId => {}, // TODO:  API 확인 후 리팩토링

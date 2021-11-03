@@ -5,6 +5,8 @@ import { Card, Text, Icons, EditBox } from '@components';
 import styled from '@emotion/styled';
 import { useHover } from '@hooks';
 import { useHistory } from 'react-router-dom';
+import { cardApi } from '@apis';
+import Swal from 'sweetalert2';
 
 const countDaysFromToday = date => {
   date = typeof date === 'string' ? new Date(date) : date;
@@ -117,7 +119,7 @@ const WaffleCard = ({
   ...props
 }) => {
   const {
-    cardId = 'null',
+    id: cardId = 'null',
     emoji = '🧇',
     cardColor = Common.colors.yellow,
     createdAt = new Date(),
@@ -157,14 +159,38 @@ const WaffleCard = ({
 
   const handleClickEditIcon = e => {
     history.push({
-      pathname: `/card/update/${cardId}`,
+      pathname: `/cards/my/update/${cardId}`,
       state: { cardId: cardId },
     });
     onClickEditIcon && onClickEditIcon(e);
   };
 
-  const handleClickDeleteIcon = e => {
-    history.push(`/`);
+  const handleClickDeleteIcon = async e => {
+    const deleteCard = async () => {
+      await cardApi.deleteCard(cardId);
+      // window.location.reload();
+    };
+    try {
+      Swal.fire({
+        title: '🤔',
+        text: '정말 와플카드를 삭제하시겠습니까?',
+        showCloseButton: true,
+        showCancelButton: true,
+        confirmButtonColor: Common.colors.point,
+        cancelButtonColor: 'red',
+      }).then(res => {
+        if (res.isConfirmed) {
+          deleteCard();
+        }
+      });
+    } catch (error) {
+      Swal.fire({
+        title: '🤯',
+        text: error,
+        confirmButtonColor: Common.colors.point,
+      });
+    }
+
     onClickDeleteIcon && onClickDeleteIcon(e);
   };
 

@@ -169,6 +169,7 @@ const CardEditModal = ({
         confirmButtonColor: Common.colors.point,
       }).then(() => {
         history.push('/cards/my');
+        window.location.reload();
       });
     } catch (error) {
       Swal.fire({
@@ -188,6 +189,7 @@ const CardEditModal = ({
         confirmButtonColor: Common.colors.point,
       }).then(() => {
         history.push('/cards/my');
+        window.location.reload();
       });
     } catch (error) {
       Swal.fire({

@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import Common from '@styles';
 import { Route } from 'react-router-dom';
@@ -9,7 +9,7 @@ import {
   CardEditModal,
   ChattingCard,
 } from '@components';
-import { authApi, cardApi } from '@apis';
+import { cardApi } from '@apis';
 import { getUserInfoByToken } from '@utils';
 import Swal from 'sweetalert2';
 
@@ -47,12 +47,6 @@ const parseCardInfo = cardData => {
   };
 };
 
-const sleep = () => {
-  return new Promise(resolve => {
-    setTimeout(() => resolve(), 2000);
-  });
-};
-
 const HomePage = () => {
   const [cardList, setCardList] = useState([]);
   const [currentParam, setCurrentParam] = useState('');
@@ -77,14 +71,18 @@ const HomePage = () => {
     setIsLoading(false);
   };
 
-  const getMyCardList = async () => {
+  const getMyCardList = async userId => {
     setIsLoading(true);
     try {
-      const response = await cardApi.getUserCardList(userInfo.id);
-      const cardList = response.data.slice(0, 1).map(cardData => {
-        return parseCardInfo(cardData);
-      });
-      setCardList(cardList);
+      if (userId) {
+        const response = await cardApi.getUserCardList(userId);
+        const cardList = response.data.slice(0, 1).map(cardData => {
+          return parseCardInfo(cardData);
+        });
+        setCardList(cardList);
+      } else {
+        setCardList([]);
+      }
     } catch (error) {
       Swal.fire({
         title: '🥲',
@@ -117,17 +115,18 @@ const HomePage = () => {
         return currentUrlArr[currentUrlArr.length - 1];
       });
 
-      if (currentParam.includes('today') || currentParam[1] === '') {
-        console.log('it is today');
+      if (currentUrlArr.includes('today') || currentUrlArr[1] === '') {
         getTodayCardList();
-      } else if (currentParam.includes('my')) {
-        console.log('it is my');
-        getMyCardList();
-      } else if (currentParam.includes('bookmark')) {
+      } else if (currentUrlArr.includes('my')) {
+        const userId = userInfo ? userInfo.id : null;
+        getMyCardList(userId);
+      } else if (currentUrlArr.includes('bookmark')) {
         // TODO: 즐겨찾기 테스트
       }
     };
+    setIsLoading(true);
     init();
+    setIsLoading(false);
   }, [currentParam]);
 
   const handleTabClick = () => {
@@ -149,10 +148,15 @@ const HomePage = () => {
           <Tab.Item title="즐겨찾기" index="2" param="bookmark"></Tab.Item>
         </Tab>
       </nav>
-      {/* <CardsContainer /> */}
-      <Route path="/card/create" render={() => <CardEditModal visible />} />
+      <CardsContainer
+        myCard={currentParam === 'my'}
+        userInfo={userInfo}
+        cardList={cardList}
+        currentParam={currentParam}
+      />
+      <Route path="/cards/my/create" render={() => <CardEditModal visible />} />
       <Route
-        path="/card/update:cardId"
+        path="/cards/my/update/:cardId"
         render={() => <CardEditModal visible />}
       />
       <Route
