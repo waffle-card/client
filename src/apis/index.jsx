@@ -101,6 +101,7 @@ const cardApi = {
   deleteCardLike: postId => authRequest.delete('likes/delete', postId),
   addCardBookMark: (userId, cardId) => {
     const userInfo = userApi.getUserInfo(userId);
+    console.log(userInfo);
     authRequest.put('settings/update-user', {
       // username: userName,
       // fullName: userName,
