@@ -289,7 +289,7 @@ const ChattingCard = ({ children, backgroundColor, visible, ...props }) => {
 
   const escFunction = useCallback(
     e => {
-      if (e.keyCode === 27) {
+      if (e.key === 'esc') {
         history.push('/');
       }
     },
