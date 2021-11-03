@@ -54,6 +54,7 @@ const UserProvider = ({ children, initialUserInfo }) => {
           confirmButtonColor: Common.colors.point,
         }).then(() => {
           history.push('/');
+          window.location.reload();
         });
       } catch (error) {
         Swal.fire({

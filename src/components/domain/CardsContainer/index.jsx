@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 import Common from '@styles';
 import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
-import { Icons, EmptyCard, WaffleCard, EmptyContainer } from '@components';
+import { EmptyCard, WaffleCard, Text, Button } from '@components';
 
 const Container = styled.section`
   display: flex;
@@ -30,31 +30,22 @@ const StyledCard = styled(WaffleCard)`
   margin: 0 10px;
 `;
 
-const CardsContainer = ({ cards, currentParam, userInfo }) => {
+const CardsContainer = ({ myCard, cardList, userInfo, currentParam }) => {
   const history = useHistory();
 
-  if (currentParam === 'today' && cards.length === 0) {
-    return <EmptyContainer />;
-  }
-
-  if (currentParam === 'my') {
-    if (!userInfo) {
-      return <EmptyContainer notLogin />;
-    }
-    if (cards.length === 0)
-      return (
-        <Container>
-          <EmptyCard />
-        </Container>
-      );
-  }
-
-  if (currentParam === 'bookmark') {
-    if (!userInfo) {
-      return <EmptyContainer notLogin />;
-    }
-    if (cards.length === 0)
-      return <EmptyContainer> 즐겨찾기한 카드가 없습니다!</EmptyContainer>;
+  if (!userInfo && (currentParam === 'my' || currentParam === 'bookmark')) {
+    return (
+      <Container>
+        <Text size={24}>와플카드 대화에 참여해보세요!</Text>
+        <Button
+          width={250}
+          onClick={() => {
+            history.push('/login');
+          }}>
+          로그인하러 가기
+        </Button>
+      </Container>
+    );
   }
 
   return (
@@ -62,28 +53,39 @@ const CardsContainer = ({ cards, currentParam, userInfo }) => {
       {/* <Icons backgroundColor={'rgba(0, 0, 0, 0)'}>
         <Icons.ArrowBack color={Common.colors.primary} fontSize={'30px'} />
       </Icons> */}
-      {[...cards.slice(0, 6)].map(card => {
-        const { cardColor, hashTags } = JSON.parse(card.meta);
-        return (
-          <StyledCard
-            key={card._id}
-            cardData={{
-              id: card._id,
-              emoji: card.title,
-              cardColor: cardColor,
-              hashTags: hashTags,
-            }}
-            onClickCard={() => {
-              history.push({
-                pathname: `/card/detail/${
-                  currentParam ? currentParam : 'today'
-                }/${card._id}`,
-                state: { cardData: card, userId: userInfo ? userInfo.id : '' },
-              });
-            }}
-          />
-        );
-      })}
+      {cardList.length === 0 ? (
+        myCard ? (
+          <EmptyCard />
+        ) : (
+          <Text>등록된 카드가 없습니다</Text>
+        )
+      ) : (
+        cardList.map(card => {
+          return (
+            <StyledCard
+              myCard={myCard}
+              key={card.id}
+              cardData={{
+                id: card.id,
+                emoji: card.emoji,
+                cardColor: card.cardColor,
+                hashTags: card.hashTags,
+              }}
+              onClickCard={() => {
+                history.push({
+                  pathname: `/card/detail/${
+                    currentParam ? currentParam : 'today'
+                  }/${card.id}`,
+                  state: {
+                    cardData: card,
+                    userId: userInfo ? userInfo.id : '',
+                  },
+                });
+              }}
+            />
+          );
+        })
+      )}
       {/* <Icons backgroundColor={'rgba(0, 0, 0, 0)'}>
         <Icons.ArrowFront color={Common.colors.primary} fontSize={'30px'} />
       </Icons> */}

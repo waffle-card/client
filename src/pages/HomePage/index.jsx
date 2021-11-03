@@ -2,8 +2,16 @@ import React, { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import Common from '@styles';
 import { Route } from 'react-router-dom';
-import { Tab, CardsContainer, CardEditModal, ChattingCard } from '@components';
-import { authApi, cardApi } from '@apis';
+import {
+  Tab,
+  Spinner,
+  CardsContainer,
+  CardEditModal,
+  ChattingCard,
+} from '@components';
+import { cardApi } from '@apis';
+import { getUserInfoByToken } from '@utils';
+import Swal from 'sweetalert2';
 
 const HomeContainer = styled.div`
   display: flex;
@@ -18,83 +26,107 @@ const HomeContainer = styled.div`
   margin: 0 auto;
 `;
 
+const parseCardInfo = cardData => {
+  const {
+    cardColor = '',
+    hashTags = [],
+    bookmarkCount = 0,
+    likeCount = 0,
+  } = JSON.parse(cardData.meta);
+  return {
+    id: cardData._id,
+    author: cardData.author.fullName,
+    emoji: cardData.title,
+    cardColor,
+    hashTags,
+    createdAt: cardData.createdAt,
+    updatedAt: cardData.updatedAt,
+    bookmarkCount,
+    likeCount,
+    comments: cardData.comments,
+  };
+};
+
 const HomePage = () => {
-  const [todaycards, setTodayCards] = useState([]);
-  const [myCard, setMyCard] = useState([]);
-  const [bookmarkCards, setbookmarkCards] = useState([]);
+  const [cardList, setCardList] = useState([]);
   const [currentParam, setCurrentParam] = useState('');
   const [userInfo, setUserInfo] = useState({});
-  const [isloading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const getUserInfo = async () => {
+  const getTodayCardList = async () => {
     setIsLoading(true);
-    const response = await authApi.getAuthUser();
-    if (!response.data) {
-      setUserInfo(false);
-      setIsLoading(true);
-      return;
-    }
-    const userInfo = {
-      id: response.data._id,
-      userName: response.data.fullName,
-      email: response.data.email,
-    };
-    setUserInfo(userInfo);
-    setIsLoading(false);
-    return;
-  };
-
-  const getTodayCardsData = async () => {
     try {
-      setIsLoading(true);
-      await cardApi.getChannelCardList().then(res => {
-        setTodayCards(res.data);
+      const response = await cardApi.getChannelCardList();
+      const cardList = response.data.slice(0, 10).map(cardData => {
+        return parseCardInfo(cardData);
       });
+      setCardList(cardList);
     } catch (error) {
-      console.log(error);
+      Swal.fire({
+        title: '🥲',
+        text: error,
+        confirmButtonColor: Common.colors.point,
+      });
     }
     setIsLoading(false);
   };
 
-  const getMyCardData = async () => {
+  const getMyCardList = async userId => {
+    setIsLoading(true);
     try {
-      setIsLoading(true);
-      await cardApi.getUserCardList().then(res => {
-        setMyCard(res.data);
-      });
+      if (userId) {
+        const response = await cardApi.getUserCardList(userId);
+        const cardList = response.data.slice(0, 1).map(cardData => {
+          return parseCardInfo(cardData);
+        });
+        setCardList(cardList);
+      } else {
+        setCardList([]);
+      }
     } catch (error) {
-      console.log(error);
+      Swal.fire({
+        title: '🥲',
+        text: error,
+        confirmButtonColor: Common.colors.point,
+      });
     }
     setIsLoading(false);
   };
 
-  const getbookmarkCardsData = async () => {
-    try {
-      setIsLoading(true);
-      await cardApi.getUserBookMarkCardList().then(res => {
-        setbookmarkCards(res.data);
-      });
-    } catch (error) {
-      console.log(error);
-    }
-    setIsLoading(false);
-  };
+  // const getBookmarkCardList = async () => {
+  //   try {
+  //     setIsLoading(true);
+  //     const response = await cardApi.getUserBookMarkCardList();
+  //     console.log(response);
+  //     // setCardList(res.data);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  //   setIsLoading(false);
+  // };
 
   useEffect(() => {
-    const currentUrlArr = window.location.pathname.split('/');
-    setCurrentParam(() => {
-      return currentUrlArr[currentUrlArr.length - 1];
-    });
+    const init = async () => {
+      const userInfo = await getUserInfoByToken();
+      setUserInfo(userInfo);
 
-    getUserInfo();
+      const currentUrlArr = window.location.pathname.split('/');
+      setCurrentParam(() => {
+        return currentUrlArr[currentUrlArr.length - 1];
+      });
 
-    if (currentUrlArr.includes('today') || currentUrlArr[0] === '') {
-      getTodayCardsData();
-    } else if (currentUrlArr.includes('my')) {
-      getMyCardData();
-    } else if (currentUrlArr.includes('bookmark')) {
-      // getbookmarkCardsData();
-    }
+      if (currentUrlArr.includes('today') || currentUrlArr[1] === '') {
+        getTodayCardList();
+      } else if (currentUrlArr.includes('my')) {
+        const userId = userInfo ? userInfo.id : null;
+        getMyCardList(userId);
+      } else if (currentUrlArr.includes('bookmark')) {
+        // TODO: 즐겨찾기 테스트
+      }
+    };
+    setIsLoading(true);
+    init();
+    setIsLoading(false);
   }, [currentParam]);
 
   const handleTabClick = () => {
@@ -117,25 +149,21 @@ const HomePage = () => {
         </Tab>
       </nav>
       <CardsContainer
-        currentParam={currentParam}
+        myCard={currentParam === 'my'}
         userInfo={userInfo}
-        cards={
-          currentParam === 'my'
-            ? myCard
-            : currentParam === 'bookmark'
-            ? bookmarkCards
-            : todaycards
-        }
+        cardList={cardList}
+        currentParam={currentParam}
       />
-      <Route path="/card/create" render={() => <CardEditModal visible />} />
+      <Route path="/cards/my/create" render={() => <CardEditModal visible />} />
       <Route
-        path="/card/update:cardId"
+        path="/cards/my/update/:cardId"
         render={() => <CardEditModal visible />}
       />
       <Route
         path="/card/detail/:Param/:cardId"
         render={() => <ChattingCard visible />}
       />
+      <Spinner loading={isLoading} />
     </HomeContainer>
   );
 };

@@ -37,14 +37,11 @@ const StyleTextLogin = styled(Text)`
 const Header = ({ backgroundColor = Common.colors.background, ...props }) => {
   const history = useHistory();
   const [userInfo, setUserInfo] = useState({});
-  const [isloading, setIsLoading] = useState(false);
 
   const getUserInfo = async () => {
-    setIsLoading(true);
     const response = await authApi.getAuthUser();
     if (!response.data) {
       setUserInfo(false);
-      setIsLoading(true);
       return;
     }
     const userInfo = {
@@ -53,7 +50,6 @@ const Header = ({ backgroundColor = Common.colors.background, ...props }) => {
       email: response.data.email,
     };
     setUserInfo(userInfo);
-    setIsLoading(false);
     return;
   };
 
