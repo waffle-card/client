@@ -95,7 +95,7 @@ const HomePage = () => {
     } else if (currentUrlArr.includes('bookmark')) {
       // getbookmarkCardsData();
     }
-  }, [currentParam, userInfo]);
+  }, [currentParam]);
 
   const handleTabClick = () => {
     setCurrentParam(() => {

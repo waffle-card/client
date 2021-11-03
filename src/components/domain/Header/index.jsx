@@ -59,7 +59,7 @@ const Header = ({ backgroundColor = Common.colors.background, ...props }) => {
 
   useEffect(() => {
     getUserInfo();
-  }, [userInfo]);
+  }, []);
 
   return (
     <HeaderTag backgroundColor={backgroundColor}>
