@@ -24,6 +24,7 @@ module.exports = {
       '../src/validators',
     );
     config.resolve.alias['@apis'] = path.resolve(__dirname, '../src/apis');
+    config.resolve.alias['@utils'] = path.resolve(__dirname, '../src/utils');
     return config;
   },
 };
