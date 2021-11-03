@@ -45,6 +45,10 @@ const GuideWrap = styled.div`
 const StyledCard = styled(WaffleCard)`
   flex: 0 0 auto;
   margin: 0 10px;
+  &:hover {
+    transform: translateY(-18px);
+  }
+  transition: all 250ms ease-out;
 `;
 
 const StyledText = styled(Text)`
