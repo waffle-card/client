@@ -1,7 +1,7 @@
 import React, { useCallback, useMemo } from 'react';
 import Common from '@styles';
 import PropTypes from 'prop-types';
-import { Card, Text, Icons, EditBox } from '@components';
+import { Card, Text, EditBox, ToggleBox } from '@components';
 import styled from '@emotion/styled';
 import { useHover } from '@hooks';
 import { useHistory } from 'react-router-dom';
@@ -41,12 +41,6 @@ const InfoContainer = styled.div`
   height: 18px;
   display: flex;
   justify-content: space-between;
-`;
-
-const IconWrapper = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
 `;
 
 const StyledText = styled(Text)`
@@ -141,22 +135,6 @@ const WaffleCard = ({
     [onClickCard],
   );
 
-  const handleClickLikeIcon = useCallback(
-    e => {
-      e.stopPropagation();
-      onClickLikeIcon && onClickLikeIcon(e);
-    },
-    [onClickLikeIcon],
-  );
-
-  const handleClickBookmarkIcon = useCallback(
-    e => {
-      e.stopPropagation();
-      onClickBookmarkIcon && onClickBookmarkIcon(e);
-    },
-    [onClickBookmarkIcon],
-  );
-
   const handleClickEditIcon = e => {
     history.push({
       pathname: `/cards/my/update/${cardId}`,
@@ -217,24 +195,14 @@ const WaffleCard = ({
       ) : null}
       <InfoContainer>
         <StyledText block>{days <= 0 ? '오늘' : `${days}일 전`}</StyledText>
-        <IconWrapper>
-          <Icons>
-            <Icons.Like
-              fontSize={'20px'}
-              active={likeToggle}
-              onClick={handleClickLikeIcon}
-            />
-          </Icons>
-          <StyledText block>{bookmarkCount}</StyledText>
-          <Icons>
-            <Icons.Bookmark
-              fontSize={'20px'}
-              active={bookmarkToggle}
-              onClick={handleClickBookmarkIcon}
-            />
-          </Icons>
-          <StyledText block>{likeCount}</StyledText>
-        </IconWrapper>
+        <ToggleBox
+          onClickLikeIcon={onClickLikeIcon}
+          onClickBookmarkIcon={onClickBookmarkIcon}
+          likeToggle={likeToggle}
+          likeCount={likeCount}
+          bookmarkToggle={bookmarkToggle}
+          bookmarkCount={bookmarkCount}
+        />
       </InfoContainer>
       <EmojiText block size={70}>
         {emoji}
