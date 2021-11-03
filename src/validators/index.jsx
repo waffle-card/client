@@ -1,3 +1,5 @@
+import { authApi } from '@apis';
+
 export const validateEmailEmpty = email => {
   return email ? true : false;
 };
@@ -26,4 +28,19 @@ export const validatePasswordLength = password => {
 
 export const validatePasswordConfirm = (a, b) => {
   return a === b;
+};
+
+export const isLoggedIn = async () => {
+  const response = await authApi.getAuthUser();
+  if (!response.data) {
+    return false;
+  }
+  if (response.data._id) {
+    const userInfo = {
+      id: response.data._id,
+      userName: response.data.fullName,
+      email: response.data.email,
+    };
+    return userInfo;
+  }
 };

@@ -11,7 +11,7 @@ import {
   validatePasswordEmpty,
   validatePasswordLength,
 } from '@validators';
-import { authApi } from '@apis';
+import { getUserInfoByToken } from '@utils';
 import Swal from 'sweetalert2';
 
 const StyledBackButton = styled(BackButton)`
@@ -94,8 +94,7 @@ const LoginPage = ({ ...prop }) => {
   useEffect(() => {
     const getUserInfo = async () => {
       setInitLoading(true);
-      const response = await authApi.getAuthUser();
-      if (response.data._id) {
+      if (await getUserInfoByToken()) {
         Swal.fire({
           title: '🤯',
           text: '이미 로그인 되어있습니다.',
@@ -103,8 +102,6 @@ const LoginPage = ({ ...prop }) => {
         }).then(() => {
           history.push('/');
         });
-        setInitLoading(false);
-        return;
       }
       setInitLoading(false);
     };
