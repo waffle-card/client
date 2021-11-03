@@ -2,7 +2,8 @@ import styled from '@emotion/styled';
 import { Text, Modal, Spinner } from '@components';
 import Common from '@styles';
 import PropTypes from 'prop-types';
-import { authApi, cardApi } from '@apis';
+import { cardApi } from '@apis';
+import { getUserInfoByToken } from '@utils';
 import {
   useCallback,
   useEffect,
@@ -78,6 +79,7 @@ const FirstHashtags = styled.div`
   justify-content: space-between;
   color: white;
   margin-top: 12px;
+  white-space: pre-wrap;
 `;
 
 const SecondHashtags = styled.div`
@@ -85,6 +87,7 @@ const SecondHashtags = styled.div`
   justify-content: space-evenly;
   color: white;
   margin-top: 12px;
+  white-space: pre-wrap;
 `;
 
 const StyledText = styled(Text)`
@@ -221,8 +224,7 @@ const Input = styled.textarea`
 
 const ChattingCard = ({ children, backgroundColor, visible, ...props }) => {
   const history = useHistory();
-  const scrollRef = useRef(null);
-  // const []
+  const [userInfo, setUserInfo] = useState(null);
   const [cardData, setCardData] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [title, setTitle] = useState('');
@@ -232,16 +234,13 @@ const ChattingCard = ({ children, backgroundColor, visible, ...props }) => {
   const [hashTags, setHashTags] = useState([]);
 
   // API가 필요한 부분
-  // const postId = useLocation().state.postId;
-  const postId = '618147ff7924de107cd3ea2d';
-  const userId = '616d869182a78113d401bedc';
-  // const postId = useLocation().state.cardData._id;
-  // const userId = useLocation().state.userId;
+  const postId = useLocation().state.cardData._id;
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     const getCardData = async () => {
       setIsLoading(true);
       const response = await cardApi.getCard(postId);
+      const userInfo = await getUserInfoByToken();
 
       if (!response.data) {
         Swal.fire({
@@ -264,61 +263,98 @@ const ChattingCard = ({ children, backgroundColor, visible, ...props }) => {
       };
 
       setCardData(cardData);
+      setUserInfo(userInfo);
       setIsLoading(false);
     };
 
     getCardData();
-  }, [history]);
+  }, [history, postId]);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     setTitle(cardData.title);
   }, [cardData.title]);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     setComments(cardData.comments);
   }, [cardData.comments]);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     setAuthor(cardData.author);
   }, [cardData.author]);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     setCardColor(cardData.cardColor);
   }, [cardData.cardColor]);
 
-  useLayoutEffect(() => {
+  // ESC 키로 채팅카드 모달 닫기
+  useEffect(() => {
     setHashTags(cardData.hashTags);
   }, [cardData.hashTags]);
 
-  // 댓글 관련 코드
-  useEffect(() => {
-    scrollRef.current.scrollIntoView({ behavior: 'smooth' });
-  }, []);
+  const escFunction = useCallback(
+    e => {
+      if (e.keyCode === 27) {
+        history.push('/');
+      }
+    },
+    [history],
+  );
 
+  useEffect(() => {
+    document.addEventListener('keydown', escFunction, false);
+
+    return () => {
+      document.removeEventListener('keydown', escFunction, false);
+    };
+  }, [escFunction]);
+
+  // 스크롤 맨 하단으로 이동
+  const ScrollToBottom = () => {
+    const scrollRef = useRef();
+    useEffect(() => scrollRef.current.scrollIntoView());
+    return <div ref={scrollRef} />;
+  };
+
+  // enter 키 이벤트
   const handleKeyUp = async e => {
     if (!e.shiftKey && e.key === 'Enter') {
-      // 댓글달기
+      setIsLoading(true);
+
       let tmpText = e.target.value;
 
       if (tmpText.replace(/ /gi, '') !== 0) {
-        const comment = await cardApi.createCardComment({
-          comment: e.target.value,
-          postId,
-        });
-        setCardData({
-          ...cardData,
-          comments: [...cardData.comments, comment.data],
-        });
-        e.target.value = '';
+        if (userInfo) {
+          const comment = await cardApi.createCardComment({
+            comment: e.target.value,
+            postId,
+          });
+          setCardData({
+            ...cardData,
+            comments: [...cardData.comments, comment.data],
+          });
+          setIsLoading(false);
+          e.target.value = '';
+        } else {
+          Swal.fire({
+            title: '😢',
+            text: '로그인이 필요합니다!',
+            confirmButtonColor: Common.colors.point,
+          }).then(() => (e.target.value = ''));
+          setIsLoading(false);
+
+          return;
+        }
       }
     }
   };
 
   const hashtagsDiv = (begin, end) =>
     hashTags &&
-    hashTags
-      .slice(begin, end)
-      .map(hashtag => <StyledText block>{hashtag}</StyledText>);
+    hashTags.slice(begin, end).map((hashtag, index) => (
+      <StyledText block key={index}>
+        {'#' + hashtag}
+      </StyledText>
+    ));
 
   return (
     <StyledModal
@@ -330,19 +366,21 @@ const ChattingCard = ({ children, backgroundColor, visible, ...props }) => {
         <FirstHashtags>{hashtagsDiv(0, 3)}</FirstHashtags>
         <SecondHashtags>{hashtagsDiv(3, 5)}</SecondHashtags>
       </HeaderContainer>
-      <BodyContainer ref={scrollRef}>
+      <BodyContainer>
         {comments &&
           comments?.map(comment => (
             <ChatContainer
-              isMine={comment.author._id === userId}
-              key={comment._id}>
-              <Message isMine={comment.author._id === userId}>
+              isMine={userInfo && comment.author._id === userInfo.id}>
+              <Message
+                isMine={userInfo && comment.author._id === userInfo.id}
+                key={comment._id}>
                 <StyledText block>
                   {comment.author.fullName} : {comment.comment}
                 </StyledText>
               </Message>
             </ChatContainer>
           ))}
+        <ScrollToBottom />
       </BodyContainer>
       <Footer>
         <InputBox>
