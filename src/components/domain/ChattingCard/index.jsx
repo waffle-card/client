@@ -322,10 +322,7 @@ const ChattingCard = ({ children, backgroundColor, visible, ...props }) => {
             comment: e.target.value,
             postId,
           });
-          setCardData({
-            ...cardData,
-            comments: [...cardData.comments, comment.data],
-          });
+          setComments([...comments, comment.data]);
           setIsLoading(false);
           e.target.value = '';
         } else {
