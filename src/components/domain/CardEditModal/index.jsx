@@ -1,10 +1,10 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import Common from '@styles';
 import Swal from 'sweetalert2';
-import { authApi, cardApi } from '@apis';
+import { cardApi } from '@apis';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
-// import { useAuthUser } from '@hooks';
+import { getUserInfoByToken } from '@utils';
 import { useHistory, useLocation } from 'react-router-dom';
 import {
   Text,
@@ -94,17 +94,28 @@ const CardEditModal = ({
 
   const checkLoggedIn = useCallback(async () => {
     setIsLoading(true);
-    const response = await authApi.getAuthUser();
-    if (!response.data) {
+    const userInfo = await getUserInfoByToken();
+    if (userInfo) {
+      const userId = userInfo.id;
+      const response = await cardApi.getUserCardList(userId);
+      const userCardList = response.data;
+      if (userCardList.length >= 1) {
+        Swal.fire({
+          title: '🤪',
+          text: '와플카드는 1개만 만들수 있어요! 와플카드를 소중하게 여겨주세요.',
+          confirmButtonColor: Common.colors.point,
+        }).then(() => {
+          history.push('/cards/my');
+        });
+      }
+    } else {
       Swal.fire({
         title: '🤯',
-        text: '로그인을 하고 접근해주세요.',
+        text: '로그인을 하고 접근해주세요!',
         confirmButtonColor: Common.colors.point,
       }).then(() => {
         history.push('/login');
       });
-      setIsLoading(false);
-      return;
     }
     setIsLoading(false);
   }, [history]);
