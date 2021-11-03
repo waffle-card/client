@@ -8,10 +8,11 @@ import { EmptyCard, WaffleCard, Text, Button } from '@components';
 const Container = styled.section`
   display: flex;
   flex-wrap: nowrap;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
   min-height: 413px;
-  margin-top: 112px;
+  padding: 20px 0;
+  margin-top: 92px;
   overflow-x: scroll;
   -ms-overflow-style: none;
   &::-webkit-scrollbar {
@@ -25,9 +26,41 @@ const Container = styled.section`
   }
 `;
 
+const GuideWrap = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  @media ${Common.media.sm} {
+    height: calc(180px * 1.56);
+  }
+  @media ${Common.media.md} {
+    height: calc(216px * 1.56);
+  }
+  @media ${Common.media.lg} {
+    height: calc(265px * 1.56);
+  }
+`;
+
 const StyledCard = styled(WaffleCard)`
   flex: 0 0 auto;
   margin: 0 10px;
+`;
+
+const StyledText = styled(Text)`
+  margin-bottom: 56px;
+  @media ${Common.media.sm} {
+    margin-bottom: 40px;
+    font-size: ${Common.fontSize.medium};
+  }
+`;
+const StyledButton = styled(Button)`
+  font-weight: ${Common.fontWeight.bold};
+  @media ${Common.media.sm} {
+    width: 180px;
+    height: 40px;
+    font-size: ${Common.fontSize.small};
+  }
 `;
 
 const CardsContainer = ({ myCard, cardList, userInfo, currentParam }) => {
@@ -36,14 +69,16 @@ const CardsContainer = ({ myCard, cardList, userInfo, currentParam }) => {
   if (!userInfo && (currentParam === 'my' || currentParam === 'bookmark')) {
     return (
       <Container>
-        <Text size={24}>와플카드 대화에 참여해보세요!</Text>
-        <Button
-          width={250}
-          onClick={() => {
-            history.push('/login');
-          }}>
-          로그인하러 가기
-        </Button>
+        <GuideWrap>
+          <StyledText size={24}>와플카드 대화에 참여해보세요!</StyledText>
+          <StyledButton
+            width={250}
+            onClick={() => {
+              history.push('/login');
+            }}>
+            로그인하러 가기
+          </StyledButton>
+        </GuideWrap>
       </Container>
     );
   }
@@ -57,7 +92,13 @@ const CardsContainer = ({ myCard, cardList, userInfo, currentParam }) => {
         myCard ? (
           <EmptyCard />
         ) : (
-          <Text>등록된 카드가 없습니다</Text>
+          <GuideWrap>
+            <StyledText>
+              {currentParam === 'bookmark'
+                ? '즐겨찾기 한 카드가 없습니다'
+                : '등록된 카드가 없습니다'}
+            </StyledText>
+          </GuideWrap>
         )
       ) : (
         cardList.map(card => {
