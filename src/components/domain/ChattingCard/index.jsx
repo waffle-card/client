@@ -219,22 +219,12 @@ const Input = styled.textarea`
   }
 `;
 
-const getDataFromAPI = async postId => {
-  try {
-    const res = await cardApi.getCard(postId);
-
-    return res;
-  } catch (e) {
-    console.error(e);
-    return;
-  }
-};
-
 const ChattingCard = ({ children, backgroundColor, visible, ...props }) => {
   const history = useHistory();
+  const scrollRef = useRef();
   const [cardData, setCardData] = useState({});
   const [isLoading, setIsLoading] = useState(false);
-  const [userId, setUserId] = useState('');
+  // const [userId, setUserId] = useState('');
   // const [postId, setPostId] = useState('');
   const [title, setTitle] = useState('');
   const [comments, setComments] = useState([]);
@@ -245,6 +235,7 @@ const ChattingCard = ({ children, backgroundColor, visible, ...props }) => {
   // API가 필요한 부분
   // const postId = useLocation().state.postId;
   const postId = '618147ff7924de107cd3ea2d';
+  const userId = '616d869182a78113d401bedc';
 
   useLayoutEffect(() => {
     const getCardData = async () => {
@@ -279,37 +270,52 @@ const ChattingCard = ({ children, backgroundColor, visible, ...props }) => {
 
     getCardData();
   }, [history]);
-  // const handleInsert = useCallback();
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     setTitle(cardData.title);
   }, [cardData.title]);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     setComments(cardData.comments);
   }, [cardData.comments]);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     setAuthor(cardData.author);
   }, [cardData.author]);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     setCardColor(cardData.cardColor);
   }, [cardData.cardColor]);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     setHashTags(cardData.hashTags);
   }, [cardData.hashTags]);
 
-  const firstHashtags = [
-    '#안녕하세요반갑습니다',
-    '#10글자로만들어봐요',
-    '#우리모두함께놀아봐요',
-  ];
-  const secondHashtags = ['#해쉬태그를만들어봐요', '#최대한길게길게갑시다'];
+  // 댓글 관련 코드
+  const handleKeyUp = async e => {
+    if (!e.shiftKey && e.key === 'Enter') {
+      // 댓글달기
+      let tmpText = e.target.value;
 
-  const hashtagsDiv = hashtags =>
-    hashtags.map(hashtag => <StyledText block>{hashtag}</StyledText>);
+      if (tmpText.replace(/ /gi, '') !== 0) {
+        const comment = await cardApi.createCardComment({
+          comment: e.target.value,
+          postId,
+        });
+        setCardData({
+          ...cardData,
+          comments: [...cardData.comments, comment.data],
+        });
+        e.target.value = '';
+      }
+    }
+  };
+
+  const hashtagsDiv = (begin, end) =>
+    hashTags &&
+    hashTags
+      .slice(begin, end)
+      .map(hashtag => <StyledText block>{hashtag}</StyledText>);
 
   return (
     <StyledModal
@@ -318,10 +324,10 @@ const ChattingCard = ({ children, backgroundColor, visible, ...props }) => {
       <HeaderContainer backgroundColor={cardColor}>
         <Header title={title} authorName={author?.fullName} />
         <Hr />
-        <FirstHashtags>{hashtagsDiv(firstHashtags)}</FirstHashtags>
-        <SecondHashtags>{hashtagsDiv(secondHashtags)}</SecondHashtags>
+        <FirstHashtags>{hashtagsDiv(0, 3)}</FirstHashtags>
+        <SecondHashtags>{hashtagsDiv(3, 5)}</SecondHashtags>
       </HeaderContainer>
-      <BodyContainer>
+      <BodyContainer ref={scrollRef}>
         {comments &&
           comments?.map(comment => (
             <ChatContainer
@@ -337,7 +343,7 @@ const ChattingCard = ({ children, backgroundColor, visible, ...props }) => {
       </BodyContainer>
       <Footer>
         <InputBox>
-          <Input placeholder="메세지를 입력하세요." />
+          <Input placeholder="메세지를 입력하세요." onKeyUp={handleKeyUp} />
         </InputBox>
       </Footer>
       <Spinner loading={isLoading} />
