@@ -99,9 +99,9 @@ const CardEditModal = ({
       const userId = userInfo.id;
       const response = await cardApi.getUserCardList(userId);
       const userCardList = response.data;
-      if (userCardList.length >= 1) {
+      if (editMode === undefined && userCardList.length >= 1) {
         Swal.fire({
-          title: '🤪',
+          title: '😝',
           text: '와플카드는 1개만 만들수 있어요! 와플카드를 소중하게 여겨주세요.',
           confirmButtonColor: Common.colors.point,
         }).then(() => {
@@ -118,13 +118,14 @@ const CardEditModal = ({
       });
     }
     setIsLoading(false);
-  }, [history]);
+  }, [history, editMode]);
 
   const initEditCardData = useCallback(async cardId => {
     try {
       const response = await cardApi.getCard(cardId);
       const { cardColor, hashTags } = JSON.parse(response.data.meta);
       const newCardData = {
+        cardId: cardId,
         emoji: response.data.title,
         cardColor,
         hashTags,
@@ -268,7 +269,7 @@ const CardEditModal = ({
             취소하기
           </StyledButton>
           <StyledButton type="submit" form="cardForm">
-            생성하기
+            {editMode ? '수정하기' : '생성하기'}
           </StyledButton>
         </ButtonContainer>
       </FormContainer>
