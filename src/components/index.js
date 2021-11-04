@@ -22,3 +22,4 @@ export { default as Header } from './domain/Header';
 export { default as NameChangeModal } from './domain/NameChangeModal';
 export { default as PasswordChangeModal } from './domain/PasswordChangeModal';
 export { default as CardsContainer } from './domain/CardsContainer';
+export { default as ToggleBox } from './domain/ToggleBox';
