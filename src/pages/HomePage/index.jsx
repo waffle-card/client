@@ -34,7 +34,8 @@ const HomePage = () => {
   const { userInfo } = useUser();
   const [isLoading, setIsLoading] = useState(false);
 
-  const getTodayCardList = async () => {
+  const getTodayCardList = useCallback(async () => {
+    if (!userInfo) return;
     setIsLoading(true);
     try {
       const response = await cardApi.getChannelCardList();
@@ -50,7 +51,7 @@ const HomePage = () => {
       });
     }
     setIsLoading(false);
-  };
+  }, [userInfo]);
 
   const getMyCardList = async userId => {
     setIsLoading(true);
@@ -116,7 +117,7 @@ const HomePage = () => {
     setIsLoading(true);
     init();
     setIsLoading(false);
-  }, [currentParam, getBookmarkCardList, userInfo]);
+  }, [currentParam, getBookmarkCardList, getTodayCardList, userInfo]);
 
   const handleTabClick = () => {
     setCurrentParam(() => {
