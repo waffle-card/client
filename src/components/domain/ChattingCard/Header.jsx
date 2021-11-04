@@ -62,9 +62,12 @@ const Header = ({ backgroundColor, title, authorName, ...props }) => {
 
   return (
     <Top>
-      <Icons style={{ width: '120px' }}>
-        <Icons.ArrowBack onClick={() => history.push('/')}></Icons.ArrowBack>
-      </Icons>
+      <div style={{ width: '120px' }}>
+        <Icons fontSize="20px">
+          <Icons.ArrowBack onClick={() => history.push('/')}></Icons.ArrowBack>
+        </Icons>
+      </div>
+
       <Title style={{ width: '120px' }}>
         <EmojiBox>{title}</EmojiBox>
         <StyledText block>{authorName}</StyledText>

@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { Text, Modal, Spinner } from '@components';
+import { Text, Modal, Spinner, Icons } from '@components';
 import Common from '@styles';
 import PropTypes from 'prop-types';
 import { cardApi } from '@apis';
@@ -197,6 +197,7 @@ const Input = styled.textarea`
   outline: none;
   resize: none;
   color: white;
+  margin-right: 10px;
 
   @media ${Common.media.sm} {
     width: 100%;
@@ -218,7 +219,7 @@ const Input = styled.textarea`
   }
 `;
 
-const ChattingCard = ({ children, backgroundColor, visible, ...props }) => {
+const ChattingCard = ({ children, visible, ...props }) => {
   const history = useHistory();
   const [userInfo, setUserInfo] = useState(null);
   const [cardData, setCardData] = useState({});
@@ -289,7 +290,7 @@ const ChattingCard = ({ children, backgroundColor, visible, ...props }) => {
 
   const escFunction = useCallback(
     e => {
-      if (e.keyCode === 27) {
+      if (e.key === 'Escape') {
         history.push('/');
       }
     },
@@ -358,7 +359,9 @@ const ChattingCard = ({ children, backgroundColor, visible, ...props }) => {
       visible={visible}
       style={{ padding: 0, display: 'flex', flexDirection: 'column' }}>
       <HeaderContainer backgroundColor={cardColor}>
-        <Header title={title} authorName={author?.fullName} />
+        {title && author && (
+          <Header title={title} authorName={author.fullName} />
+        )}
         <Hr />
         <FirstHashtags length={hashtagsDiv(0, 3)?.length}>
           {hashtagsDiv(0, 3)}
@@ -371,7 +374,8 @@ const ChattingCard = ({ children, backgroundColor, visible, ...props }) => {
         {comments &&
           comments.map(comment => (
             <ChatContainer
-              isMine={userInfo && comment.author._id === userInfo.id}>
+              isMine={userInfo && comment.author._id === userInfo.id}
+              key={comment._id}>
               <Message
                 comment={comment}
                 onRemove={handleRemove}
@@ -384,6 +388,9 @@ const ChattingCard = ({ children, backgroundColor, visible, ...props }) => {
       <Footer>
         <InputBox>
           <Input placeholder="메세지를 입력하세요." onKeyUp={handleKeyUp} />
+          <Icons fontSize="20">
+            <Icons.Send onClick={() => alert('Send')} />
+          </Icons>
         </InputBox>
       </Footer>
       <Spinner loading={isLoading} />
@@ -392,8 +399,6 @@ const ChattingCard = ({ children, backgroundColor, visible, ...props }) => {
 };
 
 ChattingCard.propTypes = {
-  backgroundColor: PropTypes.string,
-  cardData: PropTypes.object,
   visible: PropTypes.bool,
 };
 

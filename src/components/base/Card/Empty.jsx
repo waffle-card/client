@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import React, { useCallback } from 'react';
-import { Text } from '@components';
+import { Text, Icons } from '@components';
 import PropTypes from 'prop-types';
 import Common from '@styles';
 import { useHistory } from 'react-router-dom';

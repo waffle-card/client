@@ -1,10 +1,10 @@
 import styled from '@emotion/styled';
 import Common from '@styles';
 import { EditBox, Text } from '@components';
-import { useHover } from '@hooks';
 import { cardApi } from '@apis';
 import Swal from 'sweetalert2';
-import { useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import React from 'react';
 
 const ChatBox = styled.div`
   display: flex;
@@ -84,11 +84,37 @@ const EditBoxContainer = styled.div`
 `;
 
 const Message = ({ comment, isMine, onRemove, ...props }) => {
-  const [ref, state] = useHover(null);
+  const hoverRef = useRef();
+  const editRef = useRef();
+  const [isHover, setIsHover] = useState(false);
   const [isEditable, setIsEditable] = useState(false);
 
-  const handleClickEditIcon = async () => {
-    //
+  const handleMouseEnter = useCallback(() => setIsHover(true), []);
+  const handleMouseLeave = useCallback(() => setIsHover(false), []);
+
+  useEffect(() => {
+    const element = hoverRef.current;
+
+    if (element && isMine) {
+      element.addEventListener('mouseenter', handleMouseEnter);
+    }
+  }, [handleMouseEnter, isMine]);
+
+  useEffect(() => {
+    const element = hoverRef.current;
+
+    if (element && !isEditable && isMine) {
+      element.addEventListener('mouseleave', handleMouseLeave);
+    }
+  }, [handleMouseLeave, isEditable, isMine]);
+
+  // useEffect(async () => {
+  //   const response = await
+  // }, [])
+
+  const handleClickEditIcon = () => {
+    editRef.current.focus();
+    setIsEditable(true);
   };
 
   const handleClickDeleteIcon = async () => {
@@ -112,27 +138,30 @@ const Message = ({ comment, isMine, onRemove, ...props }) => {
           }
         } catch (e) {
           console.error(e);
+          return;
         }
       }
     });
   };
 
   return (
-    <ChatBox ref={ref}>
-      {isMine && state ? (
+    <ChatBox ref={hoverRef}>
+      {isMine && isHover && (
         <EditBoxContainer>
           <EditBox
             onEditIconClick={handleClickEditIcon}
             onDeleteIconClick={handleClickDeleteIcon}
           />
         </EditBoxContainer>
-      ) : undefined}
+      )}
       <StyledText block>
         {comment.author.fullName + ' : '}
-        <StyledDiv isEditable={isEditable}>{comment.comment}</StyledDiv>
+        <StyledDiv ref={editRef} isEditable={isMine}>
+          {comment.comment}
+        </StyledDiv>
       </StyledText>
     </ChatBox>
   );
 };
 
-export default Message;
+export default React.memo(Message);
