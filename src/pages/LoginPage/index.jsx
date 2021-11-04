@@ -52,6 +52,7 @@ const Header = styled(Text)`
 const StyledButton = styled(Button)`
   width: 100%;
   margin: 16px 0;
+  font-weight: ${Common.fontWeight.bold};
   &:nth-of-type(1) {
     margin-top: 32px;
   }

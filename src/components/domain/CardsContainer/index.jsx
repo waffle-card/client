@@ -14,7 +14,7 @@ const Container = styled.section`
   align-items: center;
   min-height: 413px;
   padding: 35px 0;
-  margin-top: 77px;
+  margin-top: 5vh;
   overflow-x: scroll;
   -ms-overflow-style: none;
   &::-webkit-scrollbar {
@@ -22,11 +22,9 @@ const Container = styled.section`
   }
   @media ${Common.media.sm} {
     padding: 20px 0;
-    margin-top: 64px;
     min-height: 300px;
   }
   @media ${Common.media.md} {
-    margin-top: 88px;
   }
 `;
 

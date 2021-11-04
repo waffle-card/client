@@ -64,12 +64,6 @@ const Hr = styled.hr`
 const FirstHashtags = styled.div`
   display: flex;
   justify-content: center;
-  /* justify-content: ${({ length }) =>
-    length === 1
-      ? 'center'
-      : length === 2
-      ? 'space-evenly'
-      : 'space-between'}; */
   color: white;
   margin-top: 20px;
   white-space: pre-wrap;
@@ -81,13 +75,16 @@ const FirstHashtags = styled.div`
 const SecondHashtags = styled.div`
   display: flex;
   justify-content: center;
-  /* justify-content: ${({ length }) =>
-    length === 1 ? 'center' : 'space-evenly'}; */
   color: white;
   margin-top: 20px;
   white-space: pre-wrap;
   @media ${Common.media.sm} {
     margin-top: 12px;
+  }
+  & div {
+    @media ${Common.media.sm} {
+      width: calc(100% / 3);
+    }
   }
 `;
 
@@ -159,6 +156,8 @@ const StyledText = styled(Text)`
   @media ${Common.media.sm} {
     font-size: 12px;
     margin: 0 8px;
+    text-align: center;
+    line-height: 16px;
   }
 
   @media ${Common.media.md} {
