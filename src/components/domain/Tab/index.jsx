@@ -67,7 +67,7 @@ const Tab = ({
     if (
       currentUrlArr.includes('today') ||
       currentUrlArr.includes('my') ||
-      currentUrlArr.includes('bookmark')
+      currentUrlArr.includes('like')
     ) {
       const currentActiveElement = childrenToArray(children, 'Tab.Item').filter(
         element => currentUrlArr.includes(element.props.param),

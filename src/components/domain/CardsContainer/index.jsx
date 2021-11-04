@@ -72,7 +72,7 @@ const StyledButton = styled(Button)`
 const CardsContainer = ({ myCard, cardList, userInfo, currentParam }) => {
   const history = useHistory();
 
-  if (!userInfo && (currentParam === 'my' || currentParam === 'bookmark')) {
+  if (!userInfo && (currentParam === 'my' || currentParam === 'like')) {
     return (
       <Container>
         <GuideWrap>
@@ -100,8 +100,8 @@ const CardsContainer = ({ myCard, cardList, userInfo, currentParam }) => {
         ) : (
           <GuideWrap>
             <StyledText>
-              {currentParam === 'bookmark'
-                ? '즐겨찾기 한 카드가 없습니다'
+              {currentParam === 'like'
+                ? '좋아하는 카드가 없습니다'
                 : '등록된 카드가 없습니다'}
             </StyledText>
           </GuideWrap>

@@ -110,7 +110,7 @@ const HomePage = () => {
         getTodayCardList();
       } else if (currentUrlArr.includes('my')) {
         getMyCardList(userInfo?.id);
-      } else if (currentUrlArr.includes('bookmark')) {
+      } else if (currentUrlArr.includes('like')) {
         getBookmarkCardList();
       }
     };
@@ -135,7 +135,7 @@ const HomePage = () => {
           }}>
           <Tab.Item title="오늘의 카드" index="0" param="today"></Tab.Item>
           <Tab.Item title="나의 카드" index="1" param="my"></Tab.Item>
-          <Tab.Item title="즐겨찾기" index="2" param="bookmark"></Tab.Item>
+          <Tab.Item title="관심 카드" index="2" param="like"></Tab.Item>
         </Tab>
       </nav>
       <CardsContainer
