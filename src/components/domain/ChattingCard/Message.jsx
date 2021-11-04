@@ -77,6 +77,7 @@ const EditBoxContainer = styled.div`
 const Message = ({ comment, isMine, onRemove, ...props }) => {
   const hoverRef = useRef(null);
   const [isHover, setIsHover] = useState(false);
+  const [text, setText] = useState(comment.comment);
 
   const handleMouseEnter = useCallback(() => setIsHover(true), []);
   const handleMouseLeave = useCallback(() => setIsHover(false), []);
@@ -110,19 +111,25 @@ const Message = ({ comment, isMine, onRemove, ...props }) => {
       cancelButtonText: '취소하기',
       cancelButtonColor: Common.colors.red,
       showLoaderOnConfirm: true,
-      preConfirm: text => {
-        console.log(comment._id, text);
-        return cardApi
-          .updateCardComment({ id: comment._id, comment: text })
-          .then(response => {
-            if (!response.ok) {
-              throw new Error('에러가 발생했습니다! ' + response.statusText);
-            }
-            return response.json();
-          })
-          .catch(error => {
-            Swal.showValidationMessage(`Request failed: ${error}`);
+      preConfirm: async text => {
+        try {
+          const response = await cardApi.updateCardComment({
+            id: comment._id,
+            comment: text,
           });
+
+          if (!response.status === 200) {
+            throw new Error(response.statusText);
+          }
+          setText(text);
+        } catch (e) {
+          console.error(e);
+          Swal.fire({
+            title: '😡',
+            text: '에러가 발생했어요!!',
+            confirmButtonColor: Common.colors.red,
+          });
+        }
       },
       allowOutsideClick: () => !Swal.isLoading(),
     }).then(result => {
@@ -174,7 +181,7 @@ const Message = ({ comment, isMine, onRemove, ...props }) => {
             />
           </EditBoxContainer>
         )}
-        {comment.author.fullName + ' : ' + comment.comment}
+        {comment.author.fullName + ' : ' + text}
       </StyledText>
     </ChatBox>
   );

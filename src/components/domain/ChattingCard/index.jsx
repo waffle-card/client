@@ -297,15 +297,15 @@ const ChattingCard = ({ children, visible, ...props }) => {
     setCardColor(cardData.cardColor);
   }, [cardData.cardColor]);
 
-  // ESC 키로 채팅카드 모달 닫기
   useEffect(() => {
     setHashTags(cardData.hashTags);
   }, [cardData.hashTags]);
 
+  // 모달창 닫기 이벤트
   const escFunction = useCallback(
     e => {
       if (e.key === 'Escape') {
-        history.push('/');
+        history.goBack();
       }
     },
     [history],

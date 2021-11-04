@@ -79,4 +79,4 @@ EditBox.defaultProps = {
   backgroundColor: '#3E4857',
 };
 
-export default EditBox;
+export default React.memo(EditBox);
