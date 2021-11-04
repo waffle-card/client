@@ -242,6 +242,7 @@ const ChattingCard = ({ children, visible, ...props }) => {
   const [author, setAuthor] = useState('');
   const [cardColor, setCardColor] = useState('');
   const [hashTags, setHashTags] = useState([]);
+  const textRef = useRef();
 
   // API가 필요한 부분
   const postId = useLocation().state.cardData.id;
@@ -255,7 +256,7 @@ const ChattingCard = ({ children, visible, ...props }) => {
       if (!response.data) {
         Swal.fire({
           title: '😢',
-          text: '에러가 발생했습니다!',
+          text: '에러가 발생했어요!',
           confirmButtonColor: Common.colors.point,
         }).then(() => {
           history.push('/');
@@ -296,15 +297,15 @@ const ChattingCard = ({ children, visible, ...props }) => {
     setCardColor(cardData.cardColor);
   }, [cardData.cardColor]);
 
-  // ESC 키로 채팅카드 모달 닫기
   useEffect(() => {
     setHashTags(cardData.hashTags);
   }, [cardData.hashTags]);
 
+  // 모달창 닫기 이벤트
   const escFunction = useCallback(
     e => {
       if (e.key === 'Escape') {
-        history.push('/');
+        history.goBack();
       }
     },
     [history],
@@ -318,6 +319,40 @@ const ChattingCard = ({ children, visible, ...props }) => {
     };
   }, [escFunction]);
 
+  // 댓글 생성
+  const createComment = async () => {
+    let tmpText = textRef.current.value;
+
+    if (tmpText.replace(/ /gi, '') !== 0) {
+      if (userInfo) {
+        setIsLoading(true);
+        await cardApi
+          .createCardComment({
+            comment: textRef.current.value,
+            postId,
+          })
+          .then(res => {
+            setComments([...comments, res.data]);
+          })
+          .catch(() => {
+            Swal.fire({
+              title: '😡',
+              text: '에러가 발생했어요!!',
+              confirmButtonColor: Common.colors.red,
+            });
+          });
+        setIsLoading(false);
+        textRef.current.value = '';
+      } else {
+        Swal.fire({
+          title: '😮',
+          text: '먼저 로그인을 해주세요!',
+          confirmButtonColor: Common.colors.point,
+        }).then(() => (textRef.current.value = ''));
+      }
+    }
+  };
+
   // 스크롤 맨 하단으로 이동
   const ScrollToBottom = () => {
     const scrollRef = useRef();
@@ -328,30 +363,7 @@ const ChattingCard = ({ children, visible, ...props }) => {
   // enter 키 이벤트
   const handleKeyUp = async e => {
     if (!e.shiftKey && e.key === 'Enter') {
-      setIsLoading(true);
-
-      let tmpText = e.target.value;
-
-      if (tmpText.replace(/ /gi, '') !== 0) {
-        if (userInfo) {
-          const comment = await cardApi.createCardComment({
-            comment: e.target.value,
-            postId,
-          });
-          setComments([...comments, comment.data]);
-          setIsLoading(false);
-          e.target.value = '';
-        } else {
-          Swal.fire({
-            title: '😢',
-            text: '로그인이 필요합니다!',
-            confirmButtonColor: Common.colors.point,
-          }).then(() => (e.target.value = ''));
-          setIsLoading(false);
-
-          return;
-        }
-      }
+      createComment();
     }
   };
 
@@ -392,17 +404,22 @@ const ChattingCard = ({ children, visible, ...props }) => {
               <Message
                 comment={comment}
                 onRemove={handleRemove}
-                isMine={userInfo && comment.author._id === userInfo.id}
-                key={comment._id}></Message>
+                isMine={
+                  userInfo && comment.author._id === userInfo.id
+                }></Message>
             </ChatContainer>
           ))}
         <ScrollToBottom />
       </BodyContainer>
       <Footer>
         <InputBox>
-          <Input placeholder="메세지를 입력하세요." onKeyUp={handleKeyUp} />
+          <Input
+            ref={textRef}
+            placeholder="메세지를 입력하세요."
+            onKeyUp={handleKeyUp}
+          />
           <Icons fontSize="20">
-            <Icons.Send onClick={() => alert('Send')} />
+            <Icons.Send onClick={createComment} />
           </Icons>
         </InputBox>
       </Footer>
