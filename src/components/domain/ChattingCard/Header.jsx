@@ -9,23 +9,9 @@ import PropTypes from 'prop-types';
 
 const Top = styled.div`
   display: flex;
-  height: 50%;
+  margin-bottom: 14px;
   justify-content: space-between;
   box-sizing: border-box;
-
-  @media ${Common.media.sm} {
-    max-height: 40px;
-  }
-
-  @media ${Common.media.md} {
-    min-height: 80px;
-    max-height: 90px;
-  }
-
-  @media ${Common.media.lg} {
-    min-height: 90px;
-    max-height: 120px;
-  }
 `;
 
 const Title = styled.div`
@@ -65,7 +51,7 @@ const Header = ({ backgroundColor, title, authorName, ...props }) => {
     <Top>
       <div style={{ width: '120px' }}>
         <Icons fontSize="20px">
-          <Icons.ArrowBack onClick={() => history.push('/')}></Icons.ArrowBack>
+          <Icons.ArrowBack onClick={() => history.goBack()}></Icons.ArrowBack>
         </Icons>
       </div>
 

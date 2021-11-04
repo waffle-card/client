@@ -7,7 +7,7 @@ import useToggle from '@hooks/useToggle';
 const Container = styled.div`
   position: relative;
   width: 312px;
-  margin: 14px auto 0;
+  margin: 10px auto 0;
   display: flex;
   visibility: ${({ isDelete, isVisible }) =>
     isDelete || !isVisible ? 'hidden' : 'visible'};
@@ -54,6 +54,15 @@ const DelButton = styled.div`
   &:hover {
     background-color: rgba(255, 255, 255, 0.35);
   }
+  @media ${Common.media.sm} {
+    top: -16px;
+    right: -16px;
+  }
+
+  @media ${Common.media.md} {
+    top: -20px;
+    right: -20px;
+  }
 `;
 
 const ScrollGuide = () => {
@@ -83,7 +92,7 @@ const ScrollGuide = () => {
         />
       </ImgBox>
       <StyledText weight={Common.fontWeight.regular}>
-        Shift+스크롤해서 카드들을 둘러보세요!
+        Shift+스크롤로 카드들을 둘러보세요!
       </StyledText>
     </Container>
   );

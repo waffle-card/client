@@ -18,17 +18,21 @@ import { authApi, userApi } from '@apis';
 import Swal from 'sweetalert2';
 
 const StyledBackButton = styled(BackButton)`
-  margin: 0 0 32px 50px;
+  position: fixed;
+  top: 60px;
+  left: 50px;
   @media ${Common.media.sm} {
-    margin-left: 16px;
+    left: 16px;
   }
 `;
 
 const Container = styled.div`
-  padding: 40px 0;
-  @media ${Common.media.sm} {
-    padding: 20px 0;
-  }
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: calc(100vh + 110px);
+  padding: 100px 0;
 `;
 
 const ContentContainer = styled.form`
@@ -50,15 +54,32 @@ const InputWrapper = styled.div`
 const Header = styled(Text)`
   text-align: center;
   margin-bottom: 64px;
+  @media ${Common.media.sm} {
+    font-size: 18px;
+    margin-bottom: 20px;
+  }
 `;
 
 const StyledButton = styled(Button)`
   width: 100%;
-  margin: 64px 0;
+  margin: 20px 0;
+  font-weight: ${Common.fontWeight.bold};
+  @media ${Common.media.sm} {
+    height: 40px;
+    border-radius: 12px;
+    font-size: ${Common.fontSize.small};
+    &:first-of-type {
+      margin-bottom: 16px;
+    }
+  }
 `;
 
 const StyledText = styled(Text)`
   margin: 16px 0;
+  @media ${Common.media.sm} {
+    font-size: ${Common.fontSize.small};
+    margin-bottom: 20px;
+  }
 `;
 
 const SignUpPage = ({ ...prop }) => {

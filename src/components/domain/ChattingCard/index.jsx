@@ -11,31 +11,27 @@ import Header from './Header';
 import Message from './Message';
 
 const StyledModal = styled(Modal)`
+  height: 92vh;
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
 
   @media ${Common.media.sm} {
     width: 290px;
-    height: 528px;
   }
 
   @media ${Common.media.md} {
     width: 688px;
-    height: 650px;
   }
 
   @media ${Common.media.lg} {
     width: 740px;
-    height: 700px;
   }
 `;
 
 const HeaderContainer = styled.div`
   min-width: 290px;
   max-width: 740px;
-  min-height: 120px;
-  max-height: 195px;
   background-color: ${({ backgroundColor }) => backgroundColor};
   border-top-left-radius: 16px;
   border-top-right-radius: 16px;
@@ -43,20 +39,17 @@ const HeaderContainer = styled.div`
 
   @media ${Common.media.sm} {
     width: 290px;
-    height: 120px;
-    padding: 15px 20px 0 20px;
+    padding: 20px 20px;
   }
 
   @media ${Common.media.md} {
     width: 688px;
-    height: 165px;
-    padding: 15px 30px 0 30px;
+    padding: 20px 30px;
   }
 
   @media ${Common.media.lg} {
     width: 740px;
-    height: 185px;
-    padding: 15px 40px 0 40px;
+    padding: 20px 40px;
   }
 `;
 
@@ -70,26 +63,35 @@ const Hr = styled.hr`
 
 const FirstHashtags = styled.div`
   display: flex;
-  justify-content: ${({ length }) =>
-    length === 1 ? 'center' : length === 2 ? 'space-evenly' : 'space-between'};
+  justify-content: center;
   color: white;
-  margin-top: 12px;
+  margin-top: 20px;
   white-space: pre-wrap;
+  @media ${Common.media.sm} {
+    margin-top: 12px;
+  }
 `;
 
 const SecondHashtags = styled.div`
   display: flex;
-  justify-content: ${({ length }) =>
-    length === 1 ? 'center' : 'space-evenly'};
+  justify-content: center;
   color: white;
-  margin-top: 12px;
+  margin-top: 20px;
   white-space: pre-wrap;
+  @media ${Common.media.sm} {
+    margin-top: 12px;
+  }
+  & div {
+    @media ${Common.media.sm} {
+      width: calc(100% / 3);
+    }
+  }
 `;
 
 const BodyContainer = styled.div`
   display: flex;
+  flex-grow: 1;
   flex-direction: column;
-  height: 100%;
   background-color: transparent;
   background-color: ${Common.colors.background_modal};
   overflow-y: auto;
@@ -110,19 +112,16 @@ const BodyContainer = styled.div`
   @media ${Common.media.sm} {
     width: 290px;
     padding-top: 10px;
-    height: 800px;
   }
 
   @media ${Common.media.md} {
     width: 688px;
-    padding: 10px 10px 10px 10px;
-    height: 365px;
+    padding: 10px;
   }
 
   @media ${Common.media.lg} {
     width: 740px;
-    padding: 10px 10px 10px 10px;
-    height: 395px;
+    padding: 10px;
   }
 `;
 
@@ -152,16 +151,21 @@ const ChatContainer = styled.div`
 `;
 
 const StyledText = styled(Text)`
+  font-weight: ${Common.fontWeight.bold};
+  margin: 0 16px;
   @media ${Common.media.sm} {
-    font-size: 10px;
+    font-size: 12px;
+    margin: 0 8px;
+    text-align: center;
+    line-height: 16px;
   }
 
   @media ${Common.media.md} {
-    font-size: ${Common.fontSize.md};
+    font-size: ${Common.fontSize.base};
   }
 
   @media ${Common.media.lg} {
-    font-size: ${Common.fontSize.lg};
+    font-size: ${Common.fontSize.medium};
   }
 `;
 
@@ -211,6 +215,20 @@ const Input = styled.textarea`
   resize: none;
   color: white;
   margin-right: 10px;
+
+  &::-webkit-scrollbar {
+    width: 18px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 10px;
+    background-clip: padding-box;
+    border: 4.8px solid transparent;
+    box-shadow: inset 0px 0px 3px white;
+  }
+  &::-webkit-scrollbar-track {
+    background-color: rgba(0, 0, 0, 0);
+  }
 
   @media ${Common.media.sm} {
     width: 100%;
