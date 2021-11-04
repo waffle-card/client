@@ -14,18 +14,22 @@ import {
 import Swal from 'sweetalert2';
 import { useHistory } from 'react-router';
 
-const MyPageContainer = styled.div`
-  padding: 40px 0;
+const StyledBackButton = styled(BackButton)`
+  position: fixed;
+  top: 60px;
+  left: 50px;
   @media ${Common.media.sm} {
-    padding: 20px 0;
+    left: 16px;
   }
 `;
 
-const StyledBackButton = styled(BackButton)`
-  margin: 0 0 32px 50px;
-  @media ${Common.media.sm} {
-    margin-left: 16px;
-  }
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: calc(100vh - 110px);
+  padding: 100px 0;
 `;
 
 const ContentContainer = styled.div`
@@ -62,6 +66,14 @@ const StyledButton = styled(Button)`
   margin-bottom: 16px;
   &:last-child {
     margin-bottom: 0;
+  }
+  @media ${Common.media.sm} {
+    height: 40px;
+    border-radius: 12px;
+    font-size: ${Common.fontSize.small};
+    &:first-of-type {
+      margin-bottom: 16px;
+    }
   }
 `;
 
@@ -135,7 +147,7 @@ const MyPage = ({ ...prop }) => {
   };
 
   return (
-    <MyPageContainer>
+    <Container>
       <StyledBackButton />
       <ContentContainer>
         <Text size={Common.fontSize.large}>마이페이지</Text>
@@ -179,7 +191,7 @@ const MyPage = ({ ...prop }) => {
         }}
       />
       <Spinner loading={isLoading} />
-    </MyPageContainer>
+    </Container>
   );
 };
 

@@ -39,7 +39,7 @@ const ConfirmBox = styled.div`
   }
   @media ${Common.media.sm} {
     &:nth-of-type(1) {
-      margin-bottom: 48px;
+      margin-bottom: 32px;
     }
     &:nth-of-type(2) {
       margin-bottom: 16px;

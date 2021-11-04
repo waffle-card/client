@@ -29,7 +29,7 @@ const StyledText = styled(Text)`
 const InputContainer = styled.div`
   margin-bottom: 56px;
   @media ${Common.media.sm} {
-    margin-bottom: 40px;
+    margin-bottom: 24px;
   }
 `;
 

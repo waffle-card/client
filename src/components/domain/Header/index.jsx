@@ -5,8 +5,12 @@ import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
 import { Icons, Text } from '@components';
 import { authApi } from '@apis';
+import { rgba } from 'polished';
 
 const HeaderTag = styled.header`
+  position: fixed;
+  width: 100%;
+  top: 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -60,16 +64,24 @@ const HelpIcon = styled.span`
 
 const StyleTextLogin = styled(Text)`
   cursor: pointer;
+  transition: color 0.2s ease-out;
+  &:hover {
+    color: ${rgba(Common.colors.point, 0.7)};
+  }
 `;
 
 const StyledIcon = styled(Icons.Person)`
   color: ${Common.colors.point};
   font-size: 20px;
+  transition: color 0.2s ease-out;
   @media ${Common.media.sm} {
     font-size: 20px;
   }
   @media ${Common.media.md} {
     font-size: 20px;
+  }
+  &:hover {
+    color: ${rgba(Common.colors.point, 0.7)};
   }
 `;
 
