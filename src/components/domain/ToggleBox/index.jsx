@@ -47,7 +47,9 @@ const ToggleBox = ({
   ...props
 }) => {
   const { userInfo } = useUser();
-  const [likeCount, setLikeCount] = useState(cardInfo.likes.length);
+  const [likeCount, setLikeCount] = useState(
+    cardInfo.likes?.length ? cardInfo.likes.length : 0,
+  );
 
   const handleClickLikeIcon = useCallback(
     async (e, likeToggled) => {
