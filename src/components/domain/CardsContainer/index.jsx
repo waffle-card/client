@@ -114,12 +114,7 @@ const CardsContainer = ({ myCard, cardList, userInfo, currentParam }) => {
             <StyledCard
               myCard={myCard}
               key={card.id}
-              cardData={{
-                id: card.id,
-                emoji: card.emoji,
-                cardColor: card.cardColor,
-                hashTags: card.hashTags,
-              }}
+              cardData={card}
               onClickCard={() => {
                 history.push({
                   pathname: `/card/detail/${

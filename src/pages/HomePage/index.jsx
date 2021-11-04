@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import Common from '@styles';
 import { Route } from 'react-router-dom';
@@ -11,8 +11,9 @@ import {
   ScrollGuide,
 } from '@components';
 import { cardApi } from '@apis';
-import { getUserInfoByToken } from '@utils';
 import Swal from 'sweetalert2';
+import { parseCardInfo } from '@utils';
+import { useUser } from '@contexts';
 
 const HomeContainer = styled.div`
   display: flex;
@@ -27,38 +28,18 @@ const HomeContainer = styled.div`
   margin: 0 auto;
 `;
 
-const parseCardInfo = cardData => {
-  const {
-    cardColor = '',
-    hashTags = [],
-    bookmarkCount = 0,
-    likeCount = 0,
-  } = JSON.parse(cardData.meta);
-  return {
-    id: cardData._id,
-    author: cardData.author.fullName,
-    emoji: cardData.title,
-    cardColor,
-    hashTags,
-    createdAt: cardData.createdAt,
-    updatedAt: cardData.updatedAt,
-    bookmarkCount,
-    likeCount,
-    comments: cardData.comments,
-  };
-};
-
 const HomePage = () => {
   const [cardList, setCardList] = useState([]);
   const [currentParam, setCurrentParam] = useState('');
-  const [userInfo, setUserInfo] = useState({});
+  // const [userInfo, setUserInfo] = useState({});
+  const { userInfo } = useUser();
   const [isLoading, setIsLoading] = useState(false);
 
   const getTodayCardList = async () => {
     setIsLoading(true);
     try {
       const response = await cardApi.getChannelCardList();
-      const cardList = response.data.slice(0, 10).map(cardData => {
+      const cardList = response.data.map(cardData => {
         return parseCardInfo(cardData);
       });
       setCardList(cardList);
@@ -77,7 +58,7 @@ const HomePage = () => {
     try {
       if (userId) {
         const response = await cardApi.getUserCardList(userId);
-        const cardList = response.data.slice(0, 1).map(cardData => {
+        const cardList = response.data.map(cardData => {
           return parseCardInfo(cardData);
         });
         setCardList(cardList);
@@ -94,23 +75,30 @@ const HomePage = () => {
     setIsLoading(false);
   };
 
-  // const getBookmarkCardList = async () => {
-  //   try {
-  //     setIsLoading(true);
-  //     const response = await cardApi.getUserBookMarkCardList();
-  //     console.log(response);
-  //     // setCardList(res.data);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  //   setIsLoading(false);
-  // };
+  const getBookmarkCardList = useCallback(async () => {
+    if (!userInfo) return;
+    try {
+      setIsLoading(true);
+      const response = await cardApi.getChannelCardList();
+      const cardList = response.data.map(cardData => {
+        return parseCardInfo(cardData);
+      });
+      const bookmarkedCardList = cardList.filter(card =>
+        userInfo.bookmarkCardList.includes(card.id),
+      );
+      setCardList(bookmarkedCardList);
+    } catch (error) {
+      Swal.fire({
+        title: '🥲',
+        text: error,
+        confirmButtonColor: Common.colors.point,
+      });
+    }
+    setIsLoading(false);
+  }, [userInfo]);
 
   useEffect(() => {
     const init = async () => {
-      const userInfo = await getUserInfoByToken();
-      setUserInfo(userInfo);
-
       const currentUrlArr = window.location.pathname.split('/');
       setCurrentParam(() => {
         return currentUrlArr[currentUrlArr.length - 1];
@@ -122,13 +110,13 @@ const HomePage = () => {
         const userId = userInfo ? userInfo.id : null;
         getMyCardList(userId);
       } else if (currentUrlArr.includes('bookmark')) {
-        // TODO: 즐겨찾기 테스트
+        getBookmarkCardList();
       }
     };
     setIsLoading(true);
     init();
     setIsLoading(false);
-  }, [currentParam]);
+  }, [currentParam, getBookmarkCardList, userInfo]);
 
   const handleTabClick = () => {
     setCurrentParam(() => {

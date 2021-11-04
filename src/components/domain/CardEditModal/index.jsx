@@ -16,6 +16,7 @@ import {
   ColorPalette,
   EmojiPickerActiveButton,
 } from '@components';
+import { useUser } from '@contexts';
 
 const StyledModal = styled(Modal)`
   display: flex;
@@ -89,6 +90,7 @@ const CardEditModal = ({
 }) => {
   const history = useHistory();
   const location = useLocation();
+  const { userInfo } = useUser();
   const [isLoading, setIsLoading] = useState(false);
   const [cardData, setCardData] = useState(initialCardData);
 
@@ -141,12 +143,33 @@ const CardEditModal = ({
   }, []);
 
   useEffect(() => {
-    checkLoggedIn();
+    // checkLoggedIn();
+    // if (editMode) {
+    //   const cardId = location.state.cardId;
+    //   initEditCardData(cardId);
+    // }
+    if (!userInfo) {
+      Swal.fire({
+        title: '🤯',
+        text: '로그인을 하고 접근해주세요!',
+        confirmButtonColor: Common.colors.point,
+      }).then(() => {
+        history.push('/login');
+      });
+      return;
+    }
     if (editMode) {
       const cardId = location.state.cardId;
       initEditCardData(cardId);
     }
-  }, [checkLoggedIn, editMode, initEditCardData, location.state]);
+  }, [
+    checkLoggedIn,
+    editMode,
+    initEditCardData,
+    location.state,
+    history,
+    userInfo,
+  ]);
 
   const handleEmojiClick = emoji => {
     setCardData(cardData => {
