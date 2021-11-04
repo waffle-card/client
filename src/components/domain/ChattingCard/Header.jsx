@@ -65,7 +65,7 @@ const Header = ({ backgroundColor, title, authorName, cardInfo, ...props }) => {
         <StyledText block>{authorName}</StyledText>
       </Title>
       <StyledDiv>
-        <ToggleBox cardInfo={cardInfo} />
+        <ToggleBox cardInfo={cardInfo} style={{ height: '20px' }} />
       </StyledDiv>
     </Top>
   );
