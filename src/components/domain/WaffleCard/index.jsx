@@ -218,17 +218,12 @@ const WaffleCard = ({
       <InfoContainer>
         <StyledText block>{days <= 0 ? '오늘' : `${days}일 전`}</StyledText>
         <IconWrapper>
-          <Icons>
-            <Icons.Like
-              fontSize={'20px'}
-              active={likeToggle}
-              onClick={handleClickLikeIcon}
-            />
+          <Icons fontSize="20px">
+            <Icons.Like active={likeToggle} onClick={handleClickLikeIcon} />
           </Icons>
           <StyledText block>{bookmarkCount}</StyledText>
-          <Icons>
+          <Icons fontSize="20px">
             <Icons.Bookmark
-              fontSize={'20px'}
               active={bookmarkToggle}
               onClick={handleClickBookmarkIcon}
             />

@@ -43,7 +43,9 @@ const Empty = ({ fontSize, iconSize, onClick, ...props }) => {
 
   return (
     <Container onClick={handleClick} {...props}>
-      <Icons.Add fontSize={iconSize} color={Common.colors.secondary} />
+      <Icons fontSize={iconSize}>
+        <Icons.Add color={Common.colors.secondary} />
+      </Icons>
       <Text size={fontSize} color={Common.colors.secondary}>
         카드 만들기
       </Text>

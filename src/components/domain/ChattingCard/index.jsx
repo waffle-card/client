@@ -219,7 +219,7 @@ const Input = styled.textarea`
   }
 `;
 
-const ChattingCard = ({ children, backgroundColor, visible, ...props }) => {
+const ChattingCard = ({ children, visible, ...props }) => {
   const history = useHistory();
   const [userInfo, setUserInfo] = useState(null);
   const [cardData, setCardData] = useState({});
@@ -290,7 +290,7 @@ const ChattingCard = ({ children, backgroundColor, visible, ...props }) => {
 
   const escFunction = useCallback(
     e => {
-      if (e.key === 'esc') {
+      if (e.key === 'Escape') {
         history.push('/');
       }
     },
@@ -359,7 +359,9 @@ const ChattingCard = ({ children, backgroundColor, visible, ...props }) => {
       visible={visible}
       style={{ padding: 0, display: 'flex', flexDirection: 'column' }}>
       <HeaderContainer backgroundColor={cardColor}>
-        <Header title={title} authorName={author?.fullName} />
+        {title && author && (
+          <Header title={title} authorName={author.fullName} />
+        )}
         <Hr />
         <FirstHashtags length={hashtagsDiv(0, 3)?.length}>
           {hashtagsDiv(0, 3)}
@@ -372,7 +374,8 @@ const ChattingCard = ({ children, backgroundColor, visible, ...props }) => {
         {comments &&
           comments.map(comment => (
             <ChatContainer
-              isMine={userInfo && comment.author._id === userInfo.id}>
+              isMine={userInfo && comment.author._id === userInfo.id}
+              key={comment._id}>
               <Message
                 comment={comment}
                 onRemove={handleRemove}
@@ -385,7 +388,7 @@ const ChattingCard = ({ children, backgroundColor, visible, ...props }) => {
       <Footer>
         <InputBox>
           <Input placeholder="메세지를 입력하세요." onKeyUp={handleKeyUp} />
-          <Icons>
+          <Icons fontSize="20">
             <Icons.Send onClick={() => alert('Send')} />
           </Icons>
         </InputBox>
@@ -396,8 +399,6 @@ const ChattingCard = ({ children, backgroundColor, visible, ...props }) => {
 };
 
 ChattingCard.propTypes = {
-  backgroundColor: PropTypes.string,
-  cardData: PropTypes.object,
   visible: PropTypes.bool,
 };
 

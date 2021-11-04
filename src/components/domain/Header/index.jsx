@@ -67,6 +67,7 @@ const Header = ({ backgroundColor = Common.colors.background, ...props }) => {
         <img src={require('./logo.png').default} alt="logo" />
       </Logo>
       <Icons
+        fontSize="20px"
         style={{ display: userInfo ? 'block' : 'none' }}
         onClick={() => {
           history.push('/my-page');

@@ -114,6 +114,7 @@ const Message = ({ comment, isMine, onRemove, ...props }) => {
 
   const handleClickEditIcon = () => {
     editRef.current.focus();
+    setIsEditable(true);
   };
 
   const handleClickDeleteIcon = async () => {
