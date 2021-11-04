@@ -101,7 +101,7 @@ const CardsContainer = ({ myCard, cardList, userInfo, currentParam }) => {
           <GuideWrap>
             <StyledText>
               {currentParam === 'like'
-                ? '좋아요 한 카드가 없습니다'
+                ? '좋아하는 카드가 없습니다'
                 : '등록된 카드가 없습니다'}
             </StyledText>
           </GuideWrap>
