@@ -119,13 +119,13 @@ const WaffleCard = ({
     cardColor = Common.colors.yellow,
     createdAt = new Date(),
     hashTags = [],
-    likeUsers = [],
-    bookmarkUsers = [],
+    likes = [],
   } = cardData || {};
   const history = useHistory();
   const { userInfo } = useUser();
   const [ref, hover] = useHover(null);
   const days = useMemo(() => countDaysFromToday(createdAt), [createdAt]);
+  console.log(userInfo);
 
   const handleClickCard = useCallback(
     e => {
@@ -198,13 +198,12 @@ const WaffleCard = ({
         <ToggleBox
           cardInfo={cardData}
           onClickLikeIcon={onClickLikeIcon}
-          onClickBookmarkIcon={onClickBookmarkIcon}
-          likeToggle={userInfo ? likeUsers.includes(userInfo.id) : false}
-          likeCount={likeUsers.length}
-          bookmarkToggle={
-            userInfo ? bookmarkUsers.includes(userInfo.id) : false
+          likeCount={cardData.likes?.length}
+          likeToggle={
+            userInfo && likes.find(like => like.user === userInfo.id)
+              ? true
+              : false
           }
-          bookmarkCount={bookmarkUsers.length}
         />
       </InfoContainer>
       <EmojiText block size={70}>
@@ -228,11 +227,8 @@ WaffleCard.defaultProps = {
     emoji: '🧇',
     cardColor: Common.colors.yellow,
     createdAt: new Date(),
-    bookmarkToggle: false,
-    bookmarkCount: 0,
-    likeToggle: false,
-    likeCount: 0,
     hashTags: [],
+    likes: [],
   },
   width: 256,
 };

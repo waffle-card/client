@@ -31,7 +31,6 @@ const HomeContainer = styled.div`
 const HomePage = () => {
   const [cardList, setCardList] = useState([]);
   const [currentParam, setCurrentParam] = useState('');
-  // const [userInfo, setUserInfo] = useState({});
   const { userInfo } = useUser();
   const [isLoading, setIsLoading] = useState(false);
 
@@ -80,13 +79,15 @@ const HomePage = () => {
     try {
       setIsLoading(true);
       const response = await cardApi.getChannelCardList();
-      const cardList = response.data.map(cardData => {
+      const CardDataList = response.data.filter(card => {
+        return card.likes.find(like => like.user === userInfo.id)
+          ? true
+          : false;
+      });
+      const favoriteCardList = CardDataList.map(cardData => {
         return parseCardInfo(cardData);
       });
-      const bookmarkedCardList = cardList.filter(card =>
-        userInfo.bookmarkCardList.includes(card.id),
-      );
-      setCardList(bookmarkedCardList);
+      setCardList(favoriteCardList);
     } catch (error) {
       Swal.fire({
         title: '🥲',
@@ -107,8 +108,7 @@ const HomePage = () => {
       if (currentUrlArr.includes('today') || currentUrlArr[1] === '') {
         getTodayCardList();
       } else if (currentUrlArr.includes('my')) {
-        const userId = userInfo ? userInfo.id : null;
-        getMyCardList(userId);
+        getMyCardList(userInfo?.id);
       } else if (currentUrlArr.includes('bookmark')) {
         getBookmarkCardList();
       }
