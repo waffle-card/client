@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Text, Icons } from '@components';
 import Common from '@styles';
 import useToggle from '@hooks/useToggle';
@@ -9,7 +9,8 @@ const Container = styled.div`
   width: 312px;
   margin: 14px auto 0;
   display: flex;
-  visibility: ${({ isToggle }) => (isToggle ? 'hidden' : 'visible')};
+  visibility: ${({ isDelete, isVisible }) =>
+    isDelete || !isVisible ? 'hidden' : 'visible'};
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -56,10 +57,20 @@ const DelButton = styled.div`
 `;
 
 const ScrollGuide = () => {
-  const [state, toggle] = useToggle(false);
+  const [isVisible, setIsVisible] = useState(false);
+  const [isDelete, toggle] = useToggle(false);
+
+  const currentUrlArr = window.location.pathname.split('/');
+  useEffect(() => {
+    if (currentUrlArr.includes('today') || currentUrlArr[1] === '') {
+      setIsVisible(true);
+      return;
+    }
+    setIsVisible(false);
+  }, [currentUrlArr]);
 
   return (
-    <Container isToggle={state}>
+    <Container isDelete={isDelete} isVisible={isVisible}>
       <DelButton className="del_Button" onClick={toggle}>
         <Icons fontSize={'10px'}>
           <Icons.Delete></Icons.Delete>
