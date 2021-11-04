@@ -1,12 +1,7 @@
 import { authApi } from '@apis';
 
 export const parseCardInfo = cardData => {
-  const {
-    cardColor = '',
-    hashTags = [],
-    likeUsers = [],
-    bookmarkUsers = [],
-  } = JSON.parse(cardData.meta);
+  const { cardColor = '', hashTags = [] } = JSON.parse(cardData.meta);
   return {
     id: cardData._id,
     author: cardData.author.fullName,
@@ -15,9 +10,8 @@ export const parseCardInfo = cardData => {
     hashTags,
     createdAt: cardData.createdAt,
     updatedAt: cardData.updatedAt,
-    likeUsers,
-    bookmarkUsers,
     comments: cardData.comments,
+    likes: cardData.likes,
   };
 };
 

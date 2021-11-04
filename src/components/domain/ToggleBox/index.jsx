@@ -6,6 +6,7 @@ import React, { useCallback, useState } from 'react';
 import { useUser } from '@contexts';
 import { cardApi } from '@apis';
 import Swal from 'sweetalert2';
+import axios from 'axios';
 
 const IconWrapper = styled.div`
   display: flex;
@@ -25,21 +26,29 @@ const StyledText = styled(Text)`
   }
 `;
 
+axios.defaults.baseURL = 'http://13.209.30.200';
+
+const Authorization = async (url, method, data) => {
+  const tokenId = JSON.parse(sessionStorage.getItem('WAFFLE_TOKEN'));
+  return await axios({
+    url,
+    method,
+    headers: { Authorization: `Bearer ${tokenId}` },
+    data: data,
+  })
+    .then(res => res.data)
+    .catch(e => console.error(e));
+};
+
 const ToggleBox = ({
   cardInfo,
   onClickLikeIcon,
-  onClickBookmarkIcon,
   likeToggle = false,
-  likeCount = 0,
-  bookmarkToggle = false,
-  bookmarkCount = 0,
+  likeCount: initLikeCount = 0,
   ...props
 }) => {
   const { userInfo } = useUser();
-  const [toggleState, setToggleState] = useState({
-    likeCount,
-    bookmarkCount,
-  });
+  const [likeCount, setLikeCount] = useState(initLikeCount);
 
   const handleClickLikeIcon = useCallback(
     async (e, likeToggled) => {
@@ -54,17 +63,19 @@ const ToggleBox = ({
       }
       try {
         if (!likeToggled) {
-          await cardApi.addLikeCard(userInfo, cardInfo);
-          setToggleState(toggleState => ({
-            ...toggleState,
-            likeCount: toggleState.likeCount + 1,
-          }));
+          await Authorization('likes/create', 'POST', {
+            postId: cardInfo.id,
+          });
+          setLikeCount(cnt => cnt + 1);
         } else {
-          await cardApi.deleteLikeCard(userInfo, cardInfo);
-          setToggleState(toggleState => ({
-            ...toggleState,
-            likeCount: toggleState.likeCount - 1,
-          }));
+          const likeId = cardInfo.likes.find(
+            like => like.user === userInfo.id,
+          )?._id;
+
+          if (likeId) {
+            await cardApi.deleteCardLike(likeId);
+          }
+          setLikeCount(cnt => cnt - 1);
         }
       } catch (error) {
         Swal.fire({
@@ -78,56 +89,12 @@ const ToggleBox = ({
     [onClickLikeIcon, userInfo, cardInfo],
   );
 
-  const handleClickBookmarkIcon = useCallback(
-    async (e, bookmarkToggled) => {
-      if (!userInfo) {
-        Swal.fire({
-          title: '🥲 Oops!',
-          text: '즐겨찾기는 로그인 이후에 가능합니다.',
-          confirmButtonColor: Common.colors.point,
-        });
-        return;
-      }
-      e.stopPropagation();
-      try {
-        if (!bookmarkToggled) {
-          await cardApi.addBookmarkCard(userInfo, cardInfo);
-          setToggleState(toggleState => ({
-            ...toggleState,
-            bookmarkCount: toggleState.bookmarkCount + 1,
-          }));
-        } else {
-          await cardApi.deleteBookmarkCard(userInfo, cardInfo);
-          setToggleState(toggleState => ({
-            ...toggleState,
-            bookmarkCount: toggleState.bookmarkCount - 1,
-          }));
-        }
-      } catch (error) {
-        Swal.fire({
-          title: '🥲 Oops!',
-          text: error,
-          confirmButtonColor: Common.colors.point,
-        });
-      }
-      onClickBookmarkIcon && onClickBookmarkIcon(e);
-    },
-    [onClickBookmarkIcon, userInfo, cardInfo],
-  );
-
   return (
     <IconWrapper {...props}>
       <Icons fontSize={'20px'}>
         <Icons.Like active={likeToggle} onClick={handleClickLikeIcon} />
       </Icons>
-      <StyledText block>{toggleState.likeCount}</StyledText>
-      <Icons fontSize={'20px'}>
-        <Icons.Bookmark
-          active={bookmarkToggle}
-          onClick={handleClickBookmarkIcon}
-        />
-      </Icons>
-      <StyledText block>{toggleState.bookmarkCount}</StyledText>
+      <StyledText block>{likeCount}</StyledText>
     </IconWrapper>
   );
 };
