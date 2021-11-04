@@ -16,13 +16,16 @@ const IconWrapper = styled.div`
 
 const StyledText = styled(Text)`
   @media ${Common.media.sm} {
-    font-size: ${Common.fontSize.small};
+    font-size: ${Common.fontSize.base};
+    margin-left: 4px;
   }
   @media ${Common.media.md} {
-    font-size: ${Common.fontSize.base};
+    font-size: ${Common.fontSize.medium};
+    margin-left: 8px;
   }
   @media ${Common.media.lg} {
-    font-size: ${Common.fontSize.medium};
+    font-size: ${Common.fontSize.large};
+    margin-left: 10px;
   }
 `;
 

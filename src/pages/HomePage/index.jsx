@@ -13,7 +13,7 @@ import {
 import { cardApi } from '@apis';
 import Swal from 'sweetalert2';
 import { parseCardInfo } from '@utils';
-import { useUser } from '@contexts';
+import { getUserInfoByToken } from '@utils';
 
 const HomeContainer = styled.div`
   display: flex;
@@ -31,11 +31,10 @@ const HomeContainer = styled.div`
 const HomePage = () => {
   const [cardList, setCardList] = useState([]);
   const [currentParam, setCurrentParam] = useState('');
-  const { userInfo } = useUser();
+  const [userInfo, setUserInfo] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
   const getTodayCardList = useCallback(async () => {
-    if (!userInfo) return;
     setIsLoading(true);
     try {
       const response = await cardApi.getChannelCardList();
@@ -51,7 +50,7 @@ const HomePage = () => {
       });
     }
     setIsLoading(false);
-  }, [userInfo]);
+  }, []);
 
   const getMyCardList = async userId => {
     setIsLoading(true);
@@ -101,6 +100,8 @@ const HomePage = () => {
 
   useEffect(() => {
     const init = async () => {
+      const newUSerInfo = await getUserInfoByToken();
+      setUserInfo(newUSerInfo);
       const currentUrlArr = window.location.pathname.split('/');
       setCurrentParam(() => {
         return currentUrlArr[currentUrlArr.length - 1];
@@ -117,7 +118,8 @@ const HomePage = () => {
     setIsLoading(true);
     init();
     setIsLoading(false);
-  }, [currentParam, getBookmarkCardList, getTodayCardList, userInfo]);
+    // eslint-disable-next-line
+  }, [currentParam]);
 
   const handleTabClick = () => {
     setCurrentParam(() => {
