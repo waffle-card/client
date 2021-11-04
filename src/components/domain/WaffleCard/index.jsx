@@ -7,6 +7,7 @@ import { useHover } from '@hooks';
 import { useHistory } from 'react-router-dom';
 import { cardApi } from '@apis';
 import Swal from 'sweetalert2';
+import { useUser } from '@contexts';
 
 const countDaysFromToday = date => {
   date = typeof date === 'string' ? new Date(date) : date;
@@ -117,13 +118,12 @@ const WaffleCard = ({
     emoji = '🧇',
     cardColor = Common.colors.yellow,
     createdAt = new Date(),
-    bookmarkToggle = false,
-    bookmarkCount = 0,
-    likeToggle = false,
-    likeCount = 0,
     hashTags = [],
+    likeUsers = [],
+    bookmarkUsers = [],
   } = cardData || {};
   const history = useHistory();
+  const { userInfo } = useUser();
   const [ref, hover] = useHover(null);
   const days = useMemo(() => countDaysFromToday(createdAt), [createdAt]);
 
@@ -196,12 +196,15 @@ const WaffleCard = ({
       <InfoContainer>
         <StyledText block>{days <= 0 ? '오늘' : `${days}일 전`}</StyledText>
         <ToggleBox
+          cardInfo={cardData}
           onClickLikeIcon={onClickLikeIcon}
           onClickBookmarkIcon={onClickBookmarkIcon}
-          likeToggle={likeToggle}
-          likeCount={likeCount}
-          bookmarkToggle={bookmarkToggle}
-          bookmarkCount={bookmarkCount}
+          likeToggle={userInfo ? likeUsers.includes(userInfo.id) : false}
+          likeCount={likeUsers.length}
+          bookmarkToggle={
+            userInfo ? bookmarkUsers.includes(userInfo.id) : false
+          }
+          bookmarkCount={bookmarkUsers.length}
         />
       </InfoContainer>
       <EmojiText block size={70}>

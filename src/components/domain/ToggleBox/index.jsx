@@ -1,8 +1,11 @@
 import styled from '@emotion/styled';
-import React, { useCallback } from 'react';
+import Common from '@styles';
 import PropTypes from 'prop-types';
 import { Icons, Text } from '@components';
-import Common from '@styles';
+import React, { useCallback, useState } from 'react';
+import { useUser } from '@contexts';
+import { cardApi } from '@apis';
+import Swal from 'sweetalert2';
 
 const IconWrapper = styled.div`
   display: flex;
@@ -23,6 +26,7 @@ const StyledText = styled(Text)`
 `;
 
 const ToggleBox = ({
+  cardInfo,
   onClickLikeIcon,
   onClickBookmarkIcon,
   likeToggle = false,
@@ -31,35 +35,99 @@ const ToggleBox = ({
   bookmarkCount = 0,
   ...props
 }) => {
+  const { userInfo } = useUser();
+  const [toggleState, setToggleState] = useState({
+    likeCount,
+    bookmarkCount,
+  });
+
   const handleClickLikeIcon = useCallback(
-    e => {
+    async (e, likeToggled) => {
       e.stopPropagation();
+      if (!userInfo) {
+        Swal.fire({
+          title: '🥲 Oops!',
+          text: '좋아요는 로그인 이후에 가능합니다.',
+          confirmButtonColor: Common.colors.point,
+        });
+        return;
+      }
+      try {
+        if (!likeToggled) {
+          await cardApi.addLikeCard(userInfo, cardInfo);
+          setToggleState(toggleState => ({
+            ...toggleState,
+            likeCount: toggleState.likeCount + 1,
+          }));
+        } else {
+          await cardApi.deleteLikeCard(userInfo, cardInfo);
+          setToggleState(toggleState => ({
+            ...toggleState,
+            likeCount: toggleState.likeCount - 1,
+          }));
+        }
+      } catch (error) {
+        Swal.fire({
+          title: '🥲 Oops!',
+          text: error,
+          confirmButtonColor: Common.colors.point,
+        });
+      }
       onClickLikeIcon && onClickLikeIcon(e);
     },
-    [onClickLikeIcon],
+    [onClickLikeIcon, userInfo, cardInfo],
   );
 
   const handleClickBookmarkIcon = useCallback(
-    e => {
+    async (e, bookmarkToggled) => {
+      if (!userInfo) {
+        Swal.fire({
+          title: '🥲 Oops!',
+          text: '즐겨찾기는 로그인 이후에 가능합니다.',
+          confirmButtonColor: Common.colors.point,
+        });
+        return;
+      }
       e.stopPropagation();
+      try {
+        if (!bookmarkToggled) {
+          await cardApi.addBookmarkCard(userInfo, cardInfo);
+          setToggleState(toggleState => ({
+            ...toggleState,
+            bookmarkCount: toggleState.bookmarkCount + 1,
+          }));
+        } else {
+          await cardApi.deleteBookmarkCard(userInfo, cardInfo);
+          setToggleState(toggleState => ({
+            ...toggleState,
+            bookmarkCount: toggleState.bookmarkCount - 1,
+          }));
+        }
+      } catch (error) {
+        Swal.fire({
+          title: '🥲 Oops!',
+          text: error,
+          confirmButtonColor: Common.colors.point,
+        });
+      }
       onClickBookmarkIcon && onClickBookmarkIcon(e);
     },
-    [onClickBookmarkIcon],
+    [onClickBookmarkIcon, userInfo, cardInfo],
   );
 
   return (
-    <IconWrapper>
+    <IconWrapper {...props}>
       <Icons fontSize={'20px'}>
         <Icons.Like active={likeToggle} onClick={handleClickLikeIcon} />
       </Icons>
-      <StyledText block>{bookmarkCount}</StyledText>
+      <StyledText block>{toggleState.likeCount}</StyledText>
       <Icons fontSize={'20px'}>
         <Icons.Bookmark
           active={bookmarkToggle}
           onClick={handleClickBookmarkIcon}
         />
       </Icons>
-      <StyledText block>{likeCount}</StyledText>
+      <StyledText block>{toggleState.bookmarkCount}</StyledText>
     </IconWrapper>
   );
 };
