@@ -1,8 +1,8 @@
 import axios from 'axios';
 
 const API_END_POINT = 'http://13.209.30.200';
-const CHANNEL_ID = '616a204c22996f0bc94f6e17';
-// const CHANNEL_ID = '6182ac3fe1ecd063dabf10d0'; // new
+// const CHANNEL_ID = '616a204c22996f0bc94f6e17'; // old
+const CHANNEL_ID = '6182ac3fe1ecd063dabf10d0'; // new
 
 const setInterceptors = (instance, auth) => {
   auth &&
