@@ -49,6 +49,22 @@ const authApi = {
 
 const userApi = {
   getUserInfo: userId => request.get(`users/${userId}`),
+  initUserInfo: (userInfo, token) =>
+    axios({
+      url: `${API_END_POINT}/settings/update-user`,
+      method: 'PUT',
+      headers: { Authorization: `Bearer ${token}` },
+      data: {
+        username: userInfo.userName,
+        fullName: userInfo.userName,
+        meta: JSON.stringify({
+          likeCardList: userInfo.likeCardList ? userInfo.likeCardList : [],
+          bookmarkCardList: userInfo.bookmarkCardList
+            ? userInfo.bookmarkCardList
+            : [],
+        }),
+      },
+    }),
   putUserName: userName =>
     authRequest.put('settings/update-user', {
       username: userName,
@@ -101,6 +117,7 @@ const cardApi = {
   addLikeCard: async (userId, cardId) => {
     try {
       const userInfoResponse = await userApi.getUserInfo(userId);
+      console.log('여기', userInfoResponse.meta);
       const { likeCardList = [], bookmarkCardList = [] } = JSON.parse(
         userInfoResponse.data.meta,
       );
@@ -280,6 +297,8 @@ const cardApi = {
   },
   createCardComment: commentInfo =>
     authRequest.post('comments/create', commentInfo),
+  updateCardComment: commentInfo =>
+    authRequest.put('comments/update', commentInfo),
   deleteCardComment: commentId =>
     authRequest.delete('comments/delete', commentId),
 };
