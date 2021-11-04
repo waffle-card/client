@@ -1,8 +1,7 @@
 import axios from 'axios';
 
 const API_END_POINT = 'http://13.209.30.200';
-// const CHANNEL_ID = '616a204c22996f0bc94f6e17'; // old
-const CHANNEL_ID = '6182ac3fe1ecd063dabf10d0'; // new
+const CHANNEL_ID = '6182ac3fe1ecd063dabf10d0';
 
 const setInterceptors = (instance, auth) => {
   auth &&
@@ -90,15 +89,18 @@ const cardApi = {
       JSON.stringify({
         cardColor,
         hashTags,
+        bookmarkUsers: [],
+        likeUsers: [],
       }),
     );
     authRequest.post('posts/create', cardFormData);
   },
   getCard: cardId => request.get(`posts/${cardId}`),
-  updateCard: ({ cardId, emoji, cardColor, hashTags }) => {
+  updateCard: cardInfo => {
+    const { cardColor, hashTags, likeUsers, bookmarkUsers } = cardInfo;
     const cardFormData = new FormData();
-    cardFormData.append('postId', cardId);
-    cardFormData.append('title', emoji);
+    cardFormData.append('postId', cardInfo.id);
+    cardFormData.append('title', cardInfo.emoji);
     cardFormData.append('image', null);
     cardFormData.append('channelId', CHANNEL_ID);
     cardFormData.append(
@@ -106,194 +108,124 @@ const cardApi = {
       JSON.stringify({
         cardColor,
         hashTags,
+        likeUsers,
+        bookmarkUsers,
       }),
     );
     authRequest.put('posts/update', cardFormData);
   },
   deleteCard: cardId =>
     authRequest.delete('posts/delete', { data: { id: cardId } }),
-  // createCardLike: postId => authRequest.post('likes/create', postId),
-  // deleteCardLike: postId => authRequest.delete('likes/delete', postId),
-  addLikeCard: async (userId, cardId) => {
-    try {
-      const userInfoResponse = await userApi.getUserInfo(userId);
-      console.log('여기', userInfoResponse.meta);
-      const { likeCardList = [], bookmarkCardList = [] } = JSON.parse(
-        userInfoResponse.data.meta,
-      );
-      if (!likeCardList.includes(cardId)) {
-        likeCardList.push(cardId);
-      }
+  addLikeCard: async (userInfo, cardInfo) => {
+    const userData = {
+      fullName: userInfo.userName,
+      username: userInfo.userName,
+      meta: JSON.stringify({
+        likeCardList: [...new Set([...userInfo.likeCardList, cardInfo.id])],
+        bookmarkCardList: userInfo.bookmarkCardList,
+      }),
+    };
+    authRequest.put('settings/update-user', userData);
 
-      const userInfo = {
-        fullName: userInfoResponse.data.fullName,
-        username: userInfoResponse.data.fullName,
-        meta: JSON.stringify({ likeCardList, bookmarkCardList }),
-      };
-      console.log(userInfo);
-      authRequest.put('settings/update-user', userInfo);
-
-      const cardInfoResponse = await cardApi.getCard(cardId);
-      const {
-        title: emoji,
-        cardColor,
-        hashTags = [],
-        likeUsers = [],
-        bookmarkUsers = [],
-      } = cardInfoResponse.data;
-      const cardFormData = new FormData();
-      cardFormData.append('postId', cardId);
-      cardFormData.append('title', emoji);
-      cardFormData.append('image', null);
-      cardFormData.append('channelId', CHANNEL_ID);
-      cardFormData.append(
-        'meta',
-        JSON.stringify({
-          cardColor,
-          hashTags,
-          likeUsers: likeUsers.push(userId),
-          bookmarkUsers: bookmarkUsers,
-        }),
-      );
-      authRequest.put('posts/update', cardFormData);
-    } catch (e) {
-      console.log(e);
-    }
+    const cardFormData = new FormData();
+    cardFormData.append('postId', cardInfo.id);
+    cardFormData.append('title', cardInfo.emoji);
+    cardFormData.append('image', null);
+    cardFormData.append('channelId', CHANNEL_ID);
+    cardFormData.append(
+      'meta',
+      JSON.stringify({
+        cardColor: cardInfo.cardColor,
+        hashTags: cardInfo.hashTags,
+        likeUsers: [...new Set([...cardInfo.likeUsers, userInfo.id])],
+        bookmarkUsers: cardInfo.bookmarkUsers,
+      }),
+    );
+    authRequest.put('posts/update', cardFormData);
   },
-  deleteLikeCard: async (userId, cardId) => {
-    try {
-      const response = await userApi.getUserInfo(userId);
-      const { likeCardList = [], bookmarkCardList = [] } = JSON.parse(
-        response.data.meta,
-      );
-      if (likeCardList.includes(cardId)) {
-        likeCardList.splice(likeCardList.indexOf(cardId), 1);
-      }
+  deleteLikeCard: async (userInfo, cardInfo) => {
+    const userData = {
+      fullName: userInfo.userName,
+      username: userInfo.userName,
+      meta: JSON.stringify({
+        likeCardList: userInfo.likeCardList.filter(id => id !== cardInfo.id),
+        bookmarkCardList: userInfo.bookmarkCardList,
+      }),
+    };
+    authRequest.put('settings/update-user', userData);
 
-      const userInfo = {
-        fullName: response.data.fullName,
-        username: response.data.fullName,
-        meta: JSON.stringify({ likeCardList, bookmarkCardList }),
-      };
-      console.log(userInfo);
-      authRequest.put('settings/update-user', userInfo);
-
-      const cardInfoResponse = await cardApi.getCard(cardId);
-      const {
-        title: emoji,
-        cardColor,
-        hashTags = [],
-        likeUsers = [],
-        bookmarkUsers = [],
-      } = cardInfoResponse.data;
-      const cardFormData = new FormData();
-      cardFormData.append('postId', cardId);
-      cardFormData.append('title', emoji);
-      cardFormData.append('image', null);
-      cardFormData.append('channelId', CHANNEL_ID);
-      cardFormData.append(
-        'meta',
-        JSON.stringify({
-          cardColor,
-          hashTags,
-          likeUsers: likeUsers.filter(id => id !== userId),
-          bookmarkUsers: bookmarkUsers,
-        }),
-      );
-      authRequest.put('posts/update', cardFormData);
-    } catch (error) {
-      console.log(error);
-    }
+    const cardFormData = new FormData();
+    cardFormData.append('postId', cardInfo.id);
+    cardFormData.append('title', cardInfo.emoji);
+    cardFormData.append('image', null);
+    cardFormData.append('channelId', CHANNEL_ID);
+    cardFormData.append(
+      'meta',
+      JSON.stringify({
+        cardColor: cardInfo.cardColor,
+        hashTags: cardInfo.hashTags,
+        likeUsers: cardInfo.likeUsers.filter(id => id !== userInfo.id),
+        bookmarkUsers: cardInfo.bookmarkUsers,
+      }),
+    );
+    authRequest.put('posts/update', cardFormData);
   },
-  addBookmarkCard: async (userId, cardId) => {
-    try {
-      const userInfoResponse = await userApi.getUserInfo(userId);
-      const { likeCardList = [], bookmarkCardList = [] } = JSON.parse(
-        userInfoResponse.data.meta,
-      );
-      if (!bookmarkCardList.includes(cardId)) {
-        bookmarkCardList.push(cardId);
-      }
-
-      const userInfo = {
-        fullName: userInfoResponse.data.fullName,
-        username: userInfoResponse.data.fullName,
-        meta: JSON.stringify({ likeCardList, bookmarkCardList }),
-      };
-      console.log(userInfo);
-      authRequest.put('settings/update-user', userInfo);
-
-      const cardInfoResponse = await cardApi.getCard(cardId);
-      const {
-        title: emoji,
-        cardColor,
-        hashTags = [],
-        likeUsers = [],
-        bookmarkUsers = [],
-      } = cardInfoResponse.data;
-      const cardFormData = new FormData();
-      cardFormData.append('postId', cardId);
-      cardFormData.append('title', emoji);
-      cardFormData.append('image', null);
-      cardFormData.append('channelId', CHANNEL_ID);
-      cardFormData.append(
-        'meta',
-        JSON.stringify({
-          cardColor,
-          hashTags,
-          likeUsers: likeUsers,
-          bookmarkUsers: bookmarkUsers.push(userId),
-        }),
-      );
-      authRequest.put('posts/update', cardFormData);
-    } catch (error) {
-      console.log(error);
-    }
+  addBookmarkCard: async (userInfo, cardInfo) => {
+    const userData = {
+      fullName: userInfo.userName,
+      username: userInfo.userName,
+      meta: JSON.stringify({
+        likeCardList: userInfo.likeCardList,
+        bookmarkCardList: [
+          ...new Set([...userInfo.bookmarkCardList, cardInfo.id]),
+        ],
+      }),
+    };
+    authRequest.put('settings/update-user', userData);
+    const cardFormData = new FormData();
+    cardFormData.append('postId', cardInfo.id);
+    cardFormData.append('title', cardInfo.emoji);
+    cardFormData.append('image', null);
+    cardFormData.append('channelId', CHANNEL_ID);
+    cardFormData.append(
+      'meta',
+      JSON.stringify({
+        cardColor: cardInfo.cardColor,
+        hashTags: cardInfo.hashTags,
+        likeUsers: cardInfo.likeUsers,
+        bookmarkUsers: [...new Set([...cardInfo.bookmarkUsers, userInfo.id])],
+      }),
+    );
+    authRequest.put('posts/update', cardFormData);
   },
-  deleteBookmarkCard: async (userId, cardId) => {
-    try {
-      const response = await userApi.getUserInfo(userId);
-      const { likeCardList = [], bookmarkCardList = [] } = JSON.parse(
-        response.data.meta,
-      );
-      if (bookmarkCardList.includes(cardId)) {
-        bookmarkCardList.splice(bookmarkCardList.indexOf(cardId), 1);
-      }
+  deleteBookmarkCard: async (userInfo, cardInfo) => {
+    const userData = {
+      fullName: userInfo.userName,
+      username: userInfo.userName,
+      meta: JSON.stringify({
+        likeCardList: userInfo.likeCardList,
+        bookmarkCardList: userInfo.bookmarkCardList.filter(
+          id => id !== cardInfo.id,
+        ),
+      }),
+    };
+    authRequest.put('settings/update-user', userData);
 
-      const userInfo = {
-        fullName: response.data.fullName,
-        username: response.data.fullName,
-        meta: JSON.stringify({ likeCardList, bookmarkCardList }),
-      };
-      console.log(userInfo);
-      authRequest.put('settings/update-user', userInfo);
-
-      const cardInfoResponse = await cardApi.getCard(cardId);
-      const {
-        title: emoji,
-        cardColor,
-        hashTags = [],
-        likeUsers = [],
-        bookmarkUsers = [],
-      } = cardInfoResponse.data;
-      const cardFormData = new FormData();
-      cardFormData.append('postId', cardId);
-      cardFormData.append('title', emoji);
-      cardFormData.append('image', null);
-      cardFormData.append('channelId', CHANNEL_ID);
-      cardFormData.append(
-        'meta',
-        JSON.stringify({
-          cardColor,
-          hashTags,
-          likeUsers: likeUsers,
-          bookmarkUsers: bookmarkUsers.filter(id => id !== userId),
-        }),
-      );
-      authRequest.put('posts/update', cardFormData);
-    } catch (error) {
-      console.log(error);
-    }
+    const cardFormData = new FormData();
+    cardFormData.append('postId', cardInfo.id);
+    cardFormData.append('title', cardInfo.emoji);
+    cardFormData.append('image', null);
+    cardFormData.append('channelId', CHANNEL_ID);
+    cardFormData.append(
+      'meta',
+      JSON.stringify({
+        cardColor: cardInfo.cardColor,
+        hashTags: cardInfo.hashTags,
+        likeUsers: cardInfo.likeUsers,
+        bookmarkUsers: cardInfo.bookmarkUsers.filter(id => id !== userInfo.id),
+      }),
+    );
+    authRequest.put('posts/update', cardFormData);
   },
   createCardComment: commentInfo =>
     authRequest.post('comments/create', commentInfo),

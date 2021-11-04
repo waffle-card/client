@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import Common from '@styles';
 import styled from '@emotion/styled';
+import Swal from 'sweetalert2';
 import { useForm } from '@hooks';
 import { useHistory } from 'react-router-dom';
-import { useUserContext } from '@contexts/UserProvider';
+import { useUser } from '@contexts';
+import { authApi } from '@apis';
+import { getUserInfoByToken } from '@utils';
 import { Text, Button, Input, BackButton, Spinner } from '@components';
 import {
   validateEmailEmpty,
@@ -11,8 +14,6 @@ import {
   validatePasswordEmpty,
   validatePasswordLength,
 } from '@validators';
-import { getUserInfoByToken } from '@utils';
-import Swal from 'sweetalert2';
 
 const StyledBackButton = styled(BackButton)`
   margin: 0 0 32px 50px;
@@ -63,7 +64,7 @@ const StyledText = styled(Text)`
 `;
 
 const LoginPage = ({ ...prop }) => {
-  const { handleLogin } = useUserContext();
+  const { updateUserInfo } = useUser();
   const history = useHistory();
   const [initLoading, setInitLoading] = useState(false);
   const { isLoading, errors, handleChange, handleSubmit } = useForm({
@@ -72,7 +73,28 @@ const LoginPage = ({ ...prop }) => {
       password: '',
     },
     onSubmit: async ({ email, password }) => {
-      handleLogin({ email, password });
+      try {
+        const response = await authApi.login({ email, password });
+        sessionStorage.setItem(
+          'WAFFLE_TOKEN',
+          JSON.stringify(response.data.token),
+        );
+        await updateUserInfo(); // TODO: userContext 동작확인
+        Swal.fire({
+          title: '🥳',
+          text: '로그인 되었습니다!',
+          confirmButtonColor: Common.colors.point,
+        }).then(() => {
+          history.push('/');
+          window.location.reload();
+        });
+      } catch (error) {
+        Swal.fire({
+          title: '🥲',
+          text: '이메일과 비밀번호를 확인해주세요.',
+          confirmButtonColor: Common.colors.point,
+        });
+      }
     },
     validate: ({ email, password }) => {
       const errors = {};

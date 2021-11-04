@@ -5,6 +5,7 @@ import Bookmark from './Bookmark';
 import Like from './Like';
 import Common from '@styles';
 import { useHistory } from 'react-router';
+import PropTypes from 'prop-types';
 
 const Top = styled.div`
   display: flex;
@@ -58,12 +59,18 @@ const Header = ({ backgroundColor, title, authorName, ...props }) => {
         <EmojiBox>{title}</EmojiBox>
         <StyledText block>{authorName}</StyledText>
       </Title>
-      <Icons style={{ width: '120px', justifyContent: 'end' }}>
-        <Like />
+      <Icons fontSize="20px" style={{ width: '120px', justifyContent: 'end' }}>
+        <Like fontSize="20px" />
         <Bookmark />
       </Icons>
     </Top>
   );
+};
+
+Header.propTypes = {
+  backgroundColor: PropTypes.string,
+  title: PropTypes.string,
+  authorName: PropTypes.string,
 };
 
 export default Header;
