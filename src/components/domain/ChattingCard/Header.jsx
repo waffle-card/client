@@ -1,6 +1,5 @@
 import styled from '@emotion/styled';
-import Icons from '@components/base/Icons';
-import Text from '@components/base/Text';
+import { Icons, Text, ToggleBox } from '@components';
 import Bookmark from './Bookmark';
 import Like from './Like';
 import Common from '@styles';
@@ -44,7 +43,13 @@ const EmojiBox = styled(Text)`
   }
 `;
 
-const Header = ({ backgroundColor, title, authorName, ...props }) => {
+const StyledDiv = styled.div`
+  display: flex;
+  width: 120px;
+  justify-content: end;
+`;
+
+const Header = ({ backgroundColor, title, authorName, cardInfo, ...props }) => {
   const history = useHistory();
 
   return (
@@ -59,10 +64,9 @@ const Header = ({ backgroundColor, title, authorName, ...props }) => {
         <EmojiBox>{title}</EmojiBox>
         <StyledText block>{authorName}</StyledText>
       </Title>
-      <Icons fontSize="20px" style={{ width: '120px', justifyContent: 'end' }}>
-        <Like fontSize="20px" />
-        <Bookmark />
-      </Icons>
+      <StyledDiv>
+        <ToggleBox cardInfo={cardInfo} />
+      </StyledDiv>
     </Top>
   );
 };
