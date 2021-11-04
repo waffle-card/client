@@ -98,49 +98,44 @@ const Message = ({ comment, isMine, onRemove, ...props }) => {
     }
   }, [handleMouseLeave, isMine]);
 
-  const handleClickEditIcon = () => {
-    Swal.fire({
-      title: '댓글을 수정하세요!',
+  const handleClickEditIcon = async () => {
+    const swalQueue = Swal.mixin({
+      confirmButtonText: '수정하기',
+      confirmButtonColor: Common.colors.point,
+      cancelButtonText: '돌아가기',
+      cancelButtonColor: Common.colors.red,
+      progressSteps: ['😏'],
       input: 'text',
       inputAttributes: {
-        autocapitalize: 'off',
+        required: true,
       },
-      showCancelButton: true,
-      confirmButtonText: '변경하기',
-      confirmButtonColor: Common.colors.point,
-      cancelButtonText: '취소하기',
-      cancelButtonColor: Common.colors.red,
-      showLoaderOnConfirm: true,
-      preConfirm: async text => {
-        try {
-          const response = await cardApi.updateCardComment({
-            id: comment._id,
-            comment: text,
-          });
-
-          if (!response.status === 200) {
-            throw new Error(response.statusText);
-          }
-          setText(text);
-        } catch (e) {
-          console.error(e);
-          Swal.fire({
-            title: '😡',
-            text: '에러가 발생했어요!!',
-            confirmButtonColor: Common.colors.red,
-          });
-        }
-      },
-      allowOutsideClick: () => !Swal.isLoading(),
-    }).then(result => {
-      if (result.isConfirmed) {
-        Swal.fire({
-          title: `댓글을 수정했어요!😁`,
-          confirmButtonText: '확인',
-          confirmButtonColor: Common.colors.point,
-        });
-      }
+      reverseButtons: false,
+      validationMessage: '공백은 안될텐데요? 🤔',
     });
+
+    const result = await swalQueue.fire({
+      title: '댓글을 수정하세요!',
+      showCancelButton: true,
+      currentProgressStep: false,
+    });
+
+    if (result.value) {
+      await cardApi
+        .updateCardComment({
+          id: comment._id,
+          comment: result.value,
+        })
+        .then(() => {
+          Swal.fire({
+            title: `댓글을 수정했어요!😁`,
+            confirmButtonText: '확인',
+            confirmButtonColor: Common.colors.point,
+          });
+        })
+        .then(() => {
+          setText(result.value);
+        });
+    }
   };
 
   const handleClickDeleteIcon = async () => {
@@ -154,18 +149,21 @@ const Message = ({ comment, isMine, onRemove, ...props }) => {
       cancelButtonText: '취소하기',
     }).then(async res => {
       if (res.isConfirmed) {
-        try {
-          const response = await cardApi.deleteCardComment({
+        await cardApi
+          .deleteCardComment({
             data: { id: comment._id },
-          });
-
-          if (response.status === 200) {
+          })
+          .then(() => {
             onRemove(comment._id);
-          }
-        } catch (e) {
-          console.error(e);
-          return;
-        }
+          })
+          .catch(e => {
+            console.error(e);
+            Swal.fire({
+              title: '😡',
+              text: '에러가 발생했어요!',
+              confirmButtonColor: Common.colors.point,
+            });
+          });
       }
     });
   };

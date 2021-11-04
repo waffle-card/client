@@ -260,6 +260,7 @@ const ChattingCard = ({ children, visible, ...props }) => {
   const [author, setAuthor] = useState('');
   const [cardColor, setCardColor] = useState('');
   const [hashTags, setHashTags] = useState([]);
+  const [likes, setLikes] = useState([]);
   const textRef = useRef();
 
   // API가 필요한 부분
@@ -282,13 +283,14 @@ const ChattingCard = ({ children, visible, ...props }) => {
         setIsLoading(false);
         return;
       }
-
+      console.log(response.data);
       const cardData = {
         title: response.data.title,
         comments: response.data.comments,
         author: response.data.author,
         cardColor: JSON.parse(response.data.meta).cardColor,
         hashTags: JSON.parse(response.data.meta).hashTags,
+        likes: response.data.likes,
       };
 
       setCardData(cardData);
@@ -319,11 +321,15 @@ const ChattingCard = ({ children, visible, ...props }) => {
     setHashTags(cardData.hashTags);
   }, [cardData.hashTags]);
 
+  useEffect(() => {
+    setLikes(cardData.likes);
+  }, [cardData.likes]);
+
   // 모달창 닫기 이벤트
   const escFunction = useCallback(
     e => {
       if (e.key === 'Escape') {
-        history.goBack();
+        history.push('/');
       }
     },
     [history],
@@ -341,7 +347,7 @@ const ChattingCard = ({ children, visible, ...props }) => {
   const createComment = async () => {
     let tmpText = textRef.current.value;
 
-    if (tmpText.replace(/ /gi, '') !== 0) {
+    if (tmpText.replace(/ /gi, '').length !== 0) {
       if (userInfo) {
         setIsLoading(true);
         await cardApi
@@ -368,6 +374,12 @@ const ChattingCard = ({ children, visible, ...props }) => {
           confirmButtonColor: Common.colors.point,
         }).then(() => (textRef.current.value = ''));
       }
+    } else {
+      Swal.fire({
+        title: '🙄',
+        text: '댓글을 입력하세요!',
+        confirmButtonColor: Common.colors.point,
+      });
     }
   };
 
@@ -402,8 +414,12 @@ const ChattingCard = ({ children, visible, ...props }) => {
       visible={visible}
       style={{ padding: 0, display: 'flex', flexDirection: 'column' }}>
       <HeaderContainer backgroundColor={cardColor}>
-        {title && author && (
-          <Header title={title} authorName={author.fullName} />
+        {title && author && likes && (
+          <Header
+            title={title}
+            authorName={author.fullName}
+            cardInfo={{ id: postId, likes }}
+          />
         )}
         <Hr />
         <FirstHashtags length={hashtagsDiv(0, 3)?.length}>
