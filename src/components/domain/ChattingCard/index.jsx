@@ -93,6 +93,19 @@ const BodyContainer = styled.div`
   background-color: transparent;
   background-color: ${Common.colors.background_modal};
   overflow-y: auto;
+  &::-webkit-scrollbar {
+    width: 18px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 10px;
+    background-clip: padding-box;
+    border: 4.8px solid transparent;
+    box-shadow: inset 0px 0px 3px white;
+  }
+  &::-webkit-scrollbar-track {
+    background-color: rgba(0, 0, 0, 0);
+  }
 
   @media ${Common.media.sm} {
     width: 290px;
