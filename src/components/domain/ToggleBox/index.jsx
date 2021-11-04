@@ -43,12 +43,11 @@ const Authorization = async (url, method, data) => {
 const ToggleBox = ({
   cardInfo,
   onClickLikeIcon,
-  likeToggle = false,
   likeCount: initLikeCount = 0,
   ...props
 }) => {
   const { userInfo } = useUser();
-  const [likeCount, setLikeCount] = useState(initLikeCount);
+  const [likeCount, setLikeCount] = useState(cardInfo.likes.length);
 
   const handleClickLikeIcon = useCallback(
     async (e, likeToggled) => {
@@ -92,7 +91,14 @@ const ToggleBox = ({
   return (
     <IconWrapper {...props}>
       <Icons fontSize={'20px'}>
-        <Icons.Like active={likeToggle} onClick={handleClickLikeIcon} />
+        <Icons.Like
+          active={
+            userInfo && cardInfo.likes?.find(like => like.user === userInfo.id)
+              ? true
+              : false
+          }
+          onClick={handleClickLikeIcon}
+        />
       </Icons>
       <StyledText block>{likeCount}</StyledText>
     </IconWrapper>
