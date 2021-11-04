@@ -305,7 +305,7 @@ const ChattingCard = ({ children, visible, ...props }) => {
   const escFunction = useCallback(
     e => {
       if (e.key === 'Escape') {
-        history.goBack();
+        history.push('/');
       }
     },
     [history],
@@ -323,7 +323,7 @@ const ChattingCard = ({ children, visible, ...props }) => {
   const createComment = async () => {
     let tmpText = textRef.current.value;
 
-    if (tmpText.replace(/ /gi, '') !== 0) {
+    if (tmpText.replace(/ /gi, '').length !== 0) {
       if (userInfo) {
         setIsLoading(true);
         await cardApi
@@ -350,6 +350,12 @@ const ChattingCard = ({ children, visible, ...props }) => {
           confirmButtonColor: Common.colors.point,
         }).then(() => (textRef.current.value = ''));
       }
+    } else {
+      Swal.fire({
+        title: '🙄',
+        text: '댓글을 입력하세요!',
+        confirmButtonColor: Common.colors.point,
+      });
     }
   };
 
