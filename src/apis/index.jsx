@@ -76,7 +76,6 @@ const userApi = {
 const cardApi = {
   getUserCardList: (userId, params) =>
     request.get(`posts/author/${userId}`, { params }),
-  getUserBookMarkCardList: userId => {}, // TODO:  API 확인 후 리팩토링
   getChannelCardList: params =>
     request.get(`posts/channel/${CHANNEL_ID}`, { params }),
   createCard: ({ emoji, cardColor, hashTags }) => {
@@ -116,117 +115,10 @@ const cardApi = {
   },
   deleteCard: cardId =>
     authRequest.delete('posts/delete', { data: { id: cardId } }),
-  addLikeCard: async (userInfo, cardInfo) => {
-    const userData = {
-      fullName: userInfo.userName,
-      username: userInfo.userName,
-      meta: JSON.stringify({
-        likeCardList: [...new Set([...userInfo.likeCardList, cardInfo.id])],
-        bookmarkCardList: userInfo.bookmarkCardList,
-      }),
-    };
-    authRequest.put('settings/update-user', userData);
-
-    const cardFormData = new FormData();
-    cardFormData.append('postId', cardInfo.id);
-    cardFormData.append('title', cardInfo.emoji);
-    cardFormData.append('image', null);
-    cardFormData.append('channelId', CHANNEL_ID);
-    cardFormData.append(
-      'meta',
-      JSON.stringify({
-        cardColor: cardInfo.cardColor,
-        hashTags: cardInfo.hashTags,
-        likeUsers: [...new Set([...cardInfo.likeUsers, userInfo.id])],
-        bookmarkUsers: cardInfo.bookmarkUsers,
-      }),
-    );
-    authRequest.put('posts/update', cardFormData);
-  },
-  deleteLikeCard: async (userInfo, cardInfo) => {
-    const userData = {
-      fullName: userInfo.userName,
-      username: userInfo.userName,
-      meta: JSON.stringify({
-        likeCardList: userInfo.likeCardList.filter(id => id !== cardInfo.id),
-        bookmarkCardList: userInfo.bookmarkCardList,
-      }),
-    };
-    authRequest.put('settings/update-user', userData);
-
-    const cardFormData = new FormData();
-    cardFormData.append('postId', cardInfo.id);
-    cardFormData.append('title', cardInfo.emoji);
-    cardFormData.append('image', null);
-    cardFormData.append('channelId', CHANNEL_ID);
-    cardFormData.append(
-      'meta',
-      JSON.stringify({
-        cardColor: cardInfo.cardColor,
-        hashTags: cardInfo.hashTags,
-        likeUsers: cardInfo.likeUsers.filter(id => id !== userInfo.id),
-        bookmarkUsers: cardInfo.bookmarkUsers,
-      }),
-    );
-    authRequest.put('posts/update', cardFormData);
-  },
-  addBookmarkCard: async (userInfo, cardInfo) => {
-    const userData = {
-      fullName: userInfo.userName,
-      username: userInfo.userName,
-      meta: JSON.stringify({
-        likeCardList: userInfo.likeCardList,
-        bookmarkCardList: [
-          ...new Set([...userInfo.bookmarkCardList, cardInfo.id]),
-        ],
-      }),
-    };
-    authRequest.put('settings/update-user', userData);
-    const cardFormData = new FormData();
-    cardFormData.append('postId', cardInfo.id);
-    cardFormData.append('title', cardInfo.emoji);
-    cardFormData.append('image', null);
-    cardFormData.append('channelId', CHANNEL_ID);
-    cardFormData.append(
-      'meta',
-      JSON.stringify({
-        cardColor: cardInfo.cardColor,
-        hashTags: cardInfo.hashTags,
-        likeUsers: cardInfo.likeUsers,
-        bookmarkUsers: [...new Set([...cardInfo.bookmarkUsers, userInfo.id])],
-      }),
-    );
-    authRequest.put('posts/update', cardFormData);
-  },
-  deleteBookmarkCard: async (userInfo, cardInfo) => {
-    const userData = {
-      fullName: userInfo.userName,
-      username: userInfo.userName,
-      meta: JSON.stringify({
-        likeCardList: userInfo.likeCardList,
-        bookmarkCardList: userInfo.bookmarkCardList.filter(
-          id => id !== cardInfo.id,
-        ),
-      }),
-    };
-    authRequest.put('settings/update-user', userData);
-
-    const cardFormData = new FormData();
-    cardFormData.append('postId', cardInfo.id);
-    cardFormData.append('title', cardInfo.emoji);
-    cardFormData.append('image', null);
-    cardFormData.append('channelId', CHANNEL_ID);
-    cardFormData.append(
-      'meta',
-      JSON.stringify({
-        cardColor: cardInfo.cardColor,
-        hashTags: cardInfo.hashTags,
-        likeUsers: cardInfo.likeUsers,
-        bookmarkUsers: cardInfo.bookmarkUsers.filter(id => id !== userInfo.id),
-      }),
-    );
-    authRequest.put('posts/update', cardFormData);
-  },
+  createCardLike: cardId =>
+    authRequest.post('likes/create', { postId: cardId }),
+  deleteCardLike: likeId =>
+    authRequest.delete('likes/delete', { data: { id: likeId } }),
   createCardComment: commentInfo =>
     authRequest.post('comments/create', commentInfo),
   updateCardComment: commentInfo =>
