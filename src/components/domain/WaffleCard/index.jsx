@@ -7,7 +7,6 @@ import { useHover } from '@hooks';
 import { useHistory } from 'react-router-dom';
 import { cardApi } from '@apis';
 import Swal from 'sweetalert2';
-import { useUser } from '@contexts';
 
 const countDaysFromToday = date => {
   date = typeof date === 'string' ? new Date(date) : date;
@@ -119,13 +118,10 @@ const WaffleCard = ({
     cardColor = Common.colors.yellow,
     createdAt = new Date(),
     hashTags = [],
-    likes = [],
   } = cardData || {};
   const history = useHistory();
-  const { userInfo } = useUser();
   const [ref, hover] = useHover(null);
   const days = useMemo(() => countDaysFromToday(createdAt), [createdAt]);
-  console.log(userInfo);
 
   const handleClickCard = useCallback(
     e => {
@@ -195,16 +191,7 @@ const WaffleCard = ({
       ) : null}
       <InfoContainer>
         <StyledText block>{days <= 0 ? '오늘' : `${days}일 전`}</StyledText>
-        <ToggleBox
-          cardInfo={cardData}
-          onClickLikeIcon={onClickLikeIcon}
-          likeCount={cardData.likes?.length}
-          likeToggle={
-            userInfo && likes.find(like => like.user === userInfo.id)
-              ? true
-              : false
-          }
-        />
+        <ToggleBox cardInfo={cardData} onClickLikeIcon={onClickLikeIcon} />
       </InfoContainer>
       <EmojiText block size={70}>
         {emoji}
