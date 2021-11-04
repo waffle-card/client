@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const API_END_POINT = 'http://13.209.30.200';
-const CHANNEL_ID = '6182ac3fe1ecd063dabf10d0'; // new
+const CHANNEL_ID = '6182ac3fe1ecd063dabf10d0';
 
 const setInterceptors = (instance, auth) => {
   auth &&
@@ -96,10 +96,11 @@ const cardApi = {
     authRequest.post('posts/create', cardFormData);
   },
   getCard: cardId => request.get(`posts/${cardId}`),
-  updateCard: ({ cardId, emoji, cardColor, hashTags }) => {
+  updateCard: cardInfo => {
+    const { cardColor, hashTags, likeUsers, bookmarkUsers } = cardInfo;
     const cardFormData = new FormData();
-    cardFormData.append('postId', cardId);
-    cardFormData.append('title', emoji);
+    cardFormData.append('postId', cardInfo.id);
+    cardFormData.append('title', cardInfo.emoji);
     cardFormData.append('image', null);
     cardFormData.append('channelId', CHANNEL_ID);
     cardFormData.append(
@@ -107,14 +108,14 @@ const cardApi = {
       JSON.stringify({
         cardColor,
         hashTags,
+        likeUsers,
+        bookmarkUsers,
       }),
     );
     authRequest.put('posts/update', cardFormData);
   },
   deleteCard: cardId =>
     authRequest.delete('posts/delete', { data: { id: cardId } }),
-  // createCardLike: postId => authRequest.post('likes/create', postId),
-  // deleteCardLike: postId => authRequest.delete('likes/delete', postId),
   addLikeCard: async (userInfo, cardInfo) => {
     const userData = {
       fullName: userInfo.userName,

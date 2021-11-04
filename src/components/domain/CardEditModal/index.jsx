@@ -4,6 +4,7 @@ import Swal from 'sweetalert2';
 import { cardApi } from '@apis';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
+import { parseCardInfo } from '@utils';
 import { getUserInfoByToken } from '@utils';
 import { useHistory, useLocation } from 'react-router-dom';
 import {
@@ -125,13 +126,7 @@ const CardEditModal = ({
   const initEditCardData = useCallback(async cardId => {
     try {
       const response = await cardApi.getCard(cardId);
-      const { cardColor, hashTags } = JSON.parse(response.data.meta);
-      const newCardData = {
-        cardId: cardId,
-        emoji: response.data.title,
-        cardColor,
-        hashTags,
-      };
+      const newCardData = parseCardInfo(response.data);
       setCardData(newCardData);
     } catch (error) {
       Swal.fire({
@@ -141,35 +136,6 @@ const CardEditModal = ({
       });
     }
   }, []);
-
-  useEffect(() => {
-    // checkLoggedIn();
-    // if (editMode) {
-    //   const cardId = location.state.cardId;
-    //   initEditCardData(cardId);
-    // }
-    if (!userInfo) {
-      Swal.fire({
-        title: '🤯',
-        text: '로그인을 하고 접근해주세요!',
-        confirmButtonColor: Common.colors.point,
-      }).then(() => {
-        history.push('/login');
-      });
-      return;
-    }
-    if (editMode) {
-      const cardId = location.state.cardId;
-      initEditCardData(cardId);
-    }
-  }, [
-    checkLoggedIn,
-    editMode,
-    initEditCardData,
-    location.state,
-    history,
-    userInfo,
-  ]);
 
   const handleEmojiClick = emoji => {
     setCardData(cardData => {
@@ -249,6 +215,30 @@ const CardEditModal = ({
 
     onSubmit && onSubmit(cardData);
   };
+
+  useEffect(() => {
+    if (!userInfo) {
+      Swal.fire({
+        title: '🤯',
+        text: '로그인을 하고 접근해주세요!',
+        confirmButtonColor: Common.colors.point,
+      }).then(() => {
+        history.push('/login');
+      });
+      return;
+    }
+    if (editMode) {
+      const cardId = location.state.cardId;
+      initEditCardData(cardId);
+    }
+  }, [
+    checkLoggedIn,
+    editMode,
+    initEditCardData,
+    location.state,
+    history,
+    userInfo,
+  ]);
 
   return (
     <StyledModal visible onClose={onClose} {...props}>
