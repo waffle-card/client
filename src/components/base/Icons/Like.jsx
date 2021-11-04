@@ -7,7 +7,7 @@ const Like = ({ color = 'white', active = false, onClick, ...props }) => {
 
   const handleClick = e => {
     toggle();
-    onClick && onClick(e);
+    onClick && onClick(e, liked);
   };
 
   return (
