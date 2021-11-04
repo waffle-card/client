@@ -5,8 +5,12 @@ import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
 import { Icons, Text } from '@components';
 import { authApi } from '@apis';
+import { rgba } from 'polished';
 
 const HeaderTag = styled.header`
+  position: fixed;
+  width: 100%;
+  top: 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -23,9 +27,9 @@ const Logo = styled.h1`
   font-size: 0;
   img {
     width: auto;
-    height: 24px;
+    height: 30px;
     @media ${Common.media.sm} {
-      height: 18px;
+      height: 24px;
     }
   }
 `;
@@ -44,7 +48,7 @@ const HelpIcon = styled.span`
   height: 24px;
   border-radius: 50px;
   font-size: 14px;
-  margin-right: 14px;
+  margin-right: 10px;
   color: rgba(255, 255, 255, 0.8);
   background-color: rgba(255, 255, 255, 0.15);
   cursor: pointer;
@@ -53,10 +57,32 @@ const HelpIcon = styled.span`
     color: rgba(255, 255, 255, 1);
     background-color: rgba(255, 255, 255, 0.35);
   }
+  @media ${Common.media.sm} {
+    margin-right: 8px;
+  }
 `;
 
 const StyleTextLogin = styled(Text)`
   cursor: pointer;
+  transition: color 0.2s ease-out;
+  &:hover {
+    color: ${rgba(Common.colors.point, 0.7)};
+  }
+`;
+
+const StyledIcon = styled(Icons.Person)`
+  color: ${Common.colors.point};
+  font-size: 20px;
+  transition: color 0.2s ease-out;
+  @media ${Common.media.sm} {
+    font-size: 20px;
+  }
+  @media ${Common.media.md} {
+    font-size: 20px;
+  }
+  &:hover {
+    color: ${rgba(Common.colors.point, 0.7)};
+  }
 `;
 
 const Header = ({ backgroundColor = Common.colors.background, ...props }) => {
@@ -97,13 +123,13 @@ const Header = ({ backgroundColor = Common.colors.background, ...props }) => {
       </Logo>
       <UtilIconBox>
         <HelpIcon onClick={handleClickHelpIcon}>❔</HelpIcon>
-        <Icons
+        <StyledIcon
           style={{ display: userInfo ? 'block' : 'none' }}
           onClick={() => {
             history.push('/my-page');
-          }}>
-          <Icons.Person color={Common.colors.point} />
-        </Icons>
+          }}
+          color={Common.colors.point}
+        />
         <StyleTextLogin
           style={{ display: !userInfo ? 'block' : 'none' }}
           color={Common.colors.point}
