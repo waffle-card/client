@@ -1,12 +1,15 @@
 import styled from '@emotion/styled';
 import React from 'react';
-import { Text } from '@components';
+import { Text, Icons } from '@components';
 import Common from '@styles';
+import useToggle from '@hooks/useToggle';
 
 const Container = styled.div`
+  position: relative;
   width: 312px;
   margin: 14px auto 0;
   display: flex;
+  visibility: ${({ isToggle }) => (isToggle ? 'hidden' : 'visible')};
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -35,13 +38,33 @@ const ImgBox = styled.div`
 
 const StyledText = styled(Text)`
   @media ${Common.media.sm} {
-    font-size: ${Common.fontSize.small};
+    font-size: 12px;
+  }
+`;
+
+const DelButton = styled.div`
+  position: absolute;
+  padding: 3px;
+  display: block;
+  top: -24px;
+  right: -24px;
+  border-radius: 50px;
+  background-color: rgba(255, 255, 255, 0.15);
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.35);
   }
 `;
 
 const ScrollGuide = () => {
+  const [state, toggle] = useToggle(false);
+
   return (
-    <Container>
+    <Container isToggle={state}>
+      <DelButton className="del_Button" onClick={toggle}>
+        <Icons fontSize={'10px'}>
+          <Icons.Delete></Icons.Delete>
+        </Icons>
+      </DelButton>
       <ImgBox>
         <img
           src={require('./scroll_guide_icon.png').default}
@@ -49,7 +72,7 @@ const ScrollGuide = () => {
         />
       </ImgBox>
       <StyledText weight={Common.fontWeight.regular}>
-        스크롤해서 카드들을 둘러보세요!
+        Shift+스크롤해서 카드들을 둘러보세요!
       </StyledText>
     </Container>
   );

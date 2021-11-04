@@ -4,8 +4,10 @@ import Common from '@styles';
 import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
 import { EmptyCard, WaffleCard, Text, Button } from '@components';
+// import ScrollHorizontal from 'react-scroll-horizontal';
 
 const Container = styled.section`
+  position: relative;
   display: flex;
   flex-wrap: nowrap;
   justify-content: center;
