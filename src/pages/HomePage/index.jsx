@@ -8,6 +8,7 @@ import {
   CardsContainer,
   CardEditModal,
   ChattingCard,
+  ScrollGuide,
 } from '@components';
 import { cardApi } from '@apis';
 import { getUserInfoByToken } from '@utils';
@@ -163,6 +164,7 @@ const HomePage = () => {
         path="/card/detail/:Param/:cardId"
         render={() => <ChattingCard visible />}
       />
+      <ScrollGuide class="scroll_guide" />
       <Spinner loading={isLoading} />
     </HomeContainer>
   );

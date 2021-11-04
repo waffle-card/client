@@ -19,7 +19,9 @@ const Container = styled.section`
     display: none;
   }
   @media ${Common.media.sm} {
+    padding: 20px 0;
     margin-top: 64px;
+    min-height: 300px;
   }
   @media ${Common.media.md} {
     margin-top: 88px;
