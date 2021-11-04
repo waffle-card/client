@@ -56,10 +56,10 @@ const EditBox = ({
       backgroundColor={backgroundColor}
       fontColor={fontColor}
       {...props}>
-      <Icons>
+      <Icons fontSize="15px">
         <Icons.Edit color={fontColor} href="#" onClick={handleClickEditIcon} />
       </Icons>
-      <Icons>
+      <Icons fontSize="15px">
         <Icons.Delete
           color={fontColor}
           href="#"

@@ -5,6 +5,7 @@ import { cardApi } from '@apis';
 import Swal from 'sweetalert2';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const ChatBox = styled.div`
   display: flex;
@@ -54,16 +55,6 @@ const StyledText = styled(Text)`
   }
 `;
 
-const StyledDiv = styled.div`
-  -moz-appearance: ${({ isEditable }) => (isEditable ? 'textfield' : '')};
-  -webkit-appearance: ${({ isEditable }) => (isEditable ? 'textfield' : '')};
-  user-modify: ${({ isEditable }) => (isEditable ? 'read-write' : '')};
-  background-color: transparent;
-  border: none;
-  outline: none;
-  cursor: ${({ isEditable }) => (isEditable ? 'text' : 'default')};
-`;
-
 const EditBoxContainer = styled.div`
   position: absolute;
 
@@ -84,10 +75,8 @@ const EditBoxContainer = styled.div`
 `;
 
 const Message = ({ comment, isMine, onRemove, ...props }) => {
-  const hoverRef = useRef();
-  const editRef = useRef();
+  const hoverRef = useRef(null);
   const [isHover, setIsHover] = useState(false);
-  const [isEditable, setIsEditable] = useState(false);
 
   const handleMouseEnter = useCallback(() => setIsHover(true), []);
   const handleMouseLeave = useCallback(() => setIsHover(false), []);
@@ -103,29 +92,59 @@ const Message = ({ comment, isMine, onRemove, ...props }) => {
   useEffect(() => {
     const element = hoverRef.current;
 
-    if (element && !isEditable && isMine) {
+    if (element && isMine) {
       element.addEventListener('mouseleave', handleMouseLeave);
     }
-  }, [handleMouseLeave, isEditable, isMine]);
-
-  // useEffect(async () => {
-  //   const response = await
-  // }, [])
+  }, [handleMouseLeave, isMine]);
 
   const handleClickEditIcon = () => {
-    editRef.current.focus();
-    setIsEditable(true);
+    Swal.fire({
+      title: '댓글을 수정하세요!',
+      input: 'text',
+      inputAttributes: {
+        autocapitalize: 'off',
+      },
+      showCancelButton: true,
+      confirmButtonText: '변경하기',
+      confirmButtonColor: Common.colors.point,
+      cancelButtonText: '취소하기',
+      cancelButtonColor: Common.colors.red,
+      showLoaderOnConfirm: true,
+      preConfirm: text => {
+        console.log(comment._id, text);
+        return cardApi
+          .updateCardComment({ id: comment._id, comment: text })
+          .then(response => {
+            if (!response.ok) {
+              throw new Error('에러가 발생했습니다! ' + response.statusText);
+            }
+            return response.json();
+          })
+          .catch(error => {
+            Swal.showValidationMessage(`Request failed: ${error}`);
+          });
+      },
+      allowOutsideClick: () => !Swal.isLoading(),
+    }).then(result => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          title: `댓글을 수정했어요!😁`,
+          confirmButtonText: '확인',
+          confirmButtonColor: Common.colors.point,
+        });
+      }
+    });
   };
 
   const handleClickDeleteIcon = async () => {
     Swal.fire({
       title: '😫',
-      text: '댓글을 삭제하시겠습니까?',
+      text: '댓글을 삭제하실건가요?',
       showCancelButton: true,
       confirmButtonColor: Common.colors.point,
       cancelButtonColor: Common.colors.red,
-      confirmButtonText: '예',
-      cancelButtonText: '아니오',
+      confirmButtonText: '삭제하기',
+      cancelButtonText: '취소하기',
     }).then(async res => {
       if (res.isConfirmed) {
         try {
@@ -146,22 +165,25 @@ const Message = ({ comment, isMine, onRemove, ...props }) => {
 
   return (
     <ChatBox ref={hoverRef}>
-      {isMine && isHover && (
-        <EditBoxContainer>
-          <EditBox
-            onEditIconClick={handleClickEditIcon}
-            onDeleteIconClick={handleClickDeleteIcon}
-          />
-        </EditBoxContainer>
-      )}
       <StyledText block>
-        {comment.author.fullName + ' : '}
-        <StyledDiv ref={editRef} isEditable={isMine}>
-          {comment.comment}
-        </StyledDiv>
+        {isMine && isHover && (
+          <EditBoxContainer>
+            <EditBox
+              onEditIconClick={handleClickEditIcon}
+              onDeleteIconClick={handleClickDeleteIcon}
+            />
+          </EditBoxContainer>
+        )}
+        {comment.author.fullName + ' : ' + comment.comment}
       </StyledText>
     </ChatBox>
   );
+};
+
+Message.propTypes = {
+  comment: PropTypes.object,
+  isMine: PropTypes.bool,
+  onRemove: PropTypes.func,
 };
 
 export default React.memo(Message);
