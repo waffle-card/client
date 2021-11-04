@@ -10,6 +10,7 @@ export { default as Portal } from './base/Portal';
 export { default as Spinner } from './base/Spinner';
 export { default as BackButton } from './base/BackButton';
 export { default as Input } from './base/Input';
+export { default as ScrollGuide } from './base/ScrollGuide';
 export { default as EditBox } from './domain/EditBox';
 export { default as WaffleCard } from './domain/WaffleCard';
 export { default as CardEditModal } from './domain/CardEditModal';

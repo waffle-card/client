@@ -30,6 +30,31 @@ const Logo = styled.h1`
   }
 `;
 
+const UtilIconBox = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const HelpIcon = styled.span`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50px;
+  font-size: 14px;
+  margin-right: 14px;
+  color: rgba(255, 255, 255, 0.8);
+  background-color: rgba(255, 255, 255, 0.15);
+  cursor: pointer;
+  transition: all 150ms ease-out;
+  &:hover {
+    color: rgba(255, 255, 255, 1);
+    background-color: rgba(255, 255, 255, 0.35);
+  }
+`;
+
 const StyleTextLogin = styled(Text)`
   cursor: pointer;
 `;
@@ -57,6 +82,10 @@ const Header = ({ backgroundColor = Common.colors.background, ...props }) => {
     getUserInfo();
   }, []);
 
+  const handleClickHelpIcon = () => {
+    console.log('clickHelpIcon');
+  };
+
   return (
     <HeaderTag backgroundColor={backgroundColor}>
       <Logo
@@ -66,24 +95,26 @@ const Header = ({ backgroundColor = Common.colors.background, ...props }) => {
         }}>
         <img src={require('./logo.png').default} alt="logo" />
       </Logo>
-      <Icons
-        fontSize="20px"
-        style={{ display: userInfo ? 'block' : 'none' }}
-        onClick={() => {
-          history.push('/my-page');
-        }}>
-        <Icons.Person color={Common.colors.point} />
-      </Icons>
-      <StyleTextLogin
-        style={{ display: !userInfo ? 'block' : 'none' }}
-        color={Common.colors.point}
-        size={Common.fontSize.regular}
-        weight={Common.fontWeight.regular}
-        onClick={() => {
-          history.push('/login');
-        }}>
-        로그인
-      </StyleTextLogin>
+      <UtilIconBox>
+        <HelpIcon onClick={handleClickHelpIcon}>❔</HelpIcon>
+        <Icons
+          style={{ display: userInfo ? 'block' : 'none' }}
+          onClick={() => {
+            history.push('/my-page');
+          }}>
+          <Icons.Person color={Common.colors.point} />
+        </Icons>
+        <StyleTextLogin
+          style={{ display: !userInfo ? 'block' : 'none' }}
+          color={Common.colors.point}
+          size={Common.fontSize.regular}
+          weight={Common.fontWeight.regular}
+          onClick={() => {
+            history.push('/login');
+          }}>
+          로그인
+        </StyleTextLogin>
+      </UtilIconBox>
     </HeaderTag>
   );
 };
