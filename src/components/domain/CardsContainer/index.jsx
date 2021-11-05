@@ -4,13 +4,13 @@ import Common from '@styles';
 import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
 import { EmptyCard, WaffleCard, Text, Button } from '@components';
-// import ScrollHorizontal from 'react-scroll-horizontal';
 
 const Container = styled.section`
   position: relative;
   display: flex;
   flex-wrap: nowrap;
-  justify-content: center;
+  justify-content: ${({ cardCount }) =>
+    cardCount <= 10 ? 'center' : 'flex-start'};
   align-items: center;
   min-height: 413px;
   padding: 35px 0;
@@ -23,6 +23,8 @@ const Container = styled.section`
   @media ${Common.media.sm} {
     padding: 20px 0;
     min-height: 300px;
+    justify-content: ${({ currentParam }) =>
+      currentParam === 'my' ? 'center' : 'flex-start'};
   }
   @media ${Common.media.md} {
   }
@@ -90,7 +92,7 @@ const CardsContainer = ({ myCard, cardList, userInfo, currentParam }) => {
   }
 
   return (
-    <Container>
+    <Container cardCount={cardList.length} currentParam={currentParam}>
       {/* <Icons backgroundColor={'rgba(0, 0, 0, 0)'}>
         <Icons.ArrowBack color={Common.colors.primary} fontSize={'30px'} />
       </Icons> */}
