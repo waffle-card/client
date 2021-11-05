@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_END_POINT = 'http://13.209.30.200';
+const API_END_POINT = 'https://learn.programmers.co.kr';
 const CHANNEL_ID = '6182ac3fe1ecd063dabf10d0';
 
 const setInterceptors = (instance, auth) => {

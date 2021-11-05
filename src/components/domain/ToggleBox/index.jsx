@@ -29,7 +29,7 @@ const StyledText = styled(Text)`
   }
 `;
 
-axios.defaults.baseURL = 'http://13.209.30.200';
+axios.defaults.baseURL = 'https://learn.programmers.co.kr';
 
 const Authorization = async (url, method, data) => {
   const tokenId = JSON.parse(sessionStorage.getItem('WAFFLE_TOKEN'));
