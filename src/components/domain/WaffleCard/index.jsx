@@ -116,12 +116,13 @@ const WaffleCard = ({
     id: cardId = 'null',
     emoji = '🧇',
     cardColor = Common.colors.yellow,
-    createdAt = new Date(),
+    // createdAt = new Date(),
+    updatedAt = new Date(),
     hashTags = [],
   } = cardData || {};
   const history = useHistory();
   const [ref, hover] = useHover(null);
-  const days = useMemo(() => countDaysFromToday(createdAt), [createdAt]);
+  const days = useMemo(() => countDaysFromToday(updatedAt), [updatedAt]);
 
   const handleClickCard = useCallback(
     e => {
