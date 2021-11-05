@@ -10,7 +10,7 @@ const Container = styled.section`
   display: flex;
   flex-wrap: nowrap;
   justify-content: ${({ cardCount }) =>
-    cardCount <= 10 ? 'center' : 'flex-start'};
+    cardCount <= 4 ? 'center' : 'flex-start'};
   align-items: center;
   min-height: 413px;
   padding: 35px 0;
@@ -26,7 +26,21 @@ const Container = styled.section`
     justify-content: ${({ currentParam }) =>
       currentParam === 'my' ? 'center' : 'flex-start'};
   }
-  @media ${Common.media.md} {
+`;
+
+const EmptyContainer = styled.section`
+  position: relative;
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+  min-height: 413px;
+  padding: 35px 0;
+  margin-top: 5vh;
+  overflow-x: scroll;
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar {
+    display: none;
   }
 `;
 
@@ -76,7 +90,7 @@ const CardsContainer = ({ myCard, cardList, userInfo, currentParam }) => {
 
   if (!userInfo && (currentParam === 'my' || currentParam === 'like')) {
     return (
-      <Container>
+      <EmptyContainer userInfo={userInfo}>
         <GuideWrap>
           <StyledText size={24}>와플카드 대화에 참여해보세요!</StyledText>
           <StyledButton
@@ -87,7 +101,7 @@ const CardsContainer = ({ myCard, cardList, userInfo, currentParam }) => {
             로그인하러 가기
           </StyledButton>
         </GuideWrap>
-      </Container>
+      </EmptyContainer>
     );
   }
 
