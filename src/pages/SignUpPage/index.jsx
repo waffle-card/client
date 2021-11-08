@@ -114,7 +114,7 @@ const SignUpPage = ({ ...prop }) => {
       } catch (error) {
         Swal.fire({
           title: '🥲',
-          text: error.data,
+          text: error,
           confirmButtonColor: Common.colors.point,
         });
       }
