@@ -2,13 +2,13 @@
 
 <img width="970" alt="Intro" src="https://user-images.githubusercontent.com/41064875/140715141-f00bb057-5f1d-41cb-9ef2-4edcb4f49e36.png">
 
-
+<br />
 
 ### 🧇 와플카드는?
 
 >  해시태그와 카드를 활용한 익명의 관심사 소통 서비스
 
-
+<br />
 
 ##### Background
 
@@ -44,18 +44,18 @@
 1. **익명성을 갖고 속시원하게 터놓으**며 소통이 가능하다. (나쁜기억지우개방, 자랑방, 드립방, 선택장애방과 같은 다양한 컨셉의 방)
 2. **다양한 관심사를 말하면서 재미요소**가 있다고 기대한다. (이런 익명성과 자유주제 컨셉방이라는 성질과 해쉬태그와 카드라는 컨셉)
 
-
+<br />
 
 ### 🗓 프로젝트 기간
 
 > 21.10.15 ~ 21.11.05
 
-
+<br />
 
 ### 🚀 배포링크
 
 https://waffle-card.web.app
-
+<br />
 
 
 ### 👨‍👩‍👧‍👦 팀원소개
@@ -67,7 +67,7 @@ https://waffle-card.web.app
 | 양윤   | [yyoooon](https://github.com/yyoooon)     |
 | 정윤호 | [younoah](https://github.com/younoah)     |
 
-
+<br />
 
 ### 🧑🏻‍💻 기술스택
 
@@ -75,7 +75,7 @@ https://waffle-card.web.app
 
 ![tech1](./assets/tech2.png)
 
-
+<br />
 
 ### 📝 서비스 흐름도
 
@@ -83,7 +83,7 @@ https://waffle-card.web.app
 
 
 
-
+<br />
 
 ### 🎨 페이지 및 기능
 
@@ -91,37 +91,37 @@ https://waffle-card.web.app
 
 https://user-images.githubusercontent.com/41064875/140710978-c406941a-5456-4fa8-80a0-07840d97899c.mp4
 
-
+<br />
 
 #### 로그인
 
 https://user-images.githubusercontent.com/41064875/140710943-77b991e7-48cd-4d46-8ee9-7075029c64ad.mp4
 
-
+<br />
 
 #### 마이페이지
 
 https://user-images.githubusercontent.com/41064875/140710962-c479dfa4-7da3-4dd3-b5e3-5adf846f7a47.mp4
 
-
+<br />
 
 #### 카드생성 및 수정
 
 https://user-images.githubusercontent.com/41064875/140710973-d8ba5e8a-aa33-4e95-b86d-143c6ed68630.mp4
 
-
+<br />
 
 #### Home
 
 https://user-images.githubusercontent.com/41064875/140710976-8cfa9f25-9ddd-4325-a1f1-eb44303573fa.mp4
 
-
+<br />
 
 #### 채팅카드
 
 https://user-images.githubusercontent.com/41064875/140710972-8f337fba-ae07-42d9-a386-b68319d6ea27.mp4
 
-
+<br />
 
 #### 반응형
 
@@ -130,8 +130,7 @@ https://user-images.githubusercontent.com/41064875/140710966-f3907b0a-226c-4825-
 
 
 
-
-
+<br />
 
 ### 🌳 프로젝트 구조
 
