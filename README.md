@@ -1,6 +1,6 @@
 ## 🧇 와플카드 프로젝트 소개 🗂
 
-![Intro](/Users/uno/Desktop/와플카드/Intro.png)
+<img width="970" alt="Intro" src="https://user-images.githubusercontent.com/41064875/140715141-f00bb057-5f1d-41cb-9ef2-4edcb4f49e36.png">
 
 
 
@@ -57,6 +57,7 @@
 https://waffle-card.web.app
 
 
+
 ### 👨‍👩‍👧‍👦 팀원소개
 
 | 이름   | 깃허브                                    |
@@ -70,15 +71,15 @@ https://waffle-card.web.app
 
 ### 🧑🏻‍💻 기술스택
 
-![tech1](/Users/uno/Desktop/와플카드/tech1.png)
+![tech1](./assets/tech1.png)
 
-![tech2](/Users/uno/Desktop/와플카드/tech2.png)
+![tech1](./assets/tech2.png)
 
 
 
 ### 📝 서비스 흐름도
 
-![서비스흐름도](/Users/uno/Downloads/서비스흐름도.png)
+![서비스흐름도](./assets/flowChart.png)
 
 
 
@@ -88,51 +89,47 @@ https://waffle-card.web.app
 
 #### 회원가입
 
-
+https://user-images.githubusercontent.com/41064875/140710978-c406941a-5456-4fa8-80a0-07840d97899c.mp4
 
 
 
 #### 로그인
 
+https://user-images.githubusercontent.com/41064875/140710943-77b991e7-48cd-4d46-8ee9-7075029c64ad.mp4
 
+
+
+#### 마이페이지
+
+https://user-images.githubusercontent.com/41064875/140710962-c479dfa4-7da3-4dd3-b5e3-5adf846f7a47.mp4
 
 
 
 #### 카드생성 및 수정
 
-
+https://user-images.githubusercontent.com/41064875/140710973-d8ba5e8a-aa33-4e95-b86d-143c6ed68630.mp4
 
 
 
 #### Home
 
+https://user-images.githubusercontent.com/41064875/140710976-8cfa9f25-9ddd-4325-a1f1-eb44303573fa.mp4
 
 
-#### 채팅카
+
+#### 채팅카드
+
+https://user-images.githubusercontent.com/41064875/140710972-8f337fba-ae07-42d9-a386-b68319d6ea27.mp4
 
 
 
 #### 반응형
 
-https://user-images.githubusercontent.com/41064875/140710943-77b991e7-48cd-4d46-8ee9-7075029c64ad.mp4
-
-
-https://user-images.githubusercontent.com/41064875/140710962-c479dfa4-7da3-4dd3-b5e3-5adf846f7a47.mp4
-
-
 https://user-images.githubusercontent.com/41064875/140710966-f3907b0a-226c-4825-ab86-495e0fb1dcac.mp4
 
 
-https://user-images.githubusercontent.com/41064875/140710972-8f337fba-ae07-42d9-a386-b68319d6ea27.mp4
 
 
-https://user-images.githubusercontent.com/41064875/140710973-d8ba5e8a-aa33-4e95-b86d-143c6ed68630.mp4
-
-
-https://user-images.githubusercontent.com/41064875/140710976-8cfa9f25-9ddd-4325-a1f1-eb44303573fa.mp4
-
-
-https://user-images.githubusercontent.com/41064875/140710978-c406941a-5456-4fa8-80a0-07840d97899c.mp4
 
 
 
