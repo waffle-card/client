@@ -1,70 +1,283 @@
-# Getting Started with Create React App
+## 🧇 와플카드 프로젝트 소개 🗂
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+![Intro](/Users/uno/Desktop/와플카드/Intro.png)
 
-## Available Scripts
 
-In the project directory, you can run:
 
-### `yarn start`
+### 🧇 와플카드는?
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+>  해시태그와 카드를 활용한 익명의 관심사 소통 서비스
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
 
-### `yarn test`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+##### Background
 
-### `yarn build`
+사람들이 대화를 편하게 진행할 수 있는 요소가 들어간 SNS가 필요하다.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- 익명성 : 익명으로 소통을 나누고 싶은 욕구가 있다.
+- 흥미성 : 재밌게 소통하고 싶다.
+- 캐주얼함 : 부담없이 친해질 수 있는 장치가 필요하다.
+- 유사성 : 나의 관심사로 얘기를 나누고 싶다.
+- 접근성 : 남녀노소 사용하기 쉬운 UX/UI로 누구나 대화를 온라인에서 나눌 수 있는 기회가 필요하다.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `yarn eject`
+##### **How it works**
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+- 타깃 고객 및 사이즈 : KDT 프론트엔드반 프롱이들 / 약 60명(전체 수용인원)
+  - 소속이 있는 20대 중후반. 정예 멤버들도 사용 가능.
+- 어디서 : 사용자들의 로컬 PC로 "와플카드" 웹 사이트 접속
+- 무엇을 만들고 싶은가
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+1. 대화 카드를 만들고 싶은 유저는 카드 섹션을 만들어 대화방을 오픈한다.
+2. 자신이 대화하고 싶은 키워드를 해시태그로 적어 카드를 생성한다
+3. 유저 당 만들 수 있는 카드는 1개, 해시태그를 변경한다.
+4. 웹 사이트에 접속하면 유저들이 만든 카드가 띄워지고, 채팅방에 참여하고 싶은 유저들은 '자신이 원하는, 흥미로운 주제가 있는, 호기심이 생기는' 카드를 클릭해 대화에 참여한다.
+5. 채팅방은 비동기적인 댓글 방식으로 구현
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
-## Learn More
+##### 기대효과
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+프롱이들 사이에서 "익명성"을 활용하여
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+1. **익명성을 갖고 속시원하게 터놓으**며 소통이 가능하다. (나쁜기억지우개방, 자랑방, 드립방, 선택장애방과 같은 다양한 컨셉의 방)
+2. **다양한 관심사를 말하면서 재미요소**가 있다고 기대한다. (이런 익명성과 자유주제 컨셉방이라는 성질과 해쉬태그와 카드라는 컨셉)
 
-### Code Splitting
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
 
-### Analyzing the Bundle Size
+### 🗓 프로젝트 기간
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+> 21.10.15 ~ 21.11.05
 
-### Making a Progressive Web App
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
 
-### Advanced Configuration
+### 🚀 배포링크
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+https://waffle-card.web.app
 
-### Deployment
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+### 👨‍👩‍👧‍👦 팀원소개
 
-### `yarn build` fails to minify
+| 이름   | 깃허브                                    |
+| ------ | ----------------------------------------- |
+| 김지은 | [oranjik](https://github.com/oranjik)     |
+| 나은찬 | [naeunchan](https://github.com/naeunchan) |
+| 양윤   | [yyoooon](https://github.com/yyoooon)     |
+| 정윤호 | [younoah](https://github.com/younoah)     |
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+
+### 🧑🏻‍💻 기술스택
+
+![tech1](/Users/uno/Desktop/와플카드/tech1.png)
+
+![tech2](/Users/uno/Desktop/와플카드/tech2.png)
+
+
+
+### 📝 서비스 흐름도
+
+![서비스흐름도](/Users/uno/Downloads/서비스흐름도.png)
+
+
+
+
+
+### 🎨 페이지 및 기능
+
+#### 회원가입
+
+
+
+
+
+#### 로그인
+
+
+
+
+
+#### 카드생성 및 수정
+
+
+
+
+
+#### Home
+
+
+
+#### 채팅카
+
+
+
+#### 반응형
+
+https://user-images.githubusercontent.com/41064875/140710943-77b991e7-48cd-4d46-8ee9-7075029c64ad.mp4
+
+
+https://user-images.githubusercontent.com/41064875/140710962-c479dfa4-7da3-4dd3-b5e3-5adf846f7a47.mp4
+
+
+https://user-images.githubusercontent.com/41064875/140710966-f3907b0a-226c-4825-ab86-495e0fb1dcac.mp4
+
+
+https://user-images.githubusercontent.com/41064875/140710972-8f337fba-ae07-42d9-a386-b68319d6ea27.mp4
+
+
+https://user-images.githubusercontent.com/41064875/140710973-d8ba5e8a-aa33-4e95-b86d-143c6ed68630.mp4
+
+
+https://user-images.githubusercontent.com/41064875/140710976-8cfa9f25-9ddd-4325-a1f1-eb44303573fa.mp4
+
+
+https://user-images.githubusercontent.com/41064875/140710978-c406941a-5456-4fa8-80a0-07840d97899c.mp4
+
+
+
+### 🌳 프로젝트 구조
+
+```shell
+src
+├── App.jsx
+├── apis
+│   └── index.jsx
+├── components
+│   ├── base
+│   │   ├── BackButton
+│   │   │   └── index.jsx
+│   │   ├── Button
+│   │   │   └── index.jsx
+│   │   ├── Card
+│   │   │   ├── Empty.jsx
+│   │   │   └── index.jsx
+│   │   ├── ColorPalette
+│   │   │   ├── ColorItem.jsx
+│   │   │   └── index.jsx
+│   │   ├── Icons
+│   │   │   ├── Add.jsx
+│   │   │   ├── ArrowBack.jsx
+│   │   │   ├── ArrowFront.jsx
+│   │   │   ├── Bookmark.jsx
+│   │   │   ├── Delete.jsx
+│   │   │   ├── Edit.jsx
+│   │   │   ├── Like.jsx
+│   │   │   ├── Person.jsx
+│   │   │   ├── Send.jsx
+│   │   │   └── index.jsx
+│   │   ├── Input
+│   │   │   └── index.jsx
+│   │   ├── Modal
+│   │   │   └── index.jsx
+│   │   ├── Portal
+│   │   │   └── index.jsx
+│   │   ├── ScrollGuide
+│   │   │   ├── index.jsx
+│   │   │   └── scroll_guide_icon.png
+│   │   ├── Spacer
+│   │   │   └── index.jsx
+│   │   ├── Spinner
+│   │   │   └── index.jsx
+│   │   └── Text
+│   │       └── index.jsx
+│   ├── domain
+│   │   ├── CardEditModal
+│   │   │   ├── EmojiPickerActiveButton.jsx
+│   │   │   ├── HashTagInput.jsx
+│   │   │   └── index.jsx
+│   │   ├── CardsContainer
+│   │   │   └── index.jsx
+│   │   ├── ChattingCard
+│   │   │   ├── Bookmark.jsx
+│   │   │   ├── Header.jsx
+│   │   │   ├── Like.jsx
+│   │   │   ├── Message.jsx
+│   │   │   └── index.jsx
+│   │   ├── EditBox
+│   │   │   └── index.jsx
+│   │   ├── Header
+│   │   │   ├── index.jsx
+│   │   │   └── logo.png
+│   │   ├── NameChangeModal
+│   │   │   └── index.jsx
+│   │   ├── PasswordChangeModal
+│   │   │   └── index.jsx
+│   │   ├── Tab
+│   │   │   ├── TabItem.jsx
+│   │   │   └── index.jsx
+│   │   ├── ToggleBox
+│   │   │   └── index.jsx
+│   │   └── WaffleCard
+│   │       └── index.jsx
+│   ├── index.js
+│   └── template
+│       └── index.jsx
+├── contexts
+│   ├── UserProvider.jsx
+│   └── index.jsx
+├── hooks
+│   ├── index.jsx
+│   ├── useAuthUser.jsx
+│   ├── useClickAway.jsx
+│   ├── useForm.jsx
+│   ├── useHover.jsx
+│   ├── useSessionStorage.jsx
+│   └── useToggle.jsx
+├── index.css
+├── index.jsx
+├── pages
+│   ├── GuidePage
+│   │   └── index.jsx
+│   ├── HomePage
+│   │   └── index.jsx
+│   ├── LoginPage
+│   │   └── index.jsx
+│   ├── MyPage
+│   │   └── index.jsx
+│   ├── NotFoundPage
+│   │   └── index.jsx
+│   ├── SignUpPage
+│   │   └── index.jsx
+│   └── index.jsx
+├── stories
+│   ├── components
+│   │   ├── base
+│   │   │   ├── BackButton.stories.jsx
+│   │   │   ├── Button.stories.jsx
+│   │   │   ├── Card.stories.jsx
+│   │   │   ├── ColorPalette.stories.jsx
+│   │   │   ├── Icons.stories.jsx
+│   │   │   ├── Input.stories.jsx
+│   │   │   ├── Modal.stories.jsx
+│   │   │   ├── ScrollGuide.stories.jsx
+│   │   │   ├── Spacer.stories.jsx
+│   │   │   ├── Spinner.stories.jsx
+│   │   │   └── Text.stories.jsx
+│   │   └── domain
+│   │       ├── CardEditModal.stories.jsx
+│   │       ├── ChattingCard.stories.jsx
+│   │       ├── EditBox.stories.jsx
+│   │       ├── NameChangeModal.stories.jsx
+│   │       ├── PasswordChangeModal.stories.js
+│   │       ├── Tab.stories.jsx
+│   │       ├── ToggleBox.stories.jsx
+│   │       └── WaffleCard.stories.jsx
+│   ├── hooks
+│   │   └── useHover.stories.jsx
+│   └── pages
+│       ├── HomePage.stories.jsx
+│       ├── LoginPage.stories.jsx
+│       ├── MyPage.stories.jsx
+│       ├── NotFoundPage.stories.jsx
+│       └── SignUpPage.stories.jsx
+├── styles
+│   ├── common.jsx
+│   ├── global-styles.jsx
+│   └── index.js
+├── utils
+│   └── index.jsx
+└── validators
+    └── index.jsx
+```
+
