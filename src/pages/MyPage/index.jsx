@@ -1,8 +1,7 @@
 import styled from '@emotion/styled';
 import Common from '@styles';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { authApi } from '@apis';
-import { getUserInfoByToken } from '@utils';
 import {
   Text,
   Button,
@@ -77,33 +76,12 @@ const StyledButton = styled(Button)`
   }
 `;
 
-const MyPage = ({ ...prop }) => {
+const MyPage = () => {
   const history = useHistory();
   const [nameModalVisible, setNameModalVisible] = useState(false);
   const [passWordModalVisible, setPassWordModalVisible] = useState(false);
   const [userInfo, setUserInfo] = useState({});
   const [isLoading, setIsLoading] = useState(false);
-
-  useEffect(() => {
-    const getUserInfo = async () => {
-      setIsLoading(true);
-      const userInfo = await getUserInfoByToken();
-      if (!userInfo) {
-        Swal.fire({
-          title: '🤯',
-          text: '로그인을 하고 접근해주세요.',
-          confirmButtonColor: Common.colors.point,
-        }).then(() => {
-          history.push('/login');
-        });
-        setIsLoading(false);
-        return;
-      }
-      setUserInfo(userInfo);
-      setIsLoading(false);
-    };
-    getUserInfo();
-  }, [history]);
 
   const handleClickChangeNameButton = () => {
     setNameModalVisible(true);

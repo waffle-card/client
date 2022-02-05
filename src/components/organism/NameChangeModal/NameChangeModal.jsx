@@ -106,17 +106,6 @@ const NameChangeModal = ({
     const getUserInfo = async () => {
       setInitLoading(false);
       const response = await authApi.getAuthUser();
-      if (!response.data) {
-        Swal.fire({
-          title: '🤯',
-          text: '로그인을 하고 접근해주세요.',
-          confirmButtonColor: Common.colors.point,
-        }).then(() => {
-          history.push('/login');
-        });
-        setInitLoading(false);
-        return;
-      }
       const userName = response.data.fullName;
       setUserName(userName);
       setInitLoading(false);
