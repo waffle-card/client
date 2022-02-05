@@ -1,5 +1,5 @@
 import React from 'react';
-import { Redirect, Route } from 'react-router-dom';
+import { Navigate, Route } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { useUser } from '@contexts';
 
@@ -7,10 +7,8 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
   const { userInfo } = useUser();
   return (
     <Route
+      element={userInfo ? <Component /> : <Navigate replace to="/login" />}
       {...rest}
-      render={props =>
-        userInfo ? <Component {...props} /> : <Redirect to="/login" />
-      }
     />
   );
 };

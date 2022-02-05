@@ -144,14 +144,14 @@ const HomePage = () => {
         cardList={cardList}
         currentParam={currentParam}
       />
-      <Route path="/cards/my/create" render={() => <CardEditModal visible />} />
+      <Route path="my/create" element={<CardEditModal visible />} />
       <Route
-        path="/cards/my/update/:cardId"
-        render={() => <CardEditModal visible editMode />}
+        path="my/update/:cardId"
+        element={<CardEditModal visible editMode />}
       />
       <Route
         path="/card/detail/:Param/:cardId"
-        render={() => <ChattingCard visible />}
+        element={<ChattingCard visible />}
       />
       <ScrollGuide class="scroll_guide" />
       <Spinner loading={isLoading} />
