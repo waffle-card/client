@@ -1,5 +1,7 @@
 import axios from 'axios';
 
+const API_END_POINT = 'https://waffle-card.herokuapp.com';
+
 const setInterceptors = instance => {
   instance.interceptors.request.use(
     config => {
@@ -49,7 +51,7 @@ const setAuthInterceptors = instance => {
 
 const createInstance = () => {
   const instance = axios.create({
-    baseURL: process.env.API_END_POINT,
+    baseURL: API_END_POINT,
     timeout: 5000,
   });
   return setInterceptors(instance);
@@ -57,7 +59,7 @@ const createInstance = () => {
 
 const createInstanceWithAuth = () => {
   const instance = axios.create({
-    baseURL: process.env.API_END_POINT,
+    baseURL: API_END_POINT,
     timeout: 5000,
   });
   return setAuthInterceptors(instance);
