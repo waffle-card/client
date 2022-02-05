@@ -1,14 +1,32 @@
 import React from 'react';
 import Common from '@styles';
 import PropTypes from 'prop-types';
-import { Card, Text } from '@components';
+import { Card, Text, LikeBox } from '@components';
 import styled from '@emotion/styled';
 
-const WaffleCard = ({ waffleCard, onClickWaffleCard, ...props }) => {
-  const { emoji, color, hashTags } = waffleCard;
+const countDaysFromToday = date => {
+  date = typeof date === 'string' ? new Date(date) : date;
+  const today = new Date();
+  return Math.floor((today.getTime() - date.getTime()) / (1000 * 60 * 60 * 24));
+};
+
+const WaffleCard = ({
+  waffleCard,
+  onClickWaffleCard,
+  onClickLike,
+  ...props
+}) => {
+  const { emoji, color, hashTags, updatedAt } = waffleCard;
+  const days = countDaysFromToday(updatedAt);
+
+  const handleClickLikeBox = () => {};
 
   return (
     <StyledCard backgroundColor={color} {...props}>
+      <InfoContainer>
+        <StyledText block>{days <= 0 ? '오늘' : `${days}일 전`}</StyledText>
+        <LikeBox onClick={handleClickLikeBox} interactive />
+      </InfoContainer>
       <EmojiText block size={70}>
         {emoji}
       </EmojiText>
@@ -49,6 +67,25 @@ const EmojiText = styled(Text)`
   }
   & span:nth-of-type(2) {
     margin-right: 4px;
+  }
+`;
+
+const InfoContainer = styled.div`
+  width: 100%;
+  height: 18px;
+  display: flex;
+  justify-content: space-between;
+`;
+
+const StyledText = styled(Text)`
+  @media ${Common.media.sm} {
+    font-size: ${Common.fontSize.small};
+  }
+  @media ${Common.media.md} {
+    font-size: ${Common.fontSize.base};
+  }
+  @media ${Common.media.lg} {
+    font-size: ${Common.fontSize.medium};
   }
 `;
 
