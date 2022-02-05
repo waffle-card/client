@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { Icons, Text, ToggleBox } from '@components';
+import { Icons, Text, LikeBox } from '@components';
 import Common from '@styles';
 import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
@@ -63,7 +63,7 @@ const Header = ({ backgroundColor, title, authorName, cardInfo, ...props }) => {
         <StyledText block>{authorName}</StyledText>
       </Title>
       <StyledDiv>
-        <ToggleBox cardInfo={cardInfo} style={{ height: '20px' }} />
+        <LikeBox cardInfo={cardInfo} style={{ height: '20px' }} />
       </StyledDiv>
     </Top>
   );
