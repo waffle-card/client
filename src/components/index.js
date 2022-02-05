@@ -22,4 +22,4 @@ export { default as Header } from './organism/Header/Header';
 export { default as NameChangeModal } from './organism/NameChangeModal/NameChangeModal';
 export { default as PasswordChangeModal } from './organism/PasswordChangeModal/PasswordChangeModal';
 export { default as CardsContainer } from './organism/CardsContainer/CardsContainer';
-export { default as ToggleBox } from './molecule/ToggleBox/ToggleBox';
+export { default as LikeBox } from './molecule/LikeBox/LikeBox';
