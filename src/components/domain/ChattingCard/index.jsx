@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { cardApi } from '@apis';
 import { getUserInfoByToken } from '@utils';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { useHistory, useLocation } from 'react-router';
+import { useHistory, useLocation } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import Header from './Header';
 import Message from './Message';

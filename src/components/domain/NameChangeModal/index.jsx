@@ -7,7 +7,7 @@ import { Modal, Text, Button, Input, Spinner } from '@components';
 import { validateNameEmpty, validateNameLength } from '@validators';
 import { authApi, userApi } from '@apis';
 import Swal from 'sweetalert2';
-import { useHistory } from 'react-router';
+import { useHistory } from 'react-router-dom';
 
 const StyledModal = styled(Modal)`
   width: 100%;

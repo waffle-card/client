@@ -11,7 +11,7 @@ import {
 } from '@validators';
 import { userApi } from '@apis';
 import Swal from 'sweetalert2';
-import { useHistory } from 'react-router';
+import { useHistory } from 'react-router-dom';
 
 const StyledModal = styled(Modal)`
   width: 100%;

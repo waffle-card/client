@@ -1,9 +1,7 @@
 import styled from '@emotion/styled';
 import { Icons, Text, ToggleBox } from '@components';
-import Bookmark from './Bookmark';
-import Like from './Like';
 import Common from '@styles';
-import { useHistory } from 'react-router';
+import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 const Top = styled.div`
