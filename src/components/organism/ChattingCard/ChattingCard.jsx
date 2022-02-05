@@ -1,10 +1,19 @@
 import styled from '@emotion/styled';
-import { Modal } from '@components';
-import Common from '@styles';
 import PropTypes from 'prop-types';
+import Common from '@styles';
+import { Modal } from '@components';
+import Header from './Header';
+import CommentEditor from './CommentEditor';
+import CommentList from './CommentList';
 
 const ChattingCard = ({ children, visible, ...props }) => {
-  return <StyledModal></StyledModal>;
+  return (
+    <StyledModal visible>
+      <Header />
+      <CommentList />
+      <CommentEditor />
+    </StyledModal>
+  );
 };
 
 const StyledModal = styled(Modal)`
