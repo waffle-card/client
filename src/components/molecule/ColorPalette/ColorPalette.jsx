@@ -18,7 +18,8 @@ const ColorPalette = ({ colors, name, onChange, ...props }) => {
 
   const handleChange = useCallback(
     e => {
-      onChange && onChange(e);
+      const color = e.target.value;
+      onChange && onChange(color);
     },
     [onChange],
   );

@@ -1,80 +1,36 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Common from '@styles';
 import Swal from 'sweetalert2';
-import { cardApi, waffleCardApi } from '@apis';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
-// import { parseCardInfo } from '@utils';
-// import { getUserInfoByToken } from '@utils';
-import { useHistory } from 'react-router-dom';
 import {
   Text,
   Modal,
   Button,
-  Spinner,
   WaffleCard,
   HashTagInput,
   ColorPalette,
   EmojiPickerActiveButton,
 } from '@components';
-// import { useUser } from '@contexts';
-
-// {
-// "id": String,
-// "emoji": "👽",
-// "color": "#123456",
-// "hashTags": ["안녕", "클레오파트라", "세상에서", "제일가는", "포테이토칩"]
-// }
 
 const CardEditModal = ({
   editMode,
   initialWaffleCard,
-  waffleCardId,
   onClose,
   onSubmit,
   ...props
 }) => {
-  const history = useHistory();
-  const [isLoading, setIsLoading] = useState(false);
-  const [waffleCard, setWaffleCard] = useState(() => {
-    return (
-      initialWaffleCard || {
-        id: 'test',
-        emoji: '🧇',
-        color: Common.colors.yellow,
-        hashTags: [],
-      }
-    );
-  });
+  const [waffleCard, setWaffleCard] = useState(initialWaffleCard);
 
-  const initEditCardData = useCallback(async cardId => {
-    setIsLoading(true);
-    try {
-      const response = await cardApi.getCard(cardId);
-      const { id, emoji, color, hashTags } = response.data;
-
-      setWaffleCard(() => ({ id, emoji, color, hashTags }));
-    } catch (error) {
-      Swal.fire({
-        title: '😱',
-        text: error.message,
-        confirmButtonColor: Common.colors.point,
-      });
-    }
-    setIsLoading(false);
-  }, []);
-
-  const handleEmojiClick = emoji => {
+  const handleChangeEmoji = emoji => {
     setWaffleCard(waffleCard => {
       return { ...waffleCard, emoji };
     });
   };
 
-  const handleChangeCardColor = e => {
-    const { name, value } = e.target;
-
+  const handleChangeColor = color => {
     setWaffleCard(waffleCard => {
-      return { ...waffleCard, [name]: value };
+      return { ...waffleCard, color };
     });
   };
 
@@ -86,47 +42,6 @@ const CardEditModal = ({
 
   const handleClose = e => {
     onClose && onClose(e);
-    history.goBack();
-  };
-
-  const createCard = async () => {
-    try {
-      await waffleCardApi.createWaffleCard(waffleCard);
-      Swal.fire({
-        title: '🥳',
-        text: '당신의 와플카드가 생성되었어요!',
-        confirmButtonColor: Common.colors.point,
-      }).then(() => {
-        history.push('/cards/my');
-        window.location.reload();
-      });
-    } catch (error) {
-      Swal.fire({
-        title: '😱',
-        text: error.message,
-        confirmButtonColor: Common.colors.point,
-      });
-    }
-  };
-
-  const editCard = async () => {
-    try {
-      await waffleCardApi.updateWaffleCard(waffleCard);
-      Swal.fire({
-        title: '😎',
-        text: '당신의 와플카드가 수정되었어요!',
-        confirmButtonColor: Common.colors.point,
-      }).then(() => {
-        history.push('/cards/my');
-        window.location.reload();
-      });
-    } catch (error) {
-      Swal.fire({
-        title: '😱',
-        text: error.message,
-        confirmButtonColor: Common.colors.point,
-      });
-    }
   };
 
   const handleSubmit = async e => {
@@ -141,43 +56,31 @@ const CardEditModal = ({
 
       return;
     }
-    editMode ? editCard() : createCard();
 
     onSubmit && onSubmit(waffleCard);
   };
-
-  useEffect(() => {
-    if (editMode && !waffleCardId) {
-      console.error('CardEditModal: waffleCardId is required');
-      return;
-    }
-    initEditCardData(waffleCardId);
-  }, [editMode, waffleCardId, initEditCardData]);
 
   return (
     <StyledModal visible onClose={onClose} {...props}>
       <FormContainer onSubmit={handleSubmit} id="cardForm">
         <CardEditContainer>
-          <StyledWaffleCard cardData={waffleCard} />
+          <WaffleCard.Basic waffleCard={waffleCard} />
           <EditContainer>
             <Wrapper>
               <StyledText>이모지</StyledText>
               <EmojiPickerActiveButton
                 name="emoji"
                 type="button"
-                onEmojiClick={handleEmojiClick}
+                onEmojiClick={handleChangeEmoji}
               />
             </Wrapper>
             <Wrapper>
               <StyledText>배경색</StyledText>
-              <ColorPalette name="cardColor" onChange={handleChangeCardColor} />
+              <ColorPalette name="color" onChange={handleChangeColor} />
             </Wrapper>
             <Wrapper>
               <StyledText>해시태그</StyledText>
-              <HashTagInput
-                color="white"
-                onChange={handleChangeHashTagInput}
-              />{' '}
+              <HashTagInput color="white" onChange={handleChangeHashTagInput} />
               <StyledText size={14} color="red">
                 {waffleCard.hashTags.length <= 0
                   ? '최소 1개 이상의 해시태그를 작성해주세요.'
@@ -200,7 +103,6 @@ const CardEditModal = ({
           </StyledButton>
         </ButtonContainer>
       </FormContainer>
-      <Spinner loading={isLoading} />
     </StyledModal>
   );
 };
@@ -223,10 +125,6 @@ const CardEditContainer = styled.div`
   @media ${Common.media.sm} {
     flex-direction: column;
   }
-`;
-
-const StyledWaffleCard = styled(WaffleCard)`
-  margin: 16px;
 `;
 
 const EditContainer = styled.div`
@@ -270,14 +168,14 @@ const StyledButton = styled(Button)`
 
 CardEditModal.propTypes = {
   visible: PropTypes.bool,
-  initialCardData: PropTypes.object,
+  initialWaffleCard: PropTypes.object,
   onClose: PropTypes.func,
   onSubmit: PropTypes.func,
 };
 
 CardEditModal.defaultProps = {
   visible: false,
-  initialCardData: {
+  initialWaffleCard: {
     id: 'test',
     emoji: '🧇',
     color: Common.colors.yellow,
