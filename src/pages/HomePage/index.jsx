@@ -38,10 +38,10 @@ const HomePage = () => {
     setIsLoading(true);
     try {
       const response = await cardApi.getChannelCardList();
-      const cardList = response.data.map(cardData => {
-        return parseCardInfo(cardData);
+      const waffleCards = response.data.map(waffleCard => {
+        return parseCardInfo(waffleCard);
       });
-      setCardList(cardList);
+      setCardList(waffleCards);
     } catch (error) {
       Swal.fire({
         title: '🥲',
