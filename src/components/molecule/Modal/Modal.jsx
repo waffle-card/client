@@ -2,6 +2,36 @@ import styled from '@emotion/styled';
 import { useClickAway } from '@hooks';
 import PropTypes from 'prop-types';
 import Common from '@styles';
+import { Portal } from '@components';
+
+const Modal = ({
+  children,
+  visible,
+  width,
+  height,
+  backgroundColor,
+  onClose,
+  ...props
+}) => {
+  const ref = useClickAway(() => {
+    onClose && onClose();
+  });
+
+  return (
+    <Portal>
+      <BackgroundDim style={{ display: visible ? 'block' : 'none' }}>
+        <ModalContainer
+          ref={ref}
+          width={width}
+          height={height}
+          backgroundColor={backgroundColor}
+          {...props}>
+          {children}
+        </ModalContainer>
+      </BackgroundDim>
+    </Portal>
+  );
+};
 
 const BackgroundDim = styled.div`
   position: fixed;
@@ -29,33 +59,6 @@ const ModalContainer = styled.div`
   box-shadow: ${Common.shadow.modal};
   box-sizing: border-box;
 `;
-
-const Modal = ({
-  children,
-  visible,
-  width,
-  height,
-  backgroundColor,
-  onClose,
-  ...props
-}) => {
-  const ref = useClickAway(() => {
-    onClose && onClose();
-  });
-
-  return (
-    <BackgroundDim style={{ display: visible ? 'block' : 'none' }}>
-      <ModalContainer
-        ref={ref}
-        width={width}
-        height={height}
-        backgroundColor={backgroundColor}
-        {...props}>
-        {children}
-      </ModalContainer>
-    </BackgroundDim>
-  );
-};
 
 Modal.propTypes = {
   children: PropTypes.node,
