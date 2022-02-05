@@ -28,6 +28,33 @@ const HomeContainer = styled.div`
   margin: 0 auto;
 `;
 
+// "userId": "61fbf16c09a1fbe5637ceda7",
+//         "userName": "정윤호",
+//         "emoji": "👽",
+//         "color": "#123456",
+//         "hashTags": [
+//             "안녕",
+//             "클레오파트라",
+//             "세상에서",
+//             "제일가는",
+//             "포테이토칩"
+//         ],
+//         "likeCount": 0,
+//         "createdAt": "2022-02-03T16:20:53.691Z",
+//         "updatedAt": "2022-02-03T16:20:53.691Z",
+//         "id": "61fc00e52af68e80d1c23981"
+
+// const parseWaffleCard = rawWaffleCard => {
+//   const {
+//     author: { _id: userId, username: userName },
+//     title: emoji,
+//     _id: id,
+//     createdAt,
+//     updatedAt,
+//   } = rawWaffleCard;
+//   return {};
+// };
+
 const HomePage = () => {
   const [cardList, setCardList] = useState([]);
   const [currentParam, setCurrentParam] = useState('');
@@ -38,10 +65,10 @@ const HomePage = () => {
     setIsLoading(true);
     try {
       const response = await cardApi.getChannelCardList();
-      const cardList = response.data.map(cardData => {
-        return parseCardInfo(cardData);
+      const waffleCards = response.data.map(waffleCard => {
+        return parseCardInfo(waffleCard);
       });
-      setCardList(cardList);
+      setCardList(waffleCards);
     } catch (error) {
       Swal.fire({
         title: '🥲',

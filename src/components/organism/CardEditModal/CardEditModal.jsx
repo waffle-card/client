@@ -64,7 +64,7 @@ const CardEditModal = ({
     <StyledModal visible onClose={onClose} {...props}>
       <FormContainer onSubmit={handleSubmit} id="cardForm">
         <CardEditContainer>
-          <WaffleCard.Basic waffleCard={waffleCard} />
+          <WaffleCard.Plain waffleCard={waffleCard} />
           <EditContainer>
             <Wrapper>
               <StyledText>이모지</StyledText>

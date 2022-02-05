@@ -5,6 +5,72 @@ import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
 import { Card, WaffleCard, Text, Button } from '@components';
 
+const CardsContainer = ({ myCard, cardList, userInfo, currentParam }) => {
+  const history = useHistory();
+
+  if (!userInfo && (currentParam === 'my' || currentParam === 'like')) {
+    return (
+      <EmptyContainer userInfo={userInfo}>
+        <GuideWrap>
+          <StyledText size={24}>와플카드 대화에 참여해보세요!</StyledText>
+          <StyledButton
+            width={250}
+            onClick={() => {
+              history.push('/login');
+            }}>
+            로그인하러 가기
+          </StyledButton>
+        </GuideWrap>
+      </EmptyContainer>
+    );
+  }
+
+  return (
+    <Container cardCount={cardList.length} currentParam={currentParam}>
+      {/* <Icons backgroundColor={'rgba(0, 0, 0, 0)'}>
+        <Icons.ArrowBack color={Common.colors.primary} fontSize={'30px'} />
+      </Icons> */}
+      {cardList.length === 0 ? (
+        myCard ? (
+          <Card.Empty fontSize={'16px'} />
+        ) : (
+          <GuideWrap>
+            <StyledText>
+              {currentParam === 'like'
+                ? '좋아하는 카드가 없습니다'
+                : '등록된 카드가 없습니다'}
+            </StyledText>
+          </GuideWrap>
+        )
+      ) : (
+        cardList.map(card => {
+          return (
+            <BasicWaffleCard
+              myCard={myCard}
+              key={card.id}
+              waffleCard={card}
+              // onClickCard={() => {
+              //   history.push({
+              //     pathname: `/card/detail/${
+              //       currentParam ? currentParam : 'today'
+              //     }/${card.id}`,
+              //     state: {
+              //       cardData: card,
+              //       userId: userInfo ? userInfo.id : '',
+              //     },
+              //   });
+              // }}
+            />
+          );
+        })
+      )}
+      {/* <Icons backgroundColor={'rgba(0, 0, 0, 0)'}>
+        <Icons.ArrowFront color={Common.colors.primary} fontSize={'30px'} />
+      </Icons> */}
+    </Container>
+  );
+};
+
 const Container = styled.section`
   position: relative;
   display: flex;
@@ -60,7 +126,7 @@ const GuideWrap = styled.div`
   }
 `;
 
-const StyledCard = styled(WaffleCard)`
+const BasicWaffleCard = styled(WaffleCard.Basic)`
   flex: 0 0 auto;
   margin: 0 10px;
   &:hover {
@@ -84,72 +150,6 @@ const StyledButton = styled(Button)`
     font-size: ${Common.fontSize.small};
   }
 `;
-
-const CardsContainer = ({ myCard, cardList, userInfo, currentParam }) => {
-  const history = useHistory();
-
-  if (!userInfo && (currentParam === 'my' || currentParam === 'like')) {
-    return (
-      <EmptyContainer userInfo={userInfo}>
-        <GuideWrap>
-          <StyledText size={24}>와플카드 대화에 참여해보세요!</StyledText>
-          <StyledButton
-            width={250}
-            onClick={() => {
-              history.push('/login');
-            }}>
-            로그인하러 가기
-          </StyledButton>
-        </GuideWrap>
-      </EmptyContainer>
-    );
-  }
-
-  return (
-    <Container cardCount={cardList.length} currentParam={currentParam}>
-      {/* <Icons backgroundColor={'rgba(0, 0, 0, 0)'}>
-        <Icons.ArrowBack color={Common.colors.primary} fontSize={'30px'} />
-      </Icons> */}
-      {cardList.length === 0 ? (
-        myCard ? (
-          <Card.Empty fontSize={'16px'} />
-        ) : (
-          <GuideWrap>
-            <StyledText>
-              {currentParam === 'like'
-                ? '좋아하는 카드가 없습니다'
-                : '등록된 카드가 없습니다'}
-            </StyledText>
-          </GuideWrap>
-        )
-      ) : (
-        cardList.map(card => {
-          return (
-            <StyledCard
-              myCard={myCard}
-              key={card.id}
-              cardData={card}
-              onClickCard={() => {
-                history.push({
-                  pathname: `/card/detail/${
-                    currentParam ? currentParam : 'today'
-                  }/${card.id}`,
-                  state: {
-                    cardData: card,
-                    userId: userInfo ? userInfo.id : '',
-                  },
-                });
-              }}
-            />
-          );
-        })
-      )}
-      {/* <Icons backgroundColor={'rgba(0, 0, 0, 0)'}>
-        <Icons.ArrowFront color={Common.colors.primary} fontSize={'30px'} />
-      </Icons> */}
-    </Container>
-  );
-};
 
 CardsContainer.protoTypes = {
   cards: PropTypes.array.isRequired,

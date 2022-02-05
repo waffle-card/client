@@ -1,10 +1,10 @@
 import Basic from './Basic';
-import My from './My';
+import Plain from './Plain';
 import Edit from './Edit';
 
 const WaffleCard = {
   Basic,
-  My,
+  Plain,
   Edit,
 };
 
