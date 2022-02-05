@@ -2,7 +2,6 @@ import axios from 'axios';
 
 const setInterceptors = instance => {
   instance.interceptors.request.use(
-    // TODO: 세부 설정 추가
     config => {
       config.headers = {
         ...config.headers,
