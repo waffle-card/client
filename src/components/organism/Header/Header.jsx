@@ -2,7 +2,7 @@ import React from 'react';
 import styled from '@emotion/styled';
 import Common from '@styles';
 import PropTypes from 'prop-types';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Icons, Text } from '@components';
 import { rgba } from 'polished';
 import { useUser } from '@contexts';
@@ -87,7 +87,7 @@ const StyledIcon = styled(Icons.Person)`
 
 const Header = ({ backgroundColor = Common.colors.background, ...props }) => {
   const { userInfo } = useUser();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const handleClickHelpIcon = () => {
     console.log('clickHelpIcon');
@@ -97,7 +97,7 @@ const Header = ({ backgroundColor = Common.colors.background, ...props }) => {
     <HeaderTag backgroundColor={backgroundColor} {...props}>
       <Logo
         onClick={() => {
-          history.push('/');
+          navigate('/');
           window.location.reload();
         }}>
         <img src={require('./logo.png').default} alt="logo" />
@@ -107,7 +107,7 @@ const Header = ({ backgroundColor = Common.colors.background, ...props }) => {
         {userInfo ? (
           <StyledIcon
             onClick={() => {
-              history.push('/my-page');
+              navigate('/my-page');
             }}
             color={Common.colors.point}
           />
@@ -117,7 +117,7 @@ const Header = ({ backgroundColor = Common.colors.background, ...props }) => {
             size={Common.fontSize.regular}
             weight={Common.fontWeight.regular}
             onClick={() => {
-              history.push('/login');
+              navigate('/login');
             }}>
             로그인
           </StyleTextLogin>

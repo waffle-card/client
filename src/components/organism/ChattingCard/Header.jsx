@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { Icons, Text, LikeBox } from '@components';
 import Common from '@styles';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 const Top = styled.div`
@@ -48,13 +48,13 @@ const StyledDiv = styled.div`
 `;
 
 const Header = ({ backgroundColor, title, authorName, cardInfo, ...props }) => {
-  const history = useHistory();
+  const navigate = useNavigate();
 
   return (
     <Top>
       <div style={{ width: '120px' }}>
         <Icons fontSize="20px">
-          <Icons.ArrowBack onClick={() => history.goBack()}></Icons.ArrowBack>
+          <Icons.ArrowBack onClick={() => navigate(-1)}></Icons.ArrowBack>
         </Icons>
       </div>
 

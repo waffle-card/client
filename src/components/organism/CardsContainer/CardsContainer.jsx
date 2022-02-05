@@ -2,11 +2,11 @@ import React from 'react';
 import styled from '@emotion/styled';
 import Common from '@styles';
 import PropTypes from 'prop-types';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Card, WaffleCard, Text, Button } from '@components';
 
 const CardsContainer = ({ myCard, cardList, userInfo, currentParam }) => {
-  const history = useHistory();
+  const navigate = useNavigate();
 
   if (!userInfo && (currentParam === 'my' || currentParam === 'like')) {
     return (
@@ -16,7 +16,7 @@ const CardsContainer = ({ myCard, cardList, userInfo, currentParam }) => {
           <StyledButton
             width={250}
             onClick={() => {
-              history.push('/login');
+              navigate('/login');
             }}>
             로그인하러 가기
           </StyledButton>

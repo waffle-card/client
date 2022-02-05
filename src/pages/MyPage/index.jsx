@@ -11,7 +11,7 @@ import {
   PasswordChangeModal,
 } from '@components';
 import Swal from 'sweetalert2';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const StyledBackButton = styled(BackButton)`
   position: fixed;
@@ -77,7 +77,7 @@ const StyledButton = styled(Button)`
 `;
 
 const MyPage = () => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const [nameModalVisible, setNameModalVisible] = useState(false);
   const [passWordModalVisible, setPassWordModalVisible] = useState(false);
   const [userInfo, setUserInfo] = useState({});
@@ -106,7 +106,7 @@ const MyPage = () => {
         text: '로그아웃되었습니다.',
         confirmButtonColor: Common.colors.point,
       }).then(() => {
-        history.push('/');
+        navigate('/');
         window.location.reload();
       });
     };

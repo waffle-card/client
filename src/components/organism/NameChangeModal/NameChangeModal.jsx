@@ -7,7 +7,7 @@ import { Modal, Text, Button, Input, Spinner } from '@components';
 import { validateNameEmpty, validateNameLength } from '@validators';
 import { authApi, userApi } from '@apis';
 import Swal from 'sweetalert2';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const StyledModal = styled(Modal)`
   width: 100%;
@@ -64,7 +64,7 @@ const NameChangeModal = ({
   onSubmit,
   ...props
 }) => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const [initLoading, setInitLoading] = useState(false);
   const [userName, setUserName] = useState('');
   const { isLoading, errors, handleChange, handleSubmit } = useForm({
@@ -80,7 +80,7 @@ const NameChangeModal = ({
           text: '닉네임 변경완료!',
           confirmButtonColor: Common.colors.point,
         }).then(() => {
-          history.push('/my-page');
+          navigate('/my-page');
         });
       } catch (error) {
         Swal.fire({
@@ -111,8 +111,7 @@ const NameChangeModal = ({
       setInitLoading(false);
     };
     getUserInfo();
-  }, [history]);
-
+  }, [navigate]);
   const handleClose = e => {
     onClose && onClose(e);
   };
