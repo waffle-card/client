@@ -14,7 +14,7 @@ import {
   validatePasswordConfirm,
 } from '@validators';
 import { getUserInfoByToken } from '@utils';
-import { authApi, userApi } from '@apis';
+import { newAuthApi } from '@apis';
 import Swal from 'sweetalert2';
 
 const StyledBackButton = styled(BackButton)`
@@ -93,17 +93,17 @@ const SignUpPage = ({ ...prop }) => {
     },
     onSubmit: async ({ email, userName, password }) => {
       try {
-        const response = await authApi.signUp({
+        await newAuthApi.signup({
+          name: userName,
           email,
-          fullName: userName,
           password,
         });
-        await userApi.initUserInfo(
-          {
-            userName,
-          },
-          response.data.token,
-        );
+        // await userApi.initUserInfo(
+        //   {
+        //     userName,
+        //   },
+        //   response.data.token,
+        // );
         Swal.fire({
           title: '🎉',
           text: '환영합니다! 이제 로그인을 해주세요!',
