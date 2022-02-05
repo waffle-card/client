@@ -1,6 +1,6 @@
 import { request, authRequest } from './request';
 
-const userApi = {
+const waffleCardApi = {
   getWaffleCards: () => request.get('/waffle-cards'),
   getWaffleCardById: id => request.post(`/waffle-cards/${id}`),
   getMyWaffleCard: () => authRequest.get('/waffle-cards/my'),
@@ -13,4 +13,4 @@ const userApi = {
     authRequest.delete(`/waffle-cards/${waffleCardId}`),
 };
 
-export default userApi;
+export default waffleCardApi;
