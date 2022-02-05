@@ -1,33 +1,18 @@
-import { Route, Switch } from 'react-router-dom';
+import { Switch } from 'react-router-dom';
 import { HomePage, LoginPage, SignUpPage, MyPage, NotFoundPage } from '@pages';
+import PrivateRoute from './PrivateRoute';
+import PublicRoute from './PublicRoute';
 
 const Router = () => {
   return (
     <Switch>
-      {/* public - 메인 */}
-      <Route path="/" exact component={HomePage} />
-
-      {/* private - 카드 채팅방 조회 */}
-      <Route path="/card" component={HomePage} />
-
-      {/* private  - 내 생성 카드*/}
-      <Route path="/cards/my" component={HomePage} />
-
-      {/* private  - 좋아요 한 카드*/}
-      <Route path="/cards/like" component={HomePage} />
-
-      {/* public  - 카드 목록*/}
-      <Route path="/cards" component={HomePage} />
-
-      {/* public restricted */}
-      <Route path="/login" component={LoginPage} />
-
-      {/* public restricted */}
-      <Route path="/signup" component={SignUpPage} />
-
-      {/* private */}
-      <Route path="/my-page" component={MyPage} />
-      <Route component={NotFoundPage} />
+      <PublicRoute path="/" exact component={HomePage} />
+      <PublicRoute restricted path="/login" component={LoginPage} />
+      <PublicRoute restricted path="/signup" component={SignUpPage} />
+      <PrivateRoute path="/my-page" component={MyPage} />
+      <PublicRoute path="/cards" component={HomePage} />
+      <PrivateRoute path="/card" component={HomePage} />
+      <PublicRoute component={NotFoundPage} />
     </Switch>
   );
 };

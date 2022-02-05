@@ -13,7 +13,7 @@ import {
 import { cardApi } from '@apis';
 import Swal from 'sweetalert2';
 import { parseCardInfo } from '@utils';
-import { getUserInfoByToken } from '@utils';
+import { useUser } from '@contexts';
 
 const HomeContainer = styled.div`
   display: flex;
@@ -29,9 +29,9 @@ const HomeContainer = styled.div`
 `;
 
 const HomePage = () => {
+  const { userInfo } = useUser();
   const [cardList, setCardList] = useState([]);
   const [currentParam, setCurrentParam] = useState('');
-  const [userInfo, setUserInfo] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
   const getTodayCardList = useCallback(async () => {
@@ -100,8 +100,6 @@ const HomePage = () => {
 
   useEffect(() => {
     const init = async () => {
-      const newUSerInfo = await getUserInfoByToken();
-      setUserInfo(newUSerInfo);
       const currentUrlArr = window.location.pathname.split('/');
       setCurrentParam(() => {
         return currentUrlArr[currentUrlArr.length - 1];
