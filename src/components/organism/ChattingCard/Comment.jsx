@@ -97,7 +97,7 @@ const StyledEditBox = styled(EditBox)`
 `;
 
 Comment.propTypes = {
-  type: PropTypes.array,
+  type: PropTypes.string,
   commentData: PropTypes.object,
   onClickEdit: PropTypes.func,
   onClickDelete: PropTypes.func,

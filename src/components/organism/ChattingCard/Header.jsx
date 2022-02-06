@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import { LikeBox } from '@components';
+import { IconButton } from '@mui/material';
+import ArrowBackIosNewRoundedIcon from '@mui/icons-material/ArrowBackIosNewRounded';
 import Common from '@styles';
 
 const dummy = {
@@ -19,7 +21,10 @@ const Header = ({ waffleCardData = dummy, ...props }) => {
   return (
     <Container backgroundColor={waffleCardData.color} {...props}>
       <UpperWrapper>
-        <CardInfoWrapper type="horizontal">
+        <IconButton>
+          <BackIcon />
+        </IconButton>
+        <CardInfoWrapper>
           <EmojiText>{waffleCardData.emoji}</EmojiText>
           <UserNameText>{waffleCardData.userName}</UserNameText>
         </CardInfoWrapper>
@@ -36,35 +41,79 @@ const Header = ({ waffleCardData = dummy, ...props }) => {
 
 const Container = styled.div`
   border-radius: 1rem 1rem 0 0;
-  height: 150px;
   background-color: ${props => props.backgroundColor};
 `;
 
 const UpperWrapper = styled.div`
+  margin-top: 1rem;
   display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 0 1rem;
+`;
+
+const BackIcon = styled(ArrowBackIosNewRoundedIcon)`
+  color: white;
+`;
+
+const CardInfoWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 `;
 
-const CardInfoWrapper = styled.div``;
-
 const EmojiText = styled.p`
-  font-size: 40px;
+  @media ${Common.media.sm} {
+    font-size: 32px;
+  }
+  @media ${Common.media.md} {
+    font-size: 40px;
+  }
+  @media ${Common.media.lg} {
+    font-size: 40px;
+  }
 `;
 
 const UserNameText = styled.p`
   color: ${Common.colors.primary};
+  font-weight: ${Common.fontWeight.medium};
+
+  margin: 0.5rem 0;
+
+  @media ${Common.media.sm} {
+    font-size: ${Common.fontSize.small};
+  }
+  @media ${Common.media.md} {
+    font-size: ${Common.fontSize.base};
+  }
+  @media ${Common.media.lg} {
+    font-size: ${Common.fontSize.medium};
+  }
 `;
 
 const LowerWrapper = styled.div`
   display: flex;
+  height: 100px;
+  flex-wrap: wrap;
   justify-content: center;
   align-items: center;
 `;
 
 const HashTagText = styled.p`
   color: ${Common.colors.primary};
-  font-size: ${Common.fontSize.medium};
+  font-weight: ${Common.fontWeight.bold};
+  margin: 0 1rem;
+
+  @media ${Common.media.sm} {
+    font-size: ${Common.fontSize.small};
+  }
+  @media ${Common.media.md} {
+    font-size: ${Common.fontSize.base};
+  }
+  @media ${Common.media.lg} {
+    font-size: ${Common.fontSize.medium};
+  }
 `;
 
 export default Header;

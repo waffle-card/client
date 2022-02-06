@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import Swal from 'sweetalert2';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 import Common from '@styles';
@@ -39,14 +38,7 @@ const LikeBox = ({
   const handleClick = e => {
     e.stopPropagation();
 
-    if (!interactive) {
-      Swal.fire({
-        icon: 'warning',
-        text: '좋아요는 로그인 후 사용 가능합니다.',
-        confirmButtonColor: Common.colors.point,
-      });
-      return;
-    }
+    if (!interactive) return;
 
     const nextToggle = !toggle;
     const nextCount = nextToggle ? count + 1 : count - 1;
