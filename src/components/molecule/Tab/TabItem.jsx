@@ -2,7 +2,6 @@ import styled from '@emotion/styled';
 import PropTypes from 'prop-types';
 import Common from '@styles';
 import { rgba } from 'polished';
-import { useNavigate } from 'react-router-dom';
 
 const TabItemWrapper = styled.div`
   display: flex;
@@ -50,13 +49,9 @@ const TabItem = ({
   fontSize,
   ...props
 }) => {
-  const navigate = useNavigate();
   return (
     <TabItemWrapper active={active} {...props}>
-      <LinkBox
-        onClick={() => {
-          navigate(`/cards/${param}`);
-        }}>
+      <LinkBox>
         <TabItemTitle
           active={active}
           pointColor={pointColor}

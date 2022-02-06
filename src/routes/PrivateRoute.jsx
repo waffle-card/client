@@ -3,13 +3,13 @@ import { Navigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { useUser } from '@contexts';
 
-const PrivateRoute = ({ children }) => {
+const PrivateRoute = ({ component: Component }) => {
   const { userInfo } = useUser();
-  return userInfo ? children : <Navigate replace to="/login" />;
+  return userInfo ? <Component /> : <Navigate replace to="/login" />;
 };
 
 PrivateRoute.propTypes = {
-  children: PropTypes.node.isRequired,
+  component: PropTypes.elementType.isRequired,
 };
 
 export default PrivateRoute;

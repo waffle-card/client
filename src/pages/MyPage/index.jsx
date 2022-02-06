@@ -4,7 +4,6 @@ import Common from '@styles';
 import {
   Text,
   Button,
-  Spinner,
   BackButton,
   NameChangeModal,
   PasswordChangeModal,
@@ -12,7 +11,7 @@ import {
 import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
 import { useUser } from '@contexts';
-import { userApi } from '@apis';
+import { newAuthApi } from '@apis';
 
 const MyPage = () => {
   const navigate = useNavigate();
@@ -28,7 +27,7 @@ const MyPage = () => {
     setPassWordModalVisible(true);
   };
 
-  const handleClickLogoutButton = async () => {
+  const handleClickLogoutButton = () => {
     Swal.fire({
       title: '🤔',
       text: '정말 로그아웃 하시겠습니까?',
@@ -52,7 +51,7 @@ const MyPage = () => {
 
   const handleSubmitChangedName = async ({ userName }) => {
     try {
-      await userApi.putUserName(userName);
+      await newAuthApi.updateUser({ name: userName });
       updateUserInfo({ ...userInfo, name: userName });
       Swal.fire({
         title: '😎',
@@ -72,7 +71,7 @@ const MyPage = () => {
 
   const handleSubmitChangedPassword = async ({ newPassword }) => {
     try {
-      await userApi.putUserPassword(newPassword);
+      await newAuthApi.updateUser({ password: newPassword });
       logout();
       Swal.fire({
         title: '😎',
@@ -136,7 +135,6 @@ const MyPage = () => {
           setPassWordModalVisible(false);
         }}
       />
-      <Spinner loading={!userInfo} />
     </Container>
   );
 };
