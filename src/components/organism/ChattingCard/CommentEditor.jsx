@@ -37,7 +37,7 @@ const CommentEditor = ({ onSubmit, onChange, disabled = false, ...props }) => {
         placeholder={
           disabled
             ? '로그인 후 댓글을 작성할 수 있습니다.'
-            : '댓글을 입력하세요.'
+            : '메세지를 입력해주세요.'
         }
         onChange={handleChange}
         onKeyUp={handleKeyUp}
@@ -47,7 +47,7 @@ const CommentEditor = ({ onSubmit, onChange, disabled = false, ...props }) => {
         disabled={disabled}
         type="button"
         onClick={handleClickSubmitButton}>
-        댓글 쓰기
+        입력
       </Button>
     </Form>
   );
@@ -65,15 +65,16 @@ const TextArea = styled.textarea`
   padding: 1rem;
   border: none;
   border-radius: 8px 0 0 8px;
-  outline: none;
-  background-color: ${Common.colors.backgroundButton};
   resize: none;
+  outline: none;
+  color: ${Common.colors.primary};
+  background-color: ${Common.colors.speech_bubble};
 
   @media ${Common.media.sm} {
     font-size: ${Common.fontSize.small};
   }
   @media ${Common.media.md} {
-    font-size: ${Common.fontSize.medium};
+    font-size: ${Common.fontSize.base};
   }
   @media ${Common.media.lg} {
     font-size: ${Common.fontSize.medium};
@@ -81,25 +82,29 @@ const TextArea = styled.textarea`
 `;
 
 const Button = styled.button`
-  width: 100px;
   height: 100%;
   background-color: ${Common.colors.point};
   border: none;
   border-radius: 0 8px 8px 0;
-  color: ${Common.colors.textQuaternary};
+  color: ${Common.colors.primary};
   cursor: pointer;
 
   &:active {
     background-color: ${Common.colors.pointLight};
   }
-
   @media ${Common.media.sm} {
+    width: 60px;
+
     font-size: ${Common.fontSize.small};
   }
   @media ${Common.media.md} {
-    font-size: ${Common.fontSize.medium};
+    width: 80px;
+
+    font-size: ${Common.fontSize.base};
   }
   @media ${Common.media.lg} {
+    width: 80px;
+
     font-size: ${Common.fontSize.medium};
   }
 `;

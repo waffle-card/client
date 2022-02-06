@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 import Common from '@styles';
 import { EditBox } from '@components';
@@ -19,10 +20,10 @@ const getLongestLineLength = paragraph => {
 };
 
 const Comment = ({
-  type = 'basic',
-  onClickUpdate,
-  onClickDelete,
+  type,
   commentData,
+  onClickEdit,
+  onClickDelete,
   ...props
 }) => {
   const [containerRef, hover] = useHover();
@@ -30,7 +31,7 @@ const Comment = ({
 
   const handleClickUpdate = e => {
     if (type !== 'edit') return;
-    onClickUpdate && onClickUpdate(commentData.id);
+    onClickEdit && onClickEdit(commentData.id);
   };
 
   const handleClickDelete = e => {
@@ -66,7 +67,6 @@ const Container = styled.div`
   position: relative;
   max-width: 70%;
   min-width: 30%;
-  margin: 1rem;
 `;
 
 const TextArea = styled(TextareaAutosize)`
@@ -95,5 +95,17 @@ const StyledEditBox = styled(EditBox)`
   top: -10px;
   right: 0px;
 `;
+
+Comment.propTypes = {
+  type: PropTypes.array,
+  commentData: PropTypes.object,
+  onClickEdit: PropTypes.func,
+  onClickDelete: PropTypes.func,
+};
+
+Comment.defaultProps = {
+  type: 'basic',
+  commentData: {},
+};
 
 export default Comment;

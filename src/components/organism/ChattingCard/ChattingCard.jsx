@@ -11,16 +11,16 @@ const ChattingCard = ({ children, visible, ...props }) => {
     <StyledModal visible>
       <Header />
       <CommentList />
-      <CommentEditor />
+      <StyledCommentEditor />
     </StyledModal>
   );
 };
 
 const StyledModal = styled(Modal)`
-  height: 92vh;
+  position: relative;
   display: flex;
   flex-direction: column;
-  box-sizing: border-box;
+  height: 92vh;
 
   @media ${Common.media.sm} {
     width: 290px;
@@ -33,6 +33,12 @@ const StyledModal = styled(Modal)`
   @media ${Common.media.lg} {
     width: 740px;
   }
+`;
+
+const StyledCommentEditor = styled(CommentEditor)`
+  position: absolute;
+  width: 100%;
+  bottom: 0px;
 `;
 
 ChattingCard.propTypes = {
