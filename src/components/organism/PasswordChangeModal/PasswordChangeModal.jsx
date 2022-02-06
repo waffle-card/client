@@ -9,103 +9,14 @@ import {
   validatePasswordLength,
   validatePasswordConfirm,
 } from '@validators';
-import { userApi } from '@apis';
-import Swal from 'sweetalert2';
-import { useNavigate } from 'react-router-dom';
-
-const StyledModal = styled(Modal)`
-  width: 100%;
-  max-width: 740px;
-  padding: 60px 90px;
-  @media ${Common.media.sm} {
-    width: 360px;
-    padding: 60px 60px;
-  }
-`;
-
-const StyledText = styled(Text)`
-  margin-bottom: 16px;
-  @media ${Common.media.sm} {
-    font-size: ${Common.fontSize.small};
-  }
-`;
-
-const ConfirmBox = styled.div`
-  &:nth-of-type(1) {
-    margin-bottom: 64px;
-  }
-  &:nth-of-type(2) {
-    margin-bottom: 24px;
-  }
-  @media ${Common.media.sm} {
-    &:nth-of-type(1) {
-      margin-bottom: 32px;
-    }
-    &:nth-of-type(2) {
-      margin-bottom: 16px;
-    }
-  }
-`;
-
-const InputContainer = styled.div``;
-
-const ErrorText = styled(Text)`
-  margin-top: 16px;
-  @media ${Common.media.sm} {
-    font-size: ${Common.fontSize.small};
-  }
-`;
-
-const ButtonContainer = styled.div`
-  margin-top: 80px;
-  @media ${Common.media.sm} {
-    margin-top: 48px;
-  }
-`;
-
-const StyledButton = styled(Button)`
-  width: 100%;
-  font-size: ${Common.fontSize.medium};
-  font-weight: ${Common.fontWeight.bold};
-  &:first-of-type {
-    margin-bottom: 32px;
-  }
-  @media ${Common.media.sm} {
-    height: 40px;
-    border-radius: 12px;
-    font-size: ${Common.fontSize.small};
-    &:first-of-type {
-      margin-bottom: 16px;
-    }
-  }
-`;
 
 const PasswordChangeModal = ({ visible, onClose, onSubmit, ...props }) => {
-  const navigate = useNavigate();
   const { isLoading, errors, handleChange, handleSubmit } = useForm({
     initialValues: {
       newPassword: '',
       passwordConfirm: '',
     },
-    onSubmit: async ({ newPassword }) => {
-      try {
-        await userApi.putUserPassword(newPassword);
-        sessionStorage.removeItem('WAFFLE_TOKEN');
-        Swal.fire({
-          title: '😎',
-          text: '비밀번호 변경완료! 다시 로그인해주세요!',
-          confirmButtonColor: Common.colors.point,
-        }).then(() => {
-          navigate.push('/login');
-        });
-      } catch (error) {
-        Swal.fire({
-          title: '🥲',
-          text: error,
-          confirmButtonColor: Common.colors.point,
-        });
-      }
-    },
+    onSubmit,
     validate: ({ newPassword, passwordConfirm }) => {
       const errors = {};
 
@@ -204,5 +115,72 @@ PasswordChangeModal.propTypes = {
 PasswordChangeModal.defaultProps = {
   visible: false,
 };
+
+const StyledModal = styled(Modal)`
+  width: 100%;
+  max-width: 740px;
+  padding: 60px 90px;
+  @media ${Common.media.sm} {
+    width: 360px;
+    padding: 60px 60px;
+  }
+`;
+
+const StyledText = styled(Text)`
+  margin-bottom: 16px;
+  @media ${Common.media.sm} {
+    font-size: ${Common.fontSize.small};
+  }
+`;
+
+const ConfirmBox = styled.div`
+  &:nth-of-type(1) {
+    margin-bottom: 64px;
+  }
+  &:nth-of-type(2) {
+    margin-bottom: 24px;
+  }
+  @media ${Common.media.sm} {
+    &:nth-of-type(1) {
+      margin-bottom: 32px;
+    }
+    &:nth-of-type(2) {
+      margin-bottom: 16px;
+    }
+  }
+`;
+
+const InputContainer = styled.div``;
+
+const ErrorText = styled(Text)`
+  margin-top: 16px;
+  @media ${Common.media.sm} {
+    font-size: ${Common.fontSize.small};
+  }
+`;
+
+const ButtonContainer = styled.div`
+  margin-top: 80px;
+  @media ${Common.media.sm} {
+    margin-top: 48px;
+  }
+`;
+
+const StyledButton = styled(Button)`
+  width: 100%;
+  font-size: ${Common.fontSize.medium};
+  font-weight: ${Common.fontWeight.bold};
+  &:first-of-type {
+    margin-bottom: 32px;
+  }
+  @media ${Common.media.sm} {
+    height: 40px;
+    border-radius: 12px;
+    font-size: ${Common.fontSize.small};
+    &:first-of-type {
+      margin-bottom: 16px;
+    }
+  }
+`;
 
 export default PasswordChangeModal;
