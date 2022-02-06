@@ -98,7 +98,6 @@ const Header = ({ backgroundColor = Common.colors.background, ...props }) => {
       <Logo
         onClick={() => {
           navigate('/');
-          window.location.reload();
         }}>
         <img src={require('./logo.png').default} alt="logo" />
       </Logo>
