@@ -34,11 +34,7 @@ const CommentEditor = ({ onSubmit, onChange, disabled = false, ...props }) => {
         id="content"
         name="content"
         disabled={disabled}
-        placeholder={
-          disabled
-            ? '로그인 후 댓글을 작성할 수 있습니다.'
-            : '메세지를 입력해주세요.'
-        }
+        placeholder={'메세지를 입력해주세요.'}
         onChange={handleChange}
         onKeyUp={handleKeyUp}
         value={text}
@@ -64,7 +60,7 @@ const TextArea = styled.textarea`
   height: 100%;
   padding: 1rem;
   border: none;
-  border-radius: 8px 0 0 8px;
+  border-radius: 0 0 0 1rem;
   resize: none;
   outline: none;
   color: ${Common.colors.primary};
@@ -85,7 +81,7 @@ const Button = styled.button`
   height: 100%;
   background-color: ${Common.colors.point};
   border: none;
-  border-radius: 0 8px 8px 0;
+  border-radius: 0 0 1rem 0;
   color: ${Common.colors.primary};
   cursor: pointer;
 

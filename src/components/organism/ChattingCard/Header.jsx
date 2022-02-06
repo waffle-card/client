@@ -3,28 +3,42 @@ import styled from '@emotion/styled';
 import { LikeBox } from '@components';
 import Common from '@styles';
 
-const Header = ({ ...props }) => {
+const dummy = {
+  id: '123',
+  userId: 'String',
+  userName: '윤호',
+  emoji: '😎',
+  color: 'rgba(57, 219, 178, 1)',
+  hashTags: ['안녕', '클레오파트라', '세상에서', '제일가는', '포테이토칩'],
+  likeCount: 3,
+  createdAt: 'String',
+  updatedAt: 'String',
+};
+
+const Header = ({ waffleCardData = dummy, ...props }) => {
   return (
-    <Container>
+    <Container backgroundColor={waffleCardData.color} {...props}>
       <UpperWrapper>
         <CardInfoWrapper type="horizontal">
-          <EmojiText>😎</EmojiText>
-          <UserNameText>선글라스남</UserNameText>
+          <EmojiText>{waffleCardData.emoji}</EmojiText>
+          <UserNameText>{waffleCardData.userName}</UserNameText>
         </CardInfoWrapper>
         <LikeBox />
       </UpperWrapper>
       <LowerWrapper>
-        <HashTagText>안녕</HashTagText>
-        <HashTagText>클레오파트라</HashTagText>
-        <HashTagText>세상에서</HashTagText>
-        <HashTagText>제일가는</HashTagText>
-        <HashTagText>포테이토칩</HashTagText>
+        {waffleCardData.hashTags.map((hashTag, idx) => (
+          <HashTagText key={idx}>{`#${hashTag}`}</HashTagText>
+        ))}
       </LowerWrapper>
     </Container>
   );
 };
 
-const Container = styled.div``;
+const Container = styled.div`
+  border-radius: 1rem 1rem 0 0;
+  height: 150px;
+  background-color: ${props => props.backgroundColor};
+`;
 
 const UpperWrapper = styled.div`
   display: flex;

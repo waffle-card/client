@@ -82,7 +82,28 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  margin: 1rem;
+  overflow: auto;
+
+  &::-webkit-scrollbar {
+    position: absolute;
+    width: 1rem;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 0.5rem;
+    background-clip: padding-box;
+    border: 4.8px solid transparent;
+    box-shadow: inset 0px 0px 3px white;
+  }
+  &::-webkit-scrollbar-track {
+    background-color: rgba(0, 0, 0, 0);
+  }
+
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+  ::-webkit-scrollbar {
+    display: none; /* Chrome , Safari , Opera */
+  }
 `;
 
 const MyComment = styled(Comment)`

@@ -10,7 +10,7 @@ const ChattingCard = ({ children, visible, ...props }) => {
   return (
     <StyledModal visible>
       <Header />
-      <CommentList />
+      <StyledCommentList />
       <StyledCommentEditor />
     </StyledModal>
   );
@@ -33,6 +33,10 @@ const StyledModal = styled(Modal)`
   @media ${Common.media.lg} {
     width: 740px;
   }
+`;
+
+const StyledCommentList = styled(CommentList)`
+  margin: 1rem 1rem 116px 1rem;
 `;
 
 const StyledCommentEditor = styled(CommentEditor)`
