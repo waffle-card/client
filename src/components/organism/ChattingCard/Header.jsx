@@ -1,78 +1,140 @@
-import styled from '@emotion/styled';
-import { Icons, Text, LikeBox } from '@components';
-import Common from '@styles';
-import { useNavigate } from 'react-router-dom';
+import React from 'react';
 import PropTypes from 'prop-types';
+import styled from '@emotion/styled';
+import { LikeBox } from '@components';
+import { IconButton } from '@mui/material';
+import ArrowBackIosNewRoundedIcon from '@mui/icons-material/ArrowBackIosNewRounded';
+import Common from '@styles';
 
-const Top = styled.div`
-  display: flex;
-  margin-bottom: 14px;
-  justify-content: space-between;
-  box-sizing: border-box;
-`;
+const Header = ({
+  waffleCardData,
+  onClickLikeToggle,
+  onClickBackButton,
+  likeToggled,
+  interactiveLikeToggle,
+  ...props
+}) => {
+  const handleClickBackButton = () => {
+    onClickBackButton && onClickBackButton();
+  };
 
-const Title = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
-
-const StyledText = styled(Text)`
-  white-space: nowrap;
-  @media ${Common.media.sm} {
-    font-size: 10px;
-  }
-`;
-
-const EmojiBox = styled(Text)`
-  @media ${Common.media.sm} {
-    font-size: 20px;
-    margin-bottom: 5px;
-  }
-
-  @media ${Common.media.md} {
-    font-size: 40px;
-    margin-bottom: 8px;
-  }
-
-  @media ${Common.media.lg} {
-    font-size: 50px;
-    margin-bottom: 10px;
-  }
-`;
-
-const StyledDiv = styled.div`
-  display: flex;
-  width: 120px;
-  justify-content: end;
-`;
-
-const Header = ({ backgroundColor, title, authorName, cardInfo, ...props }) => {
-  const navigate = useNavigate();
+  const handleClickLikeToggle = (likeToggled, likeCount) => {
+    onClickLikeToggle && onClickLikeToggle(likeToggled, likeCount);
+  };
 
   return (
-    <Top>
-      <div style={{ width: '120px' }}>
-        <Icons fontSize="20px">
-          <Icons.ArrowBack onClick={() => navigate(-1)}></Icons.ArrowBack>
-        </Icons>
-      </div>
-
-      <Title style={{ width: '120px' }}>
-        <EmojiBox>{title}</EmojiBox>
-        <StyledText block>{authorName}</StyledText>
-      </Title>
-      <StyledDiv>
-        <LikeBox cardInfo={cardInfo} style={{ height: '20px' }} />
-      </StyledDiv>
-    </Top>
+    <Container backgroundColor={waffleCardData.color} {...props}>
+      <UpperWrapper>
+        <IconButton onClick={handleClickBackButton}>
+          <BackIcon />
+        </IconButton>
+        <CardInfoWrapper>
+          <EmojiText>{waffleCardData.emoji}</EmojiText>
+          <UserNameText>{waffleCardData.userName}</UserNameText>
+        </CardInfoWrapper>
+        <LikeBox
+          active={likeToggled}
+          interactive={interactiveLikeToggle}
+          onClick={handleClickLikeToggle}
+        />
+      </UpperWrapper>
+      <LowerWrapper>
+        {waffleCardData.hashTags.map((hashTag, idx) => (
+          <HashTagText key={idx}>{`#${hashTag}`}</HashTagText>
+        ))}
+      </LowerWrapper>
+    </Container>
   );
 };
 
+const Container = styled.div`
+  border-radius: 1rem 1rem 0 0;
+  background-color: ${props => props.backgroundColor};
+`;
+
+const UpperWrapper = styled.div`
+  margin-top: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 0 1rem;
+`;
+
+const BackIcon = styled(ArrowBackIosNewRoundedIcon)`
+  color: white;
+`;
+
+const CardInfoWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
+const EmojiText = styled.p`
+  @media ${Common.media.sm} {
+    font-size: 32px;
+  }
+  @media ${Common.media.md} {
+    font-size: 40px;
+  }
+  @media ${Common.media.lg} {
+    font-size: 40px;
+  }
+`;
+
+const UserNameText = styled.p`
+  color: ${Common.colors.primary};
+  font-weight: ${Common.fontWeight.medium};
+
+  margin: 0.5rem 0;
+
+  @media ${Common.media.sm} {
+    font-size: ${Common.fontSize.small};
+  }
+  @media ${Common.media.md} {
+    font-size: ${Common.fontSize.base};
+  }
+  @media ${Common.media.lg} {
+    font-size: ${Common.fontSize.medium};
+  }
+`;
+
+const LowerWrapper = styled.div`
+  display: flex;
+  height: 100px;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+`;
+
+const HashTagText = styled.p`
+  color: ${Common.colors.primary};
+  font-weight: ${Common.fontWeight.bold};
+  margin: 0 1rem;
+
+  @media ${Common.media.sm} {
+    font-size: ${Common.fontSize.small};
+  }
+  @media ${Common.media.md} {
+    font-size: ${Common.fontSize.base};
+  }
+  @media ${Common.media.lg} {
+    font-size: ${Common.fontSize.medium};
+  }
+`;
+
 Header.propTypes = {
-  backgroundColor: PropTypes.string,
-  title: PropTypes.string,
-  authorName: PropTypes.string,
+  waffleCardData: PropTypes.object.isRequired,
+  onClickLikeToggle: PropTypes.func,
+  onClickBackButton: PropTypes.func,
+  likeToggled: PropTypes.bool,
+  interactiveLikeToggle: PropTypes.bool,
+};
+
+Header.defaultProps = {
+  likeToggled: false,
+  interactiveLikeToggle: false,
 };
 
 export default Header;
