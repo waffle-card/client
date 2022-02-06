@@ -3,7 +3,7 @@ import React, { useCallback } from 'react';
 import { Text } from '@components';
 import PropTypes from 'prop-types';
 import Common from '@styles';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const Container = styled.div`
   display: flex;
@@ -44,13 +44,13 @@ const IconText = styled(Text)`
 `;
 
 const Empty = ({ fontSize, iconSize, onClick, ...props }) => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const handleClick = useCallback(
     e => {
       onClick && onClick(e);
-      history.push('/cards/my/create');
+      navigate('/cards/my/create');
     },
-    [onClick, history],
+    [onClick, navigate],
   );
 
   return (

@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import Common from '@styles';
 import styled from '@emotion/styled';
 import { useForm } from '@hooks';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Text, Button, Input, BackButton, Spinner } from '@components';
 import {
   validateEmailEmpty,
@@ -83,7 +83,7 @@ const StyledText = styled(Text)`
 `;
 
 const SignUpPage = ({ ...prop }) => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const { isLoading, errors, handleChange, handleSubmit } = useForm({
     initialValues: {
       email: '',
@@ -109,7 +109,7 @@ const SignUpPage = ({ ...prop }) => {
           text: '환영합니다! 이제 로그인을 해주세요!',
           confirmButtonColor: Common.colors.point,
         }).then(() => {
-          history.push('/login');
+          navigate('/login');
         });
       } catch (error) {
         Swal.fire({
@@ -151,12 +151,12 @@ const SignUpPage = ({ ...prop }) => {
           text: '이미 로그인 되어있습니다.',
           confirmButtonColor: Common.colors.point,
         }).then(() => {
-          history.push('/');
+          navigate('/');
         });
       }
     };
     getUserInfo();
-  }, [history]);
+  }, [navigate]);
 
   return (
     <Container>

@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { cardApi } from '@apis';
 import { getUserInfoByToken } from '@utils';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import Header from './Header';
 import Message from './Message';
@@ -251,7 +251,7 @@ const Input = styled.textarea`
 `;
 
 const ChattingCard = ({ children, visible, ...props }) => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const [userInfo, setUserInfo] = useState(null);
   const [cardData, setCardData] = useState({});
   const [isLoading, setIsLoading] = useState(false);
@@ -278,7 +278,7 @@ const ChattingCard = ({ children, visible, ...props }) => {
           text: '에러가 발생했어요!',
           confirmButtonColor: Common.colors.point,
         }).then(() => {
-          history.push('/');
+          navigate('/');
         });
         setIsLoading(false);
         return;
@@ -299,7 +299,7 @@ const ChattingCard = ({ children, visible, ...props }) => {
     };
 
     getCardData();
-  }, [history, postId]);
+  }, [navigate, postId]);
 
   useEffect(() => {
     setTitle(cardData.title);
@@ -329,10 +329,10 @@ const ChattingCard = ({ children, visible, ...props }) => {
   const escFunction = useCallback(
     e => {
       if (e.key === 'Escape') {
-        history.push('/');
+        navigate('/');
       }
     },
-    [history],
+    [navigate],
   );
 
   useEffect(() => {
