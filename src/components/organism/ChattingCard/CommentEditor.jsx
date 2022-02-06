@@ -9,6 +9,7 @@ const CommentEditor = ({ onSubmit, onChange, disabled = false, ...props }) => {
     const trimmedText = text.trim();
     if (trimmedText === '') return;
     onSubmit && onSubmit(trimmedText);
+    setText('');
   };
 
   const handleChange = e => {
@@ -20,7 +21,6 @@ const CommentEditor = ({ onSubmit, onChange, disabled = false, ...props }) => {
     if (e.key === 'Enter' && e.shiftKey) return;
     if (e.key === 'Enter') {
       submitText(text);
-      setText('');
     }
   };
 

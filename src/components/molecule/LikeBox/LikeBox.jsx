@@ -1,29 +1,11 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
+import { IconButton } from '@mui/material';
+import FavoriteRoundedIcon from '@mui/icons-material/FavoriteRounded';
+import FavoriteBorderRoundedIcon from '@mui/icons-material/FavoriteBorderRounded';
 import Common from '@styles';
-import { Icons, Text } from '@components';
-
-const IconWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-const StyledText = styled(Text)`
-  @media ${Common.media.sm} {
-    font-size: ${Common.fontSize.base};
-    margin-left: 4px;
-  }
-  @media ${Common.media.md} {
-    font-size: ${Common.fontSize.medium};
-    margin-left: 8px;
-  }
-  @media ${Common.media.lg} {
-    font-size: ${Common.fontSize.large};
-    margin-left: 10px;
-  }
-`;
+import { Text } from '@components';
 
 const LikeBox = ({
   active = false,
@@ -51,19 +33,42 @@ const LikeBox = ({
 
   return (
     <IconWrapper {...props}>
-      {toggle ? (
-        <Icons fontSize={'20px'}>
-          <Icons.Like active onClick={handleClick} />
-        </Icons>
-      ) : (
-        <Icons fontSize={'20px'}>
-          <Icons.Like onClick={handleClick} />
-        </Icons>
-      )}
+      <IconButton onClick={handleClick}>
+        {toggle ? <LikeFilledIcon /> : <LikeEmptyIcon />}
+      </IconButton>
       <StyledText block>{count}</StyledText>
     </IconWrapper>
   );
 };
+
+const LikeFilledIcon = styled(FavoriteRoundedIcon)`
+  color: ${Common.colors.primary};
+`;
+
+const LikeEmptyIcon = styled(FavoriteBorderRoundedIcon)`
+  color: ${Common.colors.primary};
+`;
+
+const IconWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const StyledText = styled(Text)`
+  @media ${Common.media.sm} {
+    font-size: ${Common.fontSize.base};
+    margin-left: 4px;
+  }
+  @media ${Common.media.md} {
+    font-size: ${Common.fontSize.medium};
+    margin-left: 8px;
+  }
+  @media ${Common.media.lg} {
+    font-size: ${Common.fontSize.large};
+    margin-left: 10px;
+  }
+`;
 
 LikeBox.protoTypes = {
   onClickLikeIcon: PropTypes.func,

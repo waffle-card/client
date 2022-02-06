@@ -3,58 +3,9 @@ import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 import Comment from './Comment';
 
-const dummy = [
-  {
-    _id: '123',
-    userId: '123',
-    userName: '유노',
-    waffleCardId: '321',
-    text: `안녕하세요.
-    제 이름은 정윤호 입니다.제 이름제 이름은 정윤호 입니다.제 이름은 정윤호 입니다.
-    제 이름은 정윤호 입니다.`,
-    createdAt: '123',
-    updatedAt: '123String',
-    id: '123String',
-  },
-  {
-    _id: '123',
-    userId: '123',
-    userName: '윤호',
-    waffleCardId: '321',
-    text: `안녕하세요. 제 이름제 이름도 정윤호 입니다. 신기하네요`,
-    createdAt: '123',
-    updatedAt: '123String',
-    id: '312',
-  },
-  {
-    _id: '123',
-    userId: '123',
-    userName: '유노',
-    waffleCardId: '321',
-    text: `안녕하세요.
-    제 이름은 정윤호 입니다.제 이름제 이름은 정윤호 입니다.제 이름은 정윤호 입니다.
-    제 이름은 정윤호 입니다.`,
-    createdAt: '123',
-    updatedAt: '123String',
-    id: '123Sting',
-  },
-  {
-    _id: '123',
-    userId: '123',
-    userName: '유노',
-    waffleCardId: '321',
-    text: `안녕하세요.
-    제 이름은 정윤호 입니다.제 이름제 이름은 정윤호 입니다.제 이름은 정윤호 입니다.
-    제 이름은 정윤호 입니다.`,
-    createdAt: '123',
-    updatedAt: '123String',
-    id: '123Strin',
-  },
-];
-
 const CommentList = ({
   commentsData,
-  myCommentIds,
+  userData,
   onClickEditMyComment,
   onClickDeleteMyComment,
   ...props
@@ -62,7 +13,7 @@ const CommentList = ({
   return (
     <Container {...props}>
       {commentsData.map(commentData =>
-        myCommentIds.includes(commentData.id) ? (
+        userData && userData.id === commentData.userId ? (
           <MyComment
             key={commentData.id}
             type="edit"
@@ -99,10 +50,10 @@ const Container = styled.div`
     background-color: rgba(0, 0, 0, 0);
   }
 
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;
+  scrollbar-width: none;
   ::-webkit-scrollbar {
-    display: none; /* Chrome , Safari , Opera */
+    display: none;
   }
 `;
 
@@ -111,15 +62,10 @@ const MyComment = styled(Comment)`
 `;
 
 CommentList.propTypes = {
-  commentsData: PropTypes.array,
-  myCommentIds: PropTypes.array,
+  commentsData: PropTypes.array.isRequired,
+  userData: PropTypes.object.isRequired,
   onClickEditMyComment: PropTypes.func,
   onClickDeleteMyComment: PropTypes.func,
-};
-
-CommentList.defaultProps = {
-  commentsData: dummy,
-  myCommentIds: ['312'],
 };
 
 export default CommentList;

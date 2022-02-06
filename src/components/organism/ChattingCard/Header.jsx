@@ -1,34 +1,42 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 import { LikeBox } from '@components';
 import { IconButton } from '@mui/material';
 import ArrowBackIosNewRoundedIcon from '@mui/icons-material/ArrowBackIosNewRounded';
 import Common from '@styles';
 
-const dummy = {
-  id: '123',
-  userId: 'String',
-  userName: '윤호',
-  emoji: '😎',
-  color: 'rgba(57, 219, 178, 1)',
-  hashTags: ['안녕', '클레오파트라', '세상에서', '제일가는', '포테이토칩'],
-  likeCount: 3,
-  createdAt: 'String',
-  updatedAt: 'String',
-};
+const Header = ({
+  waffleCardData,
+  onClickLikeToggle,
+  onClickBackButton,
+  likeToggled,
+  interactiveLikeToggle,
+  ...props
+}) => {
+  const handleClickBackButton = () => {
+    onClickBackButton && onClickBackButton();
+  };
 
-const Header = ({ waffleCardData = dummy, ...props }) => {
+  const handleClickLikeToggle = (likeToggled, likeCount) => {
+    onClickLikeToggle && onClickLikeToggle(likeToggled, likeCount);
+  };
+
   return (
     <Container backgroundColor={waffleCardData.color} {...props}>
       <UpperWrapper>
-        <IconButton>
+        <IconButton onClick={handleClickBackButton}>
           <BackIcon />
         </IconButton>
         <CardInfoWrapper>
           <EmojiText>{waffleCardData.emoji}</EmojiText>
           <UserNameText>{waffleCardData.userName}</UserNameText>
         </CardInfoWrapper>
-        <LikeBox />
+        <LikeBox
+          active={likeToggled}
+          interactive={interactiveLikeToggle}
+          onClick={handleClickLikeToggle}
+        />
       </UpperWrapper>
       <LowerWrapper>
         {waffleCardData.hashTags.map((hashTag, idx) => (
@@ -115,5 +123,18 @@ const HashTagText = styled.p`
     font-size: ${Common.fontSize.medium};
   }
 `;
+
+Header.propTypes = {
+  waffleCardData: PropTypes.object.isRequired,
+  onClickLikeToggle: PropTypes.func,
+  onClickBackButton: PropTypes.func,
+  likeToggled: PropTypes.bool,
+  interactiveLikeToggle: PropTypes.bool,
+};
+
+Header.defaultProps = {
+  likeToggled: false,
+  interactiveLikeToggle: false,
+};
 
 export default Header;

@@ -92,7 +92,7 @@ const TextArea = styled(TextareaAutosize)`
 
 const StyledEditBox = styled(EditBox)`
   position: absolute;
-  top: -10px;
+  top: 0px;
   right: 0px;
 `;
 

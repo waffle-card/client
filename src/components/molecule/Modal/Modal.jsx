@@ -6,7 +6,7 @@ import { Portal } from '@components';
 
 const Modal = ({
   children,
-  visible,
+  visible = false,
   width,
   height,
   backgroundColor,
