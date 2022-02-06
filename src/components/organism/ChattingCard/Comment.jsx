@@ -30,12 +30,12 @@ const Comment = ({
 
   const handleClickUpdate = e => {
     if (type !== 'edit') return;
-    onClickUpdate && onClickUpdate(e);
+    onClickUpdate && onClickUpdate(commentData.id);
   };
 
   const handleClickDelete = e => {
     if (type !== 'edit') return;
-    onClickDelete && onClickDelete(e);
+    onClickDelete && onClickDelete(commentData.id);
   };
 
   useEffect(() => {
