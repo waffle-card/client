@@ -50,7 +50,7 @@ const CardsContainer = ({ myCard, cardList, userInfo, currentParam }) => {
               key={card.id}
               waffleCard={card}
               // onClickCard={() => {
-              //   history.push({
+              //   navigate({
               //     pathname: `/card/detail/${
               //       currentParam ? currentParam : 'today'
               //     }/${card.id}`,

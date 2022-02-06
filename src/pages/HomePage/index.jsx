@@ -1,15 +1,8 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import Common from '@styles';
-import { Route } from 'react-router-dom';
-import {
-  Tab,
-  Spinner,
-  CardsContainer,
-  CardEditModal,
-  ChattingCard,
-  ScrollGuide,
-} from '@components';
+import { Tab, Spinner, CardsContainer, ScrollGuide } from '@components';
+import { Outlet } from 'react-router-dom';
 import { cardApi } from '@apis';
 import Swal from 'sweetalert2';
 import { parseCardInfo } from '@utils';
@@ -144,17 +137,9 @@ const HomePage = () => {
         cardList={cardList}
         currentParam={currentParam}
       />
-      <Route path="my/create" element={<CardEditModal visible />} />
-      <Route
-        path="my/update/:cardId"
-        element={<CardEditModal visible editMode />}
-      />
-      <Route
-        path="/card/detail/:Param/:cardId"
-        element={<ChattingCard visible />}
-      />
       <ScrollGuide class="scroll_guide" />
       <Spinner loading={isLoading} />
+      <Outlet />
     </HomeContainer>
   );
 };

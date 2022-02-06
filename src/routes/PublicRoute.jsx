@@ -1,18 +1,11 @@
 import React from 'react';
-import { Navigate, Route } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { useUser } from '@contexts';
 
-const PublicRoute = ({ component: Component, restricted, ...rest }) => {
+const PublicRoute = ({ children, restricted }) => {
   const { userInfo } = useUser();
-  return (
-    <Route
-      element={
-        userInfo && restricted ? <Navigate replace to="/" /> : <Component />
-      }
-      {...rest}
-    />
-  );
+  return userInfo && restricted ? <Navigate replace to="/" /> : children;
 };
 
 PublicRoute.defaultProps = {
@@ -20,7 +13,7 @@ PublicRoute.defaultProps = {
 };
 
 PublicRoute.propTypes = {
-  component: PropTypes.elementType.isRequired,
+  children: PropTypes.node.isRequired,
   restricted: PropTypes.bool,
 };
 
