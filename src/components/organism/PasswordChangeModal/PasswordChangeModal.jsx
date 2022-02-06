@@ -11,7 +11,7 @@ import {
 } from '@validators';
 import { userApi } from '@apis';
 import Swal from 'sweetalert2';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const StyledModal = styled(Modal)`
   width: 100%;
@@ -81,7 +81,7 @@ const StyledButton = styled(Button)`
 `;
 
 const PasswordChangeModal = ({ visible, onClose, onSubmit, ...props }) => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const { isLoading, errors, handleChange, handleSubmit } = useForm({
     initialValues: {
       newPassword: '',
@@ -96,7 +96,7 @@ const PasswordChangeModal = ({ visible, onClose, onSubmit, ...props }) => {
           text: '비밀번호 변경완료! 다시 로그인해주세요!',
           confirmButtonColor: Common.colors.point,
         }).then(() => {
-          history.push('/login');
+          navigate.push('/login');
         });
       } catch (error) {
         Swal.fire({

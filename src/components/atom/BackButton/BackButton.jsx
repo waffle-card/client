@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from '@emotion/styled';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Common from '@styles';
 import { Text, Icons } from '@components';
 
@@ -15,11 +15,11 @@ const BackButtonContainer = styled.div`
 `;
 
 const BackButton = ({ ...props }) => {
-  const history = useHistory();
+  const navigate = useNavigate();
   return (
     <BackButtonContainer
       onClick={() => {
-        history.goBack();
+        navigate(-1);
       }}
       {...props}>
       <Icons.ArrowBack />

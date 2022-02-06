@@ -3,7 +3,7 @@ import Common from '@styles';
 import styled from '@emotion/styled';
 import Swal from 'sweetalert2';
 import { useForm } from '@hooks';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useUser } from '@contexts';
 import { Text, Button, Input, BackButton, Spinner } from '@components';
 import {
@@ -15,7 +15,7 @@ import {
 
 const LoginPage = ({ ...prop }) => {
   const { login } = useUser();
-  const history = useHistory();
+  const navigate = useNavigate();
   const { isLoading, errors, handleChange, handleSubmit } = useForm({
     initialValues: {
       email: '',
@@ -30,7 +30,7 @@ const LoginPage = ({ ...prop }) => {
           text: '로그인 되었습니다!',
           confirmButtonColor: Common.colors.point,
         }).then(() => {
-          history.replace('/');
+          navigate('/');
           window.location.reload();
         });
       } catch (error) {
@@ -60,7 +60,7 @@ const LoginPage = ({ ...prop }) => {
   });
 
   const handleClickSignUpButton = () => {
-    history.push('/signup');
+    navigate('/signup');
   };
 
   return (

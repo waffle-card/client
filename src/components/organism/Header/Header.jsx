@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import styled from '@emotion/styled';
 import Common from '@styles';
 import PropTypes from 'prop-types';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Icons, Text } from '@components';
-import { authApi } from '@apis';
 import { rgba } from 'polished';
+import { useUser } from '@contexts';
 
 const HeaderTag = styled.header`
   position: fixed;
@@ -86,60 +86,42 @@ const StyledIcon = styled(Icons.Person)`
 `;
 
 const Header = ({ backgroundColor = Common.colors.background, ...props }) => {
-  const history = useHistory();
-  const [userInfo, setUserInfo] = useState({});
-
-  const getUserInfo = async () => {
-    const response = await authApi.getAuthUser();
-    if (!response.data) {
-      setUserInfo(false);
-      return;
-    }
-    const userInfo = {
-      id: response.data._id,
-      userName: response.data.fullName,
-      email: response.data.email,
-    };
-    setUserInfo(userInfo);
-    return;
-  };
-
-  useEffect(() => {
-    getUserInfo();
-  }, []);
+  const { userInfo } = useUser();
+  const navigate = useNavigate();
 
   const handleClickHelpIcon = () => {
     console.log('clickHelpIcon');
   };
 
   return (
-    <HeaderTag backgroundColor={backgroundColor}>
+    <HeaderTag backgroundColor={backgroundColor} {...props}>
       <Logo
         onClick={() => {
-          history.push('/');
+          navigate('/');
           window.location.reload();
         }}>
         <img src={require('./logo.png').default} alt="logo" />
       </Logo>
       <UtilIconBox>
         <HelpIcon onClick={handleClickHelpIcon}>❔</HelpIcon>
-        <StyledIcon
-          style={{ display: userInfo ? 'block' : 'none' }}
-          onClick={() => {
-            history.push('/my-page');
-          }}
-          color={Common.colors.point}
-        />
-        <StyleTextLogin
-          style={{ display: !userInfo ? 'block' : 'none' }}
-          color={Common.colors.point}
-          size={Common.fontSize.regular}
-          weight={Common.fontWeight.regular}
-          onClick={() => {
-            history.push('/login');
-          }}>
-          로그인
-        </StyleTextLogin>
+        {userInfo ? (
+          <StyledIcon
+            onClick={() => {
+              navigate('/my-page');
+            }}
+            color={Common.colors.point}
+          />
+        ) : (
+          <StyleTextLogin
+            color={Common.colors.point}
+            size={Common.fontSize.regular}
+            weight={Common.fontWeight.regular}
+            onClick={() => {
+              navigate('/login');
+            }}>
+            로그인
+          </StyleTextLogin>
+        )}
       </UtilIconBox>
     </HeaderTag>
   );
