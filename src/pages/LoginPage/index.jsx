@@ -31,7 +31,6 @@ const LoginPage = ({ ...prop }) => {
           confirmButtonColor: Common.colors.point,
         }).then(() => {
           navigate('/');
-          window.location.reload();
         });
       } catch (error) {
         Swal.fire({

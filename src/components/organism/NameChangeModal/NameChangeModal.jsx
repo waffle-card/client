@@ -1,13 +1,78 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import Common from '@styles';
 import styled from '@emotion/styled';
 import { useForm } from '@hooks';
 import PropTypes from 'prop-types';
 import { Modal, Text, Button, Input, Spinner } from '@components';
 import { validateNameEmpty, validateNameLength } from '@validators';
-import { authApi, userApi } from '@apis';
-import Swal from 'sweetalert2';
-import { useNavigate } from 'react-router-dom';
+
+const NameChangeModal = ({
+  userName,
+  visible,
+  onClose,
+  onSubmit,
+  ...props
+}) => {
+  const { isLoading, errors, handleChange, handleSubmit } = useForm({
+    initialValues: {
+      userName: '',
+    },
+    onSubmit,
+    validate: ({ userName }) => {
+      const errors = {};
+
+      if (!validateNameEmpty(userName)) errors.userName = '이름을 입력해주세요';
+      if (!validateNameLength(userName))
+        errors.userName = '이름을 10글자 이내로 작성해주세요';
+
+      return errors;
+    },
+  });
+
+  const handleClose = e => {
+    onClose && onClose(e);
+  };
+
+  return (
+    <>
+      <StyledModal visible={visible} onClose={onClose} {...props}>
+        <form onSubmit={handleSubmit}>
+          <StyledText>이름(닉네임)</StyledText>
+          <InputContainer>
+            <Input
+              name="userName"
+              type="text"
+              placeholder={userName}
+              onChange={handleChange}
+            />
+            <ErrorText color="red">{errors.userName}&nbsp;</ErrorText>
+          </InputContainer>
+          <StyledButton type="submit">변경하기</StyledButton>
+          <StyledButton
+            type="button"
+            backgroundColor={Common.colors.primary}
+            fontColor={Common.colors.button_font_dark}
+            onClick={handleClose}>
+            닫기
+          </StyledButton>
+        </form>
+      </StyledModal>
+      <Spinner loading={isLoading} />
+    </>
+  );
+};
+
+NameChangeModal.propTypes = {
+  userName: PropTypes.string,
+  visible: PropTypes.bool,
+  onClose: PropTypes.func,
+  onSubmit: PropTypes.func,
+};
+
+NameChangeModal.defaultProps = {
+  userName: '',
+  visible: false,
+};
 
 const StyledModal = styled(Modal)`
   width: 100%;
@@ -56,103 +121,5 @@ const StyledButton = styled(Button)`
     }
   }
 `;
-
-const NameChangeModal = ({
-  visible,
-  onChangeUserName,
-  onClose,
-  onSubmit,
-  ...props
-}) => {
-  const navigate = useNavigate();
-  const [initLoading, setInitLoading] = useState(false);
-  const [userName, setUserName] = useState('');
-  const { isLoading, errors, handleChange, handleSubmit } = useForm({
-    initialValues: {
-      userName: '',
-    },
-    onSubmit: async ({ userName }) => {
-      try {
-        await userApi.putUserName(userName);
-        onChangeUserName(userName);
-        Swal.fire({
-          title: '😎',
-          text: '닉네임 변경완료!',
-          confirmButtonColor: Common.colors.point,
-        }).then(() => {
-          navigate('/my-page');
-        });
-      } catch (error) {
-        Swal.fire({
-          title: '🥲',
-          text: error.data,
-          confirmButtonColor: Common.colors.point,
-        });
-      }
-    },
-    validate: ({ userName }) => {
-      const errors = {};
-
-      if (!validateNameEmpty(userName)) errors.userName = '이름을 입력해주세요';
-
-      if (!validateNameLength(userName))
-        errors.userName = '이름을 10글자 이내로 작성해주세요';
-
-      return errors;
-    },
-  });
-
-  useEffect(() => {
-    const getUserInfo = async () => {
-      setInitLoading(false);
-      const response = await authApi.getAuthUser();
-      const userName = response.data.fullName;
-      setUserName(userName);
-      setInitLoading(false);
-    };
-    getUserInfo();
-  }, [navigate]);
-  const handleClose = e => {
-    onClose && onClose(e);
-  };
-
-  return (
-    <>
-      <StyledModal visible={visible} onClose={onClose} {...props}>
-        <form onSubmit={handleSubmit}>
-          <StyledText>이름(닉네임)</StyledText>
-          <InputContainer>
-            <Input
-              name="userName"
-              type="text"
-              placeholder={userName}
-              onChange={handleChange}
-            />
-            <ErrorText color="red">{errors.userName}&nbsp;</ErrorText>
-          </InputContainer>
-          <StyledButton type="submit">변경하기</StyledButton>
-          <StyledButton
-            type="button"
-            backgroundColor={Common.colors.primary}
-            fontColor={Common.colors.button_font_dark}
-            onClick={handleClose}>
-            닫기
-          </StyledButton>
-        </form>
-      </StyledModal>
-      <Spinner loading={isLoading || initLoading} />
-    </>
-  );
-};
-
-NameChangeModal.propTypes = {
-  visible: PropTypes.bool,
-  onClose: PropTypes.func,
-  onSubmit: PropTypes.func,
-};
-
-NameChangeModal.defaultProps = {
-  visible: false,
-};
 
 export default NameChangeModal;
