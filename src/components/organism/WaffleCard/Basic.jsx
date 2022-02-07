@@ -11,12 +11,12 @@ const countDaysFromToday = date => {
 };
 
 const WaffleCard = ({
-  waffleCard,
+  waffleCardData,
   onClickWaffleCard,
   onClickLike,
   ...props
 }) => {
-  const { emoji, color, hashTags, updatedAt } = waffleCard;
+  const { emoji, color, hashTags, updatedAt } = waffleCardData;
   const days = countDaysFromToday(updatedAt);
 
   const handleClickLikeBox = () => {};
@@ -122,11 +122,11 @@ const HashTag = styled(Text)`
 `;
 
 WaffleCard.protoTypes = {
-  waffleCard: PropTypes.object,
+  waffleCardData: PropTypes.object,
 };
 
 WaffleCard.defaultProps = {
-  waffleCard: {
+  waffleCardData: {
     emoji: '🧇',
     color: Common.colors.yellow,
     hashTags: [],

@@ -1,123 +1,27 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import styled from '@emotion/styled';
-import Common from '@styles';
 import { Tab, Spinner, CardsContainer, ScrollGuide } from '@components';
-import { Outlet } from 'react-router-dom';
-import { cardApi } from '@apis';
-import Swal from 'sweetalert2';
-import { parseCardInfo } from '@utils';
+import Common from '@styles';
+import styled from '@emotion/styled';
+import { waffleCardApi } from '@apis';
 import { useUser } from '@contexts';
+// import Swal from 'sweetalert2';
+// import { parseCardInfo } from '@utils';
 
 const HomePage = () => {
   const { userInfo } = useUser();
-  const [cardList, setCardList] = useState([]);
-  const [cardListName, setCardListName] = useState('');
+  const [waffleCards, setWaffleCards] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  const getTodayCardList = useCallback(async () => {
-    setIsLoading(true);
-    try {
-      const response = await cardApi.getChannelCardList();
-      const waffleCards = response.data.map(waffleCard => {
-        return parseCardInfo(waffleCard);
-      });
-      setCardList(waffleCards);
-    } catch (error) {
-      Swal.fire({
-        title: '🥲',
-        text: error,
-        confirmButtonColor: Common.colors.point,
-      });
-    }
-    setIsLoading(false);
-  }, []);
-
-  const getMyCardList = async userId => {
-    setIsLoading(true);
-    try {
-      if (userId) {
-        const response = await cardApi.getUserCardList(userId);
-        const cardList = response.data.map(cardData => {
-          return parseCardInfo(cardData);
-        });
-        setCardList(cardList);
-      } else {
-        setCardList([]);
-      }
-    } catch (error) {
-      Swal.fire({
-        title: '🥲',
-        text: error,
-        confirmButtonColor: Common.colors.point,
-      });
-    }
-    setIsLoading(false);
-  };
-
-  const getBookmarkCardList = useCallback(async () => {
-    if (!userInfo) return;
-    try {
-      setIsLoading(true);
-      const response = await cardApi.getChannelCardList();
-      const CardDataList = response.data.filter(card => {
-        return card.likes.find(like => like.user === userInfo.id)
-          ? true
-          : false;
-      });
-      const favoriteCardList = CardDataList.map(cardData => {
-        return parseCardInfo(cardData);
-      });
-      setCardList(favoriteCardList);
-    } catch (error) {
-      Swal.fire({
-        title: '🥲',
-        text: error,
-        confirmButtonColor: Common.colors.point,
-      });
-    }
-    setIsLoading(false);
-  }, [userInfo]);
-
-  useEffect(() => {
-    const init = async () => {
-      if (cardListName === 'total') {
-        await getTodayCardList();
-        console.log(cardListName);
-        return;
-      }
-      if (cardListName === 'my') {
-        await getMyCardList(userInfo?.id);
-        console.log(cardListName);
-        return;
-      }
-      if (cardListName === 'like') {
-        await getBookmarkCardList();
-        console.log(cardListName);
-        return;
-      }
-    };
-    setIsLoading(true);
-    init();
-    setIsLoading(false);
-    // eslint-disable-next-line
-  }, [cardListName]);
-
-  const handleTabClick = name => {
-    setCardListName(name);
+  const handleTabClick = tabValue => {
+    console.log(tabValue);
   };
 
   return (
     <HomeContainer>
       <Tab onClick={handleTabClick} />
-      <CardsContainer
-        myCard={cardListName === 'my'}
-        userInfo={userInfo}
-        cardList={cardList}
-        currentParam={cardListName}
-      />
+      <CardsContainer cardList={waffleCards} userInfo={userInfo} />
       <ScrollGuide class="scroll_guide" />
       <Spinner loading={isLoading} />
-      <Outlet />
     </HomeContainer>
   );
 };
