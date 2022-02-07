@@ -8,23 +8,10 @@ import Swal from 'sweetalert2';
 import { parseCardInfo } from '@utils';
 import { useUser } from '@contexts';
 
-const HomeContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  width: 100%;
-  padding: 10px 50px;
-  @media ${Common.media.sm} {
-    padding: 10px 16px;
-  }
-  height: calc(100vh - 60px);
-  margin: 0 auto;
-`;
-
 const HomePage = () => {
   const { userInfo } = useUser();
   const [cardList, setCardList] = useState([]);
-  const [currentParam, setCurrentParam] = useState('');
+  const [cardListName, setCardListName] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
   const getTodayCardList = useCallback(async () => {
@@ -93,49 +80,40 @@ const HomePage = () => {
 
   useEffect(() => {
     const init = async () => {
-      const currentUrlArr = window.location.pathname.split('/');
-      setCurrentParam(() => {
-        return currentUrlArr[currentUrlArr.length - 1];
-      });
-
-      if (currentUrlArr.includes('today') || currentUrlArr[1] === '') {
-        getTodayCardList();
-      } else if (currentUrlArr.includes('my')) {
-        getMyCardList(userInfo?.id);
-      } else if (currentUrlArr.includes('like')) {
-        getBookmarkCardList();
+      if (cardListName === 'total') {
+        await getTodayCardList();
+        console.log(cardListName);
+        return;
+      }
+      if (cardListName === 'my') {
+        await getMyCardList(userInfo?.id);
+        console.log(cardListName);
+        return;
+      }
+      if (cardListName === 'like') {
+        await getBookmarkCardList();
+        console.log(cardListName);
+        return;
       }
     };
     setIsLoading(true);
     init();
     setIsLoading(false);
     // eslint-disable-next-line
-  }, [currentParam]);
+  }, [cardListName]);
 
-  const handleTabClick = () => {
-    setCurrentParam(() => {
-      const currentUrlArr = window.location.pathname.split('/');
-      return currentUrlArr[currentUrlArr.length - 1];
-    });
+  const handleTabClick = name => {
+    setCardListName(name);
   };
 
   return (
     <HomeContainer>
-      <nav>
-        <Tab
-          onClick={() => {
-            handleTabClick();
-          }}>
-          <Tab.Item title="오늘의 카드" index="0" param="today"></Tab.Item>
-          <Tab.Item title="나의 카드" index="1" param="my"></Tab.Item>
-          <Tab.Item title="관심 카드" index="2" param="like"></Tab.Item>
-        </Tab>
-      </nav>
+      <Tab onClick={handleTabClick} />
       <CardsContainer
-        myCard={currentParam === 'my'}
+        myCard={cardListName === 'my'}
         userInfo={userInfo}
         cardList={cardList}
-        currentParam={currentParam}
+        currentParam={cardListName}
       />
       <ScrollGuide class="scroll_guide" />
       <Spinner loading={isLoading} />
@@ -143,4 +121,18 @@ const HomePage = () => {
     </HomeContainer>
   );
 };
+
+const HomeContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  padding: 10px 50px;
+  @media ${Common.media.sm} {
+    padding: 10px 16px;
+  }
+  height: calc(100vh - 60px);
+  margin: 0 auto;
+`;
+
 export default HomePage;
