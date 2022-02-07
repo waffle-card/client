@@ -39,16 +39,16 @@ const StyledCard = styled(Card)`
   }
 `;
 
-const EmojiText = styled(Text)`
-  margin: 18px; // TODO: 리팩토링
-  & span:nth-of-type(1) {
-    margin-right: 6px;
+const EmojiText = styled.p`
+  margin: 1rem;
+  @media ${Common.media.sm} {
+    font-size: 40px;
   }
-  & div:nth-of-type(1) {
-    margin-right: 8px;
+  @media ${Common.media.md} {
+    font-size: 50px;
   }
-  & span:nth-of-type(2) {
-    margin-right: 4px;
+  @media ${Common.media.lg} {
+    font-size: 70px;
   }
 `;
 

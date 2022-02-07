@@ -3,41 +3,24 @@ import styled from '@emotion/styled';
 import Common from '@styles';
 import { Button } from '@components';
 import { useNavigate } from 'react-router-dom';
+import { Text } from '@components';
 
 const LoginGuide = () => {
   const navigate = useNavigate();
 
   return (
-    <EmptyContainer>
-      <GuideWrap>
-        <StyledText size={24}>와플카드 대화에 참여해보세요!</StyledText>
-        <StyledButton
-          width={250}
-          onClick={() => {
-            navigate('/login');
-          }}>
-          로그인하러 가기
-        </StyledButton>
-      </GuideWrap>
-    </EmptyContainer>
+    <GuideWrap>
+      <StyledText size={24}>와플카드 대화에 참여해보세요!</StyledText>
+      <StyledButton
+        width={250}
+        onClick={() => {
+          navigate('/login');
+        }}>
+        로그인하러 가기
+      </StyledButton>
+    </GuideWrap>
   );
 };
-
-const EmptyContainer = styled.section`
-  position: relative;
-  display: flex;
-  flex-wrap: nowrap;
-  justify-content: center;
-  align-items: center;
-  min-height: 413px;
-  padding: 35px 0;
-  margin-top: 5vh;
-  overflow-x: scroll;
-  -ms-overflow-style: none;
-  &::-webkit-scrollbar {
-    display: none;
-  }
-`;
 
 const GuideWrap = styled.div`
   display: flex;
