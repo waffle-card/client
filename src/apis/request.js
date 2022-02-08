@@ -5,7 +5,7 @@ const API_END_POINT = 'https://waffle-card.herokuapp.com';
 const convertErrorResponse = response => {
   return {
     status: response.status ?? 500,
-    message: response.data.message ?? 'FE: 알 수 없는 에러가 발생했습니다.',
+    message: response.data.message ?? '알 수 없는 에러가 발생했습니다.',
     data: response.data,
   };
 };

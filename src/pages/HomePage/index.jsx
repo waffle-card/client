@@ -1,6 +1,8 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import Common from '@styles';
 import styled from '@emotion/styled';
+import Swal from 'sweetalert2';
+import Common from '@styles';
+import { useModals } from '@hooks';
 import { waffleCardApi, commentApi } from '@apis';
 import {
   Tab,
@@ -11,8 +13,6 @@ import {
   CardEditModal,
   ChattingCard,
 } from '@components';
-import { useModals } from '@hooks';
-import Swal from 'sweetalert2';
 
 const HomePage = () => {
   const { openModal } = useModals();

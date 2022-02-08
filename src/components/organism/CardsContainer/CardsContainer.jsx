@@ -36,7 +36,6 @@ const CardsContainer = ({
   };
 
   const handleClickLikeToggle = async (waffleCardId, likeToggled) => {
-    console.log('in CardsContainer :', waffleCardId, likeToggled);
     if (likeToggled) {
       // TODO: 좋아요 생성 가능 여부 검사
       try {

@@ -5,8 +5,8 @@ const waffleCardApi = {
   getWaffleCardById: id => request.post(`/waffle-cards/${id}`),
   getMyWaffleCard: () => authRequest.get('/waffle-cards/my'),
   getMyLikedWaffleCards: () => authRequest.get('/waffle-cards/like'),
-  createWaffleCard: ({ emoji, color, hashtags }) =>
-    authRequest.post('/waffle-cards', { emoji, color, hashtags }),
+  createWaffleCard: ({ emoji, color, hashTags }) =>
+    authRequest.post('/waffle-cards', { emoji, color, hashTags }),
   updateWaffleCard: (waffleCardId, { emoji, color, hashtags }) =>
     authRequest.put(`/waffle-cards/${waffleCardId}`, {
       emoji,

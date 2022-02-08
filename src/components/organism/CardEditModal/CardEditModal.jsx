@@ -13,17 +13,20 @@ import {
   ColorPalette,
   EmojiPickerActiveButton,
 } from '@components';
+import Swal from 'sweetalert2';
 
 // TODO(윤호): visible 삭제하기
 const CardEditModal = ({
   visible,
   editMode,
   initialWaffleCardData,
+  onSubmit,
   onClose,
   ...props
 }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [waffleCard, setWaffleCard] = useState(initialWaffleCardData);
+  // console.log('상태', waffleCard);
 
   const createWaffleCard = async () => {
     setIsLoading(true);
@@ -37,6 +40,13 @@ const CardEditModal = ({
       console.error(`in CardEditModal: ${error.message}`);
     }
     setIsLoading(false);
+    Swal.fire({
+      icon: 'success',
+      text: '생성이 완료되었습니다.',
+    }).then(() => {
+      onClose && onClose();
+    });
+    onSubmit && onSubmit();
   };
 
   const updateWaffleCard = async () => {
@@ -51,6 +61,13 @@ const CardEditModal = ({
       console.error(`in CardEditModal: ${error.message}`);
     }
     setIsLoading(false);
+    Swal.fire({
+      icon: 'success',
+      text: '수정이 완료되었습니다.',
+    }).then(() => {
+      onClose && onClose();
+    });
+    onSubmit && onSubmit();
   };
 
   const handleSubmit = async e => {
@@ -71,6 +88,7 @@ const CardEditModal = ({
   };
 
   const handleChangeHashTags = values => {
+    console.log('이번엔 여기!', values);
     setWaffleCard(waffleCard => {
       return { ...waffleCard, hashTags: values };
     });
@@ -195,7 +213,7 @@ CardEditModal.propTypes = {
 
 CardEditModal.defaultProps = {
   visible: false,
-  initialWaffleCard: {
+  initialWaffleCardData: {
     id: 'test',
     emoji: '🧇',
     color: Common.colors.yellow,
