@@ -1,5 +1,5 @@
-export const TAB_MENU = [
-  { title: '오늘의 카드', name: 'total' },
-  { title: '나의 카드', name: 'my' },
-  { title: '관심 카드', name: 'like' },
-];
+export const TAB_MENU = {
+  total: '오늘의 카드',
+  my: '나의 카드',
+  like: '관심 카드',
+};

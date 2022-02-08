@@ -18,21 +18,14 @@ const Tab = ({ currentActive, onClick, ...props }) => {
 
   return (
     <TabItemContainer {...props}>
-      <TabItem
-        title={TAB_MENU[0].title}
-        name={TAB_MENU[0].name}
-        activeItem={activeItem}
-        onClick={handleClickTabItem}></TabItem>
-      <TabItem
-        title={TAB_MENU[1].title}
-        name={TAB_MENU[1].name}
-        activeItem={activeItem}
-        onClick={handleClickTabItem}></TabItem>
-      <TabItem
-        title={TAB_MENU[2].title}
-        name={TAB_MENU[2].name}
-        activeItem={activeItem}
-        onClick={handleClickTabItem}></TabItem>
+      {Object.entries(TAB_MENU).map(([key, value]) => (
+        <TabItem
+          title={value}
+          name={key}
+          activeItem={activeItem}
+          onClick={handleClickTabItem}
+        />
+      ))}
       <TabItemPointer currentActive={activeItem} {...props}></TabItemPointer>
     </TabItemContainer>
   );
@@ -58,9 +51,7 @@ const TabItemPointer = styled.div`
   top: 0;
   transform: ${({ currentActive }) =>
     currentActive &&
-    `translate(${
-      TAB_MENU.findIndex(obj => obj.name === currentActive) * 100
-    }%, 0)`};
+    `translate(${Object.keys(TAB_MENU).indexOf(currentActive) * 100}%, 0)`};
   border: 1px solid ${Common.colors.primary};
   border-radius: 50px;
   background-color: ${rgba(Common.colors.background_menu, 0.2)};
