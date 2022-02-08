@@ -109,9 +109,9 @@ const HomePage = () => {
     console.log('waffleCardData is', waffleCardData);
     openModal(CardEditModal, {
       editMode: true,
-      onSubmit: async () => {
-        console.log('비즈니스 로직 처리');
-      },
+      // onSubmit: async () => {
+      //   console.log('비즈니스 로직 처리');
+      // },
       initialWaffleCardData: waffleCardData,
     });
   };

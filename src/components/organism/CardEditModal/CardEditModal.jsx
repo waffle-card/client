@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Common from '@styles';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
+import { waffleCardApi } from '@apis';
 import {
   Text,
   Modal,
@@ -17,11 +18,38 @@ const CardEditModal = ({
   editMode,
   initialWaffleCardData,
   onClose,
-  onSubmit,
   ...props
 }) => {
   const [waffleCard, setWaffleCard] = useState(initialWaffleCardData);
-  console.log('in CardEditModal', initialWaffleCardData);
+
+  const createWaffleCard = async () => {
+    try {
+      await waffleCardApi.createWaffleCard({
+        emoji: waffleCard.emoji,
+        color: waffleCard.color,
+        hashTags: waffleCard.hashTags,
+      });
+    } catch (error) {
+      console.error(`in CardEditModal: ${error.message}`);
+    }
+  };
+
+  const updateWaffleCard = async () => {
+    try {
+      await waffleCardApi.updateWaffleCard(waffleCard.id, {
+        emoji: waffleCard.emoji,
+        color: waffleCard.color,
+        hashTags: waffleCard.hashTags,
+      });
+    } catch (error) {
+      console.error(`in CardEditModal: ${error.message}`);
+    }
+  };
+
+  const handleSubmit = async e => {
+    e.preventDefault();
+    editMode ? updateWaffleCard() : createWaffleCard();
+  };
 
   const handleChangeEmoji = emoji => {
     setWaffleCard(waffleCard => {
@@ -35,27 +63,18 @@ const CardEditModal = ({
     });
   };
 
-  const handleChangeHashTagInput = values => {
+  const handleChangeHashTags = values => {
     setWaffleCard(waffleCard => {
       return { ...waffleCard, hashTags: values };
     });
   };
 
-  const handleClose = e => {
-    onClose && onClose(e);
-  };
-
-  const handleSubmit = async e => {
-    e.preventDefault();
-
-    if (waffleCard.hashTags.length <= 0) return;
-
-    onSubmit && onSubmit(waffleCard);
+  const handleClose = () => {
     onClose && onClose();
   };
 
   return (
-    <StyledModal visible hi={'hi'} onClose={onClose} {...props}>
+    <StyledModal visible hi={'hi'} onClose={handleClose} {...props}>
       <FormContainer onSubmit={handleSubmit} id="cardForm">
         <CardEditContainer>
           <WaffleCard type="plain" waffleCardData={waffleCard} />
@@ -74,7 +93,7 @@ const CardEditModal = ({
             </Wrapper>
             <Wrapper>
               <StyledText>해시태그</StyledText>
-              <HashTagInput color="white" onChange={handleChangeHashTagInput} />
+              <HashTagInput color="white" onChange={handleChangeHashTags} />
               <StyledText size={14} color="red">
                 {waffleCard.hashTags.length <= 0
                   ? '최소 1개 이상의 해시태그를 작성해주세요.'
@@ -164,7 +183,6 @@ CardEditModal.propTypes = {
   visible: PropTypes.bool,
   initialWaffleCard: PropTypes.object,
   onClose: PropTypes.func,
-  onSubmit: PropTypes.func,
 };
 
 CardEditModal.defaultProps = {
