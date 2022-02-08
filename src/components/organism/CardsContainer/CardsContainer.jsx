@@ -44,13 +44,13 @@ const CardsContainer = ({
     case 'total':
       if (waffleCardsData.length <= 0) {
         return (
-          <EmptyContainer>
+          <CenterAlignedContainer>
             <NoCardGuide />
-          </EmptyContainer>
+          </CenterAlignedContainer>
         );
       } else {
         return (
-          <CardListContainer {...props}>
+          <LeftAlignedContainer {...props}>
             {waffleCardsData.map(waffleCard => (
               <StyledWaffleCard
                 type="basic"
@@ -63,25 +63,25 @@ const CardsContainer = ({
                 onClickLikeToggle={handleClickLikeToggle}
               />
             ))}
-          </CardListContainer>
+          </LeftAlignedContainer>
         );
       }
     case 'my':
       if (!userInfo) {
         return (
-          <EmptyContainer>
+          <CenterAlignedContainer>
             <LoginGuide />
-          </EmptyContainer>
+          </CenterAlignedContainer>
         );
       } else if (waffleCardsData.length <= 0) {
         return (
-          <EmptyContainer>
+          <CenterAlignedContainer>
             <Card.Empty onClick={handleClickWaffleCardCreate} />
-          </EmptyContainer>
+          </CenterAlignedContainer>
         );
       } else {
         return (
-          <CardListContainer {...props}>
+          <CenterAlignedContainer {...props}>
             {waffleCardsData.map(waffleCard => (
               <StyledWaffleCard
                 type="my"
@@ -96,25 +96,25 @@ const CardsContainer = ({
                 onClickDelete={handleClickWaffleCardDelete}
               />
             ))}
-          </CardListContainer>
+          </CenterAlignedContainer>
         );
       }
     case 'like':
       if (!userInfo) {
         return (
-          <EmptyContainer>
+          <CenterAlignedContainer>
             <LoginGuide />
-          </EmptyContainer>
+          </CenterAlignedContainer>
         );
       } else if (waffleCardsData.length <= 0) {
         return (
-          <EmptyContainer>
+          <CenterAlignedContainer>
             <NoCardGuide />
-          </EmptyContainer>
+          </CenterAlignedContainer>
         );
       } else {
         return (
-          <CardListContainer {...props}>
+          <LeftAlignedContainer {...props}>
             {waffleCardsData.map(waffleCard => (
               <StyledWaffleCard
                 type="basic"
@@ -127,7 +127,7 @@ const CardsContainer = ({
                 onClickLikeToggle={handleClickLikeToggle}
               />
             ))}
-          </CardListContainer>
+          </LeftAlignedContainer>
         );
       }
     default:
@@ -135,7 +135,7 @@ const CardsContainer = ({
   }
 };
 
-const CardListContainer = styled.section`
+const LeftAlignedContainer = styled.section`
   position: relative;
   display: flex;
   align-items: center;
@@ -154,7 +154,7 @@ const CardListContainer = styled.section`
   }
 `;
 
-const EmptyContainer = styled.section`
+const CenterAlignedContainer = styled.section`
   position: relative;
   display: flex;
   flex-wrap: nowrap;
