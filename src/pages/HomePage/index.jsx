@@ -7,12 +7,11 @@ import { cardApi } from '@apis';
 import Swal from 'sweetalert2';
 import { parseCardInfo } from '@utils';
 import { useUser } from '@contexts';
-import { TAB_MENU } from '@constants';
 
 const HomePage = () => {
   const { userInfo } = useUser();
   const [cardList, setCardList] = useState([]);
-  const [cardListName, setCardListName] = useState(TAB_MENU[0].name);
+  const [cardListName, setCardListName] = useState('total');
   const [isLoading, setIsLoading] = useState(false);
 
   const getTodayCardList = useCallback(async () => {
@@ -100,20 +99,20 @@ const HomePage = () => {
     // eslint-disable-next-line
   }, [cardListName]);
 
-  const handleTabClick = name => {
+  const handleClickTab = useCallback(name => {
     setCardListName(name);
-  };
+  }, []);
 
   return (
     <HomeContainer>
-      <Tab onClick={handleTabClick} currentActive={cardListName} />
+      <Tab onClick={handleClickTab} currentActive={cardListName} />
       <CardsContainer
         myCard={cardListName === 'my'}
         userInfo={userInfo}
         cardList={cardList}
         currentParam={cardListName}
       />
-      <ScrollGuide class="scroll_guide" />
+      <ScrollGuide tabStatus={cardListName} />
       <Spinner loading={isLoading} />
       <Outlet />
     </HomeContainer>
