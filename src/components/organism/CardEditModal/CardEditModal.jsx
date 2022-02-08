@@ -13,6 +13,7 @@ import {
 } from '@components';
 
 const CardEditModal = ({
+  visible,
   editMode,
   initialWaffleCard,
   onClose,
@@ -20,6 +21,7 @@ const CardEditModal = ({
   ...props
 }) => {
   const [waffleCard, setWaffleCard] = useState(initialWaffleCard);
+  console.log('in CardEditModal', props);
 
   const handleChangeEmoji = emoji => {
     setWaffleCard(waffleCard => {
@@ -53,7 +55,7 @@ const CardEditModal = ({
   };
 
   return (
-    <StyledModal visible onClose={onClose} {...props}>
+    <StyledModal visible hi={'hi'} onClose={onClose} {...props}>
       <FormContainer onSubmit={handleSubmit} id="cardForm">
         <CardEditContainer>
           <WaffleCard.Plain waffleCard={waffleCard} />

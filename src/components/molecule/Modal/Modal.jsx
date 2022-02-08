@@ -17,10 +17,9 @@ const Modal = ({
     onClose && onClose();
   });
 
-  // TODO(윤호): visible에 따른 display 속성을 block 혹은 none으로 변경하기
   return (
     <Portal>
-      <BackgroundDim style={{ display: 'block' }}>
+      <BackgroundDim style={{ display: visible ? 'block' : 'none' }}>
         <ModalContainer
           ref={ref}
           width={width}
@@ -71,7 +70,6 @@ Modal.propTypes = {
 };
 
 Modal.defaultProps = {
-  visible: false,
   backgroundColor: Common.colors.background_modal,
 };
 

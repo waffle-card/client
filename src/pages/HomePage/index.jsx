@@ -50,13 +50,28 @@ const HomePage = () => {
       userData: userInfo,
       commentsData: commentsData ?? [],
       onClickLikeToggle: async (likeToggled, likeCount) => {
-        try {
-          await commentApi.createLike(waffleCardId);
-        } catch (error) {
-          Swal.fire({
-            icon: 'error',
-            text: error.message,
-          });
+        console.log('likeToggled is', likeToggled);
+
+        if (likeToggled) {
+          try {
+            await likeApi.createLike(waffleCardId);
+          } catch (error) {
+            Swal.fire({
+              icon: 'error',
+              text: error.message,
+            });
+          }
+          return;
+        } else {
+          try {
+            await likeApi.deleteLike(waffleCardId);
+          } catch (error) {
+            Swal.fire({
+              icon: 'error',
+              text: error.message,
+            });
+          }
+          return;
         }
       },
       onSubmitComment: async text => {

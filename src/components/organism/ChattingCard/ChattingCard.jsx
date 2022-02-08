@@ -40,7 +40,7 @@ const ChattingCard = ({
   };
 
   return (
-    <StyledModal visible={visible} onClose={handleClose} {...props}>
+    <StyledModal isOpen visible onClose={handleClose} {...props}>
       <Header
         waffleCardData={waffleCardData}
         onClickLikeToggle={handleClickLikeToggle}
