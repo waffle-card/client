@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import Swal from 'sweetalert2';
-import Common from '@styles';
 import { useModals } from '@hooks';
 import { waffleCardApi, commentApi, likeApi } from '@apis';
 import {
@@ -144,7 +143,7 @@ const HomePage = () => {
   }, [initWaffleCards]);
 
   return (
-    <HomeContainer>
+    <Container>
       <Tab onClick={setTabValue} currentActive={tabValue} />
       <CardsContainer
         type={tabValue}
@@ -155,22 +154,18 @@ const HomePage = () => {
         onClickWaffleCardDelete={handleClickWaffleCardDelete}
         onClickLikeToggle={handleClickLikeToggle}
       />
-      <ScrollGuide tabStatus={tabValue} />
       <Spinner loading={isLoading} />
       <Modals />
-    </HomeContainer>
+      {tabValue === 'total' && <ScrollGuide />}
+    </Container>
   );
 };
 
-const HomeContainer = styled.div`
+const Container = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
   width: 100%;
-  padding: 10px 50px;
-  @media ${Common.media.sm} {
-    padding: 10px 16px;
-  }
   height: calc(100vh - 60px);
   margin: 0 auto;
 `;

@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import PropTypes from 'prop-types';
-import Common from '@styles';
 import { WaffleCard, Card } from '@components';
 import LoginGuide from './LoginGuide';
 import NoCardGuide from './NoCardGuide';
@@ -114,7 +113,7 @@ const CardsContainer = ({
         );
       } else {
         return (
-          <LeftAlignedContainer {...props}>
+          <CenterAlignedContainer {...props}>
             {waffleCardsData.map(waffleCard => (
               <StyledWaffleCard
                 type="basic"
@@ -127,7 +126,7 @@ const CardsContainer = ({
                 onClickLikeToggle={handleClickLikeToggle}
               />
             ))}
-          </LeftAlignedContainer>
+          </CenterAlignedContainer>
         );
       }
     default:
@@ -135,46 +134,36 @@ const CardsContainer = ({
   }
 };
 
-const LeftAlignedContainer = styled.section`
-  position: relative;
+const CenterAlignedContainer = styled.section`
   display: flex;
+  justify-content: center;
   align-items: center;
-  height: 500px;
-  padding: 35px 0;
-  margin-top: 5vh;
-  overflow-x: scroll;
+  padding-top: 2rem;
+  margin: 4rem 0;
+  overflow-x: auto;
   -ms-overflow-style: none;
-  &::-webkit-scrollbar {
+  ::-webkit-scrollbar {
     display: none;
-  }
-  @media ${Common.media.sm} {
-    padding: 20px 0;
-    min-height: 300px;
-    justify-content: center;
   }
 `;
 
-const CenterAlignedContainer = styled.section`
-  position: relative;
+const LeftAlignedContainer = styled.section`
   display: flex;
-  flex-wrap: nowrap;
-  justify-content: center;
   align-items: center;
-  height: 500px;
-  padding: 35px 0;
-  margin-top: 5vh;
-  overflow-x: scroll;
+  padding-top: 2rem;
+  margin: 4rem 0;
+  overflow-x: auto;
   -ms-overflow-style: none;
-  &::-webkit-scrollbar {
+  ::-webkit-scrollbar {
     display: none;
   }
 `;
 
 const StyledWaffleCard = styled(WaffleCard)`
   flex: 0 0 auto;
-  margin: 0 10px;
+  margin: 0 1rem;
   &:hover {
-    transform: translateY(-18px);
+    transform: translateY(-1rem);
   }
   transition: all 250ms ease-out;
 `;

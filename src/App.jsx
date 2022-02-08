@@ -7,10 +7,8 @@ function App() {
   return (
     <UserProvider>
       <ModalsProvider>
-        <div className="App">
-          <Header />
-          <Router />
-        </div>
+        <Header />
+        <Router />
       </ModalsProvider>
     </UserProvider>
   );
