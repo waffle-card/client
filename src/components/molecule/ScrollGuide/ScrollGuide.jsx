@@ -95,7 +95,7 @@ const DelButton = styled.div`
 `;
 
 ScrollGuide.defaultProps = {
-  tabStatus: '',
+  tabStatus: 'total',
 };
 
 ScrollGuide.propTypes = {
