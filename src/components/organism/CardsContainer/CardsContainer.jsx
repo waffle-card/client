@@ -6,7 +6,6 @@ import { WaffleCard, Card } from '@components';
 import LoginGuide from './LoginGuide';
 import NoCardGuide from './NoCardGuide';
 import { useUser } from '@contexts';
-import { likeApi } from '@apis';
 
 const CardsContainer = ({
   type,
@@ -15,6 +14,8 @@ const CardsContainer = ({
   onClickWaffleCardCreate,
   onClickWaffleCardEdit,
   onClickWaffleCardDelete,
+  onClickLikeToggle,
+  onSubmit,
   ...props
 }) => {
   const { userInfo } = useUser();
@@ -35,22 +36,8 @@ const CardsContainer = ({
     onClickWaffleCardDelete && onClickWaffleCardDelete(waffleCardId);
   };
 
-  const handleClickLikeToggle = async (waffleCardId, likeToggled) => {
-    if (likeToggled) {
-      // TODO: 좋아요 생성 가능 여부 검사
-      try {
-        await likeApi.createLike(waffleCardId);
-      } catch (error) {
-        console.error(`in ChattingCard : 좋아요 생성 실패 - ${error.message}`);
-      }
-    } else {
-      // TODO: 좋아요 생성 가능 여부 검사
-      try {
-        await likeApi.deleteLike(waffleCardId);
-      } catch (error) {
-        console.error(`in ChattingCard : 좋아요 삭제 실패 - ${error.message}`);
-      }
-    }
+  const handleClickLikeToggle = (waffleCardId, likeToggled) => {
+    onClickLikeToggle && onClickLikeToggle(waffleCardId, likeToggled);
   };
 
   switch (type) {

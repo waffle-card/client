@@ -9,10 +9,10 @@ import {
   Button,
   Spinner,
   WaffleCard,
-  HashTagInput,
   ColorPalette,
-  EmojiPickerActiveButton,
 } from '@components';
+import EmojiPickerActiveButton from './EmojiPickerActiveButton';
+import HashTagsInputs from './HashTagsInputs';
 import Swal from 'sweetalert2';
 
 // TODO(윤호): visible 삭제하기
@@ -118,7 +118,11 @@ const CardEditModal = ({
             </Wrapper>
             <Wrapper>
               <StyledText>해시태그</StyledText>
-              <HashTagInput color="white" onChange={handleChangeHashTags} />
+              <HashTagsInputs
+                color="white"
+                initHashTags={waffleCard.hashTags}
+                onChange={handleChangeHashTags}
+              />
               <StyledText size={14} color="red">
                 {waffleCard.hashTags.length <= 0
                   ? '최소 1개 이상의 해시태그를 작성해주세요.'

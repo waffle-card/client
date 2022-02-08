@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 import Swal from 'sweetalert2';
 import Common from '@styles';
 import { useModals } from '@hooks';
-import { waffleCardApi, commentApi } from '@apis';
+import { waffleCardApi, commentApi, likeApi } from '@apis';
 import {
   Tab,
   Spinner,
@@ -63,6 +63,10 @@ const HomePage = () => {
       openModal(ChattingCard, {
         waffleCardData: waffleCardData,
         commentsData: commentsData ?? [],
+        onClickLikeToggle: (waffleCardId, likeToggled) => {
+          console.log('여기보자.', waffleCardId, likeToggled);
+          handleClickLikeToggle(waffleCardId, likeToggled);
+        },
       });
     } catch (error) {
       console.error(`in HomePage : 댓글 정보 가져오기 실패 - ${error.message}`);
@@ -117,6 +121,25 @@ const HomePage = () => {
     });
   };
 
+  const handleClickLikeToggle = async (waffleCardId, likeToggled) => {
+    setIsLoading(true);
+    if (likeToggled) {
+      try {
+        await likeApi.createLike(waffleCardId);
+      } catch (error) {
+        console.error(`in ChattingCard : 좋아요 생성 실패 - ${error.message}`);
+      }
+    } else {
+      try {
+        await likeApi.deleteLike(waffleCardId);
+      } catch (error) {
+        console.error(`in ChattingCard : 좋아요 삭제 실패 - ${error.message}`);
+      }
+    }
+    initWaffleCards();
+    setIsLoading(true);
+  };
+
   useEffect(() => {
     initWaffleCards();
   }, [initWaffleCards]);
@@ -131,6 +154,7 @@ const HomePage = () => {
         onClickWaffleCardCreate={handleClickWaffleCardCreate}
         onClickWaffleCardEdit={handleClickWaffleCardEdit}
         onClickWaffleCardDelete={handleClickWaffleCardDelete}
+        onClickLikeToggle={handleClickLikeToggle}
       />
       <ScrollGuide class="scroll_guide" />
       <Spinner loading={isLoading} />

@@ -8,13 +8,14 @@ import Header from './Header';
 import CommentEditor from './CommentEditor';
 import CommentList from './CommentList';
 import { useUser } from '@contexts';
-import { commentApi, likeApi } from '@apis';
+import { commentApi } from '@apis';
 
 // TODO(윤호): visible 삭제하기, 댓글 state를 가지게하여 댓글 생성, 수정, 삭제시 리렌더링 되도록 하기
 const ChattingCard = ({
   visible,
   waffleCardData,
   commentsData,
+  onClickLikeToggle,
   onClose,
   ...props
 }) => {
@@ -71,23 +72,8 @@ const ChattingCard = ({
     });
   };
 
-  const handleClickLikeToggle = async (waffleCardId, likeToggled) => {
-    console.log('in CardsContainer :', waffleCardId, likeToggled);
-    if (likeToggled) {
-      // TODO: 좋아요 생성 가능 여부 검사
-      try {
-        await likeApi.createLike(waffleCardId);
-      } catch (error) {
-        console.error(`in ChattingCard : 좋아요 생성 실패 - ${error.message}`);
-      }
-    } else {
-      // TODO: 좋아요 생성 가능 여부 검사
-      try {
-        await likeApi.deleteLike(waffleCardId);
-      } catch (error) {
-        console.error(`in ChattingCard : 좋아요 생성 실패 - ${error.message}`);
-      }
-    }
+  const handleClickLikeToggle = async likeToggled => {
+    onClickLikeToggle && onClickLikeToggle(waffleCardData.id, likeToggled);
   };
 
   const handleClose = () => {

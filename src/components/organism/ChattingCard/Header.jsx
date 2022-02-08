@@ -19,8 +19,8 @@ const Header = ({
     onClickBackButton && onClickBackButton();
   };
 
-  const handleClickLikeToggle = (likeToggled, likeCount) => {
-    onClickLikeToggle && onClickLikeToggle(likeToggled, likeCount);
+  const handleClickLikeToggle = likeToggled => {
+    onClickLikeToggle && onClickLikeToggle(likeToggled);
   };
 
   return (
