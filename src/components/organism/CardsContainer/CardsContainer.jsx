@@ -8,6 +8,7 @@ import NoCardGuide from './NoCardGuide';
 import { useUser } from '@contexts';
 import { likeApi } from '@apis';
 
+// TODO(윤호): 로딩 추가하기
 const CardsContainer = ({
   type,
   waffleCardsData,
@@ -42,14 +43,14 @@ const CardsContainer = ({
       try {
         await likeApi.createLike(waffleCardId);
       } catch (error) {
-        console.error('in CardsContainer : 좋아요 생성 실패');
+        console.error(`in ChattingCard : 좋아요 생성 실패 - ${error.message}`);
       }
     } else {
       // TODO: 좋아요 생성 가능 여부 검사
       try {
         await likeApi.deleteLike(waffleCardId);
       } catch (error) {
-        console.error('in CardsContainer : 좋아요 삭제 실패');
+        console.error(`in ChattingCard : 좋아요 삭제 실패 - ${error.message}`);
       }
     }
   };

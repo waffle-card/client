@@ -44,59 +44,6 @@ const HomePage = () => {
     openModal(ChattingCard, {
       waffleCardData: waffleCardData,
       commentsData: commentsData ?? [],
-      onClickLikeToggle: async likeToggled => {
-        if (likeToggled) {
-          try {
-            await likeApi.createLike(waffleCardData.id);
-          } catch (error) {
-            Swal.fire({
-              icon: 'error',
-              text: error.message,
-            });
-          }
-          return;
-        } else {
-          try {
-            await likeApi.deleteLike(waffleCardData.id);
-          } catch (error) {
-            Swal.fire({
-              icon: 'error',
-              text: error.message,
-            });
-          }
-          return;
-        }
-      },
-      onSubmitComment: async text => {
-        try {
-          await commentApi.createComment({ waffleCardId, text });
-        } catch (error) {
-          Swal.fire({
-            icon: 'error',
-            text: error.message,
-          });
-        }
-      },
-      onClickEditComment: async (commentId, text) => {
-        // try {
-        //   await commentApi.updateComment(commentId, text);
-        // } catch (error) {
-        //   Swal.fire({
-        //     icon: 'error',
-        //     text: error.message,
-        //   });
-        // }
-      },
-      onClickDeleteComment: async commentId => {
-        try {
-          await commentApi.deleteComment(commentId);
-        } catch (error) {
-          Swal.fire({
-            icon: 'error',
-            text: error.message,
-          });
-        }
-      },
     });
   };
 

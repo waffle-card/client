@@ -7,12 +7,14 @@ import {
   Text,
   Modal,
   Button,
+  Spinner,
   WaffleCard,
   HashTagInput,
   ColorPalette,
   EmojiPickerActiveButton,
 } from '@components';
 
+// TODO(윤호): visible 삭제하기, 로딩 추가하기
 const CardEditModal = ({
   visible,
   editMode,
@@ -20,6 +22,7 @@ const CardEditModal = ({
   onClose,
   ...props
 }) => {
+  const [isLoading, setIsLoading] = useState(false);
   const [waffleCard, setWaffleCard] = useState(initialWaffleCardData);
 
   const createWaffleCard = async () => {
@@ -116,6 +119,7 @@ const CardEditModal = ({
           </StyledButton>
         </ButtonContainer>
       </FormContainer>
+      {isLoading && <Spinner loading={isLoading} />}
     </StyledModal>
   );
 };

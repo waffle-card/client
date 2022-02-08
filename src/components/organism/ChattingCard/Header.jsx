@@ -10,6 +10,7 @@ const Header = ({
   waffleCardData,
   onClickLikeToggle,
   onClickBackButton,
+  likeCount,
   likeToggled,
   interactiveLikeToggle,
   ...props
@@ -36,6 +37,7 @@ const Header = ({
           active={likeToggled}
           interactive={interactiveLikeToggle}
           onClick={handleClickLikeToggle}
+          count={likeCount}
         />
       </UpperWrapper>
       <LowerWrapper>
