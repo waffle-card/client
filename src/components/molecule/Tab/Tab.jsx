@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
@@ -11,15 +11,19 @@ import { tebItemSize } from '@styles/mixin';
 const Tab = ({ currentActive, onClick, ...props }) => {
   const [activeItem, setActiveItem] = useState(currentActive);
 
-  const handleClickTabItem = name => {
-    setActiveItem(name);
-    onClick && onClick(name);
-  };
+  const handleClickTabItem = useCallback(
+    name => {
+      setActiveItem(name);
+      onClick && onClick(name);
+    },
+    [onClick],
+  );
 
   return (
     <TabItemContainer {...props}>
       {Object.entries(TAB_MENU).map(([key, value]) => (
         <TabItem
+          key={key}
           title={value}
           name={key}
           activeItem={activeItem}

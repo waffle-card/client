@@ -1,8 +1,37 @@
 import styled from '@emotion/styled';
+import PropTypes from 'prop-types';
 import React, { useState, useEffect } from 'react';
 import { Text, Icons } from '@components';
 import Common from '@styles';
 import useToggle from '@hooks/useToggle';
+
+const ScrollGuide = ({ tabStatus, ...props }) => {
+  const [isVisible, setIsVisible] = useState(tabStatus === 'total');
+  const [isDelete, toggle] = useToggle(false);
+
+  useEffect(() => {
+    setIsVisible(tabStatus === 'total');
+  }, [tabStatus]);
+
+  return (
+    <Container isDelete={isDelete} isVisible={isVisible} {...props}>
+      <DelButton className="del_Button" onClick={toggle}>
+        <Icons fontSize={'10px'}>
+          <Icons.Delete></Icons.Delete>
+        </Icons>
+      </DelButton>
+      <ImgBox>
+        <img
+          src={require('./scroll_guide_icon.png').default}
+          alt="scrollguide"
+        />
+      </ImgBox>
+      <StyledText weight={Common.fontWeight.regular}>
+        Shift+스크롤로 카드들을 둘러보세요!
+      </StyledText>
+    </Container>
+  );
+};
 
 const Container = styled.div`
   position: relative;
@@ -65,37 +94,12 @@ const DelButton = styled.div`
   }
 `;
 
-const ScrollGuide = () => {
-  const [isVisible, setIsVisible] = useState(false);
-  const [isDelete, toggle] = useToggle(false);
+ScrollGuide.defaultProps = {
+  tabStatus: '',
+};
 
-  const currentUrlArr = window.location.pathname.split('/');
-  useEffect(() => {
-    if (currentUrlArr.includes('today') || currentUrlArr[1] === '') {
-      setIsVisible(true);
-      return;
-    }
-    setIsVisible(false);
-  }, [currentUrlArr]);
-
-  return (
-    <Container isDelete={isDelete} isVisible={isVisible}>
-      <DelButton className="del_Button" onClick={toggle}>
-        <Icons fontSize={'10px'}>
-          <Icons.Delete></Icons.Delete>
-        </Icons>
-      </DelButton>
-      <ImgBox>
-        <img
-          src={require('./scroll_guide_icon.png').default}
-          alt="scrollguide"
-        />
-      </ImgBox>
-      <StyledText weight={Common.fontWeight.regular}>
-        Shift+스크롤로 카드들을 둘러보세요!
-      </StyledText>
-    </Container>
-  );
+ScrollGuide.propTypes = {
+  tabStatus: PropTypes.string,
 };
 
 export default ScrollGuide;

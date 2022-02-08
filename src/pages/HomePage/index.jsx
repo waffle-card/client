@@ -99,20 +99,20 @@ const HomePage = () => {
     // eslint-disable-next-line
   }, [cardListName]);
 
-  const handleTabClick = name => {
+  const handleClickTab = useCallback(name => {
     setCardListName(name);
-  };
+  }, []);
 
   return (
     <HomeContainer>
-      <Tab onClick={handleTabClick} currentActive={cardListName} />
+      <Tab onClick={handleClickTab} currentActive={cardListName} />
       <CardsContainer
         myCard={cardListName === 'my'}
         userInfo={userInfo}
         cardList={cardList}
         currentParam={cardListName}
       />
-      <ScrollGuide class="scroll_guide" />
+      <ScrollGuide tabStatus={cardListName} />
       <Spinner loading={isLoading} />
       <Outlet />
     </HomeContainer>
