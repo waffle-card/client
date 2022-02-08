@@ -155,7 +155,7 @@ const HomePage = () => {
         onClickWaffleCardDelete={handleClickWaffleCardDelete}
         onClickLikeToggle={handleClickLikeToggle}
       />
-      <ScrollGuide class="scroll_guide" />
+      <ScrollGuide tabStatus={tabValue} />
       <Spinner loading={isLoading} />
       <Modals />
     </HomeContainer>

@@ -5,11 +5,11 @@ import { rgba } from 'polished';
 import { tebItemSize } from '@styles/mixin';
 
 const TabItem = ({ title, name, activeItem, onClick, ...props }) => {
-  const handleClick = () => {
+  const handleClickTabItem = () => {
     onClick && onClick(name);
   };
   return (
-    <TabItemWrapper onClick={handleClick} {...props}>
+    <TabItemWrapper onClick={handleClickTabItem} {...props}>
       <LinkBox>
         <TabItemTitle name={name} activeItem={activeItem} {...props}>
           {title}
