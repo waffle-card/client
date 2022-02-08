@@ -49,12 +49,12 @@ const HomePage = () => {
       waffleCardData: waffleCardData,
       userData: userInfo,
       commentsData: commentsData ?? [],
-      onClickLikeToggle: async (likeToggled, likeCount) => {
-        console.log('likeToggled is', likeToggled);
+      onClickLikeToggle: async likeToggled => {
+        console.log(waffleCardData.id);
 
         if (likeToggled) {
           try {
-            await likeApi.createLike(waffleCardId);
+            await likeApi.createLike(waffleCardData.id);
           } catch (error) {
             Swal.fire({
               icon: 'error',
@@ -64,7 +64,7 @@ const HomePage = () => {
           return;
         } else {
           try {
-            await likeApi.deleteLike(waffleCardId);
+            await likeApi.deleteLike(waffleCardData.id);
           } catch (error) {
             Swal.fire({
               icon: 'error',

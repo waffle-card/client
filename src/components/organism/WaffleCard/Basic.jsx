@@ -3,6 +3,7 @@ import Common from '@styles';
 import PropTypes from 'prop-types';
 import { Card, Text, LikeBox } from '@components';
 import styled from '@emotion/styled';
+import { useUser } from '@contexts';
 
 const countDaysFromToday = date => {
   date = typeof date === 'string' ? new Date(date) : date;
@@ -14,8 +15,10 @@ const WaffleCard = ({
   waffleCardData,
   onClickWaffleCard,
   onClickLike,
+  likeToggled,
   ...props
 }) => {
+  const { userInfo } = useUser();
   const { id, emoji, color, hashTags, updatedAt } = waffleCardData;
   const days = countDaysFromToday(updatedAt);
 
@@ -32,7 +35,12 @@ const WaffleCard = ({
       {...props}>
       <InfoContainer>
         <StyledText block>{days <= 0 ? '오늘' : `${days}일 전`}</StyledText>
-        <LikeBox onClick={handleClickLikeBox} interactive />
+        <LikeBox
+          onClick={handleClickLikeBox}
+          active={likeToggled}
+          interactive={!!userInfo}
+          count={waffleCardData.likeCount}
+        />
       </InfoContainer>
       <EmojiText block size={70}>
         {emoji}

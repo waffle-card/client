@@ -1,8 +1,9 @@
 import styled from '@emotion/styled';
-import { useClickAway } from '@hooks';
+// import { useClickAway } from '@hooks';
 import PropTypes from 'prop-types';
 import Common from '@styles';
 import { Portal } from '@components';
+// import { forwardRef } from 'react';
 
 const Modal = ({
   children,
@@ -13,15 +14,16 @@ const Modal = ({
   onClose,
   ...props
 }) => {
-  const ref = useClickAway(() => {
-    onClose && onClose();
-  });
+  //TODO(윤호): 모달에서 Swal 사용으로 인해 모달이 닫히는 현상이 있음
+  // const ref = useClickAway(() => {
+  //   onClose && onClose();
+  // });
 
   return (
     <Portal>
       <BackgroundDim style={{ display: visible ? 'block' : 'none' }}>
         <ModalContainer
-          ref={ref}
+          // ref={ref}
           width={width}
           height={height}
           backgroundColor={backgroundColor}
@@ -32,7 +34,6 @@ const Modal = ({
     </Portal>
   );
 };
-
 const BackgroundDim = styled.div`
   position: fixed;
   top: 0;

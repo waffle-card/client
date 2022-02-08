@@ -32,18 +32,22 @@ const CardsContainer = ({
             <NoCardGuide />
           </EmptyContainer>
         );
+      } else {
+        return (
+          <CardListContainer {...props}>
+            {waffleCardsData.map(waffleCard => (
+              <BasicWaffleCard
+                key={waffleCard.id}
+                waffleCardData={waffleCard}
+                onClickWaffleCard={handleClickWaffleCard}
+                likeToggled={
+                  waffleCard && waffleCard.likeUserIds.includes(userInfo?.id)
+                }
+              />
+            ))}
+          </CardListContainer>
+        );
       }
-      return (
-        <CardListContainer {...props}>
-          {waffleCardsData.map(waffleCard => (
-            <BasicWaffleCard
-              key={waffleCard.id}
-              waffleCardData={waffleCard}
-              onClickWaffleCard={handleClickWaffleCard}
-            />
-          ))}
-        </CardListContainer>
-      );
     case 'my':
       if (!userInfo) {
         return (
@@ -51,25 +55,28 @@ const CardsContainer = ({
             <LoginGuide />
           </EmptyContainer>
         );
-      }
-      if (waffleCardsData.length <= 0) {
+      } else if (waffleCardsData.length <= 0) {
         return (
           <EmptyContainer>
             <Card.Empty onClick={handleEmptyCard} />
           </EmptyContainer>
         );
+      } else {
+        return (
+          <CardListContainer {...props}>
+            {waffleCardsData.map(waffleCard => (
+              <MyWaffleCard
+                key={waffleCard.id}
+                waffleCardData={waffleCard}
+                onClickWaffleCard={handleClickWaffleCard}
+                likeToggled={
+                  waffleCard && waffleCard?.likeUserIds.includes(userInfo?.id)
+                }
+              />
+            ))}
+          </CardListContainer>
+        );
       }
-      return (
-        <CardListContainer {...props}>
-          {waffleCardsData.map(waffleCard => (
-            <MyWaffleCard
-              key={waffleCard.id}
-              waffleCardData={waffleCard}
-              onClickWaffleCard={handleClickWaffleCard}
-            />
-          ))}
-        </CardListContainer>
-      );
     case 'like':
       if (!userInfo) {
         return (
@@ -77,26 +84,28 @@ const CardsContainer = ({
             <LoginGuide />
           </EmptyContainer>
         );
-      }
-      if (waffleCardsData.length <= 0) {
+      } else if (waffleCardsData.length <= 0) {
         return (
           <EmptyContainer>
             <NoCardGuide />
           </EmptyContainer>
         );
+      } else {
+        return (
+          <CardListContainer {...props}>
+            {waffleCardsData.map(waffleCard => (
+              <BasicWaffleCard
+                key={waffleCard.id}
+                waffleCardData={waffleCard}
+                onClickWaffleCard={handleClickWaffleCard}
+                likeToggled={
+                  waffleCard && waffleCard.likeUserIds.includes(userInfo?.id)
+                }
+              />
+            ))}
+          </CardListContainer>
+        );
       }
-      return (
-        <CardListContainer {...props}>
-          {waffleCardsData.map(waffleCard => (
-            <BasicWaffleCard
-              key={waffleCard.id}
-              waffleCardData={waffleCard}
-              onClickWaffleCard={handleClickWaffleCard}
-            />
-          ))}
-        </CardListContainer>
-      );
-
     default:
       return null;
   }
@@ -146,7 +155,7 @@ const BasicWaffleCard = styled(WaffleCard.Basic)`
   transition: all 250ms ease-out;
 `;
 
-const MyWaffleCard = styled(WaffleCard.Edit)`
+const MyWaffleCard = styled(WaffleCard.My)`
   flex: 0 0 auto;
   margin: 0 10px;
   &:hover {

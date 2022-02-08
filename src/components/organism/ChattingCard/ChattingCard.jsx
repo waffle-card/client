@@ -97,7 +97,6 @@ ChattingCard.propTypes = {
   likeToggled: PropTypes.bool,
   interactiveLikeToggle: PropTypes.bool,
   onClose: PropTypes.func,
-  onClickLikeToggle: PropTypes.func,
   onClickEditComment: PropTypes.func,
   onClickDeleteComment: PropTypes.func,
 };
