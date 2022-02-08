@@ -7,11 +7,21 @@ import LoginGuide from './LoginGuide';
 import NoCardGuide from './NoCardGuide';
 import { useUser } from '@contexts';
 
-const CardsContainer = ({ type = 'total', waffleCardsData, ...props }) => {
+const CardsContainer = ({
+  type = 'total',
+  waffleCardsData,
+  onClickWaffleCardCreate,
+  onClickWaffleCard,
+  ...props
+}) => {
   const { userInfo } = useUser();
 
   const handleEmptyCard = () => {
-    console.log('클릭!');
+    onClickWaffleCardCreate && onClickWaffleCardCreate();
+  };
+
+  const handleClickWaffleCard = waffleCardId => {
+    onClickWaffleCard && onClickWaffleCard(waffleCardId);
   };
 
   switch (type) {
@@ -26,7 +36,11 @@ const CardsContainer = ({ type = 'total', waffleCardsData, ...props }) => {
       return (
         <CardListContainer {...props}>
           {waffleCardsData.map(waffleCard => (
-            <BasicWaffleCard key={waffleCard.id} waffleCardData={waffleCard} />
+            <BasicWaffleCard
+              key={waffleCard.id}
+              waffleCardData={waffleCard}
+              onClickWaffleCard={handleClickWaffleCard}
+            />
           ))}
         </CardListContainer>
       );
@@ -48,7 +62,11 @@ const CardsContainer = ({ type = 'total', waffleCardsData, ...props }) => {
       return (
         <CardListContainer {...props}>
           {waffleCardsData.map(waffleCard => (
-            <MyWaffleCard key={waffleCard.id} waffleCardData={waffleCard} />
+            <MyWaffleCard
+              key={waffleCard.id}
+              waffleCardData={waffleCard}
+              onClickWaffleCard={handleClickWaffleCard}
+            />
           ))}
         </CardListContainer>
       );
@@ -70,7 +88,11 @@ const CardsContainer = ({ type = 'total', waffleCardsData, ...props }) => {
       return (
         <CardListContainer {...props}>
           {waffleCardsData.map(waffleCard => (
-            <BasicWaffleCard key={waffleCard.id} waffleCardData={waffleCard} />
+            <BasicWaffleCard
+              key={waffleCard.id}
+              waffleCardData={waffleCard}
+              onClickWaffleCard={handleClickWaffleCard}
+            />
           ))}
         </CardListContainer>
       );

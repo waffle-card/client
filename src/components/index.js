@@ -23,3 +23,4 @@ export { default as NameChangeModal } from './organism/NameChangeModal/NameChang
 export { default as PasswordChangeModal } from './organism/PasswordChangeModal/PasswordChangeModal';
 export { default as CardsContainer } from './organism/CardsContainer/CardsContainer';
 export { default as LikeBox } from './molecule/LikeBox/LikeBox';
+export { default as Modals } from './organism/Modals/Modals';

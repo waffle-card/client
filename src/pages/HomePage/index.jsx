@@ -1,39 +1,69 @@
 import React, { useEffect, useState } from 'react';
 import Common from '@styles';
 import styled from '@emotion/styled';
-import { waffleCardApi } from '@apis';
+import { waffleCardApi, commentApi } from '@apis';
 import {
   Tab,
   Spinner,
   CardsContainer,
   ScrollGuide,
+  Modals,
   CardEditModal,
   ChattingCard,
 } from '@components';
+import { useUser } from '@contexts';
+import { useModals } from '@hooks';
 
 const HomePage = () => {
+  const { openModal } = useModals();
+  const { userInfo } = useUser();
   const [tabValue, setTabValue] = useState('total');
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [waffleCards, setWaffleCards] = useState([]);
-  const [currentWaffleCard, setCurrentWaffleCard] = useState(null);
-  const [commentsData, setCommentsData] = useState(null);
-  const [visibleCardEditModal, setVisibleCardEditModal] = useState(false);
-  // const [visibleChattingCard, setVisibleChattingCard] = useState(false);
+
+  const handleClickWaffleCardCreate = async () => {
+    openModal(CardEditModal, {
+      onSubmit: () => {
+        console.log('비즈니스 로직 처리');
+      },
+    });
+  };
 
   const handleClickWaffleCard = async waffleCardId => {
+    console.log('waffleCardId is', waffleCardId);
+
+    const waffleCardData = waffleCards.find(
+      waffleCard => waffleCard.id === waffleCardId,
+    );
+
+    let commentsData;
     try {
-      const response = await waffleCardApi.getWaffleCardById(waffleCardId);
-      const waffleCard = response.data;
-      console.log(waffleCard);
-      setCurrentWaffleCard(waffleCard);
+      const response = await commentApi.getCommentsByWaffleCardId(waffleCardId);
+      commentsData = response.data;
     } catch (error) {
-      console.error(error.message);
+      console.error('in HomePage : 댓글 정보 가져오기 실패');
     }
+
+    openModal(ChattingCard, {
+      waffleCardData: waffleCardData,
+      userData: userInfo,
+      commentsData: commentsData ?? [],
+      onClickLikeToggle: () => {
+        console.log('좋아요 클릭!');
+      },
+      onSubmitComment: () => {
+        console.log('댓글 작성!');
+      },
+      onClickEditComment: () => {
+        console.log('댓글 수정!');
+      },
+      onClickDeleteComment: () => {
+        console.log('댓그 삭제!');
+      },
+    });
   };
 
   useEffect(() => {
-    setIsLoading(true);
-
     const initWaffleCards = async () => {
       const waffleCardsCommand = {
         total: () => {
@@ -57,6 +87,7 @@ const HomePage = () => {
         setWaffleCards(() => []);
       }
     };
+    setIsLoading(true);
 
     initWaffleCards();
 
@@ -69,29 +100,16 @@ const HomePage = () => {
 
   return (
     <HomeContainer>
-      <Tab onClick={setTabValue} />
+      <Tab onClick={setTabValue} currentActive={tabValue} />
       <CardsContainer
         type={tabValue}
         waffleCardsData={waffleCards}
         onClickWaffleCard={handleClickWaffleCard}
+        onClickWaffleCardCreate={handleClickWaffleCardCreate}
       />
       <ScrollGuide class="scroll_guide" />
       <Spinner loading={isLoading} />
-      <CardEditModal
-        visible={visibleCardEditModal}
-        onClose={() => setVisibleCardEditModal(false)}
-      />
-      {/* <ChattingCard
-        visible={visibleChattingCard}
-        waffleCardData={currentWaffleCard}
-        userData={userInfo}
-        commentsData={dummyComments}
-        onClose={() => setVisibleChattingCard(false)}
-        onClickLikeToggle={handleClickLikeToggle}
-        onSubmitComment={handleSubmitComment}
-        onClickEditComment={handleClickEditComment}
-        onClickDeleteComment={handleClickDeleteComment}
-      /> */}
+      <Modals />
     </HomeContainer>
   );
 };

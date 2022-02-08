@@ -6,7 +6,7 @@ import { Portal } from '@components';
 
 const Modal = ({
   children,
-  visible = false,
+  visible,
   width,
   height,
   backgroundColor,
@@ -17,9 +17,10 @@ const Modal = ({
     onClose && onClose();
   });
 
+  // TODO(윤호): visible에 따른 display 속성을 block 혹은 none으로 변경하기
   return (
     <Portal>
-      <BackgroundDim style={{ display: visible ? 'block' : 'none' }}>
+      <BackgroundDim style={{ display: 'block' }}>
         <ModalContainer
           ref={ref}
           width={width}

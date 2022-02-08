@@ -16,13 +16,20 @@ const WaffleCard = ({
   onClickLike,
   ...props
 }) => {
-  const { emoji, color, hashTags, updatedAt } = waffleCardData;
+  const { id, emoji, color, hashTags, updatedAt } = waffleCardData;
   const days = countDaysFromToday(updatedAt);
 
   const handleClickLikeBox = () => {};
 
+  const handleClickWaffleCard = () => {
+    onClickWaffleCard && onClickWaffleCard(id);
+  };
+
   return (
-    <StyledCard backgroundColor={color} {...props}>
+    <StyledCard
+      backgroundColor={color}
+      onClick={handleClickWaffleCard}
+      {...props}>
       <InfoContainer>
         <StyledText block>{days <= 0 ? '오늘' : `${days}일 전`}</StyledText>
         <LikeBox onClick={handleClickLikeBox} interactive />

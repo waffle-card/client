@@ -39,9 +39,10 @@ const Header = ({
         />
       </UpperWrapper>
       <LowerWrapper>
-        {waffleCardData.hashTags.map((hashTag, idx) => (
-          <HashTagText key={idx}>{`#${hashTag}`}</HashTagText>
-        ))}
+        {waffleCardData?.hashTags &&
+          waffleCardData.hashTags.map((hashTag, idx) => (
+            <HashTagText key={idx}>{`#${hashTag}`}</HashTagText>
+          ))}
       </LowerWrapper>
     </Container>
   );
