@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Common from '@styles';
 import styled from '@emotion/styled';
-import { waffleCardApi, commentApi } from '@apis';
+import { waffleCardApi, commentApi, likeApi } from '@apis';
 import {
   Tab,
   Spinner,
@@ -13,6 +13,7 @@ import {
 } from '@components';
 import { useUser } from '@contexts';
 import { useModals } from '@hooks';
+import Swal from 'sweetalert2';
 
 const HomePage = () => {
   const { openModal } = useModals();
@@ -48,17 +49,52 @@ const HomePage = () => {
       waffleCardData: waffleCardData,
       userData: userInfo,
       commentsData: commentsData ?? [],
-      onClickLikeToggle: () => {
-        console.log('좋아요 클릭!');
+      onClickLikeToggle: async (likeToggled, likeCount) => {
+        try {
+          await commentApi.createLike(waffleCardId);
+        } catch (error) {
+          Swal.fire({
+            icon: 'error',
+            text: error.message,
+          });
+        }
       },
-      onSubmitComment: () => {
+      onSubmitComment: async text => {
+        console.log(text);
+        try {
+          await commentApi.createComment({ waffleCardId, text });
+        } catch (error) {
+          Swal.fire({
+            icon: 'error',
+            text: error.message,
+          });
+        }
         console.log('댓글 작성!');
       },
-      onClickEditComment: () => {
+      onClickEditComment: async (commentId, text) => {
+        console.log(commentId, text);
+
+        // try {
+        //   await commentApi.updateComment(commentId, text);
+        // } catch (error) {
+        //   Swal.fire({
+        //     icon: 'error',
+        //     text: error.message,
+        //   });
+        // }
         console.log('댓글 수정!');
       },
-      onClickDeleteComment: () => {
-        console.log('댓그 삭제!');
+      onClickDeleteComment: async commentId => {
+        console.log(commentId);
+        try {
+          await commentApi.deleteComment(commentId);
+        } catch (error) {
+          Swal.fire({
+            icon: 'error',
+            text: error.message,
+          });
+        }
+        console.log('댓글 삭제!');
       },
     });
   };

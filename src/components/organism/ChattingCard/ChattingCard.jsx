@@ -31,8 +31,8 @@ const ChattingCard = ({
     onSubmitComment && onSubmitComment(text);
   };
 
-  const handleClickEditComment = commentId => {
-    onClickEditComment && onClickEditComment(commentId);
+  const handleClickEditComment = (commentId, text) => {
+    onClickEditComment && onClickEditComment(commentId, text);
   };
 
   const handleClickDeleteComment = commentId => {
