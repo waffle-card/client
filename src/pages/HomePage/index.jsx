@@ -64,7 +64,6 @@ const HomePage = () => {
         waffleCardData: waffleCardData,
         commentsData: commentsData ?? [],
         onClickLikeToggle: (waffleCardId, likeToggled) => {
-          console.log('여기보자.', waffleCardId, likeToggled);
           handleClickLikeToggle(waffleCardId, likeToggled);
         },
       });

@@ -28,7 +28,6 @@ const ChattingCard = ({
     try {
       const response = await commentApi.createComment(waffleCardData.id, text);
       const comment = response.data;
-      console.log(comment);
       setComments(comments => [...comments, comment]);
     } catch (error) {
       console.error(`in ChattingCard : 댓글 생성 실패 - ${error.message}`);

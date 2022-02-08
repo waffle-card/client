@@ -26,7 +26,6 @@ const CardEditModal = ({
 }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [waffleCard, setWaffleCard] = useState(initialWaffleCardData);
-  // console.log('상태', waffleCard);
 
   const createWaffleCard = async () => {
     setIsLoading(true);
@@ -50,6 +49,7 @@ const CardEditModal = ({
   };
 
   const updateWaffleCard = async () => {
+    if (waffleCard.hashTags.length <= 0) return;
     setIsLoading(true);
     try {
       await waffleCardApi.updateWaffleCard(waffleCard.id, {
@@ -87,10 +87,9 @@ const CardEditModal = ({
     });
   };
 
-  const handleChangeHashTags = values => {
-    console.log('이번엔 여기!', values);
+  const handleChangeHashTags = hashTags => {
     setWaffleCard(waffleCard => {
-      return { ...waffleCard, hashTags: values };
+      return { ...waffleCard, hashTags };
     });
   };
 

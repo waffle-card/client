@@ -50,12 +50,11 @@ const HashTagsInputs = React.memo(
     const handleChange = e => {
       const { name, value } = e.target;
       const newHashTagsMap = { ...hashTagsMap, [name]: value };
-      console.log(newHashTagsMap);
       setHashTagsMap(newHashTagsMap);
-      const result = Object.values(newHashTagsMap).filter(
+      const hashTags = Object.values(newHashTagsMap).filter(
         value => value !== '',
       );
-      onChange && onChange(result);
+      onChange && onChange(hashTags);
     };
 
     return (
