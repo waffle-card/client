@@ -10,6 +10,7 @@ const Header = ({
   waffleCardData,
   onClickLikeToggle,
   onClickBackButton,
+  likeCount,
   likeToggled,
   interactiveLikeToggle,
   ...props
@@ -18,8 +19,8 @@ const Header = ({
     onClickBackButton && onClickBackButton();
   };
 
-  const handleClickLikeToggle = (likeToggled, likeCount) => {
-    onClickLikeToggle && onClickLikeToggle(likeToggled, likeCount);
+  const handleClickLikeToggle = likeToggled => {
+    onClickLikeToggle && onClickLikeToggle(likeToggled);
   };
 
   return (
@@ -36,12 +37,14 @@ const Header = ({
           active={likeToggled}
           interactive={interactiveLikeToggle}
           onClick={handleClickLikeToggle}
+          count={likeCount}
         />
       </UpperWrapper>
       <LowerWrapper>
-        {waffleCardData.hashTags.map((hashTag, idx) => (
-          <HashTagText key={idx}>{`#${hashTag}`}</HashTagText>
-        ))}
+        {waffleCardData?.hashTags &&
+          waffleCardData.hashTags.map((hashTag, idx) => (
+            <HashTagText key={idx}>{`#${hashTag}`}</HashTagText>
+          ))}
       </LowerWrapper>
     </Container>
   );

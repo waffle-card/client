@@ -1,26 +1,79 @@
 import React, { useState } from 'react';
 import Common from '@styles';
-import Swal from 'sweetalert2';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
+import { waffleCardApi } from '@apis';
 import {
   Text,
   Modal,
   Button,
+  Spinner,
   WaffleCard,
-  HashTagInput,
   ColorPalette,
-  EmojiPickerActiveButton,
 } from '@components';
+import EmojiPickerActiveButton from './EmojiPickerActiveButton';
+import HashTagsInputs from './HashTagsInputs';
+import Swal from 'sweetalert2';
 
+// TODO(윤호): visible 삭제하기
 const CardEditModal = ({
+  visible,
   editMode,
-  initialWaffleCard,
-  onClose,
+  initialWaffleCardData,
   onSubmit,
+  onClose,
   ...props
 }) => {
-  const [waffleCard, setWaffleCard] = useState(initialWaffleCard);
+  const [isLoading, setIsLoading] = useState(false);
+  const [waffleCard, setWaffleCard] = useState(initialWaffleCardData);
+
+  const createWaffleCard = async () => {
+    setIsLoading(true);
+    try {
+      await waffleCardApi.createWaffleCard({
+        emoji: waffleCard.emoji,
+        color: waffleCard.color,
+        hashTags: waffleCard.hashTags,
+      });
+    } catch (error) {
+      console.error(`in CardEditModal: ${error.message}`);
+    }
+    setIsLoading(false);
+    Swal.fire({
+      icon: 'success',
+      text: '생성이 완료되었습니다.',
+    }).then(() => {
+      onClose && onClose();
+    });
+    onSubmit && onSubmit();
+  };
+
+  const updateWaffleCard = async () => {
+    if (waffleCard.hashTags.length <= 0) return;
+    setIsLoading(true);
+    try {
+      await waffleCardApi.updateWaffleCard(waffleCard.id, {
+        emoji: waffleCard.emoji,
+        color: waffleCard.color,
+        hashTags: waffleCard.hashTags,
+      });
+    } catch (error) {
+      console.error(`in CardEditModal: ${error.message}`);
+    }
+    setIsLoading(false);
+    Swal.fire({
+      icon: 'success',
+      text: '수정이 완료되었습니다.',
+    }).then(() => {
+      onClose && onClose();
+    });
+    onSubmit && onSubmit();
+  };
+
+  const handleSubmit = async e => {
+    e.preventDefault();
+    editMode ? updateWaffleCard() : createWaffleCard();
+  };
 
   const handleChangeEmoji = emoji => {
     setWaffleCard(waffleCard => {
@@ -34,37 +87,21 @@ const CardEditModal = ({
     });
   };
 
-  const handleChangeHashTagInput = values => {
+  const handleChangeHashTags = hashTags => {
     setWaffleCard(waffleCard => {
-      return { ...waffleCard, hashTags: values };
+      return { ...waffleCard, hashTags };
     });
   };
 
-  const handleClose = e => {
-    onClose && onClose(e);
-  };
-
-  const handleSubmit = async e => {
-    e.preventDefault();
-
-    if (waffleCard.hashTags.length <= 0) {
-      Swal.fire({
-        title: '😱',
-        text: '최소 1개 이상의 해시태그를 작성해주세요.',
-        confirmButtonColor: Common.colors.point,
-      });
-
-      return;
-    }
-
-    onSubmit && onSubmit(waffleCard);
+  const handleClose = () => {
+    onClose && onClose();
   };
 
   return (
-    <StyledModal visible onClose={onClose} {...props}>
+    <StyledModal visible hi={'hi'} onClose={handleClose} {...props}>
       <FormContainer onSubmit={handleSubmit} id="cardForm">
         <CardEditContainer>
-          <WaffleCard.Plain waffleCard={waffleCard} />
+          <WaffleCard type="plain" waffleCardData={waffleCard} />
           <EditContainer>
             <Wrapper>
               <StyledText>이모지</StyledText>
@@ -80,7 +117,11 @@ const CardEditModal = ({
             </Wrapper>
             <Wrapper>
               <StyledText>해시태그</StyledText>
-              <HashTagInput color="white" onChange={handleChangeHashTagInput} />
+              <HashTagsInputs
+                color="white"
+                initHashTags={waffleCard.hashTags}
+                onChange={handleChangeHashTags}
+              />
               <StyledText size={14} color="red">
                 {waffleCard.hashTags.length <= 0
                   ? '최소 1개 이상의 해시태그를 작성해주세요.'
@@ -103,6 +144,7 @@ const CardEditModal = ({
           </StyledButton>
         </ButtonContainer>
       </FormContainer>
+      {isLoading && <Spinner loading={isLoading} />}
     </StyledModal>
   );
 };
@@ -170,12 +212,11 @@ CardEditModal.propTypes = {
   visible: PropTypes.bool,
   initialWaffleCard: PropTypes.object,
   onClose: PropTypes.func,
-  onSubmit: PropTypes.func,
 };
 
 CardEditModal.defaultProps = {
   visible: false,
-  initialWaffleCard: {
+  initialWaffleCardData: {
     id: 'test',
     emoji: '🧇',
     color: Common.colors.yellow,

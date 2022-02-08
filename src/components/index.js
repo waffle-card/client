@@ -14,8 +14,6 @@ export { default as EditBox } from './molecule/EditBox/EditBox';
 export { default as WaffleCard } from './organism/WaffleCard/WaffleCard';
 export { default as CardEditModal } from './organism/CardEditModal/CardEditModal';
 export { default as ChattingCard } from './organism/ChattingCard/ChattingCard';
-export { default as HashTagInput } from './organism/CardEditModal/HashTagInput';
-export { default as EmojiPickerActiveButton } from './organism/CardEditModal/EmojiPickerActiveButton';
 export { default as Tab } from './molecule/Tab/Tab';
 export { default as TabItem } from './molecule/Tab/TabItem';
 export { default as Header } from './organism/Header/Header';
@@ -23,3 +21,4 @@ export { default as NameChangeModal } from './organism/NameChangeModal/NameChang
 export { default as PasswordChangeModal } from './organism/PasswordChangeModal/PasswordChangeModal';
 export { default as CardsContainer } from './organism/CardsContainer/CardsContainer';
 export { default as LikeBox } from './molecule/LikeBox/LikeBox';
+export { default as Modals } from './organism/Modals/Modals';

@@ -1,9 +1,8 @@
-import styled from '@emotion/styled';
-import React, { useCallback } from 'react';
-import { Text } from '@components';
+import React from 'react';
 import PropTypes from 'prop-types';
+import styled from '@emotion/styled';
+import { Text } from '@components';
 import Common from '@styles';
-import { useNavigate } from 'react-router-dom';
 
 const Container = styled.div`
   display: flex;
@@ -44,14 +43,9 @@ const IconText = styled(Text)`
 `;
 
 const Empty = ({ fontSize, iconSize, onClick, ...props }) => {
-  const navigate = useNavigate();
-  const handleClick = useCallback(
-    e => {
-      onClick && onClick(e);
-      navigate('/cards/my/create');
-    },
-    [onClick, navigate],
-  );
+  const handleClick = e => {
+    onClick && onClick(e);
+  };
 
   return (
     <Container onClick={handleClick} {...props}>

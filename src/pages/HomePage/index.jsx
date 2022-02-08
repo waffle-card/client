@@ -1,133 +1,172 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import styled from '@emotion/styled';
-import Common from '@styles';
-import { Tab, Spinner, CardsContainer, ScrollGuide } from '@components';
-import { Outlet } from 'react-router-dom';
-import { cardApi } from '@apis';
 import Swal from 'sweetalert2';
-import { parseCardInfo } from '@utils';
-import { useUser } from '@contexts';
+import { useModals } from '@hooks';
+import { waffleCardApi, commentApi, likeApi } from '@apis';
+import {
+  Tab,
+  Spinner,
+  CardsContainer,
+  ScrollGuide,
+  Modals,
+  CardEditModal,
+  ChattingCard,
+} from '@components';
 
 const HomePage = () => {
-  const { userInfo } = useUser();
-  const [cardList, setCardList] = useState([]);
-  const [cardListName, setCardListName] = useState('total');
-  const [isLoading, setIsLoading] = useState(false);
+  const { openModal } = useModals();
+  const [tabValue, setTabValue] = useState('total');
+  const [isLoading, setIsLoading] = useState(true);
+  const [waffleCards, setWaffleCards] = useState([]);
 
-  const getTodayCardList = useCallback(async () => {
+  const initWaffleCards = useCallback(async () => {
     setIsLoading(true);
+
+    const waffleCardsCommand = {
+      total: () => {
+        return waffleCardApi.getWaffleCards();
+      },
+      my: () => {
+        return waffleCardApi.getMyWaffleCard();
+      },
+      like: () => {
+        return waffleCardApi.getMyLikedWaffleCards();
+      },
+    };
+
     try {
-      const response = await cardApi.getChannelCardList();
-      const waffleCards = response.data.map(waffleCard => {
-        return parseCardInfo(waffleCard);
-      });
-      setCardList(waffleCards);
+      const response = await waffleCardsCommand[tabValue]();
+      // TODO(윤호): 서버에서 좋아요 와플카드리스트 요청시 null이 포함되어지는 경우가 있어서 필터링 추가해놓음, 서버 안정화시 filter메서드 제거하기
+      const waffleCards = response.data.filter(waffleCard => !!waffleCard);
+
+      setWaffleCards(() => waffleCards);
     } catch (error) {
-      Swal.fire({
-        title: '🥲',
-        text: error,
-        confirmButtonColor: Common.colors.point,
-      });
+      console.error(
+        `in HomePage : 와플 카드 전체 목록 가져오기 실패 - ${error.message}`,
+      );
+      setWaffleCards(() => []);
     }
+
     setIsLoading(false);
-  }, []);
+  }, [tabValue]);
 
-  const getMyCardList = async userId => {
+  const handleClickWaffleCard = async waffleCardId => {
     setIsLoading(true);
+
+    const waffleCardData = waffleCards.find(
+      waffleCard => waffleCard.id === waffleCardId,
+    );
+
     try {
-      if (userId) {
-        const response = await cardApi.getUserCardList(userId);
-        const cardList = response.data.map(cardData => {
-          return parseCardInfo(cardData);
-        });
-        setCardList(cardList);
-      } else {
-        setCardList([]);
-      }
+      const response = await commentApi.getCommentsByWaffleCardId(waffleCardId);
+      const commentsData = response.data;
+      openModal(ChattingCard, {
+        waffleCardData: waffleCardData,
+        commentsData: commentsData ?? [],
+        onClickLikeToggle: (waffleCardId, likeToggled) => {
+          handleClickLikeToggle(waffleCardId, likeToggled);
+        },
+      });
     } catch (error) {
+      console.error(`in HomePage : 댓글 정보 가져오기 실패 - ${error.message}`);
       Swal.fire({
-        title: '🥲',
-        text: error,
-        confirmButtonColor: Common.colors.point,
+        icon: 'warning',
+        text: `카드 정보를 가져오는데 실패했습니다. 잠시후에 다시 시도해주세요.`,
       });
     }
+
     setIsLoading(false);
   };
 
-  const getBookmarkCardList = useCallback(async () => {
-    if (!userInfo) return;
-    try {
-      setIsLoading(true);
-      const response = await cardApi.getChannelCardList();
-      const CardDataList = response.data.filter(card => {
-        return card.likes.find(like => like.user === userInfo.id)
-          ? true
-          : false;
-      });
-      const favoriteCardList = CardDataList.map(cardData => {
-        return parseCardInfo(cardData);
-      });
-      setCardList(favoriteCardList);
-    } catch (error) {
-      Swal.fire({
-        title: '🥲',
-        text: error,
-        confirmButtonColor: Common.colors.point,
-      });
+  const handleClickWaffleCardCreate = async () => {
+    openModal(CardEditModal, {
+      onSubmit: () => {
+        initWaffleCards();
+      },
+    });
+  };
+
+  const handleClickWaffleCardEdit = waffleCardId => {
+    const waffleCardData = waffleCards.find(
+      waffleCard => waffleCard.id === waffleCardId,
+    );
+
+    openModal(CardEditModal, {
+      editMode: true,
+      initialWaffleCardData: waffleCardData,
+      onSubmit: () => {
+        initWaffleCards();
+      },
+    });
+  };
+
+  const handleClickWaffleCardDelete = async waffleCardId => {
+    Swal.fire({
+      icon: 'question',
+      text: '정말 삭제하시겠습니까?',
+      showCancelButton: true,
+      showCloseButton: true,
+      confirmButtonText: '예',
+      cancelButtonText: '아니오',
+    }).then(async result => {
+      if (result.isConfirmed) {
+        try {
+          await waffleCardApi.deleteWaffleCard(waffleCardId);
+          initWaffleCards();
+        } catch (error) {
+          console.error(`in ChattingCard : 댓글 삭제 실패 - ${error.message}`);
+        }
+      }
+    });
+  };
+
+  const handleClickLikeToggle = async (waffleCardId, likeToggled) => {
+    setIsLoading(true);
+    if (likeToggled) {
+      try {
+        await likeApi.createLike(waffleCardId);
+      } catch (error) {
+        console.error(`in ChattingCard : 좋아요 생성 실패 - ${error.message}`);
+      }
+    } else {
+      try {
+        await likeApi.deleteLike(waffleCardId);
+      } catch (error) {
+        console.error(`in ChattingCard : 좋아요 삭제 실패 - ${error.message}`);
+      }
     }
-    setIsLoading(false);
-  }, [userInfo]);
+    initWaffleCards();
+    setIsLoading(true);
+  };
 
   useEffect(() => {
-    const init = async () => {
-      if (cardListName === 'total') {
-        await getTodayCardList();
-        return;
-      }
-      if (cardListName === 'my') {
-        await getMyCardList(userInfo?.id);
-        return;
-      }
-      if (cardListName === 'like') {
-        await getBookmarkCardList();
-        return;
-      }
-    };
-    setIsLoading(true);
-    init();
-    setIsLoading(false);
-    // eslint-disable-next-line
-  }, [cardListName]);
-
-  const handleClickTab = useCallback(name => {
-    setCardListName(name);
-  }, []);
+    initWaffleCards();
+  }, [initWaffleCards]);
 
   return (
-    <HomeContainer>
-      <Tab onClick={handleClickTab} currentActive={cardListName} />
+    <Container>
+      <Tab onClick={setTabValue} currentActive={tabValue} />
       <CardsContainer
-        myCard={cardListName === 'my'}
-        userInfo={userInfo}
-        cardList={cardList}
-        currentParam={cardListName}
+        type={tabValue}
+        waffleCardsData={waffleCards}
+        onClickWaffleCard={handleClickWaffleCard}
+        onClickWaffleCardCreate={handleClickWaffleCardCreate}
+        onClickWaffleCardEdit={handleClickWaffleCardEdit}
+        onClickWaffleCardDelete={handleClickWaffleCardDelete}
+        onClickLikeToggle={handleClickLikeToggle}
       />
-      <ScrollGuide tabStatus={cardListName} />
       <Spinner loading={isLoading} />
-      <Outlet />
-    </HomeContainer>
+      <Modals />
+      {tabValue === 'total' && <ScrollGuide />}
+    </Container>
   );
 };
 
-const HomeContainer = styled.div`
+const Container = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
   width: 100%;
-  padding: 10px 50px;
-  @media ${Common.media.sm} {
-    padding: 10px 16px;
-  }
   height: calc(100vh - 60px);
   margin: 0 auto;
 `;

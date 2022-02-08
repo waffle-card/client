@@ -31,7 +31,7 @@ const Comment = ({
 
   const handleClickUpdate = e => {
     if (type !== 'edit') return;
-    onClickEdit && onClickEdit(commentData.id);
+    onClickEdit && onClickEdit(commentData.id, commentData.text);
   };
 
   const handleClickDelete = e => {
