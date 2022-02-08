@@ -22,7 +22,6 @@ const Modals = () => {
       if (typeof onSubmit === 'function') {
         await onSubmit();
       }
-      onClose();
     };
 
     return (

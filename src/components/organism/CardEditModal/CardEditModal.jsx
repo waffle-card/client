@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import Common from '@styles';
-import Swal from 'sweetalert2';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 import {
@@ -47,17 +46,10 @@ const CardEditModal = ({
   const handleSubmit = async e => {
     e.preventDefault();
 
-    if (waffleCard.hashTags.length <= 0) {
-      Swal.fire({
-        title: '😱',
-        text: '최소 1개 이상의 해시태그를 작성해주세요.',
-        confirmButtonColor: Common.colors.point,
-      });
-
-      return;
-    }
+    if (waffleCard.hashTags.length <= 0) return;
 
     onSubmit && onSubmit(waffleCard);
+    onClose && onClose();
   };
 
   return (

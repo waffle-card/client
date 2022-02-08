@@ -24,7 +24,7 @@ const HomePage = () => {
 
   const handleClickWaffleCardCreate = async () => {
     openModal(CardEditModal, {
-      onSubmit: () => {
+      onSubmit: async () => {
         console.log('비즈니스 로직 처리');
       },
     });
