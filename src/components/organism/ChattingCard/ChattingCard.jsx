@@ -72,7 +72,6 @@ const ChattingCard = ({
   };
 
   const handleClickLikeToggle = async (waffleCardId, likeToggled) => {
-    setIsLoading(true);
     console.log('in CardsContainer :', waffleCardId, likeToggled);
     if (likeToggled) {
       // TODO: 좋아요 생성 가능 여부 검사
@@ -89,7 +88,6 @@ const ChattingCard = ({
         console.error(`in ChattingCard : 좋아요 생성 실패 - ${error.message}`);
       }
     }
-    setIsLoading(false);
   };
 
   const handleClose = () => {

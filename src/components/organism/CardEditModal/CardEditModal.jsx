@@ -14,7 +14,7 @@ import {
   EmojiPickerActiveButton,
 } from '@components';
 
-// TODO(윤호): visible 삭제하기, 로딩 추가하기
+// TODO(윤호): visible 삭제하기
 const CardEditModal = ({
   visible,
   editMode,
@@ -26,6 +26,7 @@ const CardEditModal = ({
   const [waffleCard, setWaffleCard] = useState(initialWaffleCardData);
 
   const createWaffleCard = async () => {
+    setIsLoading(true);
     try {
       await waffleCardApi.createWaffleCard({
         emoji: waffleCard.emoji,
@@ -35,9 +36,11 @@ const CardEditModal = ({
     } catch (error) {
       console.error(`in CardEditModal: ${error.message}`);
     }
+    setIsLoading(false);
   };
 
   const updateWaffleCard = async () => {
+    setIsLoading(true);
     try {
       await waffleCardApi.updateWaffleCard(waffleCard.id, {
         emoji: waffleCard.emoji,
@@ -47,6 +50,7 @@ const CardEditModal = ({
     } catch (error) {
       console.error(`in CardEditModal: ${error.message}`);
     }
+    setIsLoading(false);
   };
 
   const handleSubmit = async e => {

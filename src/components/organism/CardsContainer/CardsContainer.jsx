@@ -8,7 +8,6 @@ import NoCardGuide from './NoCardGuide';
 import { useUser } from '@contexts';
 import { likeApi } from '@apis';
 
-// TODO(윤호): 로딩 추가하기
 const CardsContainer = ({
   type,
   waffleCardsData,
