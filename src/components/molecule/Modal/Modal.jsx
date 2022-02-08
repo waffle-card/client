@@ -14,7 +14,7 @@ const Modal = ({
   onClose,
   ...props
 }) => {
-  //TODO(윤호): 모달에서 Swal 사용으로 인해 모달이 닫히는 현상이 있음
+  //TODO(윤호): 모달에서 Swal 사용으로 인해 모달이 닫히는 현상떄문에 클릭어웨이 제거, 다른방식이 있는지 고민해보기
   // const ref = useClickAway(() => {
   //   onClose && onClose();
   // });
