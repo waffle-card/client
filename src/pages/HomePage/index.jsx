@@ -11,13 +11,11 @@ import {
   CardEditModal,
   ChattingCard,
 } from '@components';
-import { useUser } from '@contexts';
 import { useModals } from '@hooks';
 import Swal from 'sweetalert2';
 
 const HomePage = () => {
   const { openModal } = useModals();
-  const { userInfo } = useUser();
   const [tabValue, setTabValue] = useState('total');
   const [isLoading, setIsLoading] = useState(true);
   const [waffleCards, setWaffleCards] = useState([]);
@@ -31,8 +29,6 @@ const HomePage = () => {
   };
 
   const handleClickWaffleCard = async waffleCardId => {
-    console.log('waffleCardId is', waffleCardId);
-
     const waffleCardData = waffleCards.find(
       waffleCard => waffleCard.id === waffleCardId,
     );
@@ -47,11 +43,8 @@ const HomePage = () => {
 
     openModal(ChattingCard, {
       waffleCardData: waffleCardData,
-      userData: userInfo,
       commentsData: commentsData ?? [],
       onClickLikeToggle: async likeToggled => {
-        console.log(waffleCardData.id);
-
         if (likeToggled) {
           try {
             await likeApi.createLike(waffleCardData.id);
@@ -75,7 +68,6 @@ const HomePage = () => {
         }
       },
       onSubmitComment: async text => {
-        console.log(text);
         try {
           await commentApi.createComment({ waffleCardId, text });
         } catch (error) {
@@ -84,11 +76,8 @@ const HomePage = () => {
             text: error.message,
           });
         }
-        console.log('댓글 작성!');
       },
       onClickEditComment: async (commentId, text) => {
-        console.log(commentId, text);
-
         // try {
         //   await commentApi.updateComment(commentId, text);
         // } catch (error) {
@@ -97,10 +86,8 @@ const HomePage = () => {
         //     text: error.message,
         //   });
         // }
-        console.log('댓글 수정!');
       },
       onClickDeleteComment: async commentId => {
-        console.log(commentId);
         try {
           await commentApi.deleteComment(commentId);
         } catch (error) {
@@ -109,12 +96,34 @@ const HomePage = () => {
             text: error.message,
           });
         }
-        console.log('댓글 삭제!');
       },
     });
   };
 
+  const handleClickEdit = waffleCardId => {
+    console.log('waffleCardId is', waffleCardId);
+
+    const waffleCardData = waffleCards.find(
+      waffleCard => waffleCard.id === waffleCardId,
+    );
+    console.log('waffleCardData is', waffleCardData);
+    openModal(CardEditModal, {
+      editMode: true,
+      onSubmit: async () => {
+        console.log('비즈니스 로직 처리');
+      },
+      initialWaffleCardData: waffleCardData,
+    });
+  };
+
+  const handleClickDelete = waffleCardId => {
+    try {
+    } catch (error) {}
+  };
+
   useEffect(() => {
+    setIsLoading(true);
+
     const initWaffleCards = async () => {
       const waffleCardsCommand = {
         total: () => {
@@ -138,16 +147,11 @@ const HomePage = () => {
         setWaffleCards(() => []);
       }
     };
-    setIsLoading(true);
 
     initWaffleCards();
 
     setIsLoading(false);
   }, [tabValue]);
-
-  useEffect(() => {
-    console.log('로딩', isLoading);
-  }, [isLoading]);
 
   return (
     <HomeContainer>
@@ -157,6 +161,7 @@ const HomePage = () => {
         waffleCardsData={waffleCards}
         onClickWaffleCard={handleClickWaffleCard}
         onClickWaffleCardCreate={handleClickWaffleCardCreate}
+        onClickWaffleCardEdit={handleClickEdit}
       />
       <ScrollGuide class="scroll_guide" />
       <Spinner loading={isLoading} />

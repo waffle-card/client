@@ -15,13 +15,13 @@ import {
 const CardEditModal = ({
   visible,
   editMode,
-  initialWaffleCard,
+  initialWaffleCardData,
   onClose,
   onSubmit,
   ...props
 }) => {
-  const [waffleCard, setWaffleCard] = useState(initialWaffleCard);
-  console.log('in CardEditModal', props);
+  const [waffleCard, setWaffleCard] = useState(initialWaffleCardData);
+  console.log('in CardEditModal', initialWaffleCardData);
 
   const handleChangeEmoji = emoji => {
     setWaffleCard(waffleCard => {
@@ -58,7 +58,7 @@ const CardEditModal = ({
     <StyledModal visible hi={'hi'} onClose={onClose} {...props}>
       <FormContainer onSubmit={handleSubmit} id="cardForm">
         <CardEditContainer>
-          <WaffleCard.Plain waffleCard={waffleCard} />
+          <WaffleCard type="plain" waffleCardData={waffleCard} />
           <EditContainer>
             <Wrapper>
               <StyledText>이모지</StyledText>

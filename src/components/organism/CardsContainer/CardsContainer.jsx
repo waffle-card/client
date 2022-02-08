@@ -6,22 +6,52 @@ import { WaffleCard, Card } from '@components';
 import LoginGuide from './LoginGuide';
 import NoCardGuide from './NoCardGuide';
 import { useUser } from '@contexts';
+import { likeApi } from '@apis';
 
 const CardsContainer = ({
-  type = 'total',
+  type,
   waffleCardsData,
-  onClickWaffleCardCreate,
   onClickWaffleCard,
+  onClickWaffleCardCreate,
+  onClickWaffleCardEdit,
+  onClickWaffleCardDelete,
   ...props
 }) => {
   const { userInfo } = useUser();
 
-  const handleEmptyCard = () => {
+  const handleClickWaffleCard = waffleCardId => {
+    onClickWaffleCard && onClickWaffleCard(waffleCardId);
+  };
+
+  const handleClickWaffleCardCreate = () => {
     onClickWaffleCardCreate && onClickWaffleCardCreate();
   };
 
-  const handleClickWaffleCard = waffleCardId => {
-    onClickWaffleCard && onClickWaffleCard(waffleCardId);
+  const handleClickWaffleCardEdit = waffleCardId => {
+    onClickWaffleCardEdit && onClickWaffleCardEdit(waffleCardId);
+  };
+
+  const handleClickWaffleCardDelete = async waffleCardId => {
+    onClickWaffleCardDelete && onClickWaffleCardDelete(waffleCardId);
+  };
+
+  const handleClickLikeToggle = async (waffleCardId, likeToggled) => {
+    console.log('in CardsContainer :', waffleCardId, likeToggled);
+    if (likeToggled) {
+      // TODO: 좋아요 생성 가능 여부 검사
+      try {
+        await likeApi.createLike(waffleCardId);
+      } catch (error) {
+        console.error('in CardsContainer : 좋아요 생성 실패');
+      }
+    } else {
+      // TODO: 좋아요 생성 가능 여부 검사
+      try {
+        await likeApi.deleteLike(waffleCardId);
+      } catch (error) {
+        console.error('in CardsContainer : 좋아요 삭제 실패');
+      }
+    }
   };
 
   switch (type) {
@@ -36,13 +66,15 @@ const CardsContainer = ({
         return (
           <CardListContainer {...props}>
             {waffleCardsData.map(waffleCard => (
-              <BasicWaffleCard
+              <StyledWaffleCard
+                type="basic"
                 key={waffleCard.id}
                 waffleCardData={waffleCard}
                 onClickWaffleCard={handleClickWaffleCard}
                 likeToggled={
                   waffleCard && waffleCard.likeUserIds.includes(userInfo?.id)
                 }
+                onClickLikeToggle={handleClickLikeToggle}
               />
             ))}
           </CardListContainer>
@@ -58,20 +90,24 @@ const CardsContainer = ({
       } else if (waffleCardsData.length <= 0) {
         return (
           <EmptyContainer>
-            <Card.Empty onClick={handleEmptyCard} />
+            <Card.Empty onClick={handleClickWaffleCardCreate} />
           </EmptyContainer>
         );
       } else {
         return (
           <CardListContainer {...props}>
             {waffleCardsData.map(waffleCard => (
-              <MyWaffleCard
+              <StyledWaffleCard
+                type="my"
                 key={waffleCard.id}
                 waffleCardData={waffleCard}
                 onClickWaffleCard={handleClickWaffleCard}
                 likeToggled={
                   waffleCard && waffleCard?.likeUserIds.includes(userInfo?.id)
                 }
+                onClickLikeToggle={handleClickLikeToggle}
+                onClickEdit={handleClickWaffleCardEdit}
+                onClickDelete={handleClickWaffleCardDelete}
               />
             ))}
           </CardListContainer>
@@ -94,13 +130,15 @@ const CardsContainer = ({
         return (
           <CardListContainer {...props}>
             {waffleCardsData.map(waffleCard => (
-              <BasicWaffleCard
+              <StyledWaffleCard
+                type="basic"
                 key={waffleCard.id}
                 waffleCardData={waffleCard}
                 onClickWaffleCard={handleClickWaffleCard}
                 likeToggled={
                   waffleCard && waffleCard.likeUserIds.includes(userInfo?.id)
                 }
+                onClickLikeToggle={handleClickLikeToggle}
               />
             ))}
           </CardListContainer>
@@ -146,16 +184,7 @@ const EmptyContainer = styled.section`
   }
 `;
 
-const BasicWaffleCard = styled(WaffleCard.Basic)`
-  flex: 0 0 auto;
-  margin: 0 10px;
-  &:hover {
-    transform: translateY(-18px);
-  }
-  transition: all 250ms ease-out;
-`;
-
-const MyWaffleCard = styled(WaffleCard.My)`
+const StyledWaffleCard = styled(WaffleCard)`
   flex: 0 0 auto;
   margin: 0 10px;
   &:hover {
@@ -167,6 +196,10 @@ const MyWaffleCard = styled(WaffleCard.My)`
 CardsContainer.protoTypes = {
   type: PropTypes.string,
   waffleCardsData: PropTypes.array.isRequired,
+  onClickWaffleCard: PropTypes.func,
+  onClickWaffleCardCreate: PropTypes.func,
+  onClickWaffleCardEdit: PropTypes.func,
+  onClickWaffleCardDelete: PropTypes.func,
 };
 
 CardsContainer.defaultProps = {

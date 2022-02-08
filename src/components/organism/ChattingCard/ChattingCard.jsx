@@ -5,12 +5,12 @@ import { Modal } from '@components';
 import Header from './Header';
 import CommentEditor from './CommentEditor';
 import CommentList from './CommentList';
+import { useUser } from '@contexts';
 
 const ChattingCard = ({
   visible,
   waffleCardData,
   commentsData,
-  userData,
   onClose,
   onClickLikeToggle,
   onClickEditComment,
@@ -19,6 +19,8 @@ const ChattingCard = ({
   likeToggled,
   ...props
 }) => {
+  const { userInfo } = useUser();
+
   const handleClose = () => {
     onClose && onClose();
   };
@@ -46,11 +48,11 @@ const ChattingCard = ({
         onClickLikeToggle={handleClickLikeToggle}
         onClickBackButton={handleClose}
         likeToggled={likeToggled}
-        interactiveLikeToggle={!!userData}
+        interactiveLikeToggle={!!userInfo}
       />
       <StyledCommentList
         commentsData={commentsData}
-        userData={userData}
+        userData={userInfo}
         myCommentsIds={['312']}
         onClickEditMyComment={handleClickEditComment}
         onClickDeleteMyComment={handleClickDeleteComment}
@@ -93,7 +95,6 @@ ChattingCard.propTypes = {
   visible: PropTypes.bool,
   waffleCardData: PropTypes.object.isRequired,
   commentsData: PropTypes.array.isRequired,
-  userData: PropTypes.object,
   likeToggled: PropTypes.bool,
   interactiveLikeToggle: PropTypes.bool,
   onClose: PropTypes.func,
@@ -105,7 +106,6 @@ ChattingCard.defaultProps = {
   visible: false,
   likeToggled: false,
   interactiveLikeToggle: false,
-  userData: null,
 };
 
 export default ChattingCard;
