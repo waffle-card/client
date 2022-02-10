@@ -25,6 +25,7 @@ const CommentEditor = ({ onSubmit, onChange, disabled = false, ...props }) => {
   };
 
   const handleClickSubmitButton = e => {
+    if (disabled) return;
     submitText(text);
   };
 
@@ -34,7 +35,7 @@ const CommentEditor = ({ onSubmit, onChange, disabled = false, ...props }) => {
         id="content"
         name="content"
         disabled={disabled}
-        placeholder={'메세지를 입력해주세요.'}
+        placeholder={disabled ? '로그인을 해주세요.' : '메세지를 입력해주세요.'}
         onChange={handleChange}
         onKeyUp={handleKeyUp}
         value={text}

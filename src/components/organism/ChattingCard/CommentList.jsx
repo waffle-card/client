@@ -63,7 +63,7 @@ const MyComment = styled(Comment)`
 
 CommentList.propTypes = {
   commentsData: PropTypes.array.isRequired,
-  userData: PropTypes.object.isRequired,
+  userData: PropTypes.object,
   onClickEditMyComment: PropTypes.func,
   onClickDeleteMyComment: PropTypes.func,
 };
