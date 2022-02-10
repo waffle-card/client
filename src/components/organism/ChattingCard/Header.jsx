@@ -31,7 +31,7 @@ const Header = ({
         </IconButton>
         <CardInfoWrapper>
           <EmojiText>{waffleCardData.emoji}</EmojiText>
-          <UserNameText>{waffleCardData.userName}</UserNameText>
+          <UserNameText>{waffleCardData.user.name}</UserNameText>
         </CardInfoWrapper>
         <LikeBox
           toggled={likeToggled}

@@ -13,7 +13,7 @@ const CommentList = ({
   return (
     <Container {...props}>
       {commentsData.map(commentData =>
-        userData && userData.id === commentData.userId ? (
+        userData && userData.id === commentData.user.id ? (
           <MyComment
             key={commentData.id}
             type="edit"

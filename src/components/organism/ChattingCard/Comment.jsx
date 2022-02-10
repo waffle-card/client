@@ -28,6 +28,7 @@ const Comment = ({
 }) => {
   const [containerRef, hover] = useHover();
   const textAreaRef = useRef();
+  console.log(commentData);
 
   const handleClickUpdate = e => {
     if (type !== 'edit') return;
@@ -56,7 +57,7 @@ const Comment = ({
         ref={textAreaRef}
         readOnly
         col={'400px'}
-        value={`${commentData.userName} : ${commentData.text}`}
+        value={`${commentData.user.name} : ${commentData.text}`}
       />
     </Container>
   );
