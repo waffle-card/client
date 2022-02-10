@@ -29,7 +29,7 @@ const UserProvider = ({ children }) => {
 
       setUserInfo({ id, email, name });
     } catch (error) {
-      sessionStorage.getItem(TOKEN_NAME);
+      sessionStorage.removeItem(TOKEN_NAME);
       console.error(`User Context: ${error.message}`);
     }
   }, []);
