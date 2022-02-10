@@ -86,7 +86,7 @@ const ChattingCard = ({
         likeToggled={
           waffleCardData && waffleCardData.likeUserIds.includes(userInfo?.id)
         }
-        likeCount={waffleCardData.likeCount}
+        likeCount={waffleCardData.likeUserIds.length}
         interactiveLikeToggle={!!userInfo}
         onClickLikeToggle={handleClickLikeToggle}
         onClickBackButton={handleClose}

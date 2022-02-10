@@ -63,7 +63,7 @@ const WaffleCard = ({
               onClick={handleClickLikeToggle}
               active={likeToggled}
               interactive={!!userInfo}
-              count={waffleCardData.likeCount}
+              count={waffleCardData.likeUserIds.length}
             />
           </InfoContainer>
         )}
