@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import Swal from 'sweetalert2';
 import { useModals } from '@hooks';
+import { useUser } from '@contexts';
 import { waffleCardApi, commentApi, likeApi } from '@apis';
 import {
   Tab,
@@ -18,6 +19,7 @@ const HomePage = () => {
   const [tabValue, setTabValue] = useState('total');
   const [isLoading, setIsLoading] = useState(true);
   const [waffleCards, setWaffleCards] = useState([]);
+  const { userInfo } = useUser();
 
   const initWaffleCards = useCallback(async () => {
     setIsLoading(true);
@@ -34,6 +36,12 @@ const HomePage = () => {
       },
     };
 
+    if ((tabValue === 'my' || tabValue === 'like') && !userInfo) {
+      setWaffleCards(() => []);
+      setIsLoading(false);
+      return;
+    }
+
     try {
       const response = await waffleCardsCommand[tabValue]();
       const waffleCards = response.data;
@@ -47,7 +55,7 @@ const HomePage = () => {
     }
 
     setIsLoading(false);
-  }, [tabValue]);
+  }, [tabValue, userInfo]);
 
   const handleClickWaffleCard = async waffleCardId => {
     setIsLoading(true);
