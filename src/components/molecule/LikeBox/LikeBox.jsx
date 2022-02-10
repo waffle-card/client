@@ -8,13 +8,13 @@ import Common from '@styles';
 import { Text } from '@components';
 
 const LikeBox = ({
-  active = false,
-  interactive = false,
+  toggled,
+  interactive,
   onClick,
   count: initCount = 0,
   ...props
 }) => {
-  const [toggle, setToggle] = useState(active);
+  const [toggle, setToggle] = useState(toggled);
   const [count, setCount] = useState(initCount);
 
   const handleClick = e => {
@@ -71,12 +71,16 @@ const StyledText = styled(Text)`
 `;
 
 LikeBox.protoTypes = {
-  onClickLikeIcon: PropTypes.func,
-  onClickBookmarkIcon: PropTypes.func,
-  likeToggle: PropTypes.bool,
-  likeCount: PropTypes.number,
-  bookmarkToggle: PropTypes.bool,
-  bookmarkCount: PropTypes.number,
+  toggled: PropTypes.bool,
+  interactive: PropTypes.bool,
+  count: PropTypes.number,
+  onClick: PropTypes.func,
+};
+
+LikeBox.defaultProps = {
+  toggled: false,
+  interactive: false,
+  count: 0,
 };
 
 export default LikeBox;
