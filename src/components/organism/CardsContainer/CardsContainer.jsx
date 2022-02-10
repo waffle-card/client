@@ -56,9 +56,6 @@ const CardsContainer = ({
                 key={waffleCard.id}
                 waffleCardData={waffleCard}
                 onClickWaffleCard={handleClickWaffleCard}
-                likeToggled={
-                  waffleCard && waffleCard.likeUserIds.includes(userInfo?.id)
-                }
                 onClickLikeToggle={handleClickLikeToggle}
               />
             ))}
@@ -87,9 +84,6 @@ const CardsContainer = ({
                 key={waffleCard.id}
                 waffleCardData={waffleCard}
                 onClickWaffleCard={handleClickWaffleCard}
-                likeToggled={
-                  waffleCard && waffleCard?.likeUserIds.includes(userInfo?.id)
-                }
                 onClickLikeToggle={handleClickLikeToggle}
                 onClickEdit={handleClickWaffleCardEdit}
                 onClickDelete={handleClickWaffleCardDelete}
@@ -120,9 +114,6 @@ const CardsContainer = ({
                 key={waffleCard.id}
                 waffleCardData={waffleCard}
                 onClickWaffleCard={handleClickWaffleCard}
-                likeToggled={
-                  waffleCard && waffleCard.likeUserIds.includes(userInfo?.id)
-                }
                 onClickLikeToggle={handleClickLikeToggle}
               />
             ))}

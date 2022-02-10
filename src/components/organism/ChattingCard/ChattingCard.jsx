@@ -86,7 +86,7 @@ const ChattingCard = ({
         likeToggled={
           waffleCardData && waffleCardData.likeUserIds.includes(userInfo?.id)
         }
-        likeCount={waffleCardData.likeCount}
+        likeCount={waffleCardData.likeUserIds.length}
         interactiveLikeToggle={!!userInfo}
         onClickLikeToggle={handleClickLikeToggle}
         onClickBackButton={handleClose}
@@ -94,13 +94,13 @@ const ChattingCard = ({
       <StyledCommentList
         commentsData={comments}
         userData={userInfo}
-        myCommentsIds={comments
-          .filter(comment => comment.userId === userInfo.id)
-          .map(comment => comment.id)}
         onClickEditMyComment={handleClickEditComment}
         onClickDeleteMyComment={handleClickDeleteComment}
       />
-      <StyledCommentEditor onSubmit={handleSubmitComment} />
+      <StyledCommentEditor
+        disabled={!userInfo}
+        onSubmit={handleSubmitComment}
+      />
       {isLoading && <Spinner loading={isLoading} />}
     </StyledModal>
   );

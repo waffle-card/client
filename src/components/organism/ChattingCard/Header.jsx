@@ -34,7 +34,7 @@ const Header = ({
           <UserNameText>{waffleCardData.userName}</UserNameText>
         </CardInfoWrapper>
         <LikeBox
-          active={likeToggled}
+          toggled={likeToggled}
           interactive={interactiveLikeToggle}
           onClick={handleClickLikeToggle}
           count={likeCount}

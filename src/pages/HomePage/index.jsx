@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import Swal from 'sweetalert2';
 import { useModals } from '@hooks';
+import { useUser } from '@contexts';
 import { waffleCardApi, commentApi, likeApi } from '@apis';
 import {
   Tab,
@@ -18,6 +19,7 @@ const HomePage = () => {
   const [tabValue, setTabValue] = useState('total');
   const [isLoading, setIsLoading] = useState(true);
   const [waffleCards, setWaffleCards] = useState([]);
+  const { userInfo } = useUser();
 
   const initWaffleCards = useCallback(async () => {
     setIsLoading(true);
@@ -34,10 +36,15 @@ const HomePage = () => {
       },
     };
 
+    if ((tabValue === 'my' || tabValue === 'like') && !userInfo) {
+      setWaffleCards(() => []);
+      setIsLoading(false);
+      return;
+    }
+
     try {
       const response = await waffleCardsCommand[tabValue]();
-      // TODO(윤호): 서버에서 좋아요 와플카드리스트 요청시 null이 포함되어지는 경우가 있어서 필터링 추가해놓음, 서버 안정화시 filter메서드 제거하기
-      const waffleCards = response.data.filter(waffleCard => !!waffleCard);
+      const waffleCards = response.data;
 
       setWaffleCards(() => waffleCards);
     } catch (error) {
@@ -48,7 +55,7 @@ const HomePage = () => {
     }
 
     setIsLoading(false);
-  }, [tabValue]);
+  }, [tabValue, userInfo]);
 
   const handleClickWaffleCard = async waffleCardId => {
     setIsLoading(true);

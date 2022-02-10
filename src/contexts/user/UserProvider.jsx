@@ -26,10 +26,13 @@ const UserProvider = ({ children }) => {
     try {
       const response = await newAuthApi.me(token);
       const { id, email, name } = response.data;
-
-      setUserInfo({ id, email, name });
+      setUserInfo({
+        id,
+        email,
+        name,
+      });
     } catch (error) {
-      sessionStorage.getItem(TOKEN_NAME);
+      sessionStorage.removeItem(TOKEN_NAME);
       console.error(`User Context: ${error.message}`);
     }
   }, []);
@@ -57,8 +60,6 @@ const UserProvider = ({ children }) => {
     <UserContext.Provider
       value={{
         userInfo,
-        setUserInfo,
-        updateUserByToken,
         updateUserInfo,
         removeUserInfo,
         login,
