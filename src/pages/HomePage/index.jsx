@@ -36,8 +36,7 @@ const HomePage = () => {
 
     try {
       const response = await waffleCardsCommand[tabValue]();
-      // TODO(윤호): 서버에서 좋아요 와플카드리스트 요청시 null이 포함되어지는 경우가 있어서 필터링 추가해놓음, 서버 안정화시 filter메서드 제거하기
-      const waffleCards = response.data.filter(waffleCard => !!waffleCard);
+      const waffleCards = response.data;
 
       setWaffleCards(() => waffleCards);
     } catch (error) {
