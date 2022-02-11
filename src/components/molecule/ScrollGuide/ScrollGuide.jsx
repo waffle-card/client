@@ -29,7 +29,7 @@ const ScrollGuide = ({ tabStatus, ...props }) => {
 
 const Container = styled.div`
   position: absolute;
-  display: flex;
+  display: none;
   left: 50%;
   bottom: 12%;
   transform: translateX(-50%);
@@ -38,8 +38,8 @@ const Container = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  @media ${Common.media.sm} {
-    width: 212px;
+  @media ${Common.media.lg} {
+    display: flex;
   }
 `;
 

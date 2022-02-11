@@ -6,7 +6,7 @@ import { rgba } from 'polished';
 import Common from '@styles';
 import TabItem from './TabItem';
 import { TAB_MENU } from '@constants';
-import { tebItemSize } from '@styles/mixin';
+import { tabItemSize } from '@styles/mixin';
 
 const Tab = ({ currentActive, onClick, ...props }) => {
   const [activeItem, setActiveItem] = useState(currentActive);
@@ -50,7 +50,7 @@ const TabItemContainer = styled.div`
 `;
 
 const TabItemPointer = styled.div`
-  ${tebItemSize}
+  ${tabItemSize}
   position: absolute;
   top: 0;
   transform: ${({ currentActive }) =>
