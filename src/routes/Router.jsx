@@ -1,5 +1,12 @@
 import { Routes, Route } from 'react-router-dom';
-import { HomePage, LoginPage, SignUpPage, MyPage, NotFoundPage } from '@pages';
+import {
+  HomePage,
+  LoginPage,
+  SignUpPage,
+  MyPage,
+  GuidePage,
+  NotFoundPage,
+} from '@pages';
 import PrivateRoute from './PrivateRoute';
 import PublicRoute from './PublicRoute';
 
@@ -16,6 +23,7 @@ const Router = () => {
         element={<PublicRoute restricted component={SignUpPage} />}
       />
       <Route path="/my-page" element={<PrivateRoute component={MyPage} />} />
+      <Route path="/guide" element={<PublicRoute component={GuidePage} />} />
       <Route path="*" element={<PublicRoute component={NotFoundPage} />} />
     </Routes>
   );

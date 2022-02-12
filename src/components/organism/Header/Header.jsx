@@ -89,10 +89,6 @@ const Header = ({ backgroundColor = Common.colors.background, ...props }) => {
   const { userInfo } = useUser();
   const navigate = useNavigate();
 
-  const handleClickHelpIcon = () => {
-    console.log('clickHelpIcon');
-  };
-
   return (
     <HeaderTag backgroundColor={backgroundColor} {...props}>
       <Logo
@@ -102,7 +98,12 @@ const Header = ({ backgroundColor = Common.colors.background, ...props }) => {
         <img src={require('./logo.png').default} alt="logo" />
       </Logo>
       <UtilIconBox>
-        <HelpIcon onClick={handleClickHelpIcon}>❔</HelpIcon>
+        <HelpIcon
+          onClick={() => {
+            navigate('/guide');
+          }}>
+          ❔
+        </HelpIcon>
         {userInfo ? (
           <StyledIcon
             onClick={() => {
