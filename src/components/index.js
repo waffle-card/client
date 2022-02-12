@@ -13,7 +13,7 @@ export { default as ScrollGuide } from './molecule/ScrollGuide/ScrollGuide';
 export { default as EditBox } from './molecule/EditBox/EditBox';
 export { default as WaffleCard } from './organism/WaffleCard/WaffleCard';
 export { default as CardEditModal } from './organism/CardEditModal/CardEditModal';
-export { default as ChattingCard } from './organism/ChattingCard/ChattingCard';
+export { default as ChattingCardModal } from './organism/ChattingCardModal/ChattingCardModal';
 export { default as Tab } from './molecule/Tab/Tab';
 export { default as TabItem } from './molecule/Tab/TabItem';
 export { default as Header } from './organism/Header/Header';
