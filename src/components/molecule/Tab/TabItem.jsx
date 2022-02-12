@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import PropTypes from 'prop-types';
 import Common from '@styles';
 import { rgba } from 'polished';
-import { tebItemSize } from '@styles/mixin';
+import { tabItemSize } from '@styles/mixin';
 
 const TabItem = ({ title, name, activeItem, onClick, ...props }) => {
   const handleClickTabItem = () => {
@@ -20,12 +20,10 @@ const TabItem = ({ title, name, activeItem, onClick, ...props }) => {
 };
 
 const TabItemWrapper = styled.div`
-  ${tebItemSize}
+  ${tabItemSize}
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 25px;
-  cursor: pointer;
 `;
 
 const TabItemTitle = styled.span`
