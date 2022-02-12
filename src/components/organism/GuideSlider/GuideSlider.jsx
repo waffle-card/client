@@ -43,12 +43,18 @@ const GuideSlider = ({ slideData, maxLength, ...props }) => {
       ))}
       <PrevIcon onClick={handleClickPrev} />
       <NextIcon onClick={handleClickNext} />
+      <Dots>
+        {Object.entries(slideData).map(([key, _], index) => (
+          <Dot key={key} active={index === slideIndex}></Dot>
+        ))}
+      </Dots>
     </Slider>
   );
 };
 
 const Slider = styled.div`
   position: relative;
+  flex-direction: column;
   height: 100%;
   display: flex;
   justify-content: center;
@@ -60,15 +66,15 @@ const moveIconStyle = css`
   position: absolute;
   top: 50%;
   transform: translateY(-20%);
-  padding: 1.2rem;
+  padding: 1.4rem;
   font-size: 2.7rem;
   border-radius: 50px;
   color: ${Common.colors.point};
   background-color: transparent;
   transition: all 0.4s ease;
   &:hover {
-    background-color: rgba(255, 255, 255, 0.25);
-    box-shadow: 0 0 2.5px 5px rgb(255, 255, 255, 0.25);
+    background-color: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 0 2px 5px rgb(255, 255, 255, 0.2);
   }
 `;
 
@@ -80,6 +86,22 @@ const PrevIcon = styled(ArrowBackIosNewIcon)`
 const NextIcon = styled(ArrowForwardIosIcon)`
   ${moveIconStyle}
   right: 14%;
+`;
+
+const Dots = styled.ul`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+`;
+
+const Dot = styled.li`
+  width: 15px;
+  height: 15px;
+  margin: 2% 4px 0;
+  border-radius: 50px;
+  background-color: ${({ active }) =>
+    active ? Common.colors.point : 'rgba(255,255,255,0.2)'};
+  transition: all 0.3s ease;
 `;
 
 export default GuideSlider;

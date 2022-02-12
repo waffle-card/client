@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { Icons, Text } from '@components';
 import { rgba } from 'polished';
 import { useUser } from '@contexts';
+import { logo } from '@assets';
 
 const HeaderTag = styled.header`
   position: fixed;
@@ -95,7 +96,7 @@ const Header = ({ backgroundColor = Common.colors.background, ...props }) => {
         onClick={() => {
           navigate('/');
         }}>
-        <img src={require('./logo.png').default} alt="logo" />
+        <img src={logo} alt="logo" />
       </Logo>
       <UtilIconBox>
         <HelpIcon
