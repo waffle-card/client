@@ -1,9 +1,9 @@
 import styled from '@emotion/styled';
 import React, { useCallback, useState } from 'react';
+import PropTypes from 'prop-types';
+import Picker from 'emoji-picker-react';
 import { Button } from '@components';
 import Common from '@styles';
-import Picker from 'emoji-picker-react';
-import PropTypes from 'prop-types';
 
 const Container = styled.label`
   display: inline-block;

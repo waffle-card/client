@@ -4,7 +4,7 @@ import styled from '@emotion/styled';
 import Common from '@styles';
 import { useHover } from '@hooks';
 import { useUser } from '@contexts';
-import { Card, Text, LikeBox, EditBox } from '@components';
+import { Card, Text, LikeToggle, EditBox } from '@components';
 
 const countDaysFromToday = date => {
   date = typeof date === 'string' ? new Date(date) : date;
@@ -60,7 +60,7 @@ const WaffleCard = ({
         {type !== 'plain' && (
           <InfoContainer>
             <StyledText block>{days <= 0 ? '오늘' : `${days}일 전`}</StyledText>
-            <LikeBox
+            <LikeToggle
               onClick={handleClickLikeToggle}
               toggled={
                 userInfo
