@@ -1,6 +1,6 @@
 import React, { useLayoutEffect } from 'react';
 
-const useIsOverflow = (element, dev) => {
+const useIsOverflow = (element, tabName) => {
   const [isOverflow, setIsOverflow] = React.useState(false);
 
   useLayoutEffect(() => {
@@ -14,7 +14,7 @@ const useIsOverflow = (element, dev) => {
     if (element) {
       trigger();
     }
-  }, [dev, element]);
+  }, [tabName, element]);
 
   return isOverflow;
 };

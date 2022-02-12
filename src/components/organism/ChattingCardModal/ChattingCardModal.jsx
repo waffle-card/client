@@ -11,7 +11,7 @@ import { useUser } from '@contexts';
 import { commentApi } from '@apis';
 
 // TODO(윤호): visible 삭제하기, 댓글 state를 가지게하여 댓글 생성, 수정, 삭제시 리렌더링 되도록 하기
-const ChattingCard = ({
+const ChattingCardModal = ({
   visible,
   waffleCardData,
   commentsData,
@@ -135,16 +135,16 @@ const StyledCommentEditor = styled(CommentEditor)`
   bottom: 0px;
 `;
 
-ChattingCard.propTypes = {
+ChattingCardModal.propTypes = {
   visible: PropTypes.bool,
   waffleCardData: PropTypes.object.isRequired,
   commentsData: PropTypes.array.isRequired,
 };
 
-ChattingCard.defaultProps = {
+ChattingCardModal.defaultProps = {
   visible: false,
   likeToggled: false,
   interactiveLikeToggle: false,
 };
 
-export default ChattingCard;
+export default ChattingCardModal;

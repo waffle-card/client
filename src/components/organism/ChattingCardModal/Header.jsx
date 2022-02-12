@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
-import { LikeBox } from '@components';
+import { LikeToggle } from '@components';
 import { IconButton } from '@mui/material';
 import ArrowBackIosNewRoundedIcon from '@mui/icons-material/ArrowBackIosNewRounded';
 import Common from '@styles';
@@ -33,7 +33,7 @@ const Header = ({
           <EmojiText>{waffleCardData.emoji}</EmojiText>
           <UserNameText>{waffleCardData.user.name}</UserNameText>
         </CardInfoWrapper>
-        <LikeBox
+        <LikeToggle
           toggled={likeToggled}
           interactive={interactiveLikeToggle}
           onClick={handleClickLikeToggle}

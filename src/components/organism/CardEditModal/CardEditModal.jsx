@@ -9,7 +9,7 @@ import {
   Button,
   Spinner,
   WaffleCard,
-  ColorPalette,
+  ColorPicker,
 } from '@components';
 import EmojiPickerActiveButton from './EmojiPickerActiveButton';
 import HashTagsInputs from './HashTagsInputs';
@@ -113,7 +113,7 @@ const CardEditModal = ({
             </Wrapper>
             <Wrapper>
               <StyledText>배경색</StyledText>
-              <ColorPalette name="color" onChange={handleChangeColor} />
+              <ColorPicker name="color" onChange={handleChangeColor} />
             </Wrapper>
             <Wrapper>
               <StyledText>해시태그</StyledText>
