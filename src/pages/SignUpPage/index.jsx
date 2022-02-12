@@ -13,7 +13,7 @@ import {
   validatePasswordLength,
   validatePasswordConfirm,
 } from '@validators';
-import { newAuthApi } from '@apis';
+import { authApi } from '@apis';
 import Swal from 'sweetalert2';
 
 const StyledBackButton = styled(BackButton)`
@@ -92,7 +92,7 @@ const SignUpPage = ({ ...prop }) => {
     },
     onSubmit: async ({ email, userName, password }) => {
       try {
-        await newAuthApi.signup({
+        await authApi.signup({
           name: userName,
           email,
           password,
