@@ -1,20 +1,14 @@
 import styled from '@emotion/styled';
-import PropTypes from 'prop-types';
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Text, Icons } from '@components';
 import Common from '@styles';
 import useToggle from '@hooks/useToggle';
 
 const ScrollGuide = ({ tabStatus, ...props }) => {
-  const [isVisible, setIsVisible] = useState(tabStatus === 'total');
   const [isDelete, toggle] = useToggle(false);
 
-  useEffect(() => {
-    setIsVisible(tabStatus === 'total');
-  }, [tabStatus]);
-
   return (
-    <Container isDelete={isDelete} isVisible={isVisible} {...props}>
+    <Container isDelete={isDelete} {...props}>
       <DelButton className="del_Button" onClick={toggle}>
         <Icons fontSize={'10px'}>
           <Icons.Delete></Icons.Delete>
@@ -34,17 +28,18 @@ const ScrollGuide = ({ tabStatus, ...props }) => {
 };
 
 const Container = styled.div`
-  position: relative;
+  position: absolute;
+  display: none;
+  left: 50%;
+  bottom: 12%;
+  transform: translateX(-50%);
   width: 312px;
-  margin: 10px auto 0;
-  display: flex;
-  visibility: ${({ isDelete, isVisible }) =>
-    isDelete || !isVisible ? 'hidden' : 'visible'};
+  visibility: ${({ isDelete }) => (isDelete ? 'hidden' : 'visible')};
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  @media ${Common.media.sm} {
-    width: 212px;
+  @media ${Common.media.lg} {
+    display: flex;
   }
 `;
 
@@ -93,13 +88,5 @@ const DelButton = styled.div`
     right: -20px;
   }
 `;
-
-ScrollGuide.defaultProps = {
-  tabStatus: 'total',
-};
-
-ScrollGuide.propTypes = {
-  tabStatus: PropTypes.string,
-};
 
 export default ScrollGuide;
