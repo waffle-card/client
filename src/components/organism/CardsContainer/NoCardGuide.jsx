@@ -6,7 +6,7 @@ import Common from '@styles';
 const NoCardGuide = ({ ...props }) => {
   return (
     <TextContainer {...props}>
-      <Text className="text">카드 목록이 없습니다</Text>
+      <StyledText>카드 목록이 없습니다</StyledText>
     </TextContainer>
   );
 };
@@ -17,9 +17,12 @@ const TextContainer = styled.div`
   height: 413px;
   @media ${Common.media.sm} {
     height: 300px;
-    .text {
-      font-size: ${Common.fontSize.micro};
-    }
+  }
+`;
+
+const StyledText = styled(Text)`
+  @media ${Common.media.sm} {
+    font-size: ${Common.fontSize.micro};
   }
 `;
 

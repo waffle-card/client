@@ -1,12 +1,10 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import styled from '@emotion/styled';
 import PropTypes from 'prop-types';
 import { WaffleCard, Card } from '@components';
 import LoginGuide from './LoginGuide';
 import NoCardGuide from './NoCardGuide';
 import { useUser } from '@contexts';
-import { useIsOverflow } from '@hooks';
-import Common from '@styles';
 
 const CardsContainer = ({
   type,
@@ -20,9 +18,6 @@ const CardsContainer = ({
   ...props
 }) => {
   const { userInfo } = useUser();
-
-  const ref = useRef();
-  const isOverflow = useIsOverflow(ref, type);
 
   const handleClickWaffleCard = waffleCardId => {
     onClickWaffleCard && onClickWaffleCard(waffleCardId);
@@ -54,11 +49,7 @@ const CardsContainer = ({
         );
       } else {
         return (
-          <Container
-            {...props}
-            ref={ref}
-            isOverflow={isOverflow}
-            className="total">
+          <LeftAlignedContainer {...props}>
             {waffleCardsData.map(waffleCard => (
               <StyledWaffleCard
                 type="basic"
@@ -68,7 +59,7 @@ const CardsContainer = ({
                 onClickLikeToggle={handleClickLikeToggle}
               />
             ))}
-          </Container>
+          </LeftAlignedContainer>
         );
       }
     case 'my':
@@ -116,11 +107,7 @@ const CardsContainer = ({
         );
       } else {
         return (
-          <Container
-            {...props}
-            ref={ref}
-            isOverflow={isOverflow}
-            className="like">
+          <CenterAlignedContainer {...props}>
             {waffleCardsData.map(waffleCard => (
               <StyledWaffleCard
                 type="basic"
@@ -130,7 +117,7 @@ const CardsContainer = ({
                 onClickLikeToggle={handleClickLikeToggle}
               />
             ))}
-          </Container>
+          </CenterAlignedContainer>
         );
       }
     default:
@@ -138,15 +125,10 @@ const CardsContainer = ({
   }
 };
 
-const Container = styled.section`
+const CenterAlignedContainer = styled.section`
   display: flex;
-  justify-content: ${({ isOverflow }) =>
-    isOverflow ? 'flex-start' : 'center'};
+  justify-content: center;
   align-items: center;
-  height: 445px;
-  @media ${Common.media.sm} {
-    height: 300px;
-  }
   padding-top: 2rem;
   margin: 4rem 0;
   overflow-x: auto;
@@ -156,8 +138,16 @@ const Container = styled.section`
   }
 `;
 
-const CenterAlignedContainer = styled(Container)`
-  justify-content: center;
+const LeftAlignedContainer = styled.section`
+  display: flex;
+  align-items: center;
+  padding-top: 2rem;
+  margin: 4rem 0;
+  overflow-x: auto;
+  -ms-overflow-style: none;
+  ::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 const StyledWaffleCard = styled(WaffleCard)`
