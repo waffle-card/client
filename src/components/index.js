@@ -20,5 +20,5 @@ export { default as Header } from './organism/Header/Header';
 export { default as NameChangeModal } from './organism/NameChangeModal/NameChangeModal';
 export { default as PasswordChangeModal } from './organism/PasswordChangeModal/PasswordChangeModal';
 export { default as CardsContainer } from './organism/CardsContainer/CardsContainer';
-export { default as LikeBox } from './molecule/LikeBox/LikeBox';
+export { default as LikeToggle } from './molecule/LikeToggle/LikeToggle';
 export { default as Modals } from './organism/Modals/Modals';
