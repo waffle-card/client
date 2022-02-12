@@ -13,7 +13,7 @@ const Container = styled.div`
   max-width: 400px;
 `;
 
-const ColorPalette = ({ colors, name, onChange, ...props }) => {
+const ColorPicker = ({ colors, name, onChange, ...props }) => {
   const pureColors = useMemo(() => [...new Set(colors)], [colors]);
 
   const handleChange = useCallback(
@@ -38,16 +38,16 @@ const ColorPalette = ({ colors, name, onChange, ...props }) => {
   );
 };
 
-ColorPalette.defaultProps = {
+ColorPicker.defaultProps = {
   colors: Object.values(Common.colors).slice(1, 13),
   name: 'color',
 };
 
-ColorPalette.propTypes = {
+ColorPicker.propTypes = {
   colors: PropTypes.array,
   name: PropTypes.string,
 };
 
-ColorPalette.ColorItem = ColorItem;
+ColorPicker.ColorItem = ColorItem;
 
-export default ColorPalette;
+export default ColorPicker;

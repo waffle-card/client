@@ -1,5 +1,5 @@
 export { default as Button } from './atom/Button/Button';
-export { default as ColorPalette } from './molecule/ColorPalette/ColorPalette';
+export { default as ColorPicker } from './molecule/ColorPicker/ColorPicker';
 export { default as Modal } from './molecule/Modal/Modal';
 export { default as Spacer } from './atom/Spacer/Spacer';
 export { default as Text } from './atom/Text/Text';
