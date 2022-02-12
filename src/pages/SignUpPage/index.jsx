@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import Common from '@styles';
 import styled from '@emotion/styled';
 import { useForm } from '@hooks';
@@ -13,8 +13,7 @@ import {
   validatePasswordLength,
   validatePasswordConfirm,
 } from '@validators';
-import { getUserInfoByToken } from '@utils';
-import { newAuthApi } from '@apis';
+import { authApi } from '@apis';
 import Swal from 'sweetalert2';
 
 const StyledBackButton = styled(BackButton)`
@@ -93,17 +92,12 @@ const SignUpPage = ({ ...prop }) => {
     },
     onSubmit: async ({ email, userName, password }) => {
       try {
-        await newAuthApi.signup({
+        await authApi.signup({
           name: userName,
           email,
           password,
         });
-        // await userApi.initUserInfo(
-        //   {
-        //     userName,
-        //   },
-        //   response.data.token,
-        // );
+
         Swal.fire({
           title: '🎉',
           text: '환영합니다! 이제 로그인을 해주세요!',
@@ -142,21 +136,6 @@ const SignUpPage = ({ ...prop }) => {
       return errors;
     },
   });
-
-  useEffect(() => {
-    const getUserInfo = async () => {
-      if (await getUserInfoByToken()) {
-        Swal.fire({
-          title: '🤯',
-          text: '이미 로그인 되어있습니다.',
-          confirmButtonColor: Common.colors.point,
-        }).then(() => {
-          navigate('/');
-        });
-      }
-    };
-    getUserInfo();
-  }, [navigate]);
 
   return (
     <Container>

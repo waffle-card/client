@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { useCallback } from 'react';
-import { newAuthApi } from '@apis';
+import { authApi } from '@apis';
 
 const TOKEN_NAME = 'WAFFLE_TOKEN';
 
@@ -11,7 +11,7 @@ const UserProvider = ({ children }) => {
   const [userInfo, setUserInfo] = useState(null);
 
   const login = async (email, password) => {
-    const response = await newAuthApi.login({ email, password });
+    const response = await authApi.login({ email, password });
     const { token, id, name, email: userEmail } = response.data;
 
     sessionStorage.setItem(TOKEN_NAME, JSON.stringify(token));
@@ -24,7 +24,7 @@ const UserProvider = ({ children }) => {
 
   const updateUserByToken = useCallback(async token => {
     try {
-      const response = await newAuthApi.me(token);
+      const response = await authApi.me(token);
       const { id, email, name } = response.data;
       setUserInfo({
         id,

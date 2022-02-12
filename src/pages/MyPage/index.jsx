@@ -11,7 +11,7 @@ import {
 import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
 import { useUser } from '@contexts';
-import { newAuthApi } from '@apis';
+import { authApi } from '@apis';
 
 const MyPage = () => {
   const navigate = useNavigate();
@@ -51,7 +51,7 @@ const MyPage = () => {
 
   const handleSubmitChangedName = async ({ userName }) => {
     try {
-      await newAuthApi.updateUser({ name: userName });
+      await authApi.updateUser({ name: userName });
       updateUserInfo({ ...userInfo, name: userName });
       Swal.fire({
         title: '😎',
@@ -71,7 +71,7 @@ const MyPage = () => {
 
   const handleSubmitChangedPassword = async ({ newPassword }) => {
     try {
-      await newAuthApi.updateUser({ password: newPassword });
+      await authApi.updateUser({ password: newPassword });
       logout();
       Swal.fire({
         title: '😎',

@@ -7,7 +7,7 @@ import FavoriteBorderRoundedIcon from '@mui/icons-material/FavoriteBorderRounded
 import Common from '@styles';
 import { Text } from '@components';
 
-const LikeBox = ({
+const LikeToggle = ({
   toggled,
   interactive,
   onClick,
@@ -70,17 +70,17 @@ const StyledText = styled(Text)`
   }
 `;
 
-LikeBox.protoTypes = {
+LikeToggle.protoTypes = {
   toggled: PropTypes.bool,
   interactive: PropTypes.bool,
   count: PropTypes.number,
   onClick: PropTypes.func,
 };
 
-LikeBox.defaultProps = {
+LikeToggle.defaultProps = {
   toggled: false,
   interactive: false,
   count: 0,
 };
 
-export default LikeBox;
+export default LikeToggle;

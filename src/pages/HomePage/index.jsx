@@ -11,7 +11,7 @@ import {
   ScrollGuide,
   Modals,
   CardEditModal,
-  ChattingCard,
+  ChattingCardModal,
 } from '@components';
 
 const HomePage = () => {
@@ -67,7 +67,7 @@ const HomePage = () => {
     try {
       const response = await commentApi.getCommentsByWaffleCardId(waffleCardId);
       const commentsData = response.data;
-      openModal(ChattingCard, {
+      openModal(ChattingCardModal, {
         waffleCardData: waffleCardData,
         commentsData: commentsData ?? [],
         onClickLikeToggle: (waffleCardId, likeToggled) => {
@@ -121,7 +121,9 @@ const HomePage = () => {
           await waffleCardApi.deleteWaffleCard(waffleCardId);
           initWaffleCards();
         } catch (error) {
-          console.error(`in ChattingCard : 댓글 삭제 실패 - ${error.message}`);
+          console.error(
+            `in ChattingCardModal : 댓글 삭제 실패 - ${error.message}`,
+          );
         }
       }
     });
@@ -133,13 +135,17 @@ const HomePage = () => {
       try {
         await likeApi.createLike(waffleCardId);
       } catch (error) {
-        console.error(`in ChattingCard : 좋아요 생성 실패 - ${error.message}`);
+        console.error(
+          `in ChattingCardModal : 좋아요 생성 실패 - ${error.message}`,
+        );
       }
     } else {
       try {
         await likeApi.deleteLike(waffleCardId);
       } catch (error) {
-        console.error(`in ChattingCard : 좋아요 삭제 실패 - ${error.message}`);
+        console.error(
+          `in ChattingCardModal : 좋아요 삭제 실패 - ${error.message}`,
+        );
       }
     }
     initWaffleCards();
