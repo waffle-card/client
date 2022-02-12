@@ -1,4 +1,4 @@
-import { ChattingCard } from '@components';
+import { ChattingCardModal } from '@components';
 import React, { useState } from 'react';
 
 const dummyWaffleCard = {
@@ -99,7 +99,7 @@ export const Default = args => {
   return (
     <>
       <button onClick={() => setVisible(true)}>Show ChattingCard</button>
-      <ChattingCard
+      <ChattingCardModal
         visible={visible}
         waffleCardData={dummyWaffleCard}
         userData={dummyUser}

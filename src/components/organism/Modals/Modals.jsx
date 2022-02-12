@@ -1,10 +1,10 @@
 import React, { useContext } from 'react';
 import { ModalsDispatchContext, ModalsStateContext } from '@contexts';
-import { CardEditModal, ChattingCard } from '@components';
+import { CardEditModal, ChattingCardModal } from '@components';
 
 export const modals = {
   cardEditModal: CardEditModal,
-  chattingCard: ChattingCard,
+  chattingCardModal: ChattingCardModal,
 };
 
 const Modals = () => {
