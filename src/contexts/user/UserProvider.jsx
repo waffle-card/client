@@ -1,8 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { useCallback } from 'react';
 import { authApi } from '@apis';
-
-const TOKEN_NAME = 'WAFFLE_TOKEN';
+import { TOKEN_NAME } from '@constants';
 
 const UserContext = createContext();
 export const useUser = () => useContext(UserContext);
