@@ -1,17 +1,13 @@
 import React from 'react';
 import { Portal, GuideSlider } from '@components';
 import styled from '@emotion/styled';
-// import Common from '@styles';
 import { GUIDE_SLIDE_DATA } from '@constants';
 import ClearIcon from '@mui/icons-material/Clear';
 import { useNavigate } from 'react-router-dom';
 
 const GuidePage = () => {
   const navigate = useNavigate();
-  // const [slideIndex, setSlideIndex] = useState(1);
 
-  // const handleClickPrev = () => {};
-  // const handleClickNext = () => {};
   const handleClickClose = () => {
     navigate(-1);
     console.log(GUIDE_SLIDE_DATA);
@@ -23,7 +19,7 @@ const GuidePage = () => {
         <StyledClearIcon
           onClick={handleClickClose}
           style={{ color: '#fff' }}></StyledClearIcon>
-        <GuideSlider></GuideSlider>
+        <GuideSlider slideData={GUIDE_SLIDE_DATA}></GuideSlider>
       </BackgroundDim>
     </Portal>
   );
