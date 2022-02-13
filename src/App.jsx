@@ -1,5 +1,5 @@
 import React, { Suspense } from 'react';
-import { Header } from '@components';
+import { Header, Spinner } from '@components';
 import { ModalsProvider } from '@contexts';
 import Router from './routes/Router';
 import { RecoilRoot } from 'recoil';
@@ -7,7 +7,7 @@ import { RecoilRoot } from 'recoil';
 function App() {
   return (
     <RecoilRoot>
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={<Spinner loading />}>
         <ModalsProvider>
           <Header />
           <Router />
