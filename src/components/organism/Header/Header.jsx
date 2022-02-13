@@ -5,7 +5,9 @@ import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
 import { Icons, Text } from '@components';
 import { rgba } from 'polished';
-import { useUser } from '@contexts';
+// import { useUser } from '@contexts';
+import { userState } from '@recoil';
+import { useRecoilValue } from 'recoil';
 
 const HeaderTag = styled.header`
   position: fixed;
@@ -86,7 +88,7 @@ const StyledIcon = styled(Icons.Person)`
 `;
 
 const Header = ({ backgroundColor = Common.colors.background, ...props }) => {
-  const { userInfo } = useUser();
+  const userInfo = useRecoilValue(userState);
   const navigate = useNavigate();
 
   const handleClickHelpIcon = () => {

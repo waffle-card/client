@@ -10,25 +10,16 @@ import {
 } from '@components';
 import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
-// import { useUser } from '@contexts';
-// import { authApi } from '@apis';
 import { userState } from '@recoil';
-import { useRecoilState, useRecoilCallback } from 'recoil';
+import { useRecoilState } from 'recoil';
+import { useUser } from '@hooks';
 
 const MyPage = () => {
   const navigate = useNavigate();
-  // const { userInfo, updateUserInfo, logout } = useUser();
   const [user, setUser] = useRecoilState(userState);
+  const { logout, updateUser } = useUser();
   const [nameModalVisible, setNameModalVisible] = useState(false);
   const [passWordModalVisible, setPassWordModalVisible] = useState(false);
-
-  const logState = useRecoilCallback(({ snapshot }) => () => {
-    console.log(
-      '현재 Snapshot에 포함된 states: ',
-      snapshot.getLoadable(userState).contents,
-    );
-  });
-  logState();
 
   const handleClickChangeNameButton = () => {
     setNameModalVisible(true);
@@ -38,67 +29,67 @@ const MyPage = () => {
     setPassWordModalVisible(true);
   };
 
-  // const handleClickLogoutButton = () => {
-  //   Swal.fire({
-  //     title: '🤔',
-  //     text: '정말 로그아웃 하시겠습니까?',
-  //     showCloseButton: true,
-  //     showCancelButton: true,
-  //     confirmButtonColor: Common.colors.point,
-  //     cancelButtonColor: 'red',
-  //   }).then(res => {
-  //     if (res.isConfirmed) {
-  //       logout();
-  //       Swal.fire({
-  //         title: '👋🏻',
-  //         text: '로그아웃되었습니다.',
-  //         confirmButtonColor: Common.colors.point,
-  //       }).then(() => {
-  //         navigate('/');
-  //       });
-  //     }
-  //   });
-  // };
+  const handleClickLogoutButton = () => {
+    Swal.fire({
+      title: '🤔',
+      text: '정말 로그아웃 하시겠습니까?',
+      showCloseButton: true,
+      showCancelButton: true,
+      confirmButtonColor: Common.colors.point,
+      cancelButtonColor: 'red',
+    }).then(res => {
+      if (res.isConfirmed) {
+        Swal.fire({
+          title: '👋🏻',
+          text: '로그아웃되었습니다.',
+          confirmButtonColor: Common.colors.point,
+        }).then(() => {
+          navigate('/', { replace: true });
+          logout();
+        });
+      }
+    });
+  };
 
-  // const handleSubmitChangedName = async ({ userName }) => {
-  //   try {
-  //     await authApi.updateUser({ name: userName });
-  //     updateUserInfo({ ...userInfo, name: userName });
-  //     Swal.fire({
-  //       title: '😎',
-  //       text: '닉네임 변경완료!',
-  //       confirmButtonColor: Common.colors.point,
-  //     }).then(() => {
-  //       navigate('/my-page');
-  //     });
-  //   } catch (error) {
-  //     Swal.fire({
-  //       title: '🥲',
-  //       text: error.data,
-  //       confirmButtonColor: Common.colors.point,
-  //     });
-  //   }
-  // };
+  const handleSubmitChangedName = async ({ userName }) => {
+    try {
+      await updateUser({ name: userName });
+      setUser({ ...user, name: userName });
+      Swal.fire({
+        title: '😎',
+        text: '닉네임 변경완료!',
+        confirmButtonColor: Common.colors.point,
+      }).then(() => {
+        navigate('/my-page');
+      });
+    } catch (error) {
+      Swal.fire({
+        title: '🥲',
+        text: error.data,
+        confirmButtonColor: Common.colors.point,
+      });
+    }
+  };
 
-  // const handleSubmitChangedPassword = async ({ newPassword }) => {
-  //   try {
-  //     await authApi.updateUser({ password: newPassword });
-  //     logout();
-  //     Swal.fire({
-  //       title: '😎',
-  //       text: '비밀번호 변경완료! 다시 로그인해주세요!',
-  //       confirmButtonColor: Common.colors.point,
-  //     }).then(() => {
-  //       navigate('/login');
-  //     });
-  //   } catch (error) {
-  //     Swal.fire({
-  //       title: '🥲',
-  //       text: error,
-  //       confirmButtonColor: Common.colors.point,
-  //     });
-  //   }
-  // };
+  const handleSubmitChangedPassword = async ({ newPassword }) => {
+    try {
+      await updateUser({ password: newPassword });
+      logout();
+      Swal.fire({
+        title: '😎',
+        text: '비밀번호 변경완료! 다시 로그인해주세요!',
+        confirmButtonColor: Common.colors.point,
+      }).then(() => {
+        navigate('/login');
+      });
+    } catch (error) {
+      Swal.fire({
+        title: '🥲',
+        text: error,
+        confirmButtonColor: Common.colors.point,
+      });
+    }
+  };
 
   return (
     <Container>
@@ -124,7 +115,7 @@ const MyPage = () => {
           </StyledButton>
           <StyledButton
             type="button"
-            // onClick={handleClickLogoutButton}
+            onClick={handleClickLogoutButton}
             fontColor={Common.colors.button_font_dark}
             backgroundColor={Common.colors.primary}>
             로그아웃
@@ -134,14 +125,14 @@ const MyPage = () => {
       <NameChangeModal
         userName={user.name}
         visible={nameModalVisible}
-        // onSubmit={handleSubmitChangedName}
+        onSubmit={handleSubmitChangedName}
         onClose={() => {
           setNameModalVisible(false);
         }}
       />
       <PasswordChangeModal
         visible={passWordModalVisible}
-        // onSubmit={handleSubmitChangedPassword}
+        onSubmit={handleSubmitChangedPassword}
         onClose={() => {
           setPassWordModalVisible(false);
         }}

@@ -8,12 +8,13 @@ function App() {
   return (
     <UserProvider>
       <RecoilRoot>
-        <ModalsProvider>
-          <Header />
-          <Suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={<div>Loading...</div>}>
+          <ModalsProvider>
+            <Header />
+
             <Router />
-          </Suspense>
-        </ModalsProvider>
+          </ModalsProvider>
+        </Suspense>
       </RecoilRoot>
     </UserProvider>
   );
