@@ -3,3 +3,5 @@ export const TAB_MENU = {
   my: '나의 카드',
   like: '관심 카드',
 };
+
+export const TOKEN_NAME = 'WAFFLE_TOKEN';

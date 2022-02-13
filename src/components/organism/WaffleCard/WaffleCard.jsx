@@ -3,8 +3,9 @@ import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 import Common from '@styles';
 import { useHover } from '@hooks';
-import { useUser } from '@contexts';
 import { Card, Text, LikeToggle, EditBox } from '@components';
+import { userState } from '@recoil';
+import { useRecoilValue } from 'recoil';
 
 const countDaysFromToday = date => {
   date = typeof date === 'string' ? new Date(date) : date;
@@ -22,7 +23,7 @@ const WaffleCard = ({
   ...props
 }) => {
   // TODO(윤호) : 유저정보를 읽어오지만 좋아요 토글이 안되는 문제
-  const { userInfo } = useUser();
+  const userInfo = useRecoilValue(userState);
 
   const [ref, isHovered] = useHover();
   const days =

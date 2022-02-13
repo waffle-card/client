@@ -4,7 +4,7 @@ import styled from '@emotion/styled';
 import Swal from 'sweetalert2';
 import { useForm } from '@hooks';
 import { useNavigate } from 'react-router-dom';
-import { useUser } from '@contexts';
+import { useUser } from '@hooks';
 import { Text, Button, Input, BackButton, Spinner } from '@components';
 import {
   validateEmailEmpty,
@@ -13,7 +13,7 @@ import {
   validatePasswordLength,
 } from '@validators';
 
-const LoginPage = ({ ...prop }) => {
+const LoginPage = () => {
   const { login } = useUser();
   const navigate = useNavigate();
   const { isLoading, errors, handleChange, handleSubmit } = useForm({
@@ -30,7 +30,7 @@ const LoginPage = ({ ...prop }) => {
           text: '로그인 되었습니다!',
           confirmButtonColor: Common.colors.point,
         }).then(() => {
-          navigate('/');
+          navigate('/', { replace: true });
         });
       } catch (error) {
         Swal.fire({
