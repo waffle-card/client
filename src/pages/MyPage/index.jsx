@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from '@emotion/styled';
-import Common from '@styles';
+import { useNavigate } from 'react-router-dom';
 import {
   Text,
   Button,
@@ -8,11 +8,11 @@ import {
   NameChangeModal,
   PasswordChangeModal,
 } from '@components';
+import Common from '@styles';
 import Swal from 'sweetalert2';
-import { useNavigate } from 'react-router-dom';
+import { useUser } from '@hooks';
 import { userState } from '@recoil';
 import { useRecoilState } from 'recoil';
-import { useUser } from '@hooks';
 
 const MyPage = () => {
   const navigate = useNavigate();
@@ -60,7 +60,7 @@ const MyPage = () => {
         text: '닉네임 변경완료!',
         confirmButtonColor: Common.colors.point,
       }).then(() => {
-        navigate('/my-page');
+        navigate('/my-page', { replace: true });
       });
     } catch (error) {
       Swal.fire({
@@ -74,12 +74,12 @@ const MyPage = () => {
   const handleSubmitChangedPassword = async ({ newPassword }) => {
     try {
       await updateUser({ password: newPassword });
-      logout();
       Swal.fire({
         title: '😎',
         text: '비밀번호 변경완료! 다시 로그인해주세요!',
         confirmButtonColor: Common.colors.point,
       }).then(() => {
+        logout();
         navigate('/login');
       });
     } catch (error) {
@@ -99,11 +99,11 @@ const MyPage = () => {
         <TextContainer>
           <InfoBox>
             <Text>이메일</Text>
-            <Text size={Common.fontSize.large}>{user.email}&nbsp;</Text>
+            <Text size={Common.fontSize.large}>{user?.email}&nbsp;</Text>
           </InfoBox>
           <InfoBox>
             <Text>이름(닉네임)</Text>
-            <Text size={Common.fontSize.large}>{user.name}&nbsp;</Text>
+            <Text size={Common.fontSize.large}>{user?.name}&nbsp;</Text>
           </InfoBox>
         </TextContainer>
         <ButtonContainer>
@@ -123,7 +123,7 @@ const MyPage = () => {
         </ButtonContainer>
       </ContentContainer>
       <NameChangeModal
-        userName={user.name}
+        userName={user?.name}
         visible={nameModalVisible}
         onSubmit={handleSubmitChangedName}
         onClose={() => {
