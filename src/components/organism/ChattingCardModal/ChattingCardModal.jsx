@@ -7,7 +7,6 @@ import { Modal, Spinner } from '@components';
 import Header from './Header';
 import CommentEditor from './CommentEditor';
 import CommentList from './CommentList';
-// import { useUser } from '@contexts';
 import { commentApi } from '@apis';
 import { userState } from '@recoil';
 import { useRecoilValue } from 'recoil';

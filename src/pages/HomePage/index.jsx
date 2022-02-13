@@ -2,7 +2,6 @@ import React, { useCallback, useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import Swal from 'sweetalert2';
 import { useModals } from '@hooks';
-// import { useUser } from '@contexts';
 import { userState } from '@recoil';
 import { useRecoilValue } from 'recoil';
 import { waffleCardApi, commentApi, likeApi } from '@apis';

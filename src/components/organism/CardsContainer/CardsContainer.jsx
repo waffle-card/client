@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import { WaffleCard, Card } from '@components';
 import LoginGuide from './LoginGuide';
 import NoCardGuide from './NoCardGuide';
-// import { useUser } from '@contexts';
 import { userState } from '@recoil';
 import { useRecoilValue } from 'recoil';
 
@@ -19,7 +18,6 @@ const CardsContainer = ({
   onSubmit,
   ...props
 }) => {
-  // const { userInfo } = useUser();
   const userInfo = useRecoilValue(userState);
 
   const handleClickWaffleCard = waffleCardId => {

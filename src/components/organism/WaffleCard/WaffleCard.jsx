@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 import Common from '@styles';
 import { useHover } from '@hooks';
-// import { useUser } from '@contexts';
 import { Card, Text, LikeToggle, EditBox } from '@components';
 import { userState } from '@recoil';
 import { useRecoilValue } from 'recoil';

@@ -1,7 +1,6 @@
 import React from 'react';
 import { Navigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
-// import { useUser } from '@contexts';
 import { userState } from '@recoil';
 import { useRecoilValue } from 'recoil';
 
