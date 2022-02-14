@@ -2,7 +2,8 @@ import React, { useCallback, useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import Swal from 'sweetalert2';
 import { useModals } from '@hooks';
-import { useUser } from '@contexts';
+import { userState } from '@recoil';
+import { useRecoilValue } from 'recoil';
 import { waffleCardApi, commentApi, likeApi } from '@apis';
 import {
   Tab,
@@ -19,7 +20,7 @@ const HomePage = () => {
   const [tabValue, setTabValue] = useState('total');
   const [isLoading, setIsLoading] = useState(true);
   const [waffleCards, setWaffleCards] = useState([]);
-  const { userInfo } = useUser();
+  const userInfo = useRecoilValue(userState);
 
   const initWaffleCards = useCallback(async () => {
     setIsLoading(true);

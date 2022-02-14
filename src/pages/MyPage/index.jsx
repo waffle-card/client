@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from '@emotion/styled';
-import Common from '@styles';
+import { useNavigate } from 'react-router-dom';
 import {
   Text,
   Button,
@@ -8,14 +8,16 @@ import {
   NameChangeModal,
   PasswordChangeModal,
 } from '@components';
+import Common from '@styles';
 import Swal from 'sweetalert2';
-import { useNavigate } from 'react-router-dom';
-import { useUser } from '@contexts';
-import { authApi } from '@apis';
+import { useUser } from '@hooks';
+import { userState } from '@recoil';
+import { useRecoilState } from 'recoil';
 
 const MyPage = () => {
   const navigate = useNavigate();
-  const { userInfo, updateUserInfo, logout } = useUser();
+  const [user, setUser] = useRecoilState(userState);
+  const { logout, updateUser } = useUser();
   const [nameModalVisible, setNameModalVisible] = useState(false);
   const [passWordModalVisible, setPassWordModalVisible] = useState(false);
 
@@ -37,13 +39,13 @@ const MyPage = () => {
       cancelButtonColor: 'red',
     }).then(res => {
       if (res.isConfirmed) {
-        logout();
         Swal.fire({
           title: '👋🏻',
           text: '로그아웃되었습니다.',
           confirmButtonColor: Common.colors.point,
         }).then(() => {
-          navigate('/');
+          navigate('/', { replace: true });
+          logout();
         });
       }
     });
@@ -51,14 +53,14 @@ const MyPage = () => {
 
   const handleSubmitChangedName = async ({ userName }) => {
     try {
-      await authApi.updateUser({ name: userName });
-      updateUserInfo({ ...userInfo, name: userName });
+      await updateUser({ name: userName });
+      setUser({ ...user, name: userName });
       Swal.fire({
         title: '😎',
         text: '닉네임 변경완료!',
         confirmButtonColor: Common.colors.point,
       }).then(() => {
-        navigate('/my-page');
+        navigate('/my-page', { replace: true });
       });
     } catch (error) {
       Swal.fire({
@@ -71,13 +73,13 @@ const MyPage = () => {
 
   const handleSubmitChangedPassword = async ({ newPassword }) => {
     try {
-      await authApi.updateUser({ password: newPassword });
-      logout();
+      await updateUser({ password: newPassword });
       Swal.fire({
         title: '😎',
         text: '비밀번호 변경완료! 다시 로그인해주세요!',
         confirmButtonColor: Common.colors.point,
       }).then(() => {
+        logout();
         navigate('/login');
       });
     } catch (error) {
@@ -97,11 +99,11 @@ const MyPage = () => {
         <TextContainer>
           <InfoBox>
             <Text>이메일</Text>
-            <Text size={Common.fontSize.large}>{userInfo.email}&nbsp;</Text>
+            <Text size={Common.fontSize.large}>{user?.email}&nbsp;</Text>
           </InfoBox>
           <InfoBox>
             <Text>이름(닉네임)</Text>
-            <Text size={Common.fontSize.large}>{userInfo.name}&nbsp;</Text>
+            <Text size={Common.fontSize.large}>{user?.name}&nbsp;</Text>
           </InfoBox>
         </TextContainer>
         <ButtonContainer>
@@ -121,7 +123,7 @@ const MyPage = () => {
         </ButtonContainer>
       </ContentContainer>
       <NameChangeModal
-        userName={userInfo.name}
+        userName={user?.name}
         visible={nameModalVisible}
         onSubmit={handleSubmitChangedName}
         onClose={() => {
