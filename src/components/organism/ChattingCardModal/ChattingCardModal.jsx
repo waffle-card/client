@@ -7,8 +7,9 @@ import { Modal, Spinner } from '@components';
 import Header from './Header';
 import CommentEditor from './CommentEditor';
 import CommentList from './CommentList';
-import { useUser } from '@contexts';
 import { commentApi } from '@apis';
+import { userState } from '@recoil';
+import { useRecoilValue } from 'recoil';
 
 // TODO(윤호): visible 삭제하기, 댓글 state를 가지게하여 댓글 생성, 수정, 삭제시 리렌더링 되도록 하기
 const ChattingCardModal = ({
@@ -19,7 +20,7 @@ const ChattingCardModal = ({
   onClose,
   ...props
 }) => {
-  const { userInfo } = useUser();
+  const userInfo = useRecoilValue(userState);
   const [isLoading, setIsLoading] = useState(false);
   const [comments, setComments] = useState(commentsData);
 

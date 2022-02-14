@@ -16,72 +16,7 @@ import {
 import { authApi } from '@apis';
 import Swal from 'sweetalert2';
 
-const StyledBackButton = styled(BackButton)`
-  position: fixed;
-  top: 60px;
-  left: 50px;
-  @media ${Common.media.sm} {
-    left: 16px;
-  }
-`;
-
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: calc(100vh + 110px);
-  padding: 100px 0;
-`;
-
-const ContentContainer = styled.form`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-  max-width: 550px;
-  margin: 0 auto;
-  @media ${Common.media.sm} {
-    padding: 0 16px;
-  }
-`;
-
-const InputWrapper = styled.div`
-  width: 100%;
-`;
-
-const Header = styled(Text)`
-  text-align: center;
-  margin-bottom: 64px;
-  @media ${Common.media.sm} {
-    font-size: 18px;
-    margin-bottom: 20px;
-  }
-`;
-
-const StyledButton = styled(Button)`
-  width: 100%;
-  margin: 20px 0;
-  font-weight: ${Common.fontWeight.bold};
-  @media ${Common.media.sm} {
-    height: 40px;
-    border-radius: 12px;
-    font-size: ${Common.fontSize.small};
-    &:first-of-type {
-      margin-bottom: 16px;
-    }
-  }
-`;
-
-const StyledText = styled(Text)`
-  margin: 16px 0;
-  @media ${Common.media.sm} {
-    font-size: ${Common.fontSize.small};
-    margin-bottom: 20px;
-  }
-`;
-
-const SignUpPage = ({ ...prop }) => {
+const SignUpPage = () => {
   const navigate = useNavigate();
   const { isLoading, errors, handleChange, handleSubmit } = useForm({
     initialValues: {
@@ -168,5 +103,70 @@ const SignUpPage = ({ ...prop }) => {
     </Container>
   );
 };
+
+const StyledBackButton = styled(BackButton)`
+  position: fixed;
+  top: 60px;
+  left: 50px;
+  @media ${Common.media.sm} {
+    left: 16px;
+  }
+`;
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: calc(100vh + 110px);
+  padding: 100px 0;
+`;
+
+const ContentContainer = styled.form`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 550px;
+  margin: 0 auto;
+  @media ${Common.media.sm} {
+    padding: 0 16px;
+  }
+`;
+
+const InputWrapper = styled.div`
+  width: 100%;
+`;
+
+const Header = styled(Text)`
+  text-align: center;
+  margin-bottom: 64px;
+  @media ${Common.media.sm} {
+    font-size: 18px;
+    margin-bottom: 20px;
+  }
+`;
+
+const StyledButton = styled(Button)`
+  width: 100%;
+  margin: 20px 0;
+  font-weight: ${Common.fontWeight.bold};
+  @media ${Common.media.sm} {
+    height: 40px;
+    border-radius: 12px;
+    font-size: ${Common.fontSize.small};
+    &:first-of-type {
+      margin-bottom: 16px;
+    }
+  }
+`;
+
+const StyledText = styled(Text)`
+  margin: 16px 0;
+  @media ${Common.media.sm} {
+    font-size: ${Common.fontSize.small};
+    margin-bottom: 20px;
+  }
+`;
 
 export default SignUpPage;

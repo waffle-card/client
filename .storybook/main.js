@@ -25,7 +25,11 @@ module.exports = {
     );
     config.resolve.alias['@apis'] = path.resolve(__dirname, '../src/apis');
     config.resolve.alias['@utils'] = path.resolve(__dirname, '../src/utils');
-    config.resolve.alias['@constants'] = path.resolve(__dirname, '../src/constants');
+    config.resolve.alias['@constants'] = path.resolve(
+      __dirname,
+      '../src/constants',
+    );
+    config.resolve.alias['@recoil'] = path.resolve(__dirname, '../src/recoil');
     return config;
   },
 };
