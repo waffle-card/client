@@ -1,5 +1,7 @@
 import React from 'react';
 import styled from '@emotion/styled';
+import Common from '@styles';
+import PropTypes from 'prop-types';
 
 const Slide = ({ text, imageUrl, ...props }) => {
   return (
@@ -15,9 +17,10 @@ const Slide = ({ text, imageUrl, ...props }) => {
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   width: 70%;
+  height: 510px;
   animation: fade 1.4s;
   @keyframes fade {
     from {
@@ -27,19 +30,39 @@ const Container = styled.div`
       opacity: 1;
     }
   }
+  @media ${Common.media.md} {
+    width: 80%;
+    height: 450px;
+  }
+  @media ${Common.media.sm} {
+    width: 100%;
+    height: 300px;
+  }
 `;
 
 const Title = styled.h1`
   color: #fff;
   font-size: 1.7rem;
-  margin-bottom: 5.2rem;
   text-align: center;
+  line-height: 1.4;
+  @media ${Common.media.md} {
+    font-size: ${Common.fontSize.large};
+  }
+  @media ${Common.media.sm} {
+    font-size: ${Common.fontSize.small};
+  }
 `;
 
 const ImageContainer = styled.div`
-  width: 80%;
-  height: 550px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 400px;
   background-color: transparent;
+  @media ${Common.media.sm} {
+    height: 250px;
+  }
 `;
 
 const StyledImg = styled.img`
@@ -48,5 +71,15 @@ const StyledImg = styled.img`
   object-fit: contain;
   object-position: center center;
 `;
+
+Slide.propTypes = {
+  text: PropTypes.string,
+  imageUrl: PropTypes.string,
+};
+
+Slide.defaultProps = {
+  text: '',
+  imageUrl: '',
+};
 
 export default Slide;

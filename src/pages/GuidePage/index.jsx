@@ -3,23 +3,20 @@ import { Portal, GuideSlider } from '@components';
 import styled from '@emotion/styled';
 import ClearIcon from '@mui/icons-material/Clear';
 import { useNavigate } from 'react-router-dom';
-import { GUIDE_SLIDE_DATA } from '@constants';
+import Common from '@styles';
 
 const GuidePage = () => {
   const navigate = useNavigate();
 
   const handleClickClose = () => {
-    console.log('close');
     navigate(-1);
   };
 
   return (
     <Portal>
       <BackgroundDim>
-        <StyledClearIcon onClick={handleClickClose} style={{ color: '#fff' }} />
-        <GuideSlider
-          slideData={GUIDE_SLIDE_DATA}
-          maxLength={Object.keys(GUIDE_SLIDE_DATA).length}></GuideSlider>
+        <StyledClearIcon onClick={handleClickClose} />
+        <GuideSlider />
       </BackgroundDim>
     </Portal>
   );
@@ -38,9 +35,28 @@ const BackgroundDim = styled.div`
 
 const StyledClearIcon = styled(ClearIcon)`
   position: absolute;
-  top: 10%;
-  right: 4%;
+  top: 12.5%;
+  right: 6.5%;
+  box-sizing: content-box;
+  font-size: 1.5rem;
+  border-radius: 50px;
+  padding: 0.4rem;
+  color: #fff;
+  background-color: rgba(255, 255, 255, 0.2);
   z-index: 1;
+  transition: all 0.3s ease;
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.43);
+  }
+  @media ${Common.media.md} {
+    top: 15%;
+  }
+  @media ${Common.media.sm} {
+    top: 15%;
+    right: 1rem;
+    font-size: 0.9rem;
+    padding: 0.25rem;
+  }
 `;
 
 export default GuidePage;

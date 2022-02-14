@@ -22,7 +22,7 @@ export const GUIDE_SLIDE_DATA = {
     url: chatting,
   },
   clickMyCardTab: {
-    text: '카드를 생성하고 싶다면 로그인 후 나의 카드 메뉴로 가주세요! 카드는 1인당 1개만 생성할 수 있습니다',
+    text: '카드를 생성하고 싶다면 로그인 후 나의 카드 탭으로 가주세요!',
     url: clickMyCardTab,
   },
   createCard: {
@@ -30,7 +30,7 @@ export const GUIDE_SLIDE_DATA = {
     url: createCard,
   },
   viewLikeCards: {
-    text: '좋아요를 누른카드는 관심카드 탭에서 모아볼 수 있습니다',
+    text: '좋아요를 누른 카드는 관심카드 탭에서 모아볼 수 있습니다',
     url: viewLikeCards,
   },
 };
