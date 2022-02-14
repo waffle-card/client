@@ -22,9 +22,7 @@ const WaffleCard = ({
   onClickDelete,
   ...props
 }) => {
-  // TODO(윤호) : 유저정보를 읽어오지만 좋아요 토글이 안되는 문제
   const userInfo = useRecoilValue(userState);
-
   const [ref, isHovered] = useHover();
   const days =
     type !== 'plain' ? countDaysFromToday(waffleCardData.updatedAt) : 0;
@@ -34,12 +32,12 @@ const WaffleCard = ({
   };
 
   const handleClickWaffleCard = () => {
-    onClickWaffleCard && onClickWaffleCard(waffleCardData.id);
+    onClickWaffleCard && onClickWaffleCard(waffleCardData);
   };
 
   const handleClickEdit = () => {
     if (type !== 'my') return;
-    onClickEdit && onClickEdit(waffleCardData.id);
+    onClickEdit && onClickEdit(waffleCardData);
   };
 
   const handleClickDelete = () => {

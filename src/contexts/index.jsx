@@ -3,3 +3,8 @@ export {
   ModalsDispatchContext,
   ModalsStateContext,
 } from './modals/ModalsProvider';
+export {
+  WaffleCardsProvider,
+  useWaffleCardsState,
+  useWaffleCardsDispatch,
+} from './waffleCards/waffleCardsContext';

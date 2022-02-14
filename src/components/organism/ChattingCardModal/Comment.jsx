@@ -28,7 +28,6 @@ const Comment = ({
 }) => {
   const [containerRef, hover] = useHover();
   const textAreaRef = useRef();
-  console.log(commentData);
 
   const handleClickUpdate = e => {
     if (type !== 'edit') return;
