@@ -3,6 +3,12 @@ import { waffleCardApi } from '@apis';
 import { userState } from '@recoil';
 import { useRecoilValue } from 'recoil';
 
+const cachedWaffleCards = {
+  total: null,
+  my: null,
+  like: null,
+};
+
 const WaffleCardsStateContext = createContext([]);
 const WaffleCardsDispatchContext = createContext(null);
 
@@ -11,42 +17,62 @@ export const WaffleCardsProvider = ({ children }) => {
   const user = useRecoilValue(userState);
 
   const setWaffleCardsByType = useCallback(
-    async type => {
-      console.log('setWaffleCardsByType - 시작');
-
+    async (type, options) => {
       if (!user && type !== 'total') {
-        setWaffleCards([]);
+        setWaffleCards(() => []);
+        return;
+      }
+
+      if (options?.cached && cachedWaffleCards[type]) {
+        setWaffleCards(() => cachedWaffleCards[type]);
         return;
       }
 
       const waffleCardsCommand = {
-        total: () => {
-          return waffleCardApi.getWaffleCards();
+        total: async () => {
+          const { data: waffleCards } = await waffleCardApi.getWaffleCards();
+          return waffleCards;
         },
-        my: () => {
-          return waffleCardApi.getMyWaffleCard();
+        my: async () => {
+          const { data: waffleCards } = await waffleCardApi.getMyWaffleCard();
+          return waffleCards;
         },
-        like: () => {
-          return waffleCardApi.getMyLikedWaffleCards();
+        like: async () => {
+          const { data: waffleCards } =
+            await waffleCardApi.getMyLikedWaffleCards();
+          return waffleCards;
         },
       };
 
       try {
-        const { data: waffleCards } = await waffleCardsCommand[type]();
-        setWaffleCards(waffleCards);
+        const waffleCards = await waffleCardsCommand[type]();
+
+        cachedWaffleCards[type] = [...waffleCards];
+
+        setWaffleCards(() => [...waffleCards]);
       } catch (error) {
         console.error(`in WaffleCards Recoil: ${error.message}`);
         return [];
       }
-
-      console.log('setWaffleCardsByType - 끝');
     },
     [user],
   );
 
+  const refreshWaffleCards = async (type = 'total') => {
+    Object.keys(cachedWaffleCards).forEach(async type => {
+      cachedWaffleCards[type] = null;
+    });
+
+    await setWaffleCardsByType(type);
+  };
+
   return (
     <WaffleCardsStateContext.Provider value={waffleCards}>
-      <WaffleCardsDispatchContext.Provider value={setWaffleCardsByType}>
+      <WaffleCardsDispatchContext.Provider
+        value={{
+          setWaffleCardsByType,
+          refreshWaffleCards,
+        }}>
         {children}
       </WaffleCardsDispatchContext.Provider>
     </WaffleCardsStateContext.Provider>

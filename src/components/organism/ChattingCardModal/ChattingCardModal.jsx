@@ -72,7 +72,7 @@ const ChattingCardModal = ({
     });
   };
 
-  const handleClickLikeToggle = async likeToggled => {
+  const handleClickLikeToggle = likeToggled => {
     onClickLikeToggle && onClickLikeToggle(waffleCardData.id, likeToggled);
   };
 

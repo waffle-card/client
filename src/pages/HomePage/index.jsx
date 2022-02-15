@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import Swal from 'sweetalert2';
 import { useModals } from '@hooks';
@@ -18,13 +18,7 @@ const HomePage = () => {
   const { openModal } = useModals();
   const [tabValue, setTabValue] = useState('total');
   const [isLoading, setIsLoading] = useState(false);
-  const setWaffleCardsByType = useWaffleCardsDispatch();
-
-  const refreshWaffleCards = useCallback(async () => {
-    setIsLoading(true);
-    await setWaffleCardsByType(tabValue);
-    setIsLoading(false);
-  }, [setWaffleCardsByType, tabValue]);
+  const { setWaffleCardsByType, refreshWaffleCards } = useWaffleCardsDispatch();
 
   const handleClickWaffleCard = async waffleCard => {
     setIsLoading(true);
@@ -55,7 +49,7 @@ const HomePage = () => {
   const handleClickWaffleCardCreate = async () => {
     openModal(CardEditModal, {
       onSubmit: async () => {
-        await refreshWaffleCards();
+        await refreshWaffleCards(tabValue);
       },
     });
   };
@@ -65,7 +59,7 @@ const HomePage = () => {
       editMode: true,
       initialWaffleCardData: waffleCard,
       onSubmit: async () => {
-        await refreshWaffleCards();
+        await refreshWaffleCards(tabValue);
       },
     });
   };
@@ -93,23 +87,31 @@ const HomePage = () => {
   };
 
   const handleClickLikeToggle = async (waffleCardId, likeToggled) => {
-    setIsLoading(true);
+    console.log(waffleCardId, likeToggled);
     try {
-      likeToggled
-        ? await likeApi.createLike(waffleCardId)
-        : await likeApi.deleteLike(waffleCardId);
+      if (likeToggled) {
+        await likeApi.createLike(waffleCardId);
+      } else {
+        await likeApi.deleteLike(waffleCardId);
+      }
     } catch (error) {
       console.error(
         `in ChattingCardModal : 좋아요 삭제 실패 - ${error.message}`,
       );
     }
-    await setWaffleCardsByType(tabValue);
-    setIsLoading(false);
+
+    await refreshWaffleCards(tabValue);
   };
 
   useEffect(() => {
-    refreshWaffleCards();
-  }, [refreshWaffleCards]);
+    const initWaffleCardsByType = async () => {
+      setIsLoading(true);
+      await setWaffleCardsByType(tabValue, { cached: true });
+      setIsLoading(false);
+    };
+
+    initWaffleCardsByType();
+  }, [setWaffleCardsByType, tabValue]);
 
   return (
     <Container>
