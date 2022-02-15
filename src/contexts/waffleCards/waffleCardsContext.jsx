@@ -34,10 +34,22 @@ export const WaffleCardsProvider = ({ children }) => {
           return waffleCards;
         },
         my: async () => {
+          if (cachedWaffleCards.total) {
+            return cachedWaffleCards.total.filter(
+              waffleCard => waffleCard.user.id === user.id,
+            );
+          }
+
           const { data: waffleCards } = await waffleCardApi.getMyWaffleCard();
           return waffleCards;
         },
         like: async () => {
+          if (cachedWaffleCards.total) {
+            return cachedWaffleCards.total.filter(waffleCard =>
+              waffleCard.likeUserIds.includes(user.id),
+            );
+          }
+
           const { data: waffleCards } =
             await waffleCardApi.getMyLikedWaffleCards();
           return waffleCards;
