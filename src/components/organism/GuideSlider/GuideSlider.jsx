@@ -33,9 +33,9 @@ const GuideSlider = ({ ...props }) => {
 
   return (
     <Slider {...props}>
-      {Object.entries(GUIDE_SLIDE_DATA).map(([key, { text, url }], index) => (
+      {GUIDE_SLIDE_DATA.map(({ text, url }, index) => (
         <Slide
-          key={key}
+          key={text}
           text={text}
           imageUrl={url}
           style={{ display: index === slideIndex ? 'flex' : 'none' }}
