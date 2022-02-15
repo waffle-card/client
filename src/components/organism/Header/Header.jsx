@@ -7,6 +7,7 @@ import { Icons, Text } from '@components';
 import { rgba } from 'polished';
 import { userState } from '@recoil';
 import { useRecoilValue } from 'recoil';
+import { logo } from '@images';
 
 const HeaderTag = styled.header`
   position: fixed;
@@ -90,20 +91,21 @@ const Header = ({ backgroundColor = Common.colors.background, ...props }) => {
   const userInfo = useRecoilValue(userState);
   const navigate = useNavigate();
 
-  const handleClickHelpIcon = () => {
-    console.log('clickHelpIcon');
-  };
-
   return (
     <HeaderTag backgroundColor={backgroundColor} {...props}>
       <Logo
         onClick={() => {
           navigate('/');
         }}>
-        <img src={require('./logo.png').default} alt="logo" />
+        <img src={logo} alt="logo" />
       </Logo>
       <UtilIconBox>
-        <HelpIcon onClick={handleClickHelpIcon}>❔</HelpIcon>
+        <HelpIcon
+          onClick={() => {
+            navigate('/guide');
+          }}>
+          ❔
+        </HelpIcon>
         {userInfo ? (
           <StyledIcon
             onClick={() => {

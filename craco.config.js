@@ -15,6 +15,7 @@ module.exports = {
       '@apis': path.resolve(__dirname, 'src/apis'),
       '@utils': path.resolve(__dirname, 'src/utils'),
       '@constants': path.resolve(__dirname, 'src/constants'),
+      '@images': path.resolve(__dirname, 'src/images'),
       '@recoil': path.resolve(__dirname, 'src/recoil'),
     },
   },

@@ -22,3 +22,4 @@ export { default as PasswordChangeModal } from './organism/PasswordChangeModal/P
 export { default as WaffleCardsList } from './organism/WaffleCardsList/WaffleCardsList';
 export { default as LikeToggle } from './molecule/LikeToggle/LikeToggle';
 export { default as Modals } from './organism/Modals/Modals';
+export { default as GuideSlider } from './organism/GuideSlider/GuideSlider';
