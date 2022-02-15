@@ -6,10 +6,10 @@ import LoginGuide from './LoginGuide';
 import NoCardGuide from './NoCardGuide';
 import { userState } from '@recoil';
 import { useRecoilValue } from 'recoil';
+import { useWaffleCardsState } from '@contexts';
 
-const CardsContainer = ({
+const WaffleCardsList = ({
   type,
-  waffleCardsData,
   onClickWaffleCard,
   onClickWaffleCardCreate,
   onClickWaffleCardEdit,
@@ -19,17 +19,18 @@ const CardsContainer = ({
   ...props
 }) => {
   const userInfo = useRecoilValue(userState);
+  const waffleCards = useWaffleCardsState();
 
-  const handleClickWaffleCard = waffleCardId => {
-    onClickWaffleCard && onClickWaffleCard(waffleCardId);
+  const handleClickWaffleCard = waffleCard => {
+    onClickWaffleCard && onClickWaffleCard(waffleCard);
   };
 
   const handleClickWaffleCardCreate = () => {
     onClickWaffleCardCreate && onClickWaffleCardCreate();
   };
 
-  const handleClickWaffleCardEdit = waffleCardId => {
-    onClickWaffleCardEdit && onClickWaffleCardEdit(waffleCardId);
+  const handleClickWaffleCardEdit = waffleCard => {
+    onClickWaffleCardEdit && onClickWaffleCardEdit(waffleCard);
   };
 
   const handleClickWaffleCardDelete = async waffleCardId => {
@@ -42,7 +43,7 @@ const CardsContainer = ({
 
   switch (type) {
     case 'total':
-      if (waffleCardsData.length <= 0) {
+      if (waffleCards.length <= 0) {
         return (
           <CenterAlignedContainer>
             <NoCardGuide />
@@ -51,7 +52,7 @@ const CardsContainer = ({
       } else {
         return (
           <LeftAlignedContainer {...props}>
-            {waffleCardsData.map(waffleCard => (
+            {waffleCards.map(waffleCard => (
               <StyledWaffleCard
                 type="basic"
                 key={waffleCard.id}
@@ -70,7 +71,7 @@ const CardsContainer = ({
             <LoginGuide />
           </CenterAlignedContainer>
         );
-      } else if (waffleCardsData.length <= 0) {
+      } else if (waffleCards.length <= 0) {
         return (
           <CenterAlignedContainer>
             <Card.Empty onClick={handleClickWaffleCardCreate} />
@@ -79,7 +80,7 @@ const CardsContainer = ({
       } else {
         return (
           <CenterAlignedContainer {...props}>
-            {waffleCardsData.map(waffleCard => (
+            {waffleCards.map(waffleCard => (
               <StyledWaffleCard
                 type="my"
                 key={waffleCard.id}
@@ -100,7 +101,7 @@ const CardsContainer = ({
             <LoginGuide />
           </CenterAlignedContainer>
         );
-      } else if (waffleCardsData.length <= 0) {
+      } else if (waffleCards.length <= 0) {
         return (
           <CenterAlignedContainer>
             <NoCardGuide />
@@ -109,7 +110,7 @@ const CardsContainer = ({
       } else {
         return (
           <CenterAlignedContainer {...props}>
-            {waffleCardsData.map(waffleCard => (
+            {waffleCards?.map(waffleCard => (
               <StyledWaffleCard
                 type="basic"
                 key={waffleCard.id}
@@ -160,17 +161,16 @@ const StyledWaffleCard = styled(WaffleCard)`
   transition: all 250ms ease-out;
 `;
 
-CardsContainer.protoTypes = {
+WaffleCardsList.protoTypes = {
   type: PropTypes.string,
-  waffleCardsData: PropTypes.array.isRequired,
   onClickWaffleCard: PropTypes.func,
   onClickWaffleCardCreate: PropTypes.func,
   onClickWaffleCardEdit: PropTypes.func,
   onClickWaffleCardDelete: PropTypes.func,
 };
 
-CardsContainer.defaultProps = {
+WaffleCardsList.defaultProps = {
   type: 'total',
 };
 
-export default CardsContainer;
+export default WaffleCardsList;

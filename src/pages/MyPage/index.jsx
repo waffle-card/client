@@ -13,6 +13,7 @@ import Swal from 'sweetalert2';
 import { useUser } from '@hooks';
 import { userState } from '@recoil';
 import { useRecoilState } from 'recoil';
+import { useWaffleCardsDispatch } from '@contexts';
 
 const MyPage = () => {
   const navigate = useNavigate();
@@ -20,6 +21,7 @@ const MyPage = () => {
   const { logout, updateUser } = useUser();
   const [nameModalVisible, setNameModalVisible] = useState(false);
   const [passWordModalVisible, setPassWordModalVisible] = useState(false);
+  const { refreshWaffleCards } = useWaffleCardsDispatch();
 
   const handleClickChangeNameButton = () => {
     setNameModalVisible(true);
@@ -44,6 +46,7 @@ const MyPage = () => {
           text: '로그아웃되었습니다.',
           confirmButtonColor: Common.colors.point,
         }).then(() => {
+          refreshWaffleCards();
           navigate('/', { replace: true });
           logout();
         });

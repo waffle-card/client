@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 import { IconButton } from '@mui/material';
@@ -30,6 +30,11 @@ const LikeToggle = ({
     setCount(() => nextCount);
     setToggle(() => nextToggle);
   };
+
+  useEffect(() => {
+    setToggle(toggled);
+    setCount(initCount);
+  }, [initCount, toggled]);
 
   return (
     <IconWrapper {...props}>

@@ -1,14 +1,13 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import Swal from 'sweetalert2';
 import { useModals } from '@hooks';
-import { userState } from '@recoil';
-import { useRecoilValue } from 'recoil';
+import { useWaffleCardsDispatch } from '@contexts';
 import { waffleCardApi, commentApi, likeApi } from '@apis';
 import {
   Tab,
   Spinner,
-  CardsContainer,
+  WaffleCardsList,
   ScrollGuide,
   Modals,
   CardEditModal,
@@ -18,58 +17,19 @@ import {
 const HomePage = () => {
   const { openModal } = useModals();
   const [tabValue, setTabValue] = useState('total');
-  const [isLoading, setIsLoading] = useState(true);
-  const [waffleCards, setWaffleCards] = useState([]);
-  const userInfo = useRecoilValue(userState);
+  const [isLoading, setIsLoading] = useState(false);
+  const { setWaffleCardsByType, refreshWaffleCards } = useWaffleCardsDispatch();
 
-  const initWaffleCards = useCallback(async () => {
+  const handleClickWaffleCard = async waffleCard => {
     setIsLoading(true);
 
-    const waffleCardsCommand = {
-      total: () => {
-        return waffleCardApi.getWaffleCards();
-      },
-      my: () => {
-        return waffleCardApi.getMyWaffleCard();
-      },
-      like: () => {
-        return waffleCardApi.getMyLikedWaffleCards();
-      },
-    };
-
-    if ((tabValue === 'my' || tabValue === 'like') && !userInfo) {
-      setWaffleCards(() => []);
-      setIsLoading(false);
-      return;
-    }
-
     try {
-      const response = await waffleCardsCommand[tabValue]();
-      const waffleCards = response.data;
-
-      setWaffleCards(() => waffleCards);
-    } catch (error) {
-      console.error(
-        `in HomePage : 와플 카드 전체 목록 가져오기 실패 - ${error.message}`,
+      const response = await commentApi.getCommentsByWaffleCardId(
+        waffleCard.id,
       );
-      setWaffleCards(() => []);
-    }
-
-    setIsLoading(false);
-  }, [tabValue, userInfo]);
-
-  const handleClickWaffleCard = async waffleCardId => {
-    setIsLoading(true);
-
-    const waffleCardData = waffleCards.find(
-      waffleCard => waffleCard.id === waffleCardId,
-    );
-
-    try {
-      const response = await commentApi.getCommentsByWaffleCardId(waffleCardId);
       const commentsData = response.data;
       openModal(ChattingCardModal, {
-        waffleCardData: waffleCardData,
+        waffleCardData: waffleCard,
         commentsData: commentsData ?? [],
         onClickLikeToggle: (waffleCardId, likeToggled) => {
           handleClickLikeToggle(waffleCardId, likeToggled);
@@ -88,22 +48,18 @@ const HomePage = () => {
 
   const handleClickWaffleCardCreate = async () => {
     openModal(CardEditModal, {
-      onSubmit: () => {
-        initWaffleCards();
+      onSubmit: async () => {
+        await refreshWaffleCards(tabValue);
       },
     });
   };
 
-  const handleClickWaffleCardEdit = waffleCardId => {
-    const waffleCardData = waffleCards.find(
-      waffleCard => waffleCard.id === waffleCardId,
-    );
-
+  const handleClickWaffleCardEdit = waffleCard => {
     openModal(CardEditModal, {
       editMode: true,
-      initialWaffleCardData: waffleCardData,
-      onSubmit: () => {
-        initWaffleCards();
+      initialWaffleCardData: waffleCard,
+      onSubmit: async () => {
+        await refreshWaffleCards(tabValue);
       },
     });
   };
@@ -120,7 +76,7 @@ const HomePage = () => {
       if (result.isConfirmed) {
         try {
           await waffleCardApi.deleteWaffleCard(waffleCardId);
-          initWaffleCards();
+          await refreshWaffleCards();
         } catch (error) {
           console.error(
             `in ChattingCardModal : 댓글 삭제 실패 - ${error.message}`,
@@ -131,38 +87,37 @@ const HomePage = () => {
   };
 
   const handleClickLikeToggle = async (waffleCardId, likeToggled) => {
-    setIsLoading(true);
-    if (likeToggled) {
-      try {
+    console.log(waffleCardId, likeToggled);
+    try {
+      if (likeToggled) {
         await likeApi.createLike(waffleCardId);
-      } catch (error) {
-        console.error(
-          `in ChattingCardModal : 좋아요 생성 실패 - ${error.message}`,
-        );
-      }
-    } else {
-      try {
+      } else {
         await likeApi.deleteLike(waffleCardId);
-      } catch (error) {
-        console.error(
-          `in ChattingCardModal : 좋아요 삭제 실패 - ${error.message}`,
-        );
       }
+    } catch (error) {
+      console.error(
+        `in ChattingCardModal : 좋아요 삭제 실패 - ${error.message}`,
+      );
     }
-    initWaffleCards();
-    setIsLoading(true);
+
+    await refreshWaffleCards(tabValue);
   };
 
   useEffect(() => {
-    initWaffleCards();
-  }, [initWaffleCards]);
+    const initWaffleCardsByType = async () => {
+      setIsLoading(true);
+      await setWaffleCardsByType(tabValue, { cached: true });
+      setIsLoading(false);
+    };
+
+    initWaffleCardsByType();
+  }, [setWaffleCardsByType, tabValue]);
 
   return (
     <Container>
       <Tab onClick={setTabValue} currentActive={tabValue} />
-      <CardsContainer
+      <WaffleCardsList
         type={tabValue}
-        waffleCardsData={waffleCards}
         onClickWaffleCard={handleClickWaffleCard}
         onClickWaffleCardCreate={handleClickWaffleCardCreate}
         onClickWaffleCardEdit={handleClickWaffleCardEdit}

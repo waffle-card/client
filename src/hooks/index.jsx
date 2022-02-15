@@ -5,3 +5,4 @@ export { default as useSessionStorage } from './useSessionStorage';
 export { default as useModals } from './useModals';
 export { default as useUser } from './useUser';
 export { default as useIsOverflow } from './useIsOverflow';
+export { default as useToggle } from './useToggle';

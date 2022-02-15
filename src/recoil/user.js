@@ -19,6 +19,7 @@ export const userState = atom({
       } catch (error) {
         sessionStorage.removeItem(TOKEN_NAME);
         console.error(`in User Recoil: ${error.message}`);
+        return null;
       }
     },
   }),
