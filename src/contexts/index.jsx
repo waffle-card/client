@@ -7,4 +7,4 @@ export {
   WaffleCardsProvider,
   useWaffleCardsState,
   useWaffleCardsDispatch,
-} from './waffleCards/waffleCardsContext';
+} from './waffleCards/waffleCardsProvider';
