@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { Modal, Text, Card } from '@components';
+import { Modal, Text, Card } from '@/components';
 import styled from '@emotion/styled';
-// import Common from '@styles';
+// import Common from '@/styles';
 
 export default {
   title: 'Component/Base/Modal',

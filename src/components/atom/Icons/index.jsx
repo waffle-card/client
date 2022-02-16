@@ -8,7 +8,7 @@ import Person from './Person';
 import Add from './Add';
 import Send from './Send';
 import styled from '@emotion/styled';
-import Common from '@styles';
+import Common from '@/styles';
 import PropTypes from 'prop-types';
 
 const Container = styled.div`
@@ -88,7 +88,8 @@ const Icons = ({ children, fontSize, backgroundColor, ...props }) => {
       fontSize={fontSize}
       backgroundColor={backgroundColor}
       style={{ ...props.style }}
-      {...props}>
+      {...props}
+    >
       {children}
     </Container>
   );

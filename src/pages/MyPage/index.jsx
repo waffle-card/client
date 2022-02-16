@@ -7,13 +7,13 @@ import {
   BackButton,
   NameChangeModal,
   PasswordChangeModal,
-} from '@components';
-import Common from '@styles';
+} from '@/components';
+import Common from '@/styles';
 import Swal from 'sweetalert2';
-import { useUser } from '@hooks';
-import { userState } from '@recoil';
+import { useUser } from '@/hooks';
+import { userState } from '@/recoil';
 import { useRecoilState } from 'recoil';
-import { useWaffleCardsDispatch } from '@contexts';
+import { useWaffleCardsDispatch } from '@/contexts';
 
 const MyPage = () => {
   const navigate = useNavigate();
@@ -120,7 +120,8 @@ const MyPage = () => {
             type="button"
             onClick={handleClickLogoutButton}
             fontColor={Common.colors.button_font_dark}
-            backgroundColor={Common.colors.primary}>
+            backgroundColor={Common.colors.primary}
+          >
             로그아웃
           </StyledButton>
         </ButtonContainer>

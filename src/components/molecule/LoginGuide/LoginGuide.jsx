@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from '@emotion/styled';
-import Common from '@styles';
-import { Button } from '@components';
+import Common from '@/styles';
+import { Button } from '@/components';
 import { useNavigate } from 'react-router-dom';
-import { Text } from '@components';
+import { Text } from '@/components';
 
 const LoginGuide = () => {
   const navigate = useNavigate();
@@ -15,7 +15,8 @@ const LoginGuide = () => {
         width={250}
         onClick={() => {
           navigate('/login');
-        }}>
+        }}
+      >
         로그인하러 가기
       </StyledButton>
     </GuideWrap>

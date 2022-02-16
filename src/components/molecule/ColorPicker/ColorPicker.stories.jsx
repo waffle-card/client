@@ -1,4 +1,4 @@
-import { ColorPicker } from '@components';
+import { ColorPicker } from '@/components';
 
 export default {
   title: 'Component/Base/ColorPicker',

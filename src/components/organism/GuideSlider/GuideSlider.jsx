@@ -4,8 +4,8 @@ import React, { useState } from 'react';
 import Slide from './Slide';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import Common from '@styles';
-import { GUIDE_SLIDE_DATA } from '@constants';
+import Common from '@/styles';
+import { GUIDE_SLIDE_DATA } from '@/constants';
 
 const GuideSlider = ({ ...props }) => {
   const [slideIndex, setSlideIndex] = useState(0);

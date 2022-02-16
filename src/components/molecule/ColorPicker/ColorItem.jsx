@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from '@emotion/styled';
-import Common from '@styles';
+import Common from '@/styles';
 import PropTypes from 'prop-types';
 
 const Container = styled.label`

@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import PropTypes from 'prop-types';
-import Common from '@styles';
+import Common from '@/styles';
 
 const Text = ({
   children,
@@ -39,7 +39,8 @@ const Text = ({
       color={color}
       underline={underline}
       del={del}
-      {...props}>
+      {...props}
+    >
       {children}
     </StyledTag>
   );

@@ -3,10 +3,10 @@ import { useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 import { rgba } from 'polished';
-import Common from '@styles';
+import Common from '@/styles';
 import TabItem from './TabItem';
-import { TAB_MENU } from '@constants';
-import { tabItemSize } from '@styles/mixin';
+import { TAB_MENU } from '@/constants';
+import { tabItemSize } from '@/styles/mixin';
 
 const Tab = ({ currentActive, onClick, ...props }) => {
   const [activeItem, setActiveItem] = useState(currentActive);

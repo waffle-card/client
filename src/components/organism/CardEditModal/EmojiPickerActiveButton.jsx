@@ -2,8 +2,8 @@ import styled from '@emotion/styled';
 import React, { useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
 import Picker from 'emoji-picker-react';
-import { Button } from '@components';
-import Common from '@styles';
+import { Button } from '@/components';
+import Common from '@/styles';
 
 const Container = styled.label`
   display: inline-block;
@@ -46,7 +46,8 @@ const EmojiPickerActiveButton = ({
         height={40}
         fontSize={Common.fontSize.small}
         disabled={disabled}
-        onClick={toggleEmojiPicker}>
+        onClick={toggleEmojiPicker}
+      >
         선택
       </Button>
       {showEmojiPicker && (

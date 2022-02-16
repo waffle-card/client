@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { useCallback } from 'react';
 import PropTypes from 'prop-types';
-import Common from '@styles';
+import Common from '@/styles';
 
 const StyledButton = styled.button`
   --width: ${({ width }) => (typeof width === 'number' ? `${width}px` : width)};
@@ -75,7 +75,8 @@ const Button = ({
       fontSize={fontSize}
       fontColor={fontColor}
       disabled={disabled}
-      {...props}>
+      {...props}
+    >
       {children}
     </StyledButton>
   );

@@ -1,4 +1,6 @@
 const path = require('path');
+// TODO(윤호): 스토리북 파일 ts파일로 전환시 아래 플러그인 활용하기
+// const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 
 module.exports = {
   stories: ['../src/**/*.stories.mdx', '../src/**/*.stories.@(js|jsx|ts|tsx)'],
@@ -8,28 +10,7 @@ module.exports = {
     '@storybook/preset-create-react-app',
   ],
   webpackFinal: async config => {
-    config.resolve.alias['@components'] = path.resolve(
-      __dirname,
-      '../src/components',
-    );
-    config.resolve.alias['@hooks'] = path.resolve(__dirname, '../src/hooks');
-    config.resolve.alias['@contexts'] = path.resolve(
-      __dirname,
-      '../src/contexts',
-    );
-    config.resolve.alias['@pages'] = path.resolve(__dirname, '../src/pages');
-    config.resolve.alias['@styles'] = path.resolve(__dirname, '../src/styles');
-    config.resolve.alias['@validators'] = path.resolve(
-      __dirname,
-      '../src/validators',
-    );
-    config.resolve.alias['@apis'] = path.resolve(__dirname, '../src/apis');
-    config.resolve.alias['@utils'] = path.resolve(__dirname, '../src/utils');
-    config.resolve.alias['@constants'] = path.resolve(
-      __dirname,
-      '../src/constants',
-    );
-    config.resolve.alias['@recoil'] = path.resolve(__dirname, '../src/recoil');
+    config.resolve.alias['@'] = path.resolve(__dirname, '../src');
     return config;
   },
 };

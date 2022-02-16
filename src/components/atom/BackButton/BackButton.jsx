@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import { useNavigate } from 'react-router-dom';
-import Common from '@styles';
-import { Text, Icons } from '@components';
+import Common from '@/styles';
+import { Text, Icons } from '@/components';
 
 const BackButtonContainer = styled.div`
   display: flex;
@@ -21,7 +21,8 @@ const BackButton = ({ ...props }) => {
       onClick={() => {
         navigate(-1);
       }}
-      {...props}>
+      {...props}
+    >
       <Icons.ArrowBack />
       <Text>뒤로가기</Text>
     </BackButtonContainer>

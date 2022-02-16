@@ -1,6 +1,6 @@
 import Icon from '@material-ui/core/Icon';
 import PropTypes from 'prop-types';
-import useToggle from '@hooks/useToggle';
+import useToggle from '@/hooks/useToggle';
 
 const Like = ({ color = 'white', active = false, onClick, ...props }) => {
   const [liked, toggle] = useToggle(active);
@@ -14,7 +14,8 @@ const Like = ({ color = 'white', active = false, onClick, ...props }) => {
     <Icon
       style={{ fontSize: 'inherit', color, cursor: 'pointer', ...props.style }}
       onClick={handleClick}
-      {...props}>
+      {...props}
+    >
       {liked ? `favorite` : `favorite_border`}
     </Icon>
   );

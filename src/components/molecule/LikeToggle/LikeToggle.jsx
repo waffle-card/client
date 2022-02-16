@@ -4,8 +4,8 @@ import styled from '@emotion/styled';
 import { IconButton } from '@mui/material';
 import FavoriteRoundedIcon from '@mui/icons-material/FavoriteRounded';
 import FavoriteBorderRoundedIcon from '@mui/icons-material/FavoriteBorderRounded';
-import Common from '@styles';
-import { Text } from '@components';
+import Common from '@/styles';
+import { Text } from '@/components';
 
 const LikeToggle = ({
   toggled,

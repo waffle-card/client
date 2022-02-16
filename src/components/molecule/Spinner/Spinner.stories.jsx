@@ -1,5 +1,5 @@
-import { Spinner } from '@components';
-import Common from '@styles';
+import { Spinner } from '@/components';
+import Common from '@/styles';
 import { useState } from 'react';
 
 export default {

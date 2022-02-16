@@ -2,7 +2,7 @@ import React from 'react';
 import styled from '@emotion/styled';
 import { useCallback } from 'react';
 import PropTypes from 'prop-types';
-import Common from '@styles';
+import Common from '@/styles';
 import Empty from './Empty';
 
 const CardStyle = styled.div`
@@ -45,7 +45,8 @@ const Card = React.forwardRef(
         backgroundColor={backgroundColor}
         onClick={handleClick}
         ref={ref}
-        {...props}>
+        {...props}
+      >
         {children}
       </CardStyle>
     );

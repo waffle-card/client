@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
-import { LikeToggle } from '@components';
+import { LikeToggle } from '@/components';
 import { IconButton } from '@mui/material';
 import ArrowBackIosNewRoundedIcon from '@mui/icons-material/ArrowBackIosNewRounded';
-import Common from '@styles';
+import Common from '@/styles';
 
 const Header = ({
   waffleCardData,

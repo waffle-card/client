@@ -6,7 +6,7 @@ import {
   MyPage,
   GuidePage,
   NotFoundPage,
-} from '@pages';
+} from '@/pages';
 import PrivateRoute from './PrivateRoute';
 import PublicRoute from './PublicRoute';
 

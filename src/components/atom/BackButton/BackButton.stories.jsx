@@ -1,4 +1,4 @@
-import { BackButton } from '@components';
+import { BackButton } from '@/components';
 
 export default {
   title: 'Component/Base/BackButton',

@@ -1,8 +1,8 @@
 import styled from '@emotion/styled';
-// import { useClickAway } from '@hooks';
+// import { useClickAway } from '@/hooks';
 import PropTypes from 'prop-types';
-import Common from '@styles';
-import { Portal } from '@components';
+import Common from '@/styles';
+import { Portal } from '@/components';
 // import { forwardRef } from 'react';
 
 const Modal = ({
@@ -27,7 +27,8 @@ const Modal = ({
           width={width}
           height={height}
           backgroundColor={backgroundColor}
-          {...props}>
+          {...props}
+        >
           {children}
         </ModalContainer>
       </BackgroundDim>

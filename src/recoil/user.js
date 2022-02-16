@@ -1,6 +1,6 @@
 import { atom, selector } from 'recoil';
-import { authApi } from '@apis';
-import { TOKEN_NAME } from '@constants';
+import { authApi } from '@/apis';
+import { TOKEN_NAME } from '@/constants';
 
 export const userState = atom({
   key: 'user',

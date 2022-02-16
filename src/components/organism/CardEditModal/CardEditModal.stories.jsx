@@ -3,7 +3,7 @@ import {
   CardEditModal,
   // HashTagInput,
   // EmojiPickerActiveButton,
-} from '@components';
+} from '@/components';
 // import { useState } from 'react';
 
 export default {

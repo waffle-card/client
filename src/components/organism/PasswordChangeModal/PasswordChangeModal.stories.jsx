@@ -1,4 +1,4 @@
-import { PasswordChangeModal } from '@components';
+import { PasswordChangeModal } from '@/components';
 
 export default {
   title: 'Component/organism/PasswordChangeModal',

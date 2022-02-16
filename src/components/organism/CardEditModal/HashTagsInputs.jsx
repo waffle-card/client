@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from '@emotion/styled';
-import Common from '@styles';
+import Common from '@/styles';
 
 const HASHTAG = {
   0: 'first',

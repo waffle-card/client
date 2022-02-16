@@ -1,7 +1,7 @@
 import React, { useCallback, useMemo } from 'react';
 import ColorItem from './ColorItem';
 import styled from '@emotion/styled';
-import Common from '@styles';
+import Common from '@/styles';
 import PropTypes from 'prop-types';
 
 const Container = styled.div`

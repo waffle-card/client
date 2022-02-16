@@ -1,4 +1,4 @@
-import MyPage from '@pages/MyPage';
+import { MyPage } from '@/pages';
 
 export default {
   title: 'page/MyPage',

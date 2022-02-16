@@ -1,17 +1,17 @@
 import React from 'react';
-import Common from '@styles';
+import Common from '@/styles';
 import styled from '@emotion/styled';
 import Swal from 'sweetalert2';
-import { useForm } from '@hooks';
+import { useForm } from '@/hooks';
 import { useNavigate } from 'react-router-dom';
-import { useUser } from '@hooks';
-import { Text, Button, Input, BackButton, Spinner } from '@components';
+import { useUser } from '@/hooks';
+import { Text, Button, Input, BackButton, Spinner } from '@/components';
 import {
   validateEmailEmpty,
   validateEmailForm,
   validatePasswordEmpty,
   validatePasswordLength,
-} from '@validators';
+} from '@/validators';
 
 const LoginPage = () => {
   const { login } = useUser();
@@ -82,7 +82,8 @@ const LoginPage = () => {
           type="button"
           onClick={handleClickSignUpButton}
           backgroundColor="white"
-          fontColor={Common.colors.button_font_dark}>
+          fontColor={Common.colors.button_font_dark}
+        >
           가입하기
         </StyledButton>
       </ContentContainer>

@@ -4,7 +4,7 @@ import {
   createCard,
   viewLikeCards,
   viewTotalCards,
-} from '@images';
+} from '@/images';
 
 export const TAB_MENU = {
   total: '오늘의 카드',

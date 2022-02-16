@@ -1,6 +1,6 @@
 import { createContext, useCallback, useContext, useState } from 'react';
-import { waffleCardApi } from '@apis';
-import { userState } from '@recoil';
+import { waffleCardApi } from '@/apis';
+import { userState } from '@/recoil';
 import { useRecoilValue } from 'recoil';
 
 const cachedWaffleCards = {
@@ -84,7 +84,8 @@ export const WaffleCardsProvider = ({ children }) => {
         value={{
           setWaffleCardsByType,
           refreshWaffleCards,
-        }}>
+        }}
+      >
         {children}
       </WaffleCardsDispatchContext.Provider>
     </WaffleCardsStateContext.Provider>

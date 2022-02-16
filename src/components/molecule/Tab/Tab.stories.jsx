@@ -1,5 +1,5 @@
-import { Tab } from '@components';
-import { TAB_MENU } from '@constants';
+import { Tab } from '@/components';
+import { TAB_MENU } from '@/constants';
 
 export default {
   title: 'Component/molecule/Tab',

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from '@emotion/styled';
-import Common from '@styles';
+import Common from '@/styles';
 
 const CommentEditor = ({ onSubmit, onChange, disabled = false, ...props }) => {
   const [text, setText] = useState('');
@@ -43,7 +43,8 @@ const CommentEditor = ({ onSubmit, onChange, disabled = false, ...props }) => {
       <Button
         disabled={disabled}
         type="button"
-        onClick={handleClickSubmitButton}>
+        onClick={handleClickSubmitButton}
+      >
         입력
       </Button>
     </Form>
