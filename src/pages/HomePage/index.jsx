@@ -87,7 +87,6 @@ const HomePage = () => {
   };
 
   const handleClickLikeToggle = async (waffleCardId, likeToggled) => {
-    console.log(waffleCardId, likeToggled);
     try {
       if (likeToggled) {
         await likeApi.createLike(waffleCardId);
