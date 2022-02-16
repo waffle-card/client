@@ -15,7 +15,7 @@ const Spinner = ({
   size = 50,
   color = Common.colors.point,
   ...props
-}: Prop) => {
+}: Prop): JSX.Element | null => {
   return loading ? (
     <Portal>
       <BackgroundDim>
