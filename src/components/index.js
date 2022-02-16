@@ -8,7 +8,7 @@ export { default as Icons } from './atom/Icons';
 export { default as Portal } from './atom/Portal/Portal';
 export { default as Spinner } from './molecule/Spinner/Spinner';
 export { default as BackButton } from './atom/BackButton/BackButton';
-export { default as Input } from './atom/Input/Input';
+export { default as Input } from './atom/Input/Input.tsx';
 export { default as ScrollGuide } from './molecule/ScrollGuide/ScrollGuide';
 export { default as EditBox } from './molecule/EditBox/EditBox';
 export { default as WaffleCard } from './organism/WaffleCard/WaffleCard';

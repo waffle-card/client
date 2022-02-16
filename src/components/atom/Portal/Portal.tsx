@@ -1,7 +1,11 @@
 import { useEffect, useMemo } from 'react';
 import { createPortal } from 'react-dom';
 
-const Portal = ({ children }) => {
+interface PortalProps {
+  children: React.ReactNode;
+}
+
+const Portal = ({ children }: PortalProps): React.ReactPortal => {
   const element = useMemo(() => document.createElement('div'), []);
   useEffect(() => {
     document.body.appendChild(element);
