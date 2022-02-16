@@ -1,0 +1,21 @@
+{
+  "env": {
+    "browser": true,
+    "es6": true,
+    "node": true
+  },
+  "extends": ["react-app", "plugin:prettier/recommended"],
+  "rules": {
+    "import/no-anonymous-default-export": "off"
+  },
+  "overrides": [
+    {
+      "files": ["*.ts", "*.tsx"],
+      "parser": "@typescript-eslint/parser",
+      "plugins": ["@typescript-eslint", "prettier"],
+      "extends": ["plugin:@typescript-eslint/recommended", "prettier"],
+      "rules": {}
+    }
+  ],
+  "ignorePatterns": ["node_modules/"]
+}
