@@ -19,7 +19,7 @@ const WaffleCardsList = ({
 }) => {
   const user = useRecoilValue(userState);
   const waffleCards = useWaffleCardsState();
-  const [containerRef, isOverflow] = useIsOverflow(type);
+  const [containerRef, isOverflow] = useIsOverflow();
 
   const handleClickWaffleCard = waffleCard => {
     onClickWaffleCard && onClickWaffleCard(waffleCard);

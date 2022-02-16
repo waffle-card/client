@@ -1,9 +1,19 @@
 import styled from '@emotion/styled';
-import { useCallback } from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import Common from '@/styles';
 
-const StyledButton = styled.button`
+interface ButtonProps extends React.ComponentProps<'button'> {
+  children: React.ReactNode;
+  width: string | number;
+  height: string | number;
+  backgroundColor: string;
+  fontColor: string;
+  fontSize: string | number;
+  disabled: boolean;
+  onClick: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+}
+
+const Button = styled.button<ButtonProps>`
   --width: ${({ width }) => (typeof width === 'number' ? `${width}px` : width)};
   --height: ${({ height }) =>
     typeof height === 'number' ? `${height}px` : height};
@@ -47,50 +57,6 @@ const StyledButton = styled.button`
     border: solid 2px var(--font-color);
   }
 `;
-
-const Button = ({
-  children,
-  width,
-  height,
-  backgroundColor,
-  fontColor,
-  fontSize,
-  disabled = false,
-  onClick,
-  ...props
-}) => {
-  const handleClick = useCallback(
-    event => {
-      onClick && onClick(event);
-    },
-    [onClick],
-  );
-
-  return (
-    <StyledButton
-      onClick={handleClick}
-      width={width}
-      height={height}
-      backgroundColor={backgroundColor}
-      fontSize={fontSize}
-      fontColor={fontColor}
-      disabled={disabled}
-      {...props}
-    >
-      {children}
-    </StyledButton>
-  );
-};
-
-Button.propTypes = {
-  children: PropTypes.string,
-  width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  height: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  backgroundColor: PropTypes.string,
-  fontColor: PropTypes.string,
-  fontSize: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  onClick: PropTypes.func,
-};
 
 Button.defaultProps = {
   width: 550,

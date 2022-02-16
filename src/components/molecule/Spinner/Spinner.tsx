@@ -5,9 +5,9 @@ import styled from '@emotion/styled';
 import { Portal } from '@/components';
 
 interface Prop {
-  loading: boolean;
-  size: number;
-  color: string;
+  loading?: boolean;
+  size?: number;
+  color?: string;
 }
 
 const Spinner = ({
