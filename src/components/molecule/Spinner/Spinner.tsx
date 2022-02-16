@@ -1,11 +1,21 @@
 import React from 'react';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Common from '@/styles';
-import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 import { Portal } from '@/components';
 
-const Spinner = ({ loading, size, color, ...props }) => {
+interface Prop {
+  loading: boolean;
+  size: number;
+  color: string;
+}
+
+const Spinner = ({
+  loading = false,
+  size = 50,
+  color = Common.colors.point,
+  ...props
+}: Prop) => {
   return loading ? (
     <Portal>
       <BackgroundDim>
@@ -31,16 +41,5 @@ const BackgroundDim = styled.div`
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 1000;
 `;
-
-Spinner.propTypes = {
-  size: PropTypes.number,
-  color: PropTypes.string,
-};
-
-Spinner.defaultProps = {
-  loading: false,
-  size: 50,
-  color: Common.colors.point,
-};
 
 export default Spinner;
