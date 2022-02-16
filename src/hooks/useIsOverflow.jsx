@@ -1,22 +1,20 @@
-import React, { useLayoutEffect } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
-const useIsOverflow = (element, tabName) => {
-  const [isOverflow, setIsOverflow] = React.useState(false);
+const useIsOverflow = () => {
+  const [isOverflow, setIsOverflow] = useState(false);
+  const ref = useRef(null);
+  const scrollWidth = ref.current?.scrollWidth;
 
-  useLayoutEffect(() => {
-    const trigger = () => {
-      const hasOverflow = element.scrollWidth > element.clientWidth;
-      console.log('trigger', element);
-
-      setIsOverflow(hasOverflow);
-    };
+  useEffect(() => {
+    const element = ref.current;
 
     if (element) {
-      trigger();
+      const isOverflow = element.scrollWidth > element.clientWidth;
+      setIsOverflow(isOverflow);
     }
-  }, [tabName, element]);
+  }, [scrollWidth]);
 
-  return isOverflow;
+  return [ref, isOverflow];
 };
 
 export default useIsOverflow;
