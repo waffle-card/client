@@ -1,4 +1,5 @@
 const path = require('path');
+const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 
 module.exports = {
   stories: ['../src/**/*.stories.mdx', '../src/**/*.stories.@(js|jsx|ts|tsx)'],
@@ -8,28 +9,7 @@ module.exports = {
     '@storybook/preset-create-react-app',
   ],
   webpackFinal: async config => {
-    config.resolve.alias['@components'] = path.resolve(
-      __dirname,
-      '../src/components',
-    );
-    config.resolve.alias['@hooks'] = path.resolve(__dirname, '../src/hooks');
-    config.resolve.alias['@contexts'] = path.resolve(
-      __dirname,
-      '../src/contexts',
-    );
-    config.resolve.alias['@pages'] = path.resolve(__dirname, '../src/pages');
-    config.resolve.alias['@styles'] = path.resolve(__dirname, '../src/styles');
-    config.resolve.alias['@validators'] = path.resolve(
-      __dirname,
-      '../src/validators',
-    );
-    config.resolve.alias['@apis'] = path.resolve(__dirname, '../src/apis');
-    config.resolve.alias['@utils'] = path.resolve(__dirname, '../src/utils');
-    config.resolve.alias['@constants'] = path.resolve(
-      __dirname,
-      '../src/constants',
-    );
-    config.resolve.alias['@recoil'] = path.resolve(__dirname, '../src/recoil');
+    config.resolve.plugins.push(new TsconfigPathsPlugin({}));
     return config;
   },
 };
