@@ -1,4 +1,4 @@
-import { SignUpPage } from '@pages';
+import { SignUpPage } from '@/pages';
 
 export default {
   title: 'Page/SignUpPage',

@@ -1,5 +1,5 @@
 import { css } from '@emotion/react';
-import Common from '@styles';
+import Common from '@/styles';
 
 export const tabItemSize = css`
   width: calc(100% / 3);

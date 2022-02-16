@@ -1,4 +1,4 @@
-import { Button } from '@components';
+import { Button } from '@/components';
 
 export default {
   title: 'Component/Base/Button',
@@ -69,7 +69,8 @@ export const Usage = () => {
         height={56}
         fontColor={'#FFD039'}
         backgroundColor={'royalblue'}
-        fontSize={'22px'}>
+        fontSize={'22px'}
+      >
         속성지정 버튼
       </Button>
     </>

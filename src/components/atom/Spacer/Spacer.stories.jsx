@@ -1,5 +1,5 @@
-import { Spacer } from '@components';
-import { Button } from '@components';
+import { Spacer } from '@/components';
+import { Button } from '@/components';
 
 export default {
   title: 'Component/Base/Spacer',

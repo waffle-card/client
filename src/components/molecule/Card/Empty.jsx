@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
-import { Text } from '@components';
-import Common from '@styles';
+import { Text } from '@/components';
+import Common from '@/styles';
 
 const Container = styled.div`
   display: flex;

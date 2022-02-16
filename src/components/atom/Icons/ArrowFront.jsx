@@ -28,7 +28,8 @@ const ArrowBack = ({ color = 'white', href, onClick, ...props }) => {
           ...props.style,
         }}
         onClick={handleClick}
-        {...props}>
+        {...props}
+      >
         arrow_forward_ios
       </Icon>
     </Anchor>

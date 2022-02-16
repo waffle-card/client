@@ -1,9 +1,8 @@
-import React from 'react';
-import { Portal, GuideSlider } from '@components';
+import { Portal, GuideSlider } from '@/components';
 import styled from '@emotion/styled';
 import ClearIcon from '@mui/icons-material/Clear';
 import { useNavigate } from 'react-router-dom';
-import Common from '@styles';
+import Common from '@/styles';
 
 const GuidePage = () => {
   const navigate = useNavigate();

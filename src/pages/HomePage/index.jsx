@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import Swal from 'sweetalert2';
-import { useModals } from '@hooks';
-import { useWaffleCardsDispatch } from '@contexts';
-import { waffleCardApi, commentApi, likeApi } from '@apis';
+import { useModals } from '@/hooks';
+import { useWaffleCardsDispatch } from '@/contexts';
+import { waffleCardApi, commentApi, likeApi } from '@/apis';
 import {
   Tab,
   Spinner,
@@ -12,7 +12,7 @@ import {
   Modals,
   CardEditModal,
   ChattingCardModal,
-} from '@components';
+} from '@/components';
 
 const HomePage = () => {
   const { openModal } = useModals();

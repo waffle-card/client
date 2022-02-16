@@ -1,5 +1,6 @@
 const path = require('path');
-const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
+// TODO(윤호): 스토리북 파일 ts파일로 전환시 아래 플러그인 활용하기
+// const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 
 module.exports = {
   stories: ['../src/**/*.stories.mdx', '../src/**/*.stories.@(js|jsx|ts|tsx)'],
@@ -9,7 +10,7 @@ module.exports = {
     '@storybook/preset-create-react-app',
   ],
   webpackFinal: async config => {
-    config.resolve.plugins.push(new TsconfigPathsPlugin({}));
+    config.resolve.alias['@'] = path.resolve(__dirname, '../src');
     return config;
   },
 };

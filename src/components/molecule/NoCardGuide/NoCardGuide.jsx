@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from '@emotion/styled';
-import { Text } from '@components';
-import Common from '@styles';
+import { Text } from '@/components';
+import Common from '@/styles';
 
 const NoCardGuide = ({ ...props }) => {
   return (

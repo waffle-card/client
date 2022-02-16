@@ -1,8 +1,8 @@
 import styled from '@emotion/styled';
 import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
-import { Icons } from '@components';
-import Common from '@styles';
+import { Icons } from '@/components';
+import Common from '@/styles';
 
 const EditBox = ({
   backgroundColor,
@@ -33,7 +33,8 @@ const EditBox = ({
     <Container
       backgroundColor={backgroundColor}
       fontColor={fontColor}
-      {...props}>
+      {...props}
+    >
       <Icons fontSize="15px">
         <Icons.Edit color={fontColor} href="#" onClick={handleClickEditIcon} />
       </Icons>

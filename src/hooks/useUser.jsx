@@ -1,7 +1,7 @@
-import { authApi } from '@apis';
-import { userState } from '@recoil';
+import { authApi } from '@/apis';
+import { userState } from '@/recoil';
 import { useSetRecoilState } from 'recoil';
-import { TOKEN_NAME } from '@constants';
+import { TOKEN_NAME } from '@/constants';
 
 const useUser = () => {
   const serUser = useSetRecoilState(userState);

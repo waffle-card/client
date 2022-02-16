@@ -1,4 +1,4 @@
-import { NameChangeModal } from '@components';
+import { NameChangeModal } from '@/components';
 
 export default {
   title: 'Component/organism/NameChangeModal',

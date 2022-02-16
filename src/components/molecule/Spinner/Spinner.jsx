@@ -1,9 +1,9 @@
 import React from 'react';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import Common from '@styles';
+import Common from '@/styles';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
-import { Portal } from '@components';
+import { Portal } from '@/components';
 
 const Spinner = ({ loading, size, color, ...props }) => {
   return loading ? (

@@ -1,6 +1,6 @@
 import React, { Suspense } from 'react';
-import { Header, Spinner } from '@components';
-import { ModalsProvider, WaffleCardsProvider } from '@contexts';
+import { Header, Spinner } from '@/components';
+import { ModalsProvider, WaffleCardsProvider } from '@/contexts';
 import Router from './routes/Router';
 import { RecoilRoot } from 'recoil';
 

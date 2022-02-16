@@ -1,14 +1,14 @@
 import React from 'react';
-import Common from '@styles';
+import Common from '@/styles';
 import styled from '@emotion/styled';
-import { useForm } from '@hooks';
+import { useForm } from '@/hooks';
 import PropTypes from 'prop-types';
-import { Modal, Text, Button, Input, Spinner } from '@components';
+import { Modal, Text, Button, Input, Spinner } from '@/components';
 import {
   validatePasswordEmpty,
   validatePasswordLength,
   validatePasswordConfirm,
-} from '@validators';
+} from '@/validators';
 
 const PasswordChangeModal = ({ visible, onClose, onSubmit, ...props }) => {
   const { isLoading, errors, handleChange, handleSubmit } = useForm({
@@ -95,7 +95,8 @@ const PasswordChangeModal = ({ visible, onClose, onSubmit, ...props }) => {
               type="button"
               backgroundColor={Common.colors.primary}
               fontColor={Common.colors.button_font_dark}
-              onClick={handleClose}>
+              onClick={handleClose}
+            >
               닫기
             </StyledButton>
           </ButtonContainer>

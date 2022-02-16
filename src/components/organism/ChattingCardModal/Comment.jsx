@@ -1,10 +1,10 @@
 import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
-import Common from '@styles';
-import { EditBox } from '@components';
+import Common from '@/styles';
+import { EditBox } from '@/components';
 import TextareaAutosize from '@mui/base/TextareaAutosize';
-import { useHover } from '@hooks';
+import { useHover } from '@/hooks';
 
 const getLongestLineLength = paragraph => {
   let longestLineLength = 0;

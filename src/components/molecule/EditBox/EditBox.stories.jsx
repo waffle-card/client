@@ -1,4 +1,4 @@
-import { EditBox } from '@components';
+import { EditBox } from '@/components';
 
 export default {
   title: 'Component/Domain/EditBox',

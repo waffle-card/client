@@ -1,13 +1,13 @@
 import React from 'react';
 import styled from '@emotion/styled';
-import Common from '@styles';
+import Common from '@/styles';
 import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
-import { Icons, Text } from '@components';
+import { Icons, Text } from '@/components';
 import { rgba } from 'polished';
-import { userState } from '@recoil';
+import { userState } from '@/recoil';
 import { useRecoilValue } from 'recoil';
-import { logo } from '@images';
+import { logo } from '@/images';
 
 const HeaderTag = styled.header`
   position: fixed;
@@ -96,14 +96,16 @@ const Header = ({ backgroundColor = Common.colors.background, ...props }) => {
       <Logo
         onClick={() => {
           navigate('/');
-        }}>
+        }}
+      >
         <img src={logo} alt="logo" />
       </Logo>
       <UtilIconBox>
         <HelpIcon
           onClick={() => {
             navigate('/guide');
-          }}>
+          }}
+        >
           ❔
         </HelpIcon>
         {userInfo ? (
@@ -120,7 +122,8 @@ const Header = ({ backgroundColor = Common.colors.background, ...props }) => {
             weight={Common.fontWeight.regular}
             onClick={() => {
               navigate('/login');
-            }}>
+            }}
+          >
             로그인
           </StyleTextLogin>
         )}

@@ -1,8 +1,8 @@
 import styled from '@emotion/styled';
 import PropTypes from 'prop-types';
-import Common from '@styles';
+import Common from '@/styles';
 import { rgba } from 'polished';
-import { tabItemSize } from '@styles/mixin';
+import { tabItemSize } from '@/styles/mixin';
 
 const TabItem = ({ title, name, activeItem, onClick, ...props }) => {
   const handleClickTabItem = () => {

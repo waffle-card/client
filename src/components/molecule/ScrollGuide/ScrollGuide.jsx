@@ -1,8 +1,8 @@
 import styled from '@emotion/styled';
 import React from 'react';
-import { Text, Icons } from '@components';
-import Common from '@styles';
-import useToggle from '@hooks/useToggle';
+import { Text, Icons } from '@/components';
+import Common from '@/styles';
+import useToggle from '@/hooks/useToggle';
 
 const ScrollGuide = ({ tabStatus, ...props }) => {
   const [isDelete, toggle] = useToggle(false);

@@ -1,4 +1,4 @@
-import { LikeToggle } from '@components';
+import { LikeToggle } from '@/components';
 
 export default {
   title: 'Component/Domain/LikeToggle',

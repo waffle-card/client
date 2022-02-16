@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import Common from '@styles';
+import Common from '@/styles';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
-import { waffleCardApi } from '@apis';
+import { waffleCardApi } from '@/apis';
 import {
   Text,
   Modal,
@@ -10,7 +10,7 @@ import {
   Spinner,
   WaffleCard,
   ColorPicker,
-} from '@components';
+} from '@/components';
 import EmojiPickerActiveButton from './EmojiPickerActiveButton';
 import HashTagsInputs from './HashTagsInputs';
 import Swal from 'sweetalert2';
@@ -136,7 +136,8 @@ const CardEditModal = ({
             type="button"
             backgroundColor={Common.colors.primary}
             fontColor={Common.colors.point}
-            onClick={handleClose}>
+            onClick={handleClose}
+          >
             취소하기
           </StyledButton>
           <StyledButton type="submit" form="cardForm">

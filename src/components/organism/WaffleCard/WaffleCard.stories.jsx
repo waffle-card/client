@@ -1,4 +1,4 @@
-import { WaffleCard } from '@components';
+import { WaffleCard } from '@/components';
 
 export default {
   title: 'Component/Domain/WaffleCard',

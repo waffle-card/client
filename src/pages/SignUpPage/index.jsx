@@ -1,9 +1,9 @@
 import React from 'react';
-import Common from '@styles';
+import Common from '@/styles';
 import styled from '@emotion/styled';
-import { useForm } from '@hooks';
+import { useForm } from '@/hooks';
 import { useNavigate } from 'react-router-dom';
-import { Text, Button, Input, BackButton, Spinner } from '@components';
+import { Text, Button, Input, BackButton, Spinner } from '@/components';
 import {
   validateEmailEmpty,
   validateEmailForm,
@@ -12,8 +12,8 @@ import {
   validatePasswordEmpty,
   validatePasswordLength,
   validatePasswordConfirm,
-} from '@validators';
-import { authApi } from '@apis';
+} from '@/validators';
+import { authApi } from '@/apis';
 import Swal from 'sweetalert2';
 
 const SignUpPage = () => {
