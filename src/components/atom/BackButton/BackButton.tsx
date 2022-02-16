@@ -2,8 +2,11 @@ import { useNavigate } from 'react-router-dom';
 import { Text } from '@/components';
 import * as S from './BackButton.style';
 
-const BackButton = ({ ...props }) => {
+type BackButtonProps = typeof S.Container;
+
+const BackButton = ({ ...props }: BackButtonProps): JSX.Element => {
   const navigate = useNavigate();
+
   return (
     <S.Container
       onClick={() => {
