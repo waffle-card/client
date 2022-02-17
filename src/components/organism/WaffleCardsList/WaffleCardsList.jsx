@@ -5,7 +5,7 @@ import { userState } from '@/recoils';
 import { useRecoilValue } from 'recoil';
 import { useWaffleCardsState } from '@/contexts';
 import { useIsOverflow } from '@/hooks';
-import { WaffleCard, Card, LoginGuide, NoCardGuide } from '@/components';
+import { WaffleCard, EmptyCard, LoginGuide, NoCardGuide } from '@/components';
 
 const WaffleCardsList = ({
   type,
@@ -47,10 +47,10 @@ const WaffleCardsList = ({
         <LoginGuide />
       ) : (
         (() => {
+          if (type === 'my' && waffleCards.length <= 0) {
+            return <EmptyCard onClick={handleClickWaffleCardCreate} />;
+          }
           if (waffleCards.length <= 0) {
-            if (type === 'my') {
-              return <Card.Empty onClick={handleClickWaffleCardCreate} />;
-            }
             return <NoCardGuide />;
           } else {
             return waffleCards?.map(waffleCard => (
