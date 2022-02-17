@@ -75,8 +75,10 @@ const HomePage = () => {
     }).then(async result => {
       if (result.isConfirmed) {
         try {
+          setIsLoading(true);
           await waffleCardApi.deleteWaffleCard(waffleCardId);
-          await refreshWaffleCards();
+          await refreshWaffleCards(tabValue);
+          setIsLoading(false);
         } catch (error) {
           console.error(
             `in ChattingCardModal : 댓글 삭제 실패 - ${error.message}`,
