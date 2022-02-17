@@ -4,7 +4,7 @@ import styled from '@emotion/styled';
 import Common from '@/styles';
 import { useHover } from '@/hooks';
 import { Card, Text, LikeToggle, EditBox } from '@/components';
-import { userState } from '@/recoil';
+import { userState } from '@/recoils';
 import { useRecoilValue } from 'recoil';
 
 const countDaysFromToday = date => {

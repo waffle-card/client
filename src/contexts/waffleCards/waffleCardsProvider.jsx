@@ -1,6 +1,6 @@
 import { createContext, useCallback, useContext, useState } from 'react';
 import { waffleCardApi } from '@/apis';
-import { userState } from '@/recoil';
+import { userState } from '@/recoils';
 import { useRecoilValue } from 'recoil';
 
 const cachedWaffleCards = {

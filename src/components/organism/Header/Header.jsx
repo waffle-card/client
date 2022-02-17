@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
 import { Icons, Text } from '@/components';
 import { rgba } from 'polished';
-import { userState } from '@/recoil';
+import { userState } from '@/recoils';
 import { useRecoilValue } from 'recoil';
 import { logo } from '@/images';
 

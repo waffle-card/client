@@ -11,7 +11,7 @@ import {
 import Common from '@/styles';
 import Swal from 'sweetalert2';
 import { useUser } from '@/hooks';
-import { userState } from '@/recoil';
+import { userState } from '@/recoils';
 import { useRecoilState } from 'recoil';
 import { useWaffleCardsDispatch } from '@/contexts';
 

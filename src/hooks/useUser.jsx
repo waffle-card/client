@@ -1,5 +1,5 @@
 import { authApi } from '@/apis';
-import { userState } from '@/recoil';
+import { userState } from '@/recoils';
 import { useSetRecoilState } from 'recoil';
 import { TOKEN_NAME } from '@/constants';
 

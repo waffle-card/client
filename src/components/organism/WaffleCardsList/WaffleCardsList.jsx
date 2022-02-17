@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import PropTypes from 'prop-types';
-import { userState } from '@/recoil';
+import { userState } from '@/recoils';
 import { useRecoilValue } from 'recoil';
 import { useWaffleCardsState } from '@/contexts';
 import { useIsOverflow } from '@/hooks';

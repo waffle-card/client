@@ -1,7 +1,7 @@
 import React from 'react';
 import { Navigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { userState } from '@/recoil';
+import { userState } from '@/recoils';
 import { useRecoilValue } from 'recoil';
 
 const PrivateRoute = ({ component: Component }) => {
