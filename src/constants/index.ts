@@ -8,16 +8,16 @@ import {
 
 export const TOKEN_NAME = 'WAFFLE_TOKEN';
 
-export const CARD_TYPE = {
+export const WAFFLE_CARD_TYPE = {
   TOTAL: 'total',
   MY: 'my',
   LIKE: 'like',
 };
 
 export const TAB_MENU = {
-  [CARD_TYPE.TOTAL]: '오늘의 카드',
-  [CARD_TYPE.MY]: '나의 카드',
-  [CARD_TYPE.LIKE]: '관심 카드',
+  [WAFFLE_CARD_TYPE.TOTAL]: '오늘의 카드',
+  [WAFFLE_CARD_TYPE.MY]: '나의 카드',
+  [WAFFLE_CARD_TYPE.LIKE]: '관심 카드',
 };
 
 export const GUIDE_SLIDE_DATA = [
