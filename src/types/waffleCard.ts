@@ -8,7 +8,7 @@ export interface WaffleCardType {
   emoji: string;
   color: string;
   hashTags: hashTag[];
-  likeUserIds: Pick<UserType, 'id'>[];
+  likeUserIds: string[];
   createdAt: string;
   updatedAt: string;
 }

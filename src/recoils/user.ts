@@ -13,10 +13,10 @@ export const userState = atom({
       try {
         const {
           data: { id, email, name },
-        } = await authApi.me(token);
+        } = await authApi.me();
 
         return { id, email, name };
-      } catch (error) {
+      } catch (error: any) {
         sessionStorage.removeItem(TOKEN_NAME);
         console.error(`in User Recoil: ${error.message}`);
         return null;

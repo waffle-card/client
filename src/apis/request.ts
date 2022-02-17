@@ -1,6 +1,6 @@
-import axios from 'axios';
+import axios, { AxiosInstance } from 'axios';
 
-const convertErrorResponse = response => {
+const convertErrorResponse = (response: any) => {
   return {
     status: response.status ?? 500,
     message: response.data.message ?? '알 수 없는 에러가 발생했습니다.',
@@ -8,7 +8,7 @@ const convertErrorResponse = response => {
   };
 };
 
-const setInterceptors = instance => {
+const setInterceptors = (instance: AxiosInstance) => {
   instance.interceptors.request.use(
     config => {
       config.headers = {
@@ -28,10 +28,13 @@ const setInterceptors = instance => {
   return instance;
 };
 
-const setAuthInterceptors = instance => {
+const setAuthInterceptors = (instance: AxiosInstance) => {
   instance.interceptors.request.use(
     config => {
-      const TOKEN = JSON.parse(sessionStorage.getItem('WAFFLE_TOKEN'));
+      const storedToken = sessionStorage.getItem('WAFFLE_TOKEN');
+      if (!storedToken) return config;
+      const TOKEN = JSON.parse(storedToken);
+      config.headers = config.headers ?? {};
       config.headers.Authorization = `Bearer ${TOKEN}`;
       return config;
     },

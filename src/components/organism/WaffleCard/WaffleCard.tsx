@@ -31,7 +31,7 @@ const WaffleCard = ({
   onClickDelete,
   ...props
 }: WaffleCardProps) => {
-  const userInfo = useRecoilValue(userState);
+  const user = useRecoilValue(userState);
   const [ref, isHovered] = useHover<HTMLDivElement>();
 
   const days =
@@ -77,11 +77,9 @@ const WaffleCard = ({
             <LikeToggle
               onClick={handleClickLikeToggle}
               toggled={
-                userInfo
-                  ? waffleCardData?.likeUserIds.includes(userInfo.id)
-                  : false
+                user ? waffleCardData?.likeUserIds.includes(user.id) : false
               }
-              interactive={!!userInfo}
+              interactive={!!user}
               count={waffleCardData?.likeUserIds.length}
             />
           </S.InfoContainer>
