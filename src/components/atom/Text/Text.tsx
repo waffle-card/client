@@ -1,6 +1,17 @@
+import type { HTMLAttributes } from 'react';
 import styled from '@emotion/styled';
-import PropTypes from 'prop-types';
 import Common from '@/styles';
+
+interface TextProps extends HTMLAttributes<HTMLElement> {
+  children: React.ReactNode;
+  block?: boolean;
+  paragraph?: boolean;
+  size?: string | number;
+  weight?: string | number;
+  color?: string;
+  underline?: boolean;
+  del?: boolean;
+}
 
 const Text = ({
   children,
@@ -12,7 +23,7 @@ const Text = ({
   underline = false,
   del = false,
   ...props
-}) => {
+}: TextProps): JSX.Element => {
   if (!underline && del) {
     children = <del>{children}</del>;
   }
@@ -24,7 +35,7 @@ const Text = ({
 
   const Tag = block ? 'div' : paragraph ? 'p' : 'span';
 
-  const StyledTag = styled(Tag)`
+  const StyledTag = styled(Tag)<TextProps>`
     font-size: ${({ size }) => (typeof size === 'number' ? `${size}px` : size)};
     font-weight: ${({ weight }) => weight};
     color: ${({ color }) => color};
@@ -44,17 +55,6 @@ const Text = ({
       {children}
     </StyledTag>
   );
-};
-
-Text.propTypes = {
-  children: PropTypes.node.isRequired,
-  block: PropTypes.bool,
-  paragraph: PropTypes.bool,
-  size: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  weight: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  color: PropTypes.string,
-  underline: PropTypes.bool,
-  del: PropTypes.bool,
 };
 
 export default Text;
