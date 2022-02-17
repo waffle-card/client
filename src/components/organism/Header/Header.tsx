@@ -11,12 +11,12 @@ import { logo } from '@/images';
 import HelpIcon from '@mui/icons-material/Help';
 import PersonIcon from '@mui/icons-material/Person';
 
-const Header = ({ ...props }): JSX.Element => {
+const Header = (): JSX.Element => {
   const userInfo = useRecoilValue(userState);
   const navigate = useNavigate();
 
   return (
-    <HeaderTag {...props}>
+    <HeaderTag>
       <Logo
         onClick={() => {
           navigate('/');
