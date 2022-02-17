@@ -1,19 +1,27 @@
 import styled from '@emotion/styled';
 // import { useClickAway } from '@/hooks';
-import PropTypes from 'prop-types';
 import Common from '@/styles';
 import { Portal } from '@/components';
 // import { forwardRef } from 'react';
+
+interface ModalProps extends React.ComponentProps<'div'> {
+  children?: React.ReactNode;
+  visible?: boolean;
+  width?: number | string;
+  height?: number | string;
+  backgroundColor?: string;
+  onClose?: () => void;
+}
 
 const Modal = ({
   children,
   visible,
   width,
   height,
-  backgroundColor,
+  backgroundColor = Common.colors.background_modal,
   onClose,
   ...props
-}) => {
+}: ModalProps) => {
   //TODO(윤호): 모달에서 Swal 사용으로 인해 모달이 닫히는 현상떄문에 클릭어웨이 제거, 다른방식이 있는지 고민해보기
   // const ref = useClickAway(() => {
   //   onClose && onClose();
@@ -45,7 +53,7 @@ const BackgroundDim = styled.div`
   z-index: 1000;
 `;
 
-const ModalContainer = styled.div`
+const ModalContainer = styled.div<ModalProps>`
   position: fixed;
   top: 50%;
   left: 50%;
@@ -61,18 +69,5 @@ const ModalContainer = styled.div`
   box-shadow: ${Common.shadow.modal};
   box-sizing: border-box;
 `;
-
-Modal.propTypes = {
-  children: PropTypes.node,
-  visible: PropTypes.bool,
-  width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  height: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  backgroundColor: PropTypes.string,
-  onClose: PropTypes.func,
-};
-
-Modal.defaultProps = {
-  backgroundColor: Common.colors.background_modal,
-};
 
 export default Modal;
