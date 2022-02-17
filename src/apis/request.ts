@@ -53,7 +53,7 @@ const setAuthInterceptors = (instance: AxiosInstance) => {
 const createInstance = () => {
   const instance = axios.create({
     baseURL: process.env.REACT_APP_API_END_POINT,
-    timeout: 10000,
+    timeout: 15000,
   });
   return setInterceptors(instance);
 };
@@ -61,7 +61,7 @@ const createInstance = () => {
 const createInstanceWithAuth = () => {
   const instance = axios.create({
     baseURL: process.env.REACT_APP_API_END_POINT,
-    timeout: 10000,
+    timeout: 15000,
   });
   return setAuthInterceptors(instance);
 };
