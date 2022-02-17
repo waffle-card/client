@@ -1,5 +1,6 @@
 import { AxiosResponse } from 'axios';
 import { request, authRequest } from './request';
+import { UserType } from '@/types';
 
 interface UserApiType {
   signup: (userInfo: {
@@ -11,7 +12,7 @@ interface UserApiType {
     email: string;
     password: string;
   }) => Promise<AxiosResponse>;
-  me: () => Promise<AxiosResponse>;
+  me: () => Promise<AxiosResponse<UserType>>;
   updateUser: ({
     name,
     password,
