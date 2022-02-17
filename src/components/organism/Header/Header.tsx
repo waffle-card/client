@@ -3,11 +3,52 @@ import styled from '@emotion/styled';
 import Common from '@/styles';
 import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
-import { Icons, Text } from '@/components';
+import { Text } from '@/components';
 import { rgba } from 'polished';
 import { userState } from '@/recoils';
 import { useRecoilValue } from 'recoil';
 import { logo } from '@/images';
+import HelpIcon from '@mui/icons-material/Help';
+import PersonIcon from '@mui/icons-material/Person';
+
+const Header = ({ ...props }): JSX.Element => {
+  const userInfo = useRecoilValue(userState);
+  const navigate = useNavigate();
+
+  return (
+    <HeaderTag {...props}>
+      <Logo
+        onClick={() => {
+          navigate('/');
+        }}
+      >
+        <img src={logo} alt="logo" />
+      </Logo>
+      <UtilIconBox>
+        <StyledHelpIcon
+          onClick={() => {
+            navigate('/guide');
+          }}
+        />
+        {userInfo ? (
+          <StyledPersonIcon
+            onClick={() => {
+              navigate('/my-page');
+            }}
+          />
+        ) : (
+          <StyleTextLogin
+            onClick={() => {
+              navigate('/login');
+            }}
+          >
+            로그인
+          </StyleTextLogin>
+        )}
+      </UtilIconBox>
+    </HeaderTag>
+  );
+};
 
 const HeaderTag = styled.header`
   position: fixed;
@@ -18,7 +59,7 @@ const HeaderTag = styled.header`
   align-items: center;
   height: 60px;
   padding: 0 50px;
-  background-color: ${({ backgroundColor }) => backgroundColor};
+  background-color: ${Common.colors.background};
   @media ${Common.media.sm} {
     padding: 0 16px;
   }
@@ -27,6 +68,7 @@ const HeaderTag = styled.header`
 const Logo = styled.h1`
   margin: 0;
   font-size: 0;
+  cursor: pointer;
   img {
     width: auto;
     height: 30px;
@@ -42,22 +84,18 @@ const UtilIconBox = styled.div`
   align-items: center;
 `;
 
-const HelpIcon = styled.span`
+const StyledHelpIcon = styled(HelpIcon)`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 24px;
-  height: 24px;
+  font-size: 1.7rem;
   border-radius: 50px;
-  font-size: 14px;
-  margin-right: 10px;
-  color: rgba(255, 255, 255, 0.8);
-  background-color: rgba(255, 255, 255, 0.15);
+  margin-right: 12px;
+  color: rgba(255, 255, 255, 0.4);
   cursor: pointer;
   transition: all 150ms ease-out;
   &:hover {
-    color: rgba(255, 255, 255, 1);
-    background-color: rgba(255, 255, 255, 0.35);
+    color: rgba(255, 255, 255, 0.8);
   }
   @media ${Common.media.sm} {
     margin-right: 8px;
@@ -72,7 +110,7 @@ const StyleTextLogin = styled(Text)`
   }
 `;
 
-const StyledIcon = styled(Icons.Person)`
+const StyledPersonIcon = styled(PersonIcon)`
   color: ${Common.colors.point};
   font-size: 20px;
   transition: color 0.2s ease-out;
@@ -86,51 +124,6 @@ const StyledIcon = styled(Icons.Person)`
     color: ${rgba(Common.colors.point, 0.7)};
   }
 `;
-
-const Header = ({ backgroundColor = Common.colors.background, ...props }) => {
-  const userInfo = useRecoilValue(userState);
-  const navigate = useNavigate();
-
-  return (
-    <HeaderTag backgroundColor={backgroundColor} {...props}>
-      <Logo
-        onClick={() => {
-          navigate('/');
-        }}
-      >
-        <img src={logo} alt="logo" />
-      </Logo>
-      <UtilIconBox>
-        <HelpIcon
-          onClick={() => {
-            navigate('/guide');
-          }}
-        >
-          ❔
-        </HelpIcon>
-        {userInfo ? (
-          <StyledIcon
-            onClick={() => {
-              navigate('/my-page');
-            }}
-            color={Common.colors.point}
-          />
-        ) : (
-          <StyleTextLogin
-            color={Common.colors.point}
-            size={Common.fontSize.regular}
-            weight={Common.fontWeight.regular}
-            onClick={() => {
-              navigate('/login');
-            }}
-          >
-            로그인
-          </StyleTextLogin>
-        )}
-      </UtilIconBox>
-    </HeaderTag>
-  );
-};
 
 Header.propTypes = {
   backgroundColor: PropTypes.string,
