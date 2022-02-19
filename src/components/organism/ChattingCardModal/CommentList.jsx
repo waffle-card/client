@@ -1,7 +1,7 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 import Comment from './Comment';
+import { useScrollToBottom } from '@/hooks';
 
 const CommentList = ({
   commentsData,
@@ -10,8 +10,10 @@ const CommentList = ({
   onClickDeleteMyComment,
   ...props
 }) => {
+  const ref = useScrollToBottom();
+
   return (
-    <Container {...props}>
+    <Container ref={ref} {...props}>
       {commentsData.map(commentData =>
         userData && userData.id === commentData.user.id ? (
           <MyComment

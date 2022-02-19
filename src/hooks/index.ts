@@ -6,3 +6,4 @@ export { default as useModals } from './useModals';
 export { default as useUser } from './useUser';
 export { default as useIsOverflow } from './useIsOverflow';
 export { default as useToggle } from './useToggle';
+export { default as useScrollToBottom } from './useScrollToBottom';
