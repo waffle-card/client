@@ -113,6 +113,7 @@ const StyleTextLogin = styled(Text)`
 const StyledPersonIcon = styled(PersonIcon)`
   color: ${Common.colors.point};
   font-size: 20px;
+  cursor: pointer;
   transition: color 0.2s ease-out;
   @media ${Common.media.sm} {
     font-size: 20px;
