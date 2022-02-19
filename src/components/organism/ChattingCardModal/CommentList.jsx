@@ -10,7 +10,7 @@ const CommentList = ({
   onClickDeleteMyComment,
   ...props
 }) => {
-  const ref = useScrollToBottom();
+  const ref = useScrollToBottom(commentsData);
 
   return (
     <Container ref={ref} {...props}>

@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef } from 'react';
 
-const useScrollToBottom = () => {
+const useScrollToBottom = dependency => {
   const ref = useRef(null);
   const commentList = ref.current;
 
@@ -12,7 +12,7 @@ const useScrollToBottom = () => {
 
   useEffect(() => {
     scrollToBottom();
-  }, [scrollToBottom]);
+  }, [scrollToBottom, dependency]);
 
   return ref;
 };
