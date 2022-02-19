@@ -51,16 +51,11 @@ const Container = styled.div`
   &::-webkit-scrollbar-track {
     background-color: rgba(0, 0, 0, 0);
   }
-
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-  ::-webkit-scrollbar {
-    display: none;
-  }
 `;
 
 const MyComment = styled(Comment)`
   align-self: flex-end;
+  margin-right: 1rem;
 `;
 
 CommentList.propTypes = {

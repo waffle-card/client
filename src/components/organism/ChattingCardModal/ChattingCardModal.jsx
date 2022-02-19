@@ -127,7 +127,7 @@ const StyledModal = styled(Modal)`
 `;
 
 const StyledCommentList = styled(CommentList)`
-  margin: 1rem 1rem 116px 1rem;
+  margin: 1rem 0 116px 1rem;
 `;
 
 const StyledCommentEditor = styled(CommentEditor)`
