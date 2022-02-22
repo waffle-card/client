@@ -3,7 +3,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 type UseHoverType<T extends HTMLElement> = [React.RefObject<T>, boolean];
 
 const useHover = <T extends HTMLElement = HTMLElement>(): UseHoverType<T> => {
-  const [state, setState] = useState(false);
+  const [state, setState] = useState<boolean>(false);
   const ref = useRef<T>(null);
 
   const handleMouseEnter = useCallback(() => setState(true), []);
