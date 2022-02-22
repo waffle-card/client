@@ -1,7 +1,7 @@
 import { EditBox } from '@/components';
 
 export default {
-  title: 'Component/Domain/EditBox',
+  title: 'Component/Molecule/EditBox',
   argTypes: {
     backgroundColor: { defaultValue: '#3E4857', control: 'color' },
     fontColor: { defaultValue: 'white', control: 'color' },
@@ -9,5 +9,5 @@ export default {
 };
 
 export const Default = () => {
-  return <EditBox cardId="tmp" />;
+  return <EditBox />;
 };

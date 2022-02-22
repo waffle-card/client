@@ -1,8 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
 
-const useIsOverflow = () => {
-  const [isOverflow, setIsOverflow] = useState(false);
-  const ref = useRef(null);
+const useIsOverflow = <T extends HTMLElement = HTMLElement>(): [
+  React.RefObject<T>,
+  boolean,
+] => {
+  const [isOverflow, setIsOverflow] = useState<boolean>(false);
+  const ref = useRef<T>(null);
   const scrollWidth = ref.current?.scrollWidth;
 
   useEffect(() => {

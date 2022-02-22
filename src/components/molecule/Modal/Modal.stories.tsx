@@ -1,10 +1,10 @@
 import { useState } from 'react';
-import { Modal, Text, Card } from '@/components';
+import { Modal, Text, WaffleCard } from '@/components';
 import styled from '@emotion/styled';
 // import Common from '@/styles';
 
 export default {
-  title: 'Component/Base/Modal',
+  title: 'Component/Molecule/Modal',
   component: Modal,
 };
 
@@ -14,37 +14,37 @@ const StyledModal = styled(Modal)`
   align-items: center;
 `;
 
-export const Default = args => {
+export const Default = () => {
   return (
     <div>
-      <StyledModal {...args}>
+      <StyledModal>
         <Text>모달</Text>
-        <Card width={200} height={300} backgroundColor="royalblue" />
+        <WaffleCard />
       </StyledModal>
     </div>
   );
 };
-Default.argTypes = {
-  visible: {
-    defaultValue: false,
-    control: { type: 'boolean' },
-  },
-  width: {
-    defaultValue: '80vw',
-    control: { type: 'text' },
-  },
-  height: {
-    defaultValue: '80vh',
-    control: { type: 'text' },
-  },
-  backgroundColor: {
-    // defaultValue: Common.colors.speech_bubble,
-    control: { type: 'color' },
-  },
-  onClose: {
-    control: { action: 'onClose' },
-  },
-};
+// Default.argTypes = {
+//   visible: {
+//     defaultValue: false,
+//     control: { type: 'boolean' },
+//   },
+//   width: {
+//     defaultValue: '80vw',
+//     control: { type: 'text' },
+//   },
+//   height: {
+//     defaultValue: '80vh',
+//     control: { type: 'text' },
+//   },
+//   backgroundColor: {
+//     // defaultValue: Common.colors.speech_bubble,
+//     control: { type: 'color' },
+//   },
+//   onClose: {
+//     control: { action: 'onClose' },
+//   },
+// };
 
 export const Usage = () => {
   const [visible, setVisible] = useState(false);
@@ -58,7 +58,7 @@ export const Usage = () => {
       <button onClick={() => setVisible(true)}>Show Modal</button>
       <StyledModal visible={visible} onClose={handleClose}>
         <Text>모달</Text>
-        <Card width={200} height={300} backgroundColor="royalblue" />
+        <WaffleCard />
       </StyledModal>
     </div>
   );

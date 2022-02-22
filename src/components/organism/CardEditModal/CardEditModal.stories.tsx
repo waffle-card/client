@@ -7,15 +7,13 @@ import {
 // import { useState } from 'react';
 
 export default {
-  title: 'Component/Domain/CardEditModal',
+  title: 'Component/Organism/CardEditModal',
 };
 
-export const Default = args => {
-  const handleSubmit = waffleCard => {
-    console.log('제출!', waffleCard);
-  };
-  return <CardEditModal {...args} onSubmit={handleSubmit} />;
+export const Default = () => {
+  return <CardEditModal />;
 };
+
 Default.argTypes = {
   visible: {
     defaultValue: true,

@@ -2,7 +2,7 @@ import { Text } from '@/components';
 import type { TextProps } from './Text.type';
 
 export default {
-  title: 'Component/Base/Text',
+  title: 'Component/Atom/Text',
   component: Text,
   argTypes: {
     block: { control: 'boolean' },

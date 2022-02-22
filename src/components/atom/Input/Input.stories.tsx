@@ -1,7 +1,7 @@
 import { Input } from '@/components';
 
 export default {
-  title: 'Component/Base/Input',
+  title: 'Component/Atom/Input',
 };
 
 export const Default = () => {

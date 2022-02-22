@@ -1,7 +1,22 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import Common from '@/styles';
-import PropTypes from 'prop-types';
+
+interface ColorItemProps extends React.ComponentProps<'label'> {
+  color?: string;
+}
+
+const ColorItem = ({
+  color = Common.colors.yellow,
+  ...props
+}: ColorItemProps) => {
+  return (
+    <Container {...props}>
+      <ColorInput type="radio" name="color" id={color} value={color} />
+      <ColorBox color={color} />
+    </Container>
+  );
+};
 
 const Container = styled.label`
   display: inline-block;
@@ -30,24 +45,5 @@ const ColorInput = styled.input`
     border: 3px solid white;
   }
 `;
-
-const ColorItem = ({ color, name, ...props }) => {
-  return (
-    <Container {...props}>
-      <ColorInput type="radio" name={name} id={color} value={color} />
-      <ColorBox color={color} />
-    </Container>
-  );
-};
-
-ColorItem.defaultProps = {
-  color: Common.colors.yellow,
-  name: 'color',
-};
-
-ColorItem.propTypes = {
-  color: PropTypes.string,
-  name: PropTypes.string,
-};
 
 export default ColorItem;
