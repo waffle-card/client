@@ -1,24 +1,28 @@
 import styled from '@emotion/styled';
 import React from 'react';
-import { Text, Icons } from '@/components';
+import type { HTMLAttributes, ReactElement } from 'react';
+import { Text } from '@/components';
+import ClearIcon from '@mui/icons-material/Clear';
 import Common from '@/styles';
 import useToggle from '@/hooks/useToggle';
+import { scrollGuideArrow } from '@/images';
 
-const ScrollGuide = ({ tabStatus, ...props }) => {
+interface ContainerProps extends HTMLAttributes<HTMLDivElement> {
+  isDelete: boolean;
+}
+
+const ScrollGuide = ({
+  ...props
+}: HTMLAttributes<HTMLDivElement>): ReactElement => {
   const [isDelete, toggle] = useToggle(false);
 
   return (
     <Container isDelete={isDelete} {...props}>
-      <DelButton className="del_Button" onClick={toggle}>
-        <Icons fontSize={'10px'}>
-          <Icons.Delete></Icons.Delete>
-        </Icons>
+      <DelButton onClick={toggle}>
+        <ClearIcon />
       </DelButton>
       <ImgBox>
-        <img
-          src={require('./scroll_guide_icon.png').default}
-          alt="scrollguide"
-        />
+        <img src={scrollGuideArrow} alt="scrollguide" />
       </ImgBox>
       <StyledText weight={Common.fontWeight.regular}>
         Shift+스크롤로 카드들을 둘러보세요!
@@ -27,7 +31,7 @@ const ScrollGuide = ({ tabStatus, ...props }) => {
   );
 };
 
-const Container = styled.div`
+const Container = styled.div<ContainerProps>`
   position: absolute;
   display: none;
   left: 50%;
