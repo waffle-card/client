@@ -1,24 +1,23 @@
-import styled from '@emotion/styled';
 import React from 'react';
-import { Text, Icons } from '@/components';
-import Common from '@/styles';
+import ClearIcon from '@mui/icons-material/Clear';
 import useToggle from '@/hooks/useToggle';
+import { scrollGuideArrow } from '@/images';
+import Common from '@/styles';
+import styled from '@emotion/styled';
+import { Text } from '@/components';
 
-const ScrollGuide = ({ tabStatus, ...props }) => {
+const ScrollGuide = ({
+  ...props
+}: React.ComponentProps<'div'>): JSX.Element => {
   const [isDelete, toggle] = useToggle(false);
 
   return (
     <Container isDelete={isDelete} {...props}>
-      <DelButton className="del_Button" onClick={toggle}>
-        <Icons fontSize={'10px'}>
-          <Icons.Delete></Icons.Delete>
-        </Icons>
+      <DelButton onClick={toggle}>
+        <ClearIcon style={{ fontSize: '1rem' }} />
       </DelButton>
       <ImgBox>
-        <img
-          src={require('./scroll_guide_icon.png').default}
-          alt="scrollguide"
-        />
+        <img src={scrollGuideArrow} alt="scrollguide" />
       </ImgBox>
       <StyledText weight={Common.fontWeight.regular}>
         Shift+스크롤로 카드들을 둘러보세요!
@@ -27,7 +26,11 @@ const ScrollGuide = ({ tabStatus, ...props }) => {
   );
 };
 
-const Container = styled.div`
+interface ContainerProps extends React.ComponentProps<'div'> {
+  isDelete: boolean;
+}
+
+export const Container = styled.div<ContainerProps>`
   position: absolute;
   display: none;
   left: 50%;
@@ -43,7 +46,7 @@ const Container = styled.div`
   }
 `;
 
-const ImgBox = styled.div`
+export const ImgBox = styled.div`
   position: relative;
   width: 100%;
   height: 0;
@@ -61,18 +64,18 @@ const ImgBox = styled.div`
   }
 `;
 
-const StyledText = styled(Text)`
+export const StyledText = styled(Text)`
   @media ${Common.media.sm} {
     font-size: 12px;
   }
 `;
 
-const DelButton = styled.div`
+export const DelButton = styled.div`
   position: absolute;
   padding: 3px;
   display: block;
-  top: -24px;
-  right: -24px;
+  top: -1.8rem;
+  right: -1.8rem;
   border-radius: 50px;
   background-color: rgba(255, 255, 255, 0.15);
   &:hover {

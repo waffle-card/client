@@ -1,17 +1,6 @@
-import type { HTMLAttributes } from 'react';
 import styled from '@emotion/styled';
 import Common from '@/styles';
-
-interface TextProps extends HTMLAttributes<HTMLElement> {
-  children: React.ReactNode;
-  block?: boolean;
-  paragraph?: boolean;
-  size?: string | number;
-  weight?: string | number;
-  color?: string;
-  underline?: boolean;
-  del?: boolean;
-}
+import type { TextProps } from './Text.type';
 
 const Text = ({
   children,

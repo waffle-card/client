@@ -1,5 +1,4 @@
 import { Tab } from '@/components';
-import { TAB_MENU } from '@/constants';
 
 export default {
   title: 'Component/molecule/Tab',
@@ -7,5 +6,5 @@ export default {
 };
 
 export const Default = () => {
-  return <Tab currentActive={TAB_MENU[0].name}></Tab>;
+  return <Tab currentActiveTabItem="total"></Tab>;
 };

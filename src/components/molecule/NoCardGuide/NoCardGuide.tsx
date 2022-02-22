@@ -3,7 +3,9 @@ import styled from '@emotion/styled';
 import { Text } from '@/components';
 import Common from '@/styles';
 
-const NoCardGuide = ({ ...props }) => {
+const NoCardGuide = ({
+  ...props
+}: React.ComponentProps<'div'>): JSX.Element => {
   return (
     <TextContainer {...props}>
       <StyledText>카드 목록이 없습니다</StyledText>

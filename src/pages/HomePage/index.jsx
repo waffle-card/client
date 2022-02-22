@@ -116,7 +116,7 @@ const HomePage = () => {
 
   return (
     <Container>
-      <Tab onClick={setTabValue} currentActive={tabValue} />
+      <Tab onClick={setTabValue} currentActiveTabItem={tabValue} />
       <WaffleCardsList
         type={tabValue}
         onClickWaffleCard={handleClickWaffleCard}
