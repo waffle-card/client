@@ -3,11 +3,11 @@ import Common from '@/styles';
 import { useState } from 'react';
 
 export default {
-  title: 'Component/Base/Spinner',
+  title: 'Component/Molecule/Spinner',
 };
 
-export const Default = args => {
-  return <Spinner loading {...args} />;
+export const Default = () => {
+  return <Spinner loading />;
 };
 Default.argTypes = {
   loading: {
