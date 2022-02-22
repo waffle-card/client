@@ -1,11 +1,17 @@
 import { useEffect, useState } from 'react';
 
-const useForm = ({ initialValues, onSubmit, validate }) => {
+interface UseFormArgs {
+  initialValues: { [key: string]: string };
+  onSubmit: (values: { [key: string]: string }) => Promise<void>;
+  validate: (values: { [key: string]: string }) => { [key: string]: string };
+}
+
+const useForm = ({ initialValues, onSubmit, validate }: UseFormArgs) => {
   const [values, setValues] = useState(initialValues);
   const [errors, setErrors] = useState({});
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleChange = event => {
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     if (name.includes('password') || name.includes('Password')) {
       setValues({ ...values, [name]: value });
@@ -18,7 +24,7 @@ const useForm = ({ initialValues, onSubmit, validate }) => {
     return () => setIsLoading(false);
   }, []);
 
-  const handleSubmit = async event => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     setIsLoading(true);
     event.preventDefault();
     const newErrors = validate ? validate(values) : {};
