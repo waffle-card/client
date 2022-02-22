@@ -1,17 +1,21 @@
 import { WaffleCard } from '@/components';
+import { WaffleCardType } from '@/types';
 
 export default {
-  title: 'Component/Domain/WaffleCard',
+  title: 'Component/Molecule/WaffleCard',
 };
 
-const dummyWaffleCard = {
+const dummyWaffleCard: WaffleCardType = {
   id: '1',
-  userId: '123',
-  userName: '윤호',
+  user: {
+    id: '1',
+    email: 'test@test.com',
+    name: '테스터',
+  },
   emoji: '😎',
   color: 'rgba(57, 219, 178, 1)',
   hashTags: ['안녕', '클레오파트라', '세상에서', '제일가는', '포테이토칩'],
-  likeCount: 3,
+  likeUserIds: [],
   createdAt: '2022-02-05T13:51:11.462Z',
   updatedAt: '2022-02-05T13:51:11.462Z',
 };
