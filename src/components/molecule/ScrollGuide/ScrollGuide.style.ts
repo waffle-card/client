@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
+import type { HTMLAttributes } from 'react';
 import { Text } from '@/components';
 import Common from '@/styles';
-import type { HTMLAttributes } from 'react';
 
 interface ContainerProps extends HTMLAttributes<HTMLDivElement> {
   isDelete: boolean;
