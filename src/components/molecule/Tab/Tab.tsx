@@ -1,5 +1,4 @@
 import React, { useCallback } from 'react';
-import type { HTMLAttributes, ReactElement } from 'react';
 import { useState } from 'react';
 import styled from '@emotion/styled';
 import { rgba } from 'polished';
@@ -8,7 +7,7 @@ import TabItem from './TabItem';
 import { TAB_MENU } from '@/constants';
 import { tabItemSize } from '@/styles/mixin';
 
-interface TabProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onClick'> {
+interface TabProps extends Omit<React.ComponentProps<'div'>, 'onClick'> {
   currentActiveTabItem?: string;
   onClick?: (tabName: string) => void;
 }
@@ -17,7 +16,7 @@ const Tab = ({
   currentActiveTabItem,
   onClick,
   ...props
-}: TabProps): ReactElement => {
+}: TabProps): JSX.Element => {
   const [activeItem, setActiveItem] = useState(currentActiveTabItem);
 
   const handleClickTabItem = useCallback(

@@ -1,6 +1,4 @@
-import type { HTMLAttributes } from 'react';
-
-interface TextProps extends HTMLAttributes<HTMLElement> {
+interface TextProps extends React.ComponentProps<'html'> {
   children: React.ReactNode;
   block?: boolean;
   paragraph?: boolean;

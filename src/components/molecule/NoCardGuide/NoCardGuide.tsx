@@ -1,12 +1,11 @@
 import React from 'react';
-import type { HTMLAttributes, ReactElement } from 'react';
 import styled from '@emotion/styled';
 import { Text } from '@/components';
 import Common from '@/styles';
 
 const NoCardGuide = ({
   ...props
-}: HTMLAttributes<HTMLDivElement>): ReactElement => {
+}: React.ComponentProps<'div'>): JSX.Element => {
   return (
     <TextContainer {...props}>
       <StyledText>카드 목록이 없습니다</StyledText>

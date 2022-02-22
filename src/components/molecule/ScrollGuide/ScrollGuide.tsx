@@ -1,5 +1,4 @@
 import React from 'react';
-import type { HTMLAttributes, ReactElement } from 'react';
 import ClearIcon from '@mui/icons-material/Clear';
 import useToggle from '@/hooks/useToggle';
 import { scrollGuideArrow } from '@/images';
@@ -8,13 +7,13 @@ import Common from '@/styles';
 
 const ScrollGuide = ({
   ...props
-}: HTMLAttributes<HTMLDivElement>): ReactElement => {
+}: React.ComponentProps<'div'>): JSX.Element => {
   const [isDelete, toggle] = useToggle(false);
 
   return (
     <S.Container isDelete={isDelete} {...props}>
       <S.DelButton onClick={toggle}>
-        <ClearIcon />
+        <ClearIcon style={{ fontSize: '14px' }} />
       </S.DelButton>
       <S.ImgBox>
         <img src={scrollGuideArrow} alt="scrollguide" />
