@@ -100,10 +100,10 @@ const WaffleCardsList = ({
 
 const translate = keyframes`
  0% {
-  transform:translateX(-33%)
+  transform:translateX(-33.3333%)
   }
   100% {
-    transform:translateX(-100%)
+    transform:translateX(-66.6666%)
   }
 `;
 
