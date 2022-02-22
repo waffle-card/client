@@ -1,23 +1,17 @@
+import { useCallback, useState } from 'react';
 import styled from '@emotion/styled';
-import React, { useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
 import Picker from 'emoji-picker-react';
 import { Button } from '@/components';
 import Common from '@/styles';
 
-const Container = styled.label`
-  display: inline-block;
-  position: relative;
-  margin: 0;
-`;
-
-const PickerWrapper = styled.div`
-  position: absolute;
-  top: 48px;
-  left: 0;
-  z-index: 2;
-  animation: fadeIn 0.5s ease-in forwards;
-`;
+interface EmojiPickerActiveButtonProps {
+  disabled: boolean;
+  id: string;
+  name: string;
+  type: 'button' | 'submit' | 'reset' | undefined;
+  onEmojiClick: (emoji: string) => void;
+}
 
 const EmojiPickerActiveButton = ({
   disabled,
@@ -26,7 +20,7 @@ const EmojiPickerActiveButton = ({
   type,
   onEmojiClick,
   ...props
-}) => {
+}: EmojiPickerActiveButtonProps) => {
   const [showEmojiPicker, togglePicker] = useState(() => false);
   const toggleEmojiPicker = () => togglePicker(prev => !prev);
 
@@ -58,6 +52,20 @@ const EmojiPickerActiveButton = ({
     </Container>
   );
 };
+
+const Container = styled.label`
+  display: inline-block;
+  position: relative;
+  margin: 0;
+`;
+
+const PickerWrapper = styled.div`
+  position: absolute;
+  top: 48px;
+  left: 0;
+  z-index: 2;
+  animation: fadeIn 0.5s ease-in forwards;
+`;
 
 EmojiPickerActiveButton.protoTypes = {
   disabled: PropTypes.bool,

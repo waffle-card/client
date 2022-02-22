@@ -3,14 +3,14 @@ import styled from '@emotion/styled';
 import Common from '@/styles';
 
 interface ButtonProps extends React.ComponentProps<'button'> {
-  children: React.ReactNode;
-  width: string | number;
-  height: string | number;
-  backgroundColor: string;
-  fontColor: string;
-  fontSize: string | number;
-  disabled: boolean;
-  onClick: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+  children?: React.ReactNode;
+  width?: string | number;
+  height?: string | number;
+  backgroundColor?: string;
+  fontColor?: string;
+  fontSize?: string | number;
+  disabled?: boolean;
+  onClick?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
 }
 
 const Button = styled.button<ButtonProps>`
@@ -22,6 +22,7 @@ const Button = styled.button<ButtonProps>`
   --font-color: ${({ fontColor }) => fontColor};
   --background-color: ${({ backgroundColor }) => backgroundColor};
   --border-radius: ${({ width }) => {
+    if (!width) return;
     if (typeof width === 'number') {
       return width < 250 ? '12px' : '16px';
     } else {

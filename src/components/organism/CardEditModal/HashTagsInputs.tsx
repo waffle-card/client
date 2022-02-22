@@ -2,7 +2,9 @@ import React, { useState } from 'react';
 import styled from '@emotion/styled';
 import Common from '@/styles';
 
-const HASHTAG = {
+const HASHTAG: {
+  [key: string]: string;
+} = {
   0: 'first',
   1: 'second',
   2: 'third',
@@ -10,17 +12,23 @@ const HASHTAG = {
   4: 'fifth',
 };
 
+interface HashTagsInputsProps {
+  color: string;
+  onChange: (hashTags: string[]) => void;
+  initHashTags: string[];
+}
+
 const HashTagsInputs = React.memo(
-  ({ color, onChange, initHashTags = [], ...props }) => {
+  ({ color, onChange, initHashTags = [], ...props }: HashTagsInputsProps) => {
     const [hashTagsMap, setHashTagsMap] = useState(() => {
-      const obj = {};
+      const obj: { [key: string]: string } = {};
       initHashTags.forEach((hashTag, index) => {
         obj[HASHTAG[index]] = hashTag;
       });
       return obj;
     });
 
-    const handleChange = e => {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       const { name, value } = e.target;
       const newHashTagsMap = { ...hashTagsMap, [name]: value };
       setHashTagsMap(newHashTagsMap);

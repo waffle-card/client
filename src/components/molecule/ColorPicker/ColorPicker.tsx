@@ -3,8 +3,10 @@ import styled from '@emotion/styled';
 import Common from '@/styles';
 import ColorItem from './ColorItem';
 
-interface ColorPickerProps extends React.ComponentProps<'div'> {
+interface ColorPickerProps
+  extends Omit<React.ComponentProps<'div'>, 'onChange'> {
   colors?: string[];
+  onChange?: (color: string) => void;
 }
 
 const ColorPicker = ({

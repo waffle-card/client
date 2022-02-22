@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import Common from '@/styles';
-import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 import { waffleCardApi } from '@/apis';
 import {
@@ -14,6 +13,15 @@ import {
 import EmojiPickerActiveButton from './EmojiPickerActiveButton';
 import HashTagsInputs from './HashTagsInputs';
 import Swal from 'sweetalert2';
+import { WaffleCardType } from '@/types';
+
+interface CardEditModalProps {
+  visible?: boolean;
+  editMode?: boolean;
+  initialWaffleCardData?: WaffleCardType;
+  onSubmit?: () => void;
+  onClose?: () => void;
+}
 
 // TODO(윤호): visible 삭제하기
 const CardEditModal = ({
@@ -23,9 +31,24 @@ const CardEditModal = ({
   onSubmit,
   onClose,
   ...props
-}) => {
+}: CardEditModalProps) => {
   const [isLoading, setIsLoading] = useState(false);
-  const [waffleCard, setWaffleCard] = useState(initialWaffleCardData);
+  const [waffleCard, setWaffleCard] = useState<WaffleCardType>(
+    initialWaffleCardData || {
+      id: 'null',
+      user: {
+        id: 'null',
+        name: 'null',
+        email: 'null',
+      },
+      emoji: '🧇',
+      color: Common.colors.yellow,
+      hashTags: [],
+      likeUserIds: [],
+      createdAt: '',
+      updatedAt: '',
+    },
+  );
 
   const createWaffleCard = async () => {
     setIsLoading(true);
@@ -36,7 +59,7 @@ const CardEditModal = ({
         hashTags: waffleCard.hashTags,
       });
     } catch (error) {
-      console.error(`in CardEditModal: ${error.message}`);
+      console.error(`in CardEditModal: ${error}`);
     }
     setIsLoading(false);
     Swal.fire({
@@ -58,7 +81,7 @@ const CardEditModal = ({
         hashTags: waffleCard.hashTags,
       });
     } catch (error) {
-      console.error(`in CardEditModal: ${error.message}`);
+      console.error(`in CardEditModal: ${error}`);
     }
     setIsLoading(false);
     Swal.fire({
@@ -70,24 +93,24 @@ const CardEditModal = ({
     onSubmit && onSubmit();
   };
 
-  const handleSubmit = async e => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     editMode ? updateWaffleCard() : createWaffleCard();
   };
 
-  const handleChangeEmoji = emoji => {
+  const handleChangeEmoji = (emoji: string) => {
     setWaffleCard(waffleCard => {
       return { ...waffleCard, emoji };
     });
   };
 
-  const handleChangeColor = color => {
+  const handleChangeColor = (color: string) => {
     setWaffleCard(waffleCard => {
       return { ...waffleCard, color };
     });
   };
 
-  const handleChangeHashTags = hashTags => {
+  const handleChangeHashTags = (hashTags: string[]) => {
     setWaffleCard(waffleCard => {
       return { ...waffleCard, hashTags };
     });
@@ -98,8 +121,8 @@ const CardEditModal = ({
   };
 
   return (
-    <StyledModal visible hi={'hi'} onClose={handleClose} {...props}>
-      <FormContainer onSubmit={handleSubmit} id="cardForm">
+    <StyledModal visible onClose={handleClose} {...props}>
+      <form onSubmit={handleSubmit} id="cardForm">
         <CardEditContainer>
           <WaffleCard type="plain" waffleCardData={waffleCard} />
           <EditContainer>
@@ -113,7 +136,7 @@ const CardEditModal = ({
             </Wrapper>
             <Wrapper>
               <StyledText>배경색</StyledText>
-              <ColorPicker name="color" onChange={handleChangeColor} />
+              <ColorPicker onChange={handleChangeColor} />
             </Wrapper>
             <Wrapper>
               <StyledText>해시태그</StyledText>
@@ -144,7 +167,7 @@ const CardEditModal = ({
             {editMode ? '수정하기' : '생성하기'}
           </StyledButton>
         </ButtonContainer>
-      </FormContainer>
+      </form>
       {isLoading && <Spinner loading={isLoading} />}
     </StyledModal>
   );
@@ -157,8 +180,6 @@ const StyledModal = styled(Modal)`
   padding: 16px;
   box-sizing: border-box;
 `;
-
-const FormContainer = styled.form``;
 
 const CardEditContainer = styled.div`
   display: flex;
@@ -208,12 +229,6 @@ const StyledButton = styled(Button)`
     height: 56px;
   }
 `;
-
-CardEditModal.propTypes = {
-  visible: PropTypes.bool,
-  initialWaffleCard: PropTypes.object,
-  onClose: PropTypes.func,
-};
 
 CardEditModal.defaultProps = {
   visible: false,
