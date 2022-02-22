@@ -1,4 +1,3 @@
-import React from 'react';
 import styled from '@emotion/styled';
 import Common from '@/styles';
 import { Button } from '@/components';

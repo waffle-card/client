@@ -1,7 +1,7 @@
 import { Button } from '@/components';
 
 export default {
-  title: 'Component/Base/Button',
+  title: 'Component/Atom/Button',
   component: Button,
 };
 
@@ -15,12 +15,12 @@ export const Default = () => {
   );
 };
 
-export const Custom = args => {
+export const Custom = () => {
   return (
     <>
-      <Button {...args}>가입하기</Button>
+      <Button>가입하기</Button>
       <br />
-      <Button {...args}>입장하기</Button>
+      <Button>입장하기</Button>
     </>
   );
 };
