@@ -2,7 +2,6 @@ export { default as Button } from './atom/Button/Button';
 export { default as ColorPicker } from './molecule/ColorPicker/ColorPicker';
 export { default as Modal } from './molecule/Modal/Modal';
 export { default as Text } from './atom/Text/Text';
-export { default as Icons } from './atom/Icons';
 export { default as Portal } from './atom/Portal/Portal';
 export { default as Spinner } from './molecule/Spinner/Spinner';
 export { default as BackButton } from './atom/BackButton/BackButton';
