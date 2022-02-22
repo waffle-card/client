@@ -1,18 +1,31 @@
 import styled from '@emotion/styled';
-import PropTypes from 'prop-types';
 import Common from '@/styles';
 import { rgba } from 'polished';
 import { tabItemSize } from '@/styles/mixin';
 
-const TabItem = ({ title, name, activeItem, onClick, ...props }) => {
+interface TabItemProps extends Omit<React.ComponentProps<'div'>, 'onClick'> {
+  children: string;
+  name: string;
+  activeItem?: string;
+  onClick?: (tabName: string) => void;
+}
+
+const TabItem = ({
+  children,
+  name,
+  activeItem = '',
+  onClick,
+  ...props
+}: TabItemProps): JSX.Element => {
   const handleClickTabItem = () => {
     onClick && onClick(name);
   };
+
   return (
     <TabItemWrapper onClick={handleClickTabItem} {...props}>
       <LinkBox>
         <TabItemTitle name={name} activeItem={activeItem} {...props}>
-          {title}
+          {children}
         </TabItemTitle>
       </LinkBox>
     </TabItemWrapper>
@@ -26,7 +39,7 @@ const TabItemWrapper = styled.div`
   justify-content: center;
 `;
 
-const TabItemTitle = styled.span`
+const TabItemTitle = styled.span<TabItemProps>`
   display: flex;
   width: 100%;
   justify-content: center;
@@ -47,17 +60,5 @@ const LinkBox = styled.div`
   display: block;
   width: 100%;
 `;
-
-TabItem.defaultProps = {
-  activeItem: '',
-  onClick: () => {},
-};
-
-TabItem.propTypes = {
-  title: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-  activeItem: PropTypes.string,
-  onClick: PropTypes.func,
-};
 
 export default TabItem;
