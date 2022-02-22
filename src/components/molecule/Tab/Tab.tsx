@@ -1,6 +1,5 @@
 import React, { useCallback } from 'react';
 import { useState } from 'react';
-import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 import { rgba } from 'polished';
 import Common from '@/styles';
@@ -8,13 +7,22 @@ import TabItem from './TabItem';
 import { TAB_MENU } from '@/constants';
 import { tabItemSize } from '@/styles/mixin';
 
-const Tab = ({ currentActive, onClick, ...props }) => {
-  const [activeItem, setActiveItem] = useState(currentActive);
+interface TabProps extends Omit<React.ComponentProps<'div'>, 'onClick'> {
+  currentActiveTabItem?: string;
+  onClick?: (tabName: string) => void;
+}
+
+const Tab = ({
+  currentActiveTabItem,
+  onClick,
+  ...props
+}: TabProps): JSX.Element => {
+  const [activeItem, setActiveItem] = useState(currentActiveTabItem);
 
   const handleClickTabItem = useCallback(
-    name => {
-      setActiveItem(name);
-      onClick && onClick(name);
+    tabName => {
+      setActiveItem(tabName);
+      onClick && onClick(tabName);
     },
     [onClick],
   );
@@ -24,13 +32,17 @@ const Tab = ({ currentActive, onClick, ...props }) => {
       {Object.entries(TAB_MENU).map(([key, value]) => (
         <TabItem
           key={key}
-          title={value}
           name={key}
           activeItem={activeItem}
           onClick={handleClickTabItem}
-        />
+        >
+          {value}
+        </TabItem>
       ))}
-      <TabItemPointer currentActive={activeItem} {...props}></TabItemPointer>
+      <TabItemPointer
+        currentActiveTabItem={activeItem}
+        {...props}
+      ></TabItemPointer>
     </TabItemContainer>
   );
 };
@@ -49,28 +61,20 @@ const TabItemContainer = styled.div`
   box-shadow: ${Common.shadow.menu};
 `;
 
-const TabItemPointer = styled.div`
+const TabItemPointer = styled.div<TabProps>`
   ${tabItemSize}
   position: absolute;
   top: 0;
-  transform: ${({ currentActive }) =>
-    currentActive &&
-    `translate(${Object.keys(TAB_MENU).indexOf(currentActive) * 100}%, 0)`};
+  transform: ${({ currentActiveTabItem }) =>
+    currentActiveTabItem &&
+    `translate(${
+      Object.keys(TAB_MENU).indexOf(currentActiveTabItem) * 100
+    }%, 0)`};
   border: 1px solid ${Common.colors.primary};
   border-radius: 50px;
   background-color: ${rgba(Common.colors.background_menu, 0.2)};
   box-shadow: ${Common.shadow.menu};
   transition: transform 0.2s ease-out;
 `;
-
-Tab.defaultProps = {
-  currentActive: '',
-  onClick: () => {},
-};
-
-Tab.propTypes = {
-  currentActive: PropTypes.string,
-  onClick: PropTypes.func,
-};
 
 export default Tab;
