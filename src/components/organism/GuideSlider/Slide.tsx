@@ -3,7 +3,12 @@ import styled from '@emotion/styled';
 import Common from '@/styles';
 import PropTypes from 'prop-types';
 
-const Slide = ({ text, imageUrl, ...props }) => {
+interface SlideProps extends React.ComponentProps<'div'> {
+  text: string;
+  imageUrl: string;
+}
+
+const Slide = ({ text, imageUrl, ...props }: SlideProps): JSX.Element => {
   return (
     <Container {...props}>
       <Title>{text}</Title>

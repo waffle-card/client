@@ -5,8 +5,8 @@ import {
   Text,
   Button,
   BackButton,
-  NameChangeModal,
-  PasswordChangeModal,
+  NameEditModal,
+  PasswordEditModal,
 } from '@/components';
 import Common from '@/styles';
 import Swal from 'sweetalert2';
@@ -126,7 +126,7 @@ const MyPage = () => {
           </StyledButton>
         </ButtonContainer>
       </ContentContainer>
-      <NameChangeModal
+      <NameEditModal
         userName={user?.name}
         visible={nameModalVisible}
         onSubmit={handleSubmitChangedName}
@@ -134,7 +134,7 @@ const MyPage = () => {
           setNameModalVisible(false);
         }}
       />
-      <PasswordChangeModal
+      <PasswordEditModal
         visible={passWordModalVisible}
         onSubmit={handleSubmitChangedPassword}
         onClose={() => {

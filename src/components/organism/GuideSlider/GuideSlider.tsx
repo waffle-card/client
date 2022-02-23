@@ -7,7 +7,9 @@ import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import Common from '@/styles';
 import { GUIDE_SLIDE_DATA } from '@/constants';
 
-const GuideSlider = ({ ...props }) => {
+const GuideSlider = ({
+  ...props
+}: React.ComponentProps<'div'>): JSX.Element => {
   const [slideIndex, setSlideIndex] = useState(0);
   const maxLength = Object.keys(GUIDE_SLIDE_DATA).length;
 
@@ -114,7 +116,7 @@ const Dots = styled.ul`
   margin-top: 2.5rem;
 `;
 
-const Dot = styled.li`
+const Dot = styled.li<{ active: boolean }>`
   width: 15px;
   height: 15px;
   margin: 2% 4px 0;
