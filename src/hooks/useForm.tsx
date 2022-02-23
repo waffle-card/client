@@ -8,7 +8,7 @@ interface UseFormArgs {
 
 const useForm = ({ initialValues, onSubmit, validate }: UseFormArgs) => {
   const [values, setValues] = useState(initialValues);
-  const [errors, setErrors] = useState({});
+  const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const [isLoading, setIsLoading] = useState(false);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {

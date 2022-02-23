@@ -2,24 +2,32 @@ import React from 'react';
 import Common from '@/styles';
 import styled from '@emotion/styled';
 import { useForm } from '@/hooks';
-import PropTypes from 'prop-types';
 import { Modal, Text, Button, Input, Spinner } from '@/components';
 import { validateNameEmpty, validateNameLength } from '@/validators';
 
-const NameChangeModal = ({
+export interface NameEditModalProps {
+  userName?: string;
+  visible?: boolean;
+  onClose: () => void;
+  onSubmit: (values: { [key: string]: string }) => Promise<void>;
+}
+
+const NameEditModal = ({
   userName,
   visible,
   onClose,
   onSubmit,
   ...props
-}) => {
+}: NameEditModalProps): JSX.Element => {
   const { isLoading, errors, handleChange, handleSubmit } = useForm({
     initialValues: {
       userName: '',
     },
     onSubmit,
     validate: ({ userName }) => {
-      const errors = {};
+      const errors = {
+        userName: '',
+      };
 
       if (!validateNameEmpty(userName)) errors.userName = '이름을 입력해주세요';
       if (!validateNameLength(userName))
@@ -29,8 +37,8 @@ const NameChangeModal = ({
     },
   });
 
-  const handleClose = e => {
-    onClose && onClose(e);
+  const handleClose = () => {
+    onClose && onClose();
   };
 
   return (
@@ -63,14 +71,7 @@ const NameChangeModal = ({
   );
 };
 
-NameChangeModal.propTypes = {
-  userName: PropTypes.string,
-  visible: PropTypes.bool,
-  onClose: PropTypes.func,
-  onSubmit: PropTypes.func,
-};
-
-NameChangeModal.defaultProps = {
+NameEditModal.defaultProps = {
   userName: '',
   visible: false,
 };
@@ -123,4 +124,4 @@ const StyledButton = styled(Button)`
   }
 `;
 
-export default NameChangeModal;
+export default NameEditModal;

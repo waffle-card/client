@@ -5,7 +5,7 @@ import {
   Text,
   Button,
   BackButton,
-  NameChangeModal,
+  NameEditModal,
   PasswordChangeModal,
 } from '@/components';
 import Common from '@/styles';
@@ -126,7 +126,7 @@ const MyPage = () => {
           </StyledButton>
         </ButtonContainer>
       </ContentContainer>
-      <NameChangeModal
+      <NameEditModal
         userName={user?.name}
         visible={nameModalVisible}
         onSubmit={handleSubmitChangedName}

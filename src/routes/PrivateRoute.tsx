@@ -1,16 +1,17 @@
 import React from 'react';
 import { Navigate } from 'react-router-dom';
-import PropTypes from 'prop-types';
 import { userState } from '@/recoils';
 import { useRecoilValue } from 'recoil';
 
-const PrivateRoute = ({ component: Component }) => {
+interface PrivateRouteProps {
+  component: React.ComponentType;
+}
+
+const PrivateRoute = ({
+  component: Component,
+}: PrivateRouteProps): JSX.Element => {
   const userInfo = useRecoilValue(userState);
   return userInfo ? <Component /> : <Navigate replace to="/login" />;
-};
-
-PrivateRoute.propTypes = {
-  component: PropTypes.elementType.isRequired,
 };
 
 export default PrivateRoute;

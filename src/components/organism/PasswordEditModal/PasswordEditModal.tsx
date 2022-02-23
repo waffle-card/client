@@ -2,7 +2,6 @@ import React from 'react';
 import Common from '@/styles';
 import styled from '@emotion/styled';
 import { useForm } from '@/hooks';
-import PropTypes from 'prop-types';
 import { Modal, Text, Button, Input, Spinner } from '@/components';
 import {
   validatePasswordEmpty,
@@ -10,7 +9,18 @@ import {
   validatePasswordConfirm,
 } from '@/validators';
 
-const PasswordChangeModal = ({ visible, onClose, onSubmit, ...props }) => {
+export interface PasswordEditModalProps {
+  visible?: boolean;
+  onClose: () => void;
+  onSubmit: (values: { [key: string]: string }) => Promise<void>;
+}
+
+const PasswordEditModal = ({
+  visible,
+  onClose,
+  onSubmit,
+  ...props
+}: PasswordEditModalProps): JSX.Element => {
   const { isLoading, errors, handleChange, handleSubmit } = useForm({
     initialValues: {
       newPassword: '',
@@ -18,7 +28,10 @@ const PasswordChangeModal = ({ visible, onClose, onSubmit, ...props }) => {
     },
     onSubmit,
     validate: ({ newPassword, passwordConfirm }) => {
-      const errors = {};
+      const errors = {
+        newPassword: '',
+        passwordConfirm: '',
+      };
 
       if (!validatePasswordEmpty(newPassword)) {
         errors.newPassword = '비밀번호를 입력해주세요.';
@@ -48,8 +61,8 @@ const PasswordChangeModal = ({ visible, onClose, onSubmit, ...props }) => {
     },
   });
 
-  const handleClose = e => {
-    onClose && onClose(e);
+  const handleClose = () => {
+    onClose && onClose();
   };
 
   return (
@@ -107,13 +120,7 @@ const PasswordChangeModal = ({ visible, onClose, onSubmit, ...props }) => {
   );
 };
 
-PasswordChangeModal.propTypes = {
-  visible: PropTypes.bool,
-  onClose: PropTypes.func,
-  onSubmit: PropTypes.func,
-};
-
-PasswordChangeModal.defaultProps = {
+PasswordEditModal.defaultProps = {
   visible: false,
 };
 
@@ -184,4 +191,4 @@ const StyledButton = styled(Button)`
   }
 `;
 
-export default PasswordChangeModal;
+export default PasswordEditModal;
