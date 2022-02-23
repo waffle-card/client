@@ -5,8 +5,8 @@ import {
   Text,
   Button,
   BackButton,
-  NameChangeModal,
-  PasswordChangeModal,
+  NameEditModal,
+  PasswordEditModal,
 } from '@/components';
 import Common from '@/styles';
 import Swal from 'sweetalert2';
@@ -23,11 +23,11 @@ const MyPage = () => {
   const [passWordModalVisible, setPassWordModalVisible] = useState(false);
   const { refreshWaffleCards } = useWaffleCardsDispatch();
 
-  const handleClickChangeNameButton = () => {
+  const handleClickEditNameButton = () => {
     setNameModalVisible(true);
   };
 
-  const handleClickChangePasswordButton = () => {
+  const handleClickEditPasswordButton = () => {
     setPassWordModalVisible(true);
   };
 
@@ -54,7 +54,7 @@ const MyPage = () => {
     });
   };
 
-  const handleSubmitChangedName = async ({ userName }) => {
+  const handleSubmitEditdName = async ({ userName }) => {
     try {
       await updateUser({ name: userName });
       setUser({ ...user, name: userName });
@@ -63,7 +63,7 @@ const MyPage = () => {
         text: '닉네임 변경완료!',
         confirmButtonColor: Common.colors.point,
       }).then(() => {
-        navigate('/my-page', { replace: true });
+        setNameModalVisible(false);
       });
     } catch (error) {
       Swal.fire({
@@ -74,7 +74,7 @@ const MyPage = () => {
     }
   };
 
-  const handleSubmitChangedPassword = async ({ newPassword }) => {
+  const handleSubmitEditdPassword = async ({ newPassword }) => {
     try {
       await updateUser({ password: newPassword });
       Swal.fire({
@@ -110,10 +110,10 @@ const MyPage = () => {
           </InfoBox>
         </TextContainer>
         <ButtonContainer>
-          <StyledButton type="button" onClick={handleClickChangeNameButton}>
+          <StyledButton type="button" onClick={handleClickEditNameButton}>
             닉네임 변경
           </StyledButton>
-          <StyledButton type="button" onClick={handleClickChangePasswordButton}>
+          <StyledButton type="button" onClick={handleClickEditPasswordButton}>
             비밀번호 변경
           </StyledButton>
           <StyledButton
@@ -126,17 +126,17 @@ const MyPage = () => {
           </StyledButton>
         </ButtonContainer>
       </ContentContainer>
-      <NameChangeModal
+      <NameEditModal
         userName={user?.name}
         visible={nameModalVisible}
-        onSubmit={handleSubmitChangedName}
+        onSubmit={handleSubmitEditdName}
         onClose={() => {
           setNameModalVisible(false);
         }}
       />
-      <PasswordChangeModal
+      <PasswordEditModal
         visible={passWordModalVisible}
-        onSubmit={handleSubmitChangedPassword}
+        onSubmit={handleSubmitEditdPassword}
         onClose={() => {
           setPassWordModalVisible(false);
         }}

@@ -1,5 +1,4 @@
-import { Text } from '@/components';
-import type { TextProps } from './Text.type';
+import { Text, TextProps } from '@/components';
 
 export default {
   title: 'Component/Atom/Text',

@@ -2,7 +2,7 @@ import { WaffleCard } from '@/components';
 import { WaffleCardType } from '@/types';
 
 export default {
-  title: 'Component/Molecule/WaffleCard',
+  title: 'Component/Organism/WaffleCard',
 };
 
 const dummyWaffleCard: WaffleCardType = {
