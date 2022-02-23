@@ -1,7 +1,7 @@
 import { NameEditModal, NameEditModalProps } from '@/components';
 
 export default {
-  title: 'Component/organism/NameEditModal',
+  title: 'Component/Organism/NameEditModal',
   component: NameEditModal,
   argTypes: {
     userName: {

@@ -1,7 +1,7 @@
 import { ScrollGuide } from '@/components';
 
 export default {
-  title: 'Component/molecule/ScrollGuide',
+  title: 'Component/Molecule/ScrollGuide',
   component: ScrollGuide,
 };
 

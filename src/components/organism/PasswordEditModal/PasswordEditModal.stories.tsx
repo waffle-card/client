@@ -1,7 +1,7 @@
 import { PasswordEditModal, PasswordEditModalProps } from '@/components';
 
 export default {
-  title: 'Component/organism/PasswordEditModal',
+  title: 'Component/Organism/PasswordEditModal',
   component: PasswordEditModal,
   argTypes: {
     visible: {

@@ -1,7 +1,7 @@
 import { NoCardGuide } from '@/components';
 
 export default {
-  title: 'Component/molecule/NoCardGuide',
+  title: 'Component/Molecule/NoCardGuide',
   component: NoCardGuide,
 };
 

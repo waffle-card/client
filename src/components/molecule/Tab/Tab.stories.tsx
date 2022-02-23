@@ -1,7 +1,7 @@
 import { Tab } from '@/components';
 
 export default {
-  title: 'Component/molecule/Tab',
+  title: 'Component/Molecule/Tab',
   component: Tab,
 };
 
