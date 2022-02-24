@@ -1,8 +1,7 @@
-import { Text } from '@/components';
-import type { TextProps } from './Text.type';
+import { Text, TextProps } from '@/components';
 
 export default {
-  title: 'Component/Base/Text',
+  title: 'Component/Atom/Text',
   component: Text,
   argTypes: {
     block: { control: 'boolean' },

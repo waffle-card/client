@@ -4,7 +4,7 @@ import Common from '@/styles';
 import styled from '@emotion/styled';
 import { Portal } from '@/components';
 
-interface Prop {
+interface SpinnerProps {
   loading?: boolean;
   size?: number;
   color?: string;
@@ -15,7 +15,7 @@ const Spinner = ({
   size = 50,
   color = Common.colors.point,
   ...props
-}: Prop): JSX.Element | null => {
+}: SpinnerProps): JSX.Element | null => {
   return loading ? (
     <Portal>
       <BackgroundDim>

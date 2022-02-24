@@ -69,7 +69,7 @@ const dummyUser = {
 };
 
 export default {
-  title: 'Component/Domain/ChattingCard',
+  title: 'Component/Organism/ChattingCard',
 };
 
 export const Default = args => {

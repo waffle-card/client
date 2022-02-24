@@ -1,8 +1,8 @@
 export { default as Button } from './atom/Button/Button';
 export { default as ColorPicker } from './molecule/ColorPicker/ColorPicker';
 export { default as Modal } from './molecule/Modal/Modal';
-export { default as Text } from './atom/Text/Text';
-export { default as Icons } from './atom/Icons';
+export { Text } from './atom/Text';
+export type { TextProps } from './atom/Text';
 export { default as Portal } from './atom/Portal/Portal';
 export { default as Spinner } from './molecule/Spinner/Spinner';
 export { default as BackButton } from './atom/BackButton/BackButton';
@@ -16,8 +16,10 @@ export { default as ChattingCardModal } from './organism/ChattingCardModal/Chatt
 export { default as Tab } from './molecule/Tab/Tab';
 export { default as TabItem } from './molecule/Tab/TabItem';
 export { default as Header } from './organism/Header/Header';
-export { default as NameChangeModal } from './organism/NameChangeModal/NameChangeModal';
-export { default as PasswordChangeModal } from './organism/PasswordChangeModal/PasswordChangeModal';
+export { NameEditModal } from './organism/NameEditModal';
+export type { NameEditModalProps } from './organism/NameEditModal';
+export { PasswordEditModal } from './organism/PasswordEditModal';
+export type { PasswordEditModalProps } from './organism/PasswordEditModal';
 export { default as WaffleCardsList } from './organism/WaffleCardsList/WaffleCardsList';
 export { default as LikeToggle } from './molecule/LikeToggle/LikeToggle';
 export { default as Modals } from './organism/Modals/Modals';
