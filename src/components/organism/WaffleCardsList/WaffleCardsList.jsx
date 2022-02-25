@@ -1,14 +1,13 @@
-import React, { useRef, useEffect } from 'react';
+import React from 'react';
 import styled from '@emotion/styled';
-import Common from '@/styles';
-import { keyframes } from '@emotion/react';
 import PropTypes from 'prop-types';
 import { userState } from '@/recoils';
 import { useRecoilValue } from 'recoil';
 import { useWaffleCardsState } from '@/contexts';
 import { useIsOverflow } from '@/hooks';
-import { css } from '@emotion/react';
 import { WaffleCard, EmptyCard, LoginGuide, NoCardGuide } from '@/components';
+import WaffleCardsWrapper from './WaffleCardsWrapper';
+import { css } from '@emotion/react';
 
 const WaffleCardsList = ({
   type,
@@ -23,12 +22,9 @@ const WaffleCardsList = ({
   const user = useRecoilValue(userState);
   const waffleCards = useWaffleCardsState();
   const [containerRef, isOverflow] = useIsOverflow();
-  const maxLength = waffleCards.length * 3;
-  const CardsWrapperRef = useRef(null);
 
   const handleClickWaffleCard = waffleCard => {
     onClickWaffleCard && onClickWaffleCard(waffleCard);
-    CardsWrapperRef.current.style.animationPlayState = 'paused';
   };
 
   const handleClickWaffleCardCreate = () => {
@@ -47,18 +43,13 @@ const WaffleCardsList = ({
     onClickLikeToggle && onClickLikeToggle(waffleCardId, likeToggled);
   };
 
-  const { current } = containerRef;
-  useEffect(() => {
-    if (current) {
-      setTimeout(() => {
-        containerRef.current.scrollLeft =
-          CardsWrapperRef.current.offsetWidth / 3;
-      }, 1000);
-    }
-  }, [containerRef, current]);
-
   return (
-    <Container ref={containerRef} type={type} {...props}>
+    <Container
+      ref={containerRef}
+      isOverflow={isOverflow}
+      type={type}
+      {...props}
+    >
       {!user && type !== 'total' ? (
         <LoginGuide />
       ) : (
@@ -70,26 +61,22 @@ const WaffleCardsList = ({
             return <NoCardGuide />;
           } else {
             return (
-              <CardsWrapper
+              <WaffleCardsWrapper
                 isOverflow={isOverflow}
-                maxLength={maxLength}
-                ref={CardsWrapperRef}
+                containerRef={containerRef?.current}
               >
-                {[...waffleCards, ...waffleCards, ...waffleCards]?.map(
-                  (waffleCard, index) => (
-                    <StyledWaffleCard
-                      index={index}
-                      type={type}
-                      key={waffleCard.id + index}
-                      waffleCardData={waffleCard}
-                      onClickWaffleCard={handleClickWaffleCard}
-                      onClickLikeToggle={handleClickLikeToggle}
-                      onClickEdit={handleClickWaffleCardEdit}
-                      onClickDelete={handleClickWaffleCardDelete}
-                    />
-                  ),
-                )}
-              </CardsWrapper>
+                {[...waffleCards, ...waffleCards]?.map(waffleCard => (
+                  <StyledWaffleCard
+                    type={type}
+                    key={waffleCard.id}
+                    waffleCardData={waffleCard}
+                    onClickWaffleCard={handleClickWaffleCard}
+                    onClickLikeToggle={handleClickLikeToggle}
+                    onClickEdit={handleClickWaffleCardEdit}
+                    onClickDelete={handleClickWaffleCardDelete}
+                  />
+                ))}
+              </WaffleCardsWrapper>
             );
           }
         })()
@@ -97,15 +84,6 @@ const WaffleCardsList = ({
     </Container>
   );
 };
-
-const translate = keyframes`
- 0% {
-  transform:translateX(-33.3333%)
-  }
-  100% {
-    transform:translateX(-66.6666%)
-  }
-`;
 
 const Container = styled.section`
   ${({ type }) => {
@@ -125,40 +103,6 @@ const Container = styled.section`
   ::-webkit-scrollbar {
     display: none;
   }
-`;
-
-const CardsWrapper = styled.ul`
-  display: flex;
-  align-items: center;
-
-  width: ${({ maxLength }) => (265 + 32) * maxLength}px;
-  @media ${Common.media.md} {
-    width: ${({ maxLength }) => (216 + 32) * maxLength}px;
-  }
-  @media ${Common.media.sm} {
-    width: ${({ maxLength }) => (180 + 32) * maxLength}px;
-  }
-
-  ${({ isOverflow, maxLength }) => {
-    if (isOverflow) {
-      return css`
-        justify-content: left;
-        animation-name: ${translate};
-        animation-duration: ${maxLength / 0.8}s;
-        animation-delay: 1s;
-        animation-iteration-count: infinite;
-        animation-timing-function: linear;
-        animation-direction: normal;
-        &:hover {
-          animation-play-state: paused;
-        }
-      `;
-    } else {
-      return css`
-        justify-content: center;
-      `;
-    }
-  }};
 `;
 
 const StyledWaffleCard = styled(WaffleCard)`
