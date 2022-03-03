@@ -6,7 +6,6 @@ import { useRecoilValue } from 'recoil';
 import { useWaffleCardsState } from '@/contexts';
 import { useIsOverflow, useInterval } from '@/hooks';
 import { WaffleCard, EmptyCard, LoginGuide, NoCardGuide } from '@/components';
-import WaffleCardsWrapper from './WaffleCardsWrapper';
 import { css } from '@emotion/react';
 
 const WaffleCardsList = ({
@@ -61,6 +60,7 @@ const WaffleCardsList = ({
     },
     15,
     isPlayMove,
+    type,
   );
 
   return (
@@ -69,6 +69,13 @@ const WaffleCardsList = ({
       isOverflow={isOverflow}
       type={type}
       {...props}
+      onMouseOver={() => {
+        setIsPlayMove(false);
+      }}
+      onMouseOut={() => {
+        // 채팅창이 열리지 않았을 때의 조건을 걸어준다
+        setIsPlayMove(true);
+      }}
     >
       {!user && type !== 'total' ? (
         <LoginGuide />
@@ -80,31 +87,17 @@ const WaffleCardsList = ({
           if (waffleCards.length <= 0) {
             return <NoCardGuide />;
           } else {
-            return (
-              <WaffleCardsWrapper
-                isOverflow={isOverflow}
-                containerRef={containerRef?.current}
-                onMouseOver={() => {
-                  setIsPlayMove(false);
-                }}
-                onMouseOut={() => {
-                  // 채팅창이 열리지 않았을 때의 조건을 걸어준다
-                  setIsPlayMove(true);
-                }}
-              >
-                {waffleCards.map((waffleCard, index) => (
-                  <StyledWaffleCard
-                    type={type}
-                    key={waffleCard.id + index}
-                    waffleCardData={waffleCard}
-                    onClickWaffleCard={handleClickWaffleCard}
-                    onClickLikeToggle={handleClickLikeToggle}
-                    onClickEdit={handleClickWaffleCardEdit}
-                    onClickDelete={handleClickWaffleCardDelete}
-                  />
-                ))}
-              </WaffleCardsWrapper>
-            );
+            return waffleCards?.map(waffleCard => (
+              <StyledWaffleCard
+                type={type}
+                key={waffleCard.id}
+                waffleCardData={waffleCard}
+                onClickWaffleCard={handleClickWaffleCard}
+                onClickLikeToggle={handleClickLikeToggle}
+                onClickEdit={handleClickWaffleCardEdit}
+                onClickDelete={handleClickWaffleCardDelete}
+              />
+            ));
           }
         })()
       )}
@@ -122,6 +115,10 @@ const Container = styled.section`
       `;
     }
   }}
+  display: flex;
+  justify-content: ${({ isOverflow }) =>
+    isOverflow ? 'flex-start' : 'center'};
+  align-items: center;
   position: relative;
   padding-top: 2rem;
   margin: 4rem 0;
@@ -142,7 +139,6 @@ const StyledWaffleCard = styled(WaffleCard)`
 `;
 
 WaffleCardsList.protoTypes = {
-  type: PropTypes.string,
   onClickWaffleCard: PropTypes.func,
   onClickWaffleCardCreate: PropTypes.func,
   onClickWaffleCardEdit: PropTypes.func,
