@@ -52,7 +52,7 @@ const CardsWrapper = styled.ul`
     if (isOverflow) {
       return css`
         justify-content: left;
-        animation-name: ${translate};
+        /* animation-name: ${translate};
         animation-duration: ${CardsLength /
         0.8}s; // 카드 갯수에 비례해서 속도를 계산함
         animation-delay: 1s;
@@ -61,7 +61,7 @@ const CardsWrapper = styled.ul`
         animation-direction: normal;
         &:hover {
           animation-play-state: paused;
-        }
+        } */
       `;
     } else {
       return css`
