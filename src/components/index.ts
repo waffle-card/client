@@ -26,3 +26,4 @@ export { default as Modals } from './organism/Modals/Modals';
 export { default as GuideSlider } from './organism/GuideSlider/GuideSlider';
 export { default as LoginGuide } from './molecule/LoginGuide/LoginGuide';
 export { default as NoCardGuide } from './molecule/NoCardGuide/NoCardGuide';
+export { default as ArrowIcons } from './molecule/ArrowIcons/ArrowIcons';

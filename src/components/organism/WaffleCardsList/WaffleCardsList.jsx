@@ -6,6 +6,7 @@ import { useRecoilValue } from 'recoil';
 import { useWaffleCardsState } from '@/contexts';
 import { useIsOverflow, useInterval } from '@/hooks';
 import { WaffleCard, EmptyCard, LoginGuide, NoCardGuide } from '@/components';
+import ScrollButtons from './ScrollButtons';
 import { css } from '@emotion/react';
 
 const WaffleCardsList = ({
@@ -22,6 +23,7 @@ const WaffleCardsList = ({
   const waffleCards = useWaffleCardsState();
   const [containerRef, isOverflow] = useIsOverflow();
   const [isPlayMove, setIsPlayMove] = useState(true);
+  const containerDom = containerRef.current;
 
   const handleClickWaffleCard = waffleCard => {
     onClickWaffleCard && onClickWaffleCard(waffleCard);
@@ -43,11 +45,14 @@ const WaffleCardsList = ({
     onClickLikeToggle && onClickLikeToggle(waffleCardId, likeToggled);
   };
 
-  // 1. 카드 wrapped 원래대로 돌려놓기
-  // 2. 채팅 모달 온 오프 값 가져오기
-  // 4. 처음으로 가기, 끝으로 가기 버튼 구현하기
+  const handleClickFrontButton = () => {
+    containerDom.scrollLeft = 0;
+  };
 
-  const containerDom = containerRef.current;
+  const handleClickBackButton = () => {
+    containerDom.scrollLeft = containerDom.scrollWidth;
+  };
+
   useInterval(
     () => {
       const { scrollLeft, clientWidth } = containerDom;
@@ -64,44 +69,49 @@ const WaffleCardsList = ({
   );
 
   return (
-    <Container
-      ref={containerRef}
-      isOverflow={isOverflow}
-      type={type}
-      {...props}
-      onMouseOver={() => {
-        setIsPlayMove(false);
-      }}
-      onMouseOut={() => {
-        // 채팅창이 열리지 않았을 때의 조건을 걸어준다
-        setIsPlayMove(true);
-      }}
-    >
-      {!user && type !== 'total' ? (
-        <LoginGuide />
-      ) : (
-        (() => {
-          if (type === 'my' && waffleCards.length <= 0) {
-            return <EmptyCard onClick={handleClickWaffleCardCreate} />;
-          }
-          if (waffleCards.length <= 0) {
-            return <NoCardGuide />;
-          } else {
-            return waffleCards?.map(waffleCard => (
-              <StyledWaffleCard
-                type={type}
-                key={waffleCard.id}
-                waffleCardData={waffleCard}
-                onClickWaffleCard={handleClickWaffleCard}
-                onClickLikeToggle={handleClickLikeToggle}
-                onClickEdit={handleClickWaffleCardEdit}
-                onClickDelete={handleClickWaffleCardDelete}
-              />
-            ));
-          }
-        })()
-      )}
-    </Container>
+    <>
+      <ScrollButtons
+        onClickFrontButton={handleClickFrontButton}
+        onClickBackButton={handleClickBackButton}
+      />
+      <Container
+        ref={containerRef}
+        isOverflow={isOverflow}
+        type={type}
+        {...props}
+        onMouseOver={() => {
+          setIsPlayMove(false);
+        }}
+        onMouseOut={() => {
+          setIsPlayMove(true);
+        }}
+      >
+        {!user && type !== 'total' ? (
+          <LoginGuide />
+        ) : (
+          (() => {
+            if (type === 'my' && waffleCards.length <= 0) {
+              return <EmptyCard onClick={handleClickWaffleCardCreate} />;
+            }
+            if (waffleCards.length <= 0) {
+              return <NoCardGuide />;
+            } else {
+              return waffleCards?.map(waffleCard => (
+                <StyledWaffleCard
+                  type={type}
+                  key={waffleCard.id}
+                  waffleCardData={waffleCard}
+                  onClickWaffleCard={handleClickWaffleCard}
+                  onClickLikeToggle={handleClickLikeToggle}
+                  onClickEdit={handleClickWaffleCardEdit}
+                  onClickDelete={handleClickWaffleCardDelete}
+                />
+              ));
+            }
+          })()
+        )}
+      </Container>
+    </>
   );
 };
 
