@@ -3,10 +3,12 @@ import { request, authRequest } from './request';
 import { WaffleCardType } from '@/types';
 
 interface WaffleCardApiType {
-  getWaffleCards: () => Promise<AxiosResponse>;
-  getWaffleCardById: (id: Pick<WaffleCardType, 'id'>) => Promise<AxiosResponse>;
-  getMyWaffleCard: () => Promise<AxiosResponse>;
-  getMyLikedWaffleCards: () => Promise<AxiosResponse>;
+  getWaffleCards: () => Promise<AxiosResponse<WaffleCardType[]>>;
+  getWaffleCardById: (
+    id: Pick<WaffleCardType, 'id'>,
+  ) => Promise<AxiosResponse<WaffleCardType>>;
+  getMyWaffleCard: () => Promise<AxiosResponse<WaffleCardType[]>>;
+  getMyLikedWaffleCards: () => Promise<AxiosResponse<WaffleCardType[]>>;
   createWaffleCard: ({
     emoji,
     color,
