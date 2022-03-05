@@ -11,7 +11,7 @@ interface UserApiType {
   login: (userInfo: {
     email: string;
     password: string;
-  }) => Promise<AxiosResponse>;
+  }) => Promise<AxiosResponse<UserType & { token: string }>>;
   me: () => Promise<AxiosResponse<UserType>>;
   updateUser: ({
     name,
