@@ -121,7 +121,7 @@ const CardEditModal = ({
   };
 
   return (
-    <StyledModal visible onClose={handleClose} {...props}>
+    <StyledModal visible={visible} onClose={handleClose} {...props}>
       <form onSubmit={handleSubmit} id="cardForm">
         <CardEditContainer>
           <WaffleCard type="plain" waffleCardData={waffleCard} />
