@@ -7,7 +7,7 @@ interface ModalsProviderProps {
 }
 
 export const ModalsDispatchContext = createContext<{
-  open: (Component: React.ReactElement, props: any[]) => void;
+  open: (Component: React.ReactElement, props: any) => void;
   close: (Component: React.ReactElement) => void;
 }>({
   // eslint-disable-next-line @typescript-eslint/no-empty-function
@@ -21,7 +21,7 @@ export const ModalsStateContext = createContext<ModalsStateType[]>([]);
 const ModalsProvider = ({ children }: ModalsProviderProps) => {
   const [openedModals, setOpenedModals] = useState<ModalsStateType[]>([]);
 
-  const open = (Component: React.ReactElement, props: any[]) => {
+  const open = (Component: React.ReactElement, props: any) => {
     setOpenedModals(modals => {
       return [...modals, { Component, props }];
     });
