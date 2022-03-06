@@ -29,6 +29,7 @@ const HomePage = () => {
       );
       const commentsData = response.data;
       openModal(ChattingCardModal, {
+        visible: true,
         waffleCardData: waffleCard,
         commentsData: commentsData ?? [],
         onClickLikeToggle: (waffleCardId, likeToggled) => {
@@ -48,6 +49,7 @@ const HomePage = () => {
 
   const handleClickWaffleCardCreate = async () => {
     openModal(CardEditModal, {
+      visible: true,
       onSubmit: async () => {
         await refreshWaffleCards(tabValue);
       },
@@ -56,6 +58,7 @@ const HomePage = () => {
 
   const handleClickWaffleCardEdit = waffleCard => {
     openModal(CardEditModal, {
+      visible: true,
       editMode: true,
       initialWaffleCardData: waffleCard,
       onSubmit: async () => {

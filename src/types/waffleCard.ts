@@ -2,7 +2,7 @@ import { UserType } from './user';
 
 type hashTag = string;
 
-export interface WaffleCardType {
+export type WaffleCardType = {
   id: string;
   user: UserType;
   emoji: string;
@@ -11,4 +11,4 @@ export interface WaffleCardType {
   likeUserIds: string[];
   createdAt: string;
   updatedAt: string;
-}
+};

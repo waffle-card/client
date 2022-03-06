@@ -2,22 +2,35 @@ import { createContext, useCallback, useContext, useState } from 'react';
 import { waffleCardApi } from '@/apis';
 import { userState } from '@/recoils';
 import { useRecoilValue } from 'recoil';
+import { WaffleCardType } from '@/types';
 
-const cachedWaffleCards = {
+const cachedWaffleCards: { [type: string]: WaffleCardType[] | null } = {
   total: null,
   my: null,
   like: null,
 };
 
-const WaffleCardsStateContext = createContext([]);
-const WaffleCardsDispatchContext = createContext(null);
+const WaffleCardsStateContext = createContext<WaffleCardType[] | null>([]);
+const WaffleCardsDispatchContext = createContext<{
+  setWaffleCardsByType: (type: string, waffleCards: WaffleCardType[]) => void;
+  refreshWaffleCards: (type?: string) => void;
+}>({
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  setWaffleCardsByType: () => {},
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  refreshWaffleCards: () => {},
+});
 
-export const WaffleCardsProvider = ({ children }) => {
-  const [waffleCards, setWaffleCards] = useState([]);
+interface WaffleCardsProviderProps {
+  children: React.ReactElement | React.ReactElement[];
+}
+
+export const WaffleCardsProvider = ({ children }: WaffleCardsProviderProps) => {
+  const [waffleCards, setWaffleCards] = useState<WaffleCardType[] | null>([]);
   const user = useRecoilValue(userState);
 
   const setWaffleCardsByType = useCallback(
-    async (type, options) => {
+    async (type, options = {}) => {
       if (!user && type !== 'total') {
         setWaffleCards(() => []);
         return;
@@ -28,13 +41,15 @@ export const WaffleCardsProvider = ({ children }) => {
         return;
       }
 
-      const waffleCardsCommand = {
+      const waffleCardsCommand: {
+        [command: string]: () => Promise<WaffleCardType[]>;
+      } = {
         total: async () => {
           const { data: waffleCards } = await waffleCardApi.getWaffleCards();
           return waffleCards;
         },
         my: async () => {
-          if (cachedWaffleCards.total) {
+          if (cachedWaffleCards.total && user) {
             return cachedWaffleCards.total.filter(
               waffleCard => waffleCard.user.id === user.id,
             );
@@ -44,7 +59,7 @@ export const WaffleCardsProvider = ({ children }) => {
           return waffleCards;
         },
         like: async () => {
-          if (cachedWaffleCards.total) {
+          if (cachedWaffleCards.total && user) {
             return cachedWaffleCards.total.filter(waffleCard =>
               waffleCard.likeUserIds.includes(user.id),
             );
@@ -62,7 +77,7 @@ export const WaffleCardsProvider = ({ children }) => {
         cachedWaffleCards[type] = [...waffleCards];
 
         setWaffleCards(() => [...waffleCards]);
-      } catch (error) {
+      } catch (error: any) {
         console.error(`in WaffleCards Recoil: ${error.message}`);
         return [];
       }
