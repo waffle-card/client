@@ -16,6 +16,19 @@ https://waffle-card.com/
 
 <br />
 
+
+
+### 🧑🏻‍💻 기술스택
+
+- `Javascript`, `Typescript`, `React`
+- `Context`, `Recoil`,  `Axios`
+- `Storybook`, `Emotion`, `Mui`
+- `ESLint`, `Prettier`, `Netlify`
+
+<br />
+
+
+
 ### 🗓 개발 기간 & 일정
 
 - 1차 : 2021.10.18 ~ 2021.11.08
@@ -23,9 +36,11 @@ https://waffle-card.com/
 
 <br />
 
+
+
 ### 프로젝트 기획 배경
 
-사람들이 대화를 편하게 진행할 수 있는 요소가 들어간 SNS가 필요하다.
+> 사람들이 대화를 편하게 진행할 수 있는 요소가 들어간 SNS가 필요하다.
 
 - 익명성 : 익명으로 소통을 나누고 싶은 욕구가 있다.
 - 흥미성 : 재밌게 소통하고 싶다.
@@ -52,23 +67,14 @@ https://waffle-card.com/
 
 <br />
 
+
+
 📍 **기대 효과**
 
 프롱이들 사이에서 "익명성"을 활용하여
 
 1. **익명성을 갖고 속시원하게 터놓으**며 소통이 가능합니다. (나쁜기억지우개방, 자랑방, 드립방, 선택장애방과 같은 다양한 컨셉의 방)
 2. **다양한 관심사를 말하면서 재미요소**가 있다고 기대합니다. (이런 익명성과 자유주제 컨셉방이라는 성질과 해쉬태그와 카드라는 컨셉)
-
-<br />
-
-
-
-### 🧑🏻‍💻 기술스택
-
-- `Javascript`, `Typescript`, `React`
-- `Context`, `Recoil`,  `Axios`
-- `Storybook`, `Emotion`, `Mui`
-- `ESLint`, `Prettier`, `Netlify`
 
 
 
