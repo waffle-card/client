@@ -21,7 +21,10 @@ export const ModalsStateContext = createContext<ModalsStateType[]>([]);
 const ModalsProvider = ({ children }: ModalsProviderProps) => {
   const [openedModals, setOpenedModals] = useState<ModalsStateType[]>([]);
 
-  const open = (Component: React.ReactElement, props: any) => {
+  const open = (
+    Component: React.ReactElement,
+    props: { [key: string]: string },
+  ) => {
     setOpenedModals(modals => {
       return [...modals, { Component, props }];
     });

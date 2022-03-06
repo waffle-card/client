@@ -1,4 +1,4 @@
 export type ModalsStateType = {
   Component: React.ReactElement;
-  props: any;
+  props: { [key: string]: string };
 };
