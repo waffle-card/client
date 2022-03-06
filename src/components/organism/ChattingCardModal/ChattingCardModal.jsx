@@ -81,7 +81,7 @@ const ChattingCardModal = ({
   };
 
   return (
-    <StyledModal visible onClose={handleClose} {...props}>
+    <StyledModal visible={visible} onClose={handleClose} {...props}>
       <Header
         waffleCardData={waffleCardData}
         likeToggled={

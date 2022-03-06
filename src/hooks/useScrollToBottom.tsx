@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef } from 'react';
 
-const useScrollToBottom = dependency => {
-  const ref = useRef(null);
+const useScrollToBottom = (deps: any[]) => {
+  const ref = useRef<HTMLElement>(null);
   const commentList = ref.current;
 
   const scrollToBottom = useCallback(() => {
@@ -12,7 +12,8 @@ const useScrollToBottom = dependency => {
 
   useEffect(() => {
     scrollToBottom();
-  }, [scrollToBottom, dependency]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [scrollToBottom, ...deps]);
 
   return ref;
 };

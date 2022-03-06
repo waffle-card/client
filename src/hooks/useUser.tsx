@@ -6,7 +6,7 @@ import { TOKEN_NAME } from '@/constants';
 const useUser = () => {
   const serUser = useSetRecoilState(userState);
 
-  const login = async (email, password) => {
+  const login = async (email: string, password: string) => {
     const response = await authApi.login({ email, password });
     const { token, id, name, email: userEmail } = response.data;
 
@@ -19,7 +19,7 @@ const useUser = () => {
     serUser(null);
   };
 
-  const updateUser = async userInfo => {
+  const updateUser = async (userInfo: { name: string; password: string }) => {
     await authApi.updateUser({ ...userInfo });
   };
 
