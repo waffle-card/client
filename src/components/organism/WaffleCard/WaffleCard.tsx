@@ -6,12 +6,7 @@ import { userState } from '@/recoils';
 import { useRecoilValue } from 'recoil';
 import * as S from './WaffleCard.style';
 import { WaffleCardType } from '@/types';
-
-const countDaysFromToday = (date: string | Date) => {
-  date = typeof date === 'string' ? new Date(date) : date;
-  const today = new Date();
-  return Math.floor((today.getTime() - date.getTime()) / (1000 * 60 * 60 * 24));
-};
+import { countDaysFromToday } from '@/utils';
 
 interface WaffleCardProps extends React.ComponentProps<'div'> {
   type?: 'basic' | 'plain' | 'my';
