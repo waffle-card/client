@@ -10,7 +10,7 @@ import { countDaysFromToday } from '@/utils';
 
 interface WaffleCardProps extends React.ComponentProps<'div'> {
   type?: 'basic' | 'plain' | 'my';
-  waffleCardData?: WaffleCardType;
+  waffleCardData?: Partial<WaffleCardType>;
   onClickWaffleCard?: (waffleCard: WaffleCardType) => void;
   onClickLikeToggle?: (waffleCardId: string, likeToggled: boolean) => void;
   onClickEdit?: (waffleCard: WaffleCardType) => void;
@@ -18,8 +18,12 @@ interface WaffleCardProps extends React.ComponentProps<'div'> {
 }
 
 const WaffleCard = ({
-  type,
-  waffleCardData,
+  type = 'basic',
+  waffleCardData = {
+    emoji: '🧇',
+    color: Common.colors.yellow,
+    hashTags: [],
+  },
   onClickWaffleCard,
   onClickLikeToggle,
   onClickEdit,
@@ -30,27 +34,27 @@ const WaffleCard = ({
   const [ref, isHovered] = useHover<HTMLDivElement>();
 
   const days =
-    type !== 'plain' && waffleCardData
+    type !== 'plain' && waffleCardData && waffleCardData.updatedAt
       ? countDaysFromToday(waffleCardData.updatedAt)
       : 0;
 
   const handleClickLikeToggle = (likeToggled: boolean) => {
-    if (!waffleCardData) return;
+    if (!waffleCardData || !waffleCardData.id) return;
     onClickLikeToggle && onClickLikeToggle(waffleCardData.id, likeToggled);
   };
 
   const handleClickWaffleCard = () => {
     if (!waffleCardData) return;
-    onClickWaffleCard && onClickWaffleCard(waffleCardData);
+    onClickWaffleCard && onClickWaffleCard(waffleCardData as WaffleCardType);
   };
 
   const handleClickEdit = () => {
     if (type !== 'my' || !waffleCardData) return;
-    onClickEdit && onClickEdit(waffleCardData);
+    onClickEdit && onClickEdit(waffleCardData as WaffleCardType);
   };
 
   const handleClickDelete = () => {
-    if (type !== 'my' || !waffleCardData) return;
+    if (type !== 'my' || !waffleCardData || !waffleCardData.id) return;
     onClickDelete && onClickDelete(waffleCardData.id);
   };
 
@@ -72,33 +76,30 @@ const WaffleCard = ({
             <LikeToggle
               onClick={handleClickLikeToggle}
               toggled={
-                user ? waffleCardData?.likeUserIds.includes(user.id) : false
+                user && waffleCardData.likeUserIds
+                  ? waffleCardData.likeUserIds.includes(user.id)
+                  : false
               }
               interactive={!!user}
-              count={waffleCardData?.likeUserIds.length}
+              count={
+                waffleCardData.likeUserIds && waffleCardData.likeUserIds.length
+              }
             />
           </S.InfoContainer>
         )}
         <S.EmojiText>{waffleCardData?.emoji}</S.EmojiText>
         <S.HashTagWrapper>
-          {waffleCardData?.hashTags.map((hashTag, index) => (
-            <S.HashTag size={20} block key={index}>
-              {`#${hashTag}`}
-            </S.HashTag>
-          ))}
+          {waffleCardData &&
+            waffleCardData.hashTags &&
+            waffleCardData.hashTags.map((hashTag, index) => (
+              <S.HashTag size={20} block key={index}>
+                {`#${hashTag}`}
+              </S.HashTag>
+            ))}
         </S.HashTagWrapper>
       </S.Card>
     </S.Container>
   );
-};
-
-WaffleCard.defaultProps = {
-  type: 'basic',
-  waffleCardData: {
-    emoji: '🧇',
-    color: Common.colors.yellow,
-    hashTags: [],
-  },
 };
 
 export default WaffleCard;
