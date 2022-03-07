@@ -14,7 +14,7 @@ const countDaysFromToday = (date: string | Date) => {
 };
 
 interface WaffleCardProps extends React.ComponentProps<'div'> {
-  type?: string;
+  type?: 'basic' | 'plain' | 'my';
   waffleCardData?: WaffleCardType;
   onClickWaffleCard?: (waffleCard: WaffleCardType) => void;
   onClickLikeToggle?: (waffleCardId: string, likeToggled: boolean) => void;
