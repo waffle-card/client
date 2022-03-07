@@ -1,4 +1,3 @@
-import React from 'react';
 import styled from '@emotion/styled';
 import PropTypes from 'prop-types';
 import { userState } from '@/recoils';
@@ -6,6 +5,16 @@ import { useRecoilValue } from 'recoil';
 import { useWaffleCardsState } from '@/contexts';
 import { useIsOverflow } from '@/hooks';
 import { WaffleCard, EmptyCard, LoginGuide, NoCardGuide } from '@/components';
+import { WaffleCardType } from '@/types';
+
+interface WaffleCardsListProps extends React.ComponentProps<'article'> {
+  type?: 'total' | 'my' | 'like';
+  onClickWaffleCard?: (waffleCard: WaffleCardType) => void;
+  onClickWaffleCardCreate?: () => void;
+  onClickWaffleCardEdit?: (waffleCard: WaffleCardType) => void;
+  onClickWaffleCardDelete?: (waffleCardId: string) => void;
+  onClickLikeToggle?: (waffleCardId: string, likeToggled: boolean) => void;
+}
 
 const WaffleCardsList = ({
   type,
@@ -14,14 +23,13 @@ const WaffleCardsList = ({
   onClickWaffleCardEdit,
   onClickWaffleCardDelete,
   onClickLikeToggle,
-  onSubmit,
   ...props
-}) => {
+}: WaffleCardsListProps) => {
   const user = useRecoilValue(userState);
   const waffleCards = useWaffleCardsState();
   const [containerRef, isOverflow] = useIsOverflow();
 
-  const handleClickWaffleCard = waffleCard => {
+  const handleClickWaffleCard = (waffleCard: WaffleCardType) => {
     onClickWaffleCard && onClickWaffleCard(waffleCard);
   };
 
@@ -29,15 +37,18 @@ const WaffleCardsList = ({
     onClickWaffleCardCreate && onClickWaffleCardCreate();
   };
 
-  const handleClickWaffleCardEdit = waffleCard => {
+  const handleClickWaffleCardEdit = (waffleCard: WaffleCardType) => {
     onClickWaffleCardEdit && onClickWaffleCardEdit(waffleCard);
   };
 
-  const handleClickWaffleCardDelete = async waffleCardId => {
+  const handleClickWaffleCardDelete = async (waffleCardId: string) => {
     onClickWaffleCardDelete && onClickWaffleCardDelete(waffleCardId);
   };
 
-  const handleClickLikeToggle = (waffleCardId, likeToggled) => {
+  const handleClickLikeToggle = (
+    waffleCardId: string,
+    likeToggled: boolean,
+  ) => {
     onClickLikeToggle && onClickLikeToggle(waffleCardId, likeToggled);
   };
 
@@ -47,15 +58,15 @@ const WaffleCardsList = ({
         <LoginGuide />
       ) : (
         (() => {
-          if (type === 'my' && waffleCards.length <= 0) {
+          if (type === 'my' && waffleCards && waffleCards.length <= 0) {
             return <EmptyCard onClick={handleClickWaffleCardCreate} />;
           }
-          if (waffleCards.length <= 0) {
+          if (waffleCards && waffleCards.length <= 0) {
             return <NoCardGuide />;
           } else {
             return waffleCards?.map(waffleCard => (
               <StyledWaffleCard
-                type={type}
+                type={type === 'my' ? 'my' : 'basic'}
                 key={waffleCard.id}
                 waffleCardData={waffleCard}
                 onClickWaffleCard={handleClickWaffleCard}
@@ -71,7 +82,7 @@ const WaffleCardsList = ({
   );
 };
 
-const Container = styled.section`
+const Container = styled.article<{ isOverflow: boolean }>`
   display: flex;
   justify-content: ${({ isOverflow }) =>
     isOverflow ? 'flex-start' : 'center'};
