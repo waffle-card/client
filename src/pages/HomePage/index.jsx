@@ -135,7 +135,7 @@ const HomePage = () => {
   );
 };
 
-const Container = styled.div`
+const Container = styled.main`
   position: relative;
   display: flex;
   flex-direction: column;
