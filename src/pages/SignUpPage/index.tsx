@@ -4,15 +4,7 @@ import styled from '@emotion/styled';
 import { useForm } from '@/hooks';
 import { useNavigate } from 'react-router-dom';
 import { Text, Button, Input, BackButton, Spinner } from '@/components';
-import {
-  validateEmailEmpty,
-  validateEmailForm,
-  validateNameEmpty,
-  validateNameLength,
-  validatePasswordEmpty,
-  validatePasswordLength,
-  validatePasswordConfirm,
-} from '@/validators';
+import { formValidator } from '@/utils';
 import { authApi } from '@/apis';
 import Swal from 'sweetalert2';
 
@@ -50,21 +42,22 @@ const SignUpPage = () => {
     },
     validate: ({ email, userName, password, passwordConfirm }) => {
       const errors: { [key: string]: string } = {};
-      if (!validateEmailForm(email)) {
+      if (!formValidator.validateEmailForm(email)) {
         errors.email = '올바른 이메일을 입력해주세요.';
       }
-      if (!validateEmailEmpty(email)) errors.email = '이메일을 입력해주세요.';
-      if (!validateNameEmpty(userName))
+      if (!formValidator.validateEmailEmpty(email))
+        errors.email = '이메일을 입력해주세요.';
+      if (!formValidator.validateNameEmpty(userName))
         errors.userName = '이름을 입력해주세요.';
-      if (!validateNameLength(userName))
+      if (!formValidator.validateNameLength(userName))
         errors.userName = '이름을 10글자 이내로 작성해주세요.';
-      if (!validatePasswordLength(password)) {
+      if (!formValidator.validatePasswordLength(password)) {
         errors.password = '비밀번호를 8자 이상 작성해주세요.';
       }
-      if (!validatePasswordEmpty(password)) {
+      if (!formValidator.validatePasswordEmpty(password)) {
         errors.password = '비밀번호를 입력해주세요.';
       }
-      if (!validatePasswordConfirm(password, passwordConfirm)) {
+      if (!formValidator.validatePasswordConfirm(password, passwordConfirm)) {
         errors.passwordConfirm = '비밀번호가 일치하는지 확인해주세요.';
       }
 
