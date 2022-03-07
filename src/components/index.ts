@@ -19,6 +19,7 @@ export { default as LikeToggle } from './molecule/LikeToggle/LikeToggle';
 export type { LikeToggleProps } from './molecule/LikeToggle/LikeToggle';
 export { default as LoginGuide } from './molecule/LoginGuide/LoginGuide';
 export { default as Modal } from './molecule/Modal/Modal';
+export type { ModalProps } from './molecule/Modal/Modal';
 export { default as NoCardGuide } from './molecule/NoCardGuide/NoCardGuide';
 export { default as ScrollGuide } from './molecule/ScrollGuide/ScrollGuide';
 export { default as Spinner } from './molecule/Spinner/Spinner';

@@ -2,9 +2,8 @@ import styled from '@emotion/styled';
 // import { useClickAway } from '@/hooks';
 import Common from '@/styles';
 import { Portal } from '@/components';
-// import { forwardRef } from 'react';
 
-interface ModalProps extends React.ComponentProps<'div'> {
+export interface ModalProps extends React.ComponentProps<'div'> {
   children?: React.ReactNode;
   visible?: boolean;
   width?: number | string;

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Modal, Text, WaffleCard } from '@/components';
+import { Modal, ModalProps, Text, WaffleCard } from '@/components';
 import styled from '@emotion/styled';
 // import Common from '@/styles';
 
@@ -46,7 +46,7 @@ export const Default = () => {
 //   },
 // };
 
-export const Usage = () => {
+export const Usage = ({ ...args }: ModalProps) => {
   const [visible, setVisible] = useState(false);
 
   const handleClose = () => {
@@ -56,7 +56,7 @@ export const Usage = () => {
   return (
     <div>
       <button onClick={() => setVisible(true)}>Show Modal</button>
-      <StyledModal visible={visible} onClose={handleClose}>
+      <StyledModal visible={visible} onClose={handleClose} {...args}>
         <Text>모달</Text>
         <WaffleCard />
       </StyledModal>
@@ -64,12 +64,12 @@ export const Usage = () => {
   );
 };
 
-export const TestInputInModal = () => {
+export const TestInputInModal = ({ ...args }: ModalProps) => {
   const [state, setState] = useState('');
 
   return (
     <div>
-      <Modal visible>
+      <Modal visible {...args}>
         <Text>모달</Text>
         <input
           type="text"
