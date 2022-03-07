@@ -12,6 +12,7 @@ export type { TextProps } from './atom/Text';
 
 // molecule
 export { default as ColorPicker } from './molecule/ColorPicker/ColorPicker';
+export type { ColorPickerProps } from './molecule/ColorPicker/ColorPicker';
 export { default as EditBox } from './molecule/EditBox/EditBox';
 export { default as LikeToggle } from './molecule/LikeToggle/LikeToggle';
 export { default as LoginGuide } from './molecule/LoginGuide/LoginGuide';
