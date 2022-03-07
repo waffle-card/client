@@ -1,5 +1,6 @@
 // atom
 export { default as BackButton } from './atom/BackButton/BackButton';
+export type { BackButtonProps } from './atom/BackButton/BackButton';
 export { default as Button } from './atom/Button/Button';
 export { default as Input } from './atom/Input/Input';
 export { default as Portal } from './atom/Portal/Portal';
