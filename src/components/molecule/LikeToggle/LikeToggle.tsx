@@ -7,7 +7,8 @@ import FavoriteBorderRoundedIcon from '@mui/icons-material/FavoriteBorderRounded
 import Common from '@/styles';
 import { Text } from '@/components';
 
-interface LikeToggleProps extends Omit<React.ComponentProps<'div'>, 'onClick'> {
+export interface LikeToggleProps
+  extends Omit<React.ComponentProps<'div'>, 'onClick'> {
   toggled?: boolean;
   interactive?: boolean;
   onClick?: (toggled: boolean, count: number) => void;
@@ -24,8 +25,7 @@ const LikeToggle = ({
   const [toggle, setToggle] = useState(toggled);
   const [count, setCount] = useState(initCount);
 
-  // TODO(윤호): any타입 삭제하고 명확한 타입 지정하는 방법 찾아보기
-  const handleClick = (e: any) => {
+  const handleClick = (e: React.MouseEvent) => {
     e.stopPropagation();
 
     if (!interactive) return;

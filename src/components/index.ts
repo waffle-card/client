@@ -16,6 +16,7 @@ export type { ColorPickerProps } from './molecule/ColorPicker/ColorPicker';
 export { default as EditBox } from './molecule/EditBox/EditBox';
 export type { EditBoxProps } from './molecule/EditBox/EditBox';
 export { default as LikeToggle } from './molecule/LikeToggle/LikeToggle';
+export type { LikeToggleProps } from './molecule/LikeToggle/LikeToggle';
 export { default as LoginGuide } from './molecule/LoginGuide/LoginGuide';
 export { default as Modal } from './molecule/Modal/Modal';
 export { default as NoCardGuide } from './molecule/NoCardGuide/NoCardGuide';
