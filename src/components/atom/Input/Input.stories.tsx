@@ -1,9 +1,9 @@
-import { Input } from '@/components';
+import { Input, InputProps } from '@/components';
 
 export default {
   title: 'Component/Atom/Input',
 };
 
-export const Default = () => {
+export const Default = ({ ...args }: InputProps) => {
   return <Input />;
 };
