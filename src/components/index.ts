@@ -6,6 +6,7 @@ export type { ButtonProps } from './atom/Button/Button';
 export { default as Input } from './atom/Input/Input';
 export type { InputProps } from './atom/Input/Input';
 export { default as Portal } from './atom/Portal/Portal';
+export type { PortalProps } from './atom/Portal/Portal';
 export { Text } from './atom/Text';
 export type { TextProps } from './atom/Text';
 
