@@ -35,13 +35,16 @@ const SignUpPage = () => {
       } catch (error: any) {
         Swal.fire({
           title: '🥲',
-          text: error,
+          text:
+            error.message ??
+            '알 수 없는 오류가 발생했습니다. 다시 시도해주세요.',
           confirmButtonColor: Common.colors.point,
         });
       }
     },
     validate: ({ email, userName, password, passwordConfirm }) => {
       const errors: { [key: string]: string } = {};
+
       if (!formValidator.validateEmailForm(email)) {
         errors.email = '올바른 이메일을 입력해주세요.';
       }
@@ -88,8 +91,8 @@ const SignUpPage = () => {
             type="password"
             onChange={handleChange}
           />
+          <StyledText color="red">{errors.passwordConfirm}&nbsp;</StyledText>
         </InputWrapper>
-        <StyledText color="red">{errors.passwordConfirm}&nbsp;</StyledText>
         <StyledButton type="submit">가입하기</StyledButton>
       </ContentContainer>
       <Spinner loading={isLoading} />
