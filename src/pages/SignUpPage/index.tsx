@@ -1,12 +1,11 @@
-import React from 'react';
-import Common from '@/styles';
-import styled from '@emotion/styled';
-import { useForm } from '@/hooks';
-import { useNavigate } from 'react-router-dom';
-import { Text, Button, Input, BackButton, Spinner } from '@/components';
-import { formValidator } from '@/utils';
-import { authApi } from '@/apis';
 import Swal from 'sweetalert2';
+import { useNavigate } from 'react-router-dom';
+import Common from '@/styles';
+import { authApi } from '@/apis';
+import { useForm } from '@/hooks';
+import styled from '@emotion/styled';
+import { formValidator } from '@/utils';
+import { Text, Button, Input, BackButton, Spinner } from '@/components';
 
 const SignUpPage = () => {
   const navigate = useNavigate();
