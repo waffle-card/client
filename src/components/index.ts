@@ -23,6 +23,7 @@ export type { ModalProps } from './molecule/Modal/Modal';
 export { default as NoCardGuide } from './molecule/NoCardGuide/NoCardGuide';
 export { default as ScrollGuide } from './molecule/ScrollGuide/ScrollGuide';
 export { default as Spinner } from './molecule/Spinner/Spinner';
+export type { SpinnerProps } from './molecule/Spinner/Spinner';
 export { default as Tab } from './molecule/Tab/Tab';
 export { default as TabItem } from './molecule/Tab/TabItem';
 
