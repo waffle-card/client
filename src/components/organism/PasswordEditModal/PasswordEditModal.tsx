@@ -3,11 +3,7 @@ import Common from '@/styles';
 import styled from '@emotion/styled';
 import { useForm } from '@/hooks';
 import { Modal, Text, Button, Input, Spinner } from '@/components';
-import {
-  validatePasswordEmpty,
-  validatePasswordLength,
-  validatePasswordConfirm,
-} from '@/validators';
+import { formValidator } from '@/utils';
 
 export interface PasswordEditModalProps {
   visible?: boolean;
@@ -30,27 +26,29 @@ const PasswordEditModal = ({
     validate: ({ newPassword, passwordConfirm }) => {
       const errors: { [key: string]: string } = {};
 
-      if (!validatePasswordEmpty(newPassword)) {
+      if (!formValidator.validatePasswordEmpty(newPassword)) {
         errors.newPassword = '비밀번호를 입력해주세요.';
       }
-      if (!validatePasswordLength(newPassword)) {
+      if (!formValidator.validatePasswordLength(newPassword)) {
         errors.newPassword = '비밀번호를 8자 이상 작성해주세요.';
       }
-      if (!validatePasswordEmpty(newPassword)) {
+      if (!formValidator.validatePasswordEmpty(newPassword)) {
         errors.newPassword = '비밀번호를 입력해주세요.';
       }
 
-      if (!validatePasswordEmpty(passwordConfirm)) {
+      if (!formValidator.validatePasswordEmpty(passwordConfirm)) {
         errors.newPassword = '비밀번호를 입력해주세요.';
       }
-      if (!validatePasswordLength(passwordConfirm)) {
+      if (!formValidator.validatePasswordLength(passwordConfirm)) {
         errors.passwordConfirm = '비밀번호를 8자 이상 작성해주세요.';
       }
-      if (!validatePasswordEmpty(passwordConfirm)) {
+      if (!formValidator.validatePasswordEmpty(passwordConfirm)) {
         errors.passwordConfirm = '비밀번호를 입력해주세요.';
       }
 
-      if (!validatePasswordConfirm(newPassword, passwordConfirm)) {
+      if (
+        !formValidator.validatePasswordConfirm(newPassword, passwordConfirm)
+      ) {
         errors.passwordConfirm = '비밀번호가 일치하는지 확인해주세요.';
       }
 
@@ -62,6 +60,7 @@ const PasswordEditModal = ({
     onClose && onClose();
   };
 
+  // TODO(윤호): 현재 비밀번호 검사 api 구현시 현재 비밀번호 폼 추가하기
   return (
     <>
       <StyledModal visible={visible} onClose={onClose} {...props}>

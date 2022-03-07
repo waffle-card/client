@@ -17,8 +17,8 @@ interface UserApiType {
     name,
     password,
   }: {
-    name: string;
-    password: string;
+    name?: string;
+    password?: string;
   }) => Promise<AxiosResponse>;
 }
 

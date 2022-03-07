@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
-import styled from '@emotion/styled';
+import Swal from 'sweetalert2';
+import { useState } from 'react';
+import { useRecoilState } from 'recoil';
 import { useNavigate } from 'react-router-dom';
 import {
   Text,
@@ -9,10 +10,9 @@ import {
   PasswordEditModal,
 } from '@/components';
 import Common from '@/styles';
-import Swal from 'sweetalert2';
 import { useUser } from '@/hooks';
+import styled from '@emotion/styled';
 import { userState } from '@/recoils';
-import { useRecoilState } from 'recoil';
 import { useWaffleCardsDispatch } from '@/contexts';
 
 const MyPage = () => {
@@ -54,8 +54,13 @@ const MyPage = () => {
     });
   };
 
-  const handleSubmitEditdName = async ({ userName }) => {
+  const handleSubmitEditName = async ({
+    userName,
+  }: {
+    [key: string]: string;
+  }) => {
     try {
+      if (!user) return;
       await updateUser({ name: userName });
       setUser({ ...user, name: userName });
       Swal.fire({
@@ -65,16 +70,21 @@ const MyPage = () => {
       }).then(() => {
         setNameModalVisible(false);
       });
-    } catch (error) {
+    } catch (error: any) {
       Swal.fire({
         title: '🥲',
-        text: error.data,
+        text:
+          error.message ?? '알수 없는 오류가 발생했습니다. 다시 시도해주세요',
         confirmButtonColor: Common.colors.point,
       });
     }
   };
 
-  const handleSubmitEditdPassword = async ({ newPassword }) => {
+  const handleSubmitEditPassword = async ({
+    newPassword,
+  }: {
+    [key: string]: string;
+  }) => {
     try {
       await updateUser({ password: newPassword });
       Swal.fire({
@@ -85,10 +95,11 @@ const MyPage = () => {
         logout();
         navigate('/login');
       });
-    } catch (error) {
+    } catch (error: any) {
       Swal.fire({
         title: '🥲',
-        text: error,
+        text:
+          error.message ?? '알수 없는 오류가 발생했습니다. 다시 시도해주세요',
         confirmButtonColor: Common.colors.point,
       });
     }
@@ -129,14 +140,14 @@ const MyPage = () => {
       <NameEditModal
         userName={user?.name}
         visible={nameModalVisible}
-        onSubmit={handleSubmitEditdName}
+        onSubmit={handleSubmitEditName}
         onClose={() => {
           setNameModalVisible(false);
         }}
       />
       <PasswordEditModal
         visible={passWordModalVisible}
-        onSubmit={handleSubmitEditdPassword}
+        onSubmit={handleSubmitEditPassword}
         onClose={() => {
           setPassWordModalVisible(false);
         }}

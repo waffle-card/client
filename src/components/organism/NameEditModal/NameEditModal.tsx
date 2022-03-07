@@ -3,7 +3,7 @@ import Common from '@/styles';
 import styled from '@emotion/styled';
 import { useForm } from '@/hooks';
 import { Modal, Text, Button, Input, Spinner } from '@/components';
-import { validateNameEmpty, validateNameLength } from '@/validators';
+import { formValidator } from '@/utils';
 
 export interface NameEditModalProps {
   userName?: string;
@@ -27,8 +27,9 @@ const NameEditModal = ({
     validate: ({ userName }) => {
       const errors: { [key: string]: string } = {};
 
-      if (!validateNameEmpty(userName)) errors.userName = '이름을 입력해주세요';
-      if (!validateNameLength(userName))
+      if (!formValidator.validateNameEmpty(userName))
+        errors.userName = '이름을 입력해주세요';
+      if (!formValidator.validateNameLength(userName))
         errors.userName = '이름을 10글자 이내로 작성해주세요';
 
       return errors;

@@ -6,7 +6,7 @@ export default function useModals() {
 
   const openModal = (
     Component: React.ReactElement,
-    props: { [key: string]: string },
+    props: { [key: string]: any },
   ) => {
     open(Component, props);
   };
