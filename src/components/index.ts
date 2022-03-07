@@ -7,8 +7,8 @@ export { default as Input } from './atom/Input/Input';
 export type { InputProps } from './atom/Input/Input';
 export { default as Portal } from './atom/Portal/Portal';
 export type { PortalProps } from './atom/Portal/Portal';
-export { Text } from './atom/Text';
-export type { TextProps } from './atom/Text';
+export { default as Text } from './atom/Text/Text';
+export type { TextProps } from './atom/Text/Text';
 
 // molecule
 export { default as ColorPicker } from './molecule/ColorPicker/ColorPicker';
