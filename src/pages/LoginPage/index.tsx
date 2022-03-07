@@ -6,12 +6,7 @@ import { useForm } from '@/hooks';
 import { useNavigate } from 'react-router-dom';
 import { useUser } from '@/hooks';
 import { Text, Button, Input, BackButton, Spinner } from '@/components';
-import {
-  validateEmailEmpty,
-  validateEmailForm,
-  validatePasswordEmpty,
-  validatePasswordLength,
-} from '@/validators';
+import { formValidator } from '@/utils';
 
 const LoginPage = () => {
   const { login } = useUser();
@@ -43,14 +38,15 @@ const LoginPage = () => {
     validate: ({ email, password }) => {
       const errors: { [key: string]: string } = {};
 
-      if (!validateEmailForm(email)) {
+      if (!formValidator.validateEmailForm(email)) {
         errors.email = '올바른 이메일을 입력해주세요.';
       }
-      if (!validateEmailEmpty(email)) errors.email = '이메일을 입력해주세요.';
-      if (!validatePasswordLength(password)) {
+      if (!formValidator.validateEmailEmpty(email))
+        errors.email = '이메일을 입력해주세요.';
+      if (!formValidator.validatePasswordLength(password)) {
         errors.password = '비밀번호를 8자 이상 작성해주세요.';
       }
-      if (!validatePasswordEmpty(password)) {
+      if (!formValidator.validatePasswordEmpty(password)) {
         errors.password = '비밀번호를 입력해주세요.';
       }
 
