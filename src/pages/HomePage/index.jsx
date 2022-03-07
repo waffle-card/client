@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import styled from '@emotion/styled';
 import Swal from 'sweetalert2';
+import { useEffect, useState } from 'react';
 import { useModals } from '@/hooks';
+import styled from '@emotion/styled';
 import { useWaffleCardsDispatch } from '@/contexts';
 import { waffleCardApi, commentApi, likeApi } from '@/apis';
 import {

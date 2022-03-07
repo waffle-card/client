@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
-import styled from '@emotion/styled';
+import Swal from 'sweetalert2';
+import { useState } from 'react';
+import { useRecoilState } from 'recoil';
 import { useNavigate } from 'react-router-dom';
 import {
   Text,
@@ -9,10 +10,9 @@ import {
   PasswordEditModal,
 } from '@/components';
 import Common from '@/styles';
-import Swal from 'sweetalert2';
 import { useUser } from '@/hooks';
+import styled from '@emotion/styled';
 import { userState } from '@/recoils';
-import { useRecoilState } from 'recoil';
 import { useWaffleCardsDispatch } from '@/contexts';
 
 const MyPage = () => {

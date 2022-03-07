@@ -1,12 +1,11 @@
-import React from 'react';
-import Common from '@/styles';
-import styled from '@emotion/styled';
 import Swal from 'sweetalert2';
-import { useForm } from '@/hooks';
 import { useNavigate } from 'react-router-dom';
+import Common from '@/styles';
+import { useForm } from '@/hooks';
 import { useUser } from '@/hooks';
-import { Text, Button, Input, BackButton, Spinner } from '@/components';
+import styled from '@emotion/styled';
 import { formValidator } from '@/utils';
+import { Text, Button, Input, BackButton, Spinner } from '@/components';
 
 const LoginPage = () => {
   const { login } = useUser();
