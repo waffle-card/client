@@ -1,26 +1,26 @@
-import { Button } from '@/components';
+import { Button, ButtonProps } from '@/components';
 
 export default {
   title: 'Component/Atom/Button',
   component: Button,
 };
 
-export const Default = () => {
+export const Default = ({ ...args }: ButtonProps) => {
   return (
     <>
-      <Button>가입하기</Button>
+      <Button {...args}>가입하기</Button>
       <br />
-      <Button>입장하기</Button>
+      <Button {...args}>입장하기</Button>
     </>
   );
 };
 
-export const Custom = () => {
+export const Custom = ({ ...args }: ButtonProps) => {
   return (
     <>
-      <Button>가입하기</Button>
+      <Button {...args}>가입하기</Button>
       <br />
-      <Button>입장하기</Button>
+      <Button {...args}>입장하기</Button>
     </>
   );
 };

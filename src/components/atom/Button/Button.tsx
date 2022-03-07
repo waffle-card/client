@@ -1,8 +1,6 @@
 import styled from '@emotion/styled';
-// import PropTypes from 'prop-types';
 import Common from '@/styles';
-
-interface ButtonProps extends React.ComponentProps<'button'> {
+export interface ButtonProps extends React.ComponentProps<'button'> {
   children?: React.ReactNode;
   width?: string | number;
   height?: string | number;
