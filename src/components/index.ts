@@ -24,10 +24,10 @@ export { default as ChattingCardModal } from './organism/ChattingCardModal/Chatt
 export { default as GuideSlider } from './organism/GuideSlider/GuideSlider';
 export { default as Header } from './organism/Header/Header';
 export { default as Modals } from './organism/Modals/Modals';
-export { NameEditModal } from './organism/NameEditModal';
-export type { NameEditModalProps } from './organism/NameEditModal';
-export { PasswordEditModal } from './organism/PasswordEditModal';
-export type { PasswordEditModalProps } from './organism/PasswordEditModal';
+export { default as NameEditModal } from './organism/NameEditModal/NameEditModal';
+export type { NameEditModalProps } from './organism/NameEditModal/NameEditModal';
+export { default as PasswordEditModal } from './organism/PasswordEditModal/PasswordEditModal';
+export type { PasswordEditModalProps } from './organism/PasswordEditModal/PasswordEditModal';
 export { default as WaffleCard } from './organism/WaffleCard/WaffleCard';
 export { default as EmptyCard } from './organism/WaffleCard/EmptyCard';
 export { default as WaffleCardsList } from './organism/WaffleCardsList/WaffleCardsList';
