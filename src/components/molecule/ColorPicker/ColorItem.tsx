@@ -2,7 +2,7 @@ import React from 'react';
 import styled from '@emotion/styled';
 import Common from '@/styles';
 
-interface ColorItemProps extends React.ComponentProps<'label'> {
+export interface ColorItemProps extends React.ComponentProps<'label'> {
   color?: string;
 }
 

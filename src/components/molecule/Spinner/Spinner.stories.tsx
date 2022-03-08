@@ -1,4 +1,4 @@
-import { Spinner } from '@/components';
+import { Spinner, SpinnerProps } from '@/components';
 import Common from '@/styles';
 import { useState } from 'react';
 
@@ -24,7 +24,7 @@ Default.argTypes = {
   },
 };
 
-export const Usage = () => {
+export const Usage = ({ ...args }: SpinnerProps) => {
   const [loading, setLoading] = useState(false);
 
   const handleClick = () => {
@@ -37,7 +37,7 @@ export const Usage = () => {
     <>
       <button onClick={handleClick}>이것은 버튼</button>
       <h1>이것은 헤더</h1>
-      <Spinner loading={loading} />
+      <Spinner loading={loading} {...args} />
     </>
   );
 };

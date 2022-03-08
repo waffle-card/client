@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import * as S from './EditBox.style';
 
-interface EditBoxProps extends React.ComponentProps<'div'> {
+export interface EditBoxProps extends React.ComponentProps<'div'> {
   backgroundColor?: string;
   fontColor?: string;
   onClickUpdate?: (e: React.MouseEvent) => void;

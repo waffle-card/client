@@ -2,9 +2,8 @@ import styled from '@emotion/styled';
 // import { useClickAway } from '@/hooks';
 import Common from '@/styles';
 import { Portal } from '@/components';
-// import { forwardRef } from 'react';
 
-interface ModalProps extends React.ComponentProps<'div'> {
+export interface ModalProps extends React.ComponentProps<'div'> {
   children?: React.ReactNode;
   visible?: boolean;
   width?: number | string;
@@ -22,7 +21,7 @@ const Modal = ({
   onClose,
   ...props
 }: ModalProps) => {
-  //TODO(윤호): 모달에서 Swal 사용으로 인해 모달이 닫히는 현상떄문에 클릭어웨이 제거, 다른방식이 있는지 고민해보기
+  //TODO(윤호): 모달에서 Swal 사용으로 모달이 닫히는 현상 발생하여 클릭어웨이 제거, 다른방식이 있는지 고민해보기
   // const ref = useClickAway(() => {
   //   onClose && onClose();
   // });

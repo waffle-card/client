@@ -18,16 +18,15 @@ const WaffleCardsList = ({
   onClickWaffleCardEdit,
   onClickWaffleCardDelete,
   onClickLikeToggle,
-  onSubmit,
   ...props
-}) => {
+}: WaffleCardsListProps) => {
   const user = useRecoilValue(userState);
   const waffleCards = useWaffleCardsState();
   const [containerRef, isOverflow] = useIsOverflow();
   const [isPlayMove, setIsPlayMove] = useState(true);
   const containerDom = containerRef.current;
 
-  const handleClickWaffleCard = waffleCard => {
+  const handleClickWaffleCard = (waffleCard: WaffleCardType) => {
     onClickWaffleCard && onClickWaffleCard(waffleCard);
   };
 
@@ -35,15 +34,18 @@ const WaffleCardsList = ({
     onClickWaffleCardCreate && onClickWaffleCardCreate();
   };
 
-  const handleClickWaffleCardEdit = waffleCard => {
+  const handleClickWaffleCardEdit = (waffleCard: WaffleCardType) => {
     onClickWaffleCardEdit && onClickWaffleCardEdit(waffleCard);
   };
 
-  const handleClickWaffleCardDelete = async waffleCardId => {
+  const handleClickWaffleCardDelete = async (waffleCardId: string) => {
     onClickWaffleCardDelete && onClickWaffleCardDelete(waffleCardId);
   };
 
-  const handleClickLikeToggle = (waffleCardId, likeToggled) => {
+  const handleClickLikeToggle = (
+    waffleCardId: string,
+    likeToggled: boolean,
+  ) => {
     onClickLikeToggle && onClickLikeToggle(waffleCardId, likeToggled);
   };
 

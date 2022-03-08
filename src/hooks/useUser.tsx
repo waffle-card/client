@@ -19,7 +19,7 @@ const useUser = () => {
     serUser(null);
   };
 
-  const updateUser = async (userInfo: { name: string; password: string }) => {
+  const updateUser = async (userInfo: { name?: string; password?: string }) => {
     await authApi.updateUser({ ...userInfo });
   };
 

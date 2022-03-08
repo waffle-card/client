@@ -4,7 +4,7 @@ import Common from '@/styles';
 import styled from '@emotion/styled';
 import { Portal } from '@/components';
 
-interface SpinnerProps {
+export interface SpinnerProps {
   loading?: boolean;
   size?: number;
   color?: string;
