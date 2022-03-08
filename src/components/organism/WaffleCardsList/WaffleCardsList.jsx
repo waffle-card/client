@@ -4,10 +4,12 @@ import PropTypes from 'prop-types';
 import { userState } from '@/recoils';
 import { useRecoilValue } from 'recoil';
 import { useWaffleCardsState } from '@/contexts';
+import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { useIsOverflow, useInterval } from '@/hooks';
 import { WaffleCard, EmptyCard, LoginGuide, NoCardGuide } from '@/components';
-import ScrollButtons from './ScrollButtons';
 import { css } from '@emotion/react';
+import Common from '@/styles';
 
 const WaffleCardsList = ({
   type,
@@ -47,6 +49,7 @@ const WaffleCardsList = ({
 
   const handleClickFrontButton = () => {
     containerDom.scrollLeft = 0;
+    setIsPlayMove(true);
   };
 
   const handleClickBackButton = () => {
@@ -69,10 +72,18 @@ const WaffleCardsList = ({
   );
 
   return (
-    <>
-      <ScrollButtons
-        onClickFrontButton={handleClickFrontButton}
-        onClickBackButton={handleClickBackButton}
+    <StyledDiv>
+      <PrevIcon
+        onClick={handleClickFrontButton}
+        onMouseOver={() => {
+          setIsPlayMove(false);
+        }}
+      />
+      <NextIcon
+        onClick={handleClickBackButton}
+        onMouseOver={() => {
+          setIsPlayMove(false);
+        }}
       />
       <Container
         ref={containerRef}
@@ -111,9 +122,44 @@ const WaffleCardsList = ({
           })()
         )}
       </Container>
-    </>
+    </StyledDiv>
   );
 };
+
+const StyledDiv = styled.div`
+  position: relative;
+`;
+
+const moveIconStyle = css`
+  position: absolute;
+  top: 45%;
+  box-sizing: content-box;
+  padding: 1rem;
+  font-size: 2.7rem;
+  border-radius: 50px;
+  color: ${Common.colors.point};
+  background-color: rgba(255, 255, 255, 0.2);
+  transition: all 0.4s ease;
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 0 2px 5px rgb(255, 255, 255, 0.2);
+  }
+  @media ${Common.media.sm} {
+    padding: 0.5rem;
+    font-size: 2rem;
+  }
+  z-index: 2;
+`;
+
+const PrevIcon = styled(ArrowBackIosNewIcon)`
+  ${moveIconStyle}
+  left: 3%;
+`;
+
+const NextIcon = styled(ArrowForwardIosIcon)`
+  ${moveIconStyle}
+  right: 3%;
+`;
 
 const Container = styled.section`
   ${({ type }) => {
@@ -133,6 +179,7 @@ const Container = styled.section`
   padding-top: 2rem;
   margin: 4rem 0;
   overflow-x: auto;
+  transition: all 0.4s ease;
   -ms-overflow-style: none;
   ::-webkit-scrollbar {
     display: none;

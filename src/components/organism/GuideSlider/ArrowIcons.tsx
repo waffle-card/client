@@ -6,7 +6,6 @@ import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import Common from '@/styles';
 
 interface ArrowIconsProps extends React.ComponentProps<'div'> {
-  width?: number | string;
   visiblePrev?: boolean;
   visibleNext?: boolean;
   onClickPrev?: () => number | void;
@@ -14,7 +13,6 @@ interface ArrowIconsProps extends React.ComponentProps<'div'> {
 }
 
 const ArrowIcons = ({
-  width = '100%',
   visiblePrev = true,
   visibleNext = true,
   onClickPrev,
@@ -22,7 +20,7 @@ const ArrowIcons = ({
   ...props
 }: ArrowIconsProps): JSX.Element => {
   return (
-    <IconsContainer width={width} {...props}>
+    <IconsContainer {...props}>
       <PrevIcon onClick={onClickPrev} visiblePrev={visiblePrev} />
       <NextIcon onClick={onClickNext} visibleNext={visibleNext} />
     </IconsContainer>
@@ -34,7 +32,7 @@ const IconsContainer = styled.div<ArrowIconsProps>`
   position: absolute;
   top: 50%;
   transform: translateY(-20%);
-  width: ${({ width }) => (typeof width === 'number' ? `${width}px` : width)};
+  width: 80%;
   display: flex;
   justify-content: space-between;
   @media ${Common.media.md} {
@@ -43,6 +41,7 @@ const IconsContainer = styled.div<ArrowIconsProps>`
   @media ${Common.media.sm} {
     width: 90%;
   }
+  z-index: 2;
 `;
 
 const moveIconStyle = css`
