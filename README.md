@@ -16,7 +16,7 @@ https://waffle-card.com/
 
 ### 👨‍👩‍👧‍👧 협업 툴
 [협업 문서 - 노션](https://www.notion.so/1-89d2f90de1f244fda71d7b8bcb1fe119)
-[이슈 관리 - 지라] (https://wafflecard.atlassian.net/jira/software/projects/WC/boards/2)
+[이슈 관리 - 지라](https://wafflecard.atlassian.net/jira/software/projects/WC/boards/2)
 
 <br />
 
