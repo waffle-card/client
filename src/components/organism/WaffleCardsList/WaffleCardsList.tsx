@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useContext, useEffect, useCallback } from 'react';
 import styled from '@emotion/styled';
 import PropTypes from 'prop-types';
 import { userState } from '@/recoils';
 import { useRecoilValue } from 'recoil';
-import { useWaffleCardsState } from '@/contexts';
+import { useWaffleCardsState, ModalsIsOpenContext } from '@/contexts';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { useIsOverflow, useInterval } from '@/hooks';
@@ -33,8 +33,10 @@ const WaffleCardsList = ({
   const user = useRecoilValue(userState);
   const waffleCards = useWaffleCardsState();
   const [containerRef, isOverflow] = useIsOverflow();
-  const [isPlayMove, setIsPlayMove] = useState(true);
+
   const containerDom = containerRef.current;
+  const [isPlayMove, setIsPlayMove] = useState(true);
+  const isOpen = useContext(ModalsIsOpenContext);
 
   const handleClickWaffleCard = (waffleCard: WaffleCardType) => {
     onClickWaffleCard && onClickWaffleCard(waffleCard);
@@ -59,12 +61,12 @@ const WaffleCardsList = ({
     onClickLikeToggle && onClickLikeToggle(waffleCardId, likeToggled);
   };
 
-  const handleClickFrontButton = () => {
+  const handleClickFrontButton = useCallback(() => {
     if (containerDom instanceof Element) {
       containerDom.scrollLeft = 0;
       setIsPlayMove(true);
     }
-  };
+  }, [containerDom]);
 
   const handleClickBackButton = () => {
     if (containerDom instanceof Element) {
@@ -87,6 +89,14 @@ const WaffleCardsList = ({
     15,
     isPlayMove,
   );
+
+  useEffect(() => {
+    isOpen ? setIsPlayMove(false) : setIsPlayMove(true);
+  }, [isOpen]);
+
+  useEffect(() => {
+    handleClickFrontButton();
+  }, [handleClickFrontButton, type]);
 
   return (
     <StyledDiv>
