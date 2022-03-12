@@ -4,9 +4,9 @@ import { useModals } from '@/hooks';
 import styled from '@emotion/styled';
 import { useWaffleCardsDispatch } from '@/contexts';
 import { waffleCardApi, commentApi, likeApi } from '@/apis';
+import { useLoadingDispatch } from '@/contexts';
 import {
   Tab,
-  Spinner,
   WaffleCardsList,
   ScrollGuide,
   Modals,
@@ -17,11 +17,11 @@ import {
 const HomePage = () => {
   const { openModal } = useModals();
   const [tabValue, setTabValue] = useState('total');
-  const [isLoading, setIsLoading] = useState(false);
+  const setLoading = useLoadingDispatch();
   const { setWaffleCardsByType, refreshWaffleCards } = useWaffleCardsDispatch();
 
   const handleClickWaffleCard = async waffleCard => {
-    setIsLoading(true);
+    setLoading(true);
 
     try {
       const response = await commentApi.getCommentsByWaffleCardId(
@@ -44,7 +44,7 @@ const HomePage = () => {
       });
     }
 
-    setIsLoading(false);
+    setLoading(false);
   };
 
   const handleClickWaffleCardCreate = async () => {
@@ -78,10 +78,10 @@ const HomePage = () => {
     }).then(async result => {
       if (result.isConfirmed) {
         try {
-          setIsLoading(true);
+          setLoading(true);
           await waffleCardApi.deleteWaffleCard(waffleCardId);
           await refreshWaffleCards(tabValue);
-          setIsLoading(false);
+          setLoading(false);
         } catch (error) {
           console.error(
             `in ChattingCardModal : 댓글 삭제 실패 - ${error.message}`,
@@ -109,13 +109,13 @@ const HomePage = () => {
 
   useEffect(() => {
     const initWaffleCardsByType = async () => {
-      setIsLoading(true);
+      setLoading(true);
       await setWaffleCardsByType(tabValue, { cached: true });
-      setIsLoading(false);
+      setLoading(false);
     };
 
     initWaffleCardsByType();
-  }, [setWaffleCardsByType, tabValue]);
+  }, [setLoading, setWaffleCardsByType, tabValue]);
 
   return (
     <Container>
@@ -128,7 +128,6 @@ const HomePage = () => {
         onClickWaffleCardDelete={handleClickWaffleCardDelete}
         onClickLikeToggle={handleClickLikeToggle}
       />
-      <Spinner loading={isLoading} />
       <Modals />
       {tabValue === 'total' && <ScrollGuide />}
     </Container>
