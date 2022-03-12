@@ -1,3 +1,4 @@
+// TODO(윤호): ThemeProvider로 모두 전환시 삭제하기
 export default {
   colors: {
     point: 'rgba(255, 208, 57, 1)',
@@ -90,3 +91,10 @@ export default {
     lg: '(min-width: 1201px)',
   },
 };
+
+export { colors } from './colors';
+export * as font from './font';
+export { media } from './media';
+export { default as GlobalStyle } from './GlobalStyle';
+export { default as theme } from './theme';
+export type { ThemeType } from './theme';
