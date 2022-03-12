@@ -89,7 +89,6 @@ const LoginPage = () => {
           가입하기
         </StyledButton>
       </ContentContainer>
-      {/* <Spinner loading={isLoading} /> */}
     </Container>
   );
 };
