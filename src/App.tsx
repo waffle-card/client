@@ -3,7 +3,11 @@ import Router from './routes/Router';
 import { RecoilRoot } from 'recoil';
 import { GlobalStyle } from '@/styles';
 import { Header, Spinner } from '@/components';
-import { ModalsProvider, WaffleCardsProvider } from '@/contexts';
+import {
+  ModalsProvider,
+  WaffleCardsProvider,
+  LoadingProvider,
+} from '@/contexts';
 
 function App() {
   return (
@@ -11,11 +15,13 @@ function App() {
       <Suspense fallback={<Spinner loading />}>
         <GlobalStyle />
         <Header />
-        <ModalsProvider>
-          <WaffleCardsProvider>
-            <Router />
-          </WaffleCardsProvider>
-        </ModalsProvider>
+        <LoadingProvider>
+          <ModalsProvider>
+            <WaffleCardsProvider>
+              <Router />
+            </WaffleCardsProvider>
+          </ModalsProvider>
+        </LoadingProvider>
       </Suspense>
     </RecoilRoot>
   );

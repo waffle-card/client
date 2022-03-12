@@ -8,3 +8,8 @@ export {
   useWaffleCardsState,
   useWaffleCardsDispatch,
 } from './waffleCards/waffleCardsProvider';
+export {
+  LoadingProvider,
+  useLoadingState,
+  useLoadingDispatch,
+} from './loading/loadingProvider';
