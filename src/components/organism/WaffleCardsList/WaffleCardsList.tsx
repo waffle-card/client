@@ -1,12 +1,12 @@
-import React, { useState, useContext, useEffect, useCallback } from 'react';
+import React from 'react';
 import styled from '@emotion/styled';
 import PropTypes from 'prop-types';
 import { userState } from '@/recoils';
 import { useRecoilValue } from 'recoil';
-import { useWaffleCardsState, ModalsIsOpenContext } from '@/contexts';
+import { useWaffleCardsState } from '@/contexts';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import { useIsOverflow, useInterval } from '@/hooks';
+import { useIsOverflow, useScrollAnimation } from '@/hooks';
 import { WaffleCard, EmptyCard, LoginGuide, NoCardGuide } from '@/components';
 import { css } from '@emotion/react';
 import Common from '@/styles';
@@ -33,10 +33,9 @@ const WaffleCardsList = ({
   const user = useRecoilValue(userState);
   const waffleCards = useWaffleCardsState();
   const [containerRef, isOverflow] = useIsOverflow();
-
   const containerDom = containerRef.current;
-  const [isPlayMove, setIsPlayMove] = useState(true);
-  const isOpen = useContext(ModalsIsOpenContext);
+  const [handleClickFrontButton, handleClickBackButton, setIsPlayMove] =
+    useScrollAnimation({ containerDom, resetDep: type });
 
   const handleClickWaffleCard = (waffleCard: WaffleCardType) => {
     onClickWaffleCard && onClickWaffleCard(waffleCard);
@@ -60,43 +59,6 @@ const WaffleCardsList = ({
   ) => {
     onClickLikeToggle && onClickLikeToggle(waffleCardId, likeToggled);
   };
-
-  const handleClickFrontButton = useCallback(() => {
-    if (containerDom instanceof Element) {
-      containerDom.scrollLeft = 0;
-      setIsPlayMove(true);
-    }
-  }, [containerDom]);
-
-  const handleClickBackButton = () => {
-    if (containerDom instanceof Element) {
-      containerDom.scrollLeft = containerDom.scrollWidth;
-    }
-  };
-
-  useInterval(
-    () => {
-      if (containerDom instanceof Element) {
-        const { scrollLeft, clientWidth } = containerDom;
-        const scrolledWidth = Math.ceil(scrollLeft + clientWidth);
-        const isRenderedCards = scrolledWidth > containerDom.clientWidth;
-        const isFinishScroll = scrolledWidth === containerDom.scrollWidth;
-
-        isRenderedCards && isFinishScroll && setIsPlayMove(false);
-        containerDom.scrollLeft += 1;
-      }
-    },
-    15,
-    isPlayMove,
-  );
-
-  useEffect(() => {
-    isOpen ? setIsPlayMove(false) : setIsPlayMove(true);
-  }, [isOpen]);
-
-  useEffect(() => {
-    handleClickFrontButton();
-  }, [handleClickFrontButton, type]);
 
   return (
     <StyledDiv>
