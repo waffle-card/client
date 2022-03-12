@@ -10,6 +10,16 @@ import { useIsOverflow, useInterval } from '@/hooks';
 import { WaffleCard, EmptyCard, LoginGuide, NoCardGuide } from '@/components';
 import { css } from '@emotion/react';
 import Common from '@/styles';
+import { WaffleCardType } from '@/types';
+
+interface WaffleCardsListProps extends React.ComponentProps<'article'> {
+  type?: 'total' | 'my' | 'like';
+  onClickWaffleCard?: (waffleCard: WaffleCardType) => void;
+  onClickWaffleCardCreate?: () => void;
+  onClickWaffleCardEdit?: (waffleCard: WaffleCardType) => void;
+  onClickWaffleCardDelete?: (waffleCardId: string) => void;
+  onClickLikeToggle?: (waffleCardId: string, likeToggled: boolean) => void;
+}
 
 const WaffleCardsList = ({
   type,
@@ -50,27 +60,32 @@ const WaffleCardsList = ({
   };
 
   const handleClickFrontButton = () => {
-    containerDom.scrollLeft = 0;
-    setIsPlayMove(true);
+    if (containerDom instanceof Element) {
+      containerDom.scrollLeft = 0;
+      setIsPlayMove(true);
+    }
   };
 
   const handleClickBackButton = () => {
-    containerDom.scrollLeft = containerDom.scrollWidth;
+    if (containerDom instanceof Element) {
+      containerDom.scrollLeft = containerDom.scrollWidth;
+    }
   };
 
   useInterval(
     () => {
-      const { scrollLeft, clientWidth } = containerDom;
-      const scrolledWidth = Math.ceil(scrollLeft + clientWidth);
-      const isRenderedCards = scrolledWidth > containerDom.clientWidth;
-      const isFinishScroll = scrolledWidth === containerDom.scrollWidth;
+      if (containerDom instanceof Element) {
+        const { scrollLeft, clientWidth } = containerDom;
+        const scrolledWidth = Math.ceil(scrollLeft + clientWidth);
+        const isRenderedCards = scrolledWidth > containerDom.clientWidth;
+        const isFinishScroll = scrolledWidth === containerDom.scrollWidth;
 
-      isRenderedCards && isFinishScroll && setIsPlayMove(false);
-      containerDom.scrollLeft += 1;
+        isRenderedCards && isFinishScroll && setIsPlayMove(false);
+        containerDom.scrollLeft += 1;
+      }
     },
     15,
     isPlayMove,
-    type,
   );
 
   return (
@@ -103,15 +118,15 @@ const WaffleCardsList = ({
           <LoginGuide />
         ) : (
           (() => {
-            if (type === 'my' && waffleCards.length <= 0) {
+            if (type === 'my' && waffleCards && waffleCards.length <= 0) {
               return <EmptyCard onClick={handleClickWaffleCardCreate} />;
             }
-            if (waffleCards.length <= 0) {
+            if (waffleCards && waffleCards.length <= 0) {
               return <NoCardGuide />;
             } else {
               return waffleCards?.map(waffleCard => (
                 <StyledWaffleCard
-                  type={type}
+                  type={type === 'my' ? 'my' : 'basic'}
                   key={waffleCard.id}
                   waffleCardData={waffleCard}
                   onClickWaffleCard={handleClickWaffleCard}
@@ -163,7 +178,10 @@ const NextIcon = styled(ArrowForwardIosIcon)`
   right: 3%;
 `;
 
-const Container = styled.section`
+const Container = styled.article<{
+  isOverflow: boolean;
+  type?: 'total' | 'my' | 'like';
+}>`
   ${({ type }) => {
     if (type === 'my') {
       return css`
