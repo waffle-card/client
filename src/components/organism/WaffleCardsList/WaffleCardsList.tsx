@@ -34,10 +34,10 @@ const WaffleCardsList = ({
   const waffleCards = useWaffleCardsState();
   const [containerRef, isOverflow] = useIsOverflow();
   const [setIsPlayMove, moveScrollToFront, moveScrollToBack] =
-    useScrollAnimation<'total' | 'my' | 'like' | undefined>({
-      containerDom: containerRef.current,
-      deps: [type],
-    });
+    useScrollAnimation<'total' | 'my' | 'like' | undefined>(
+      containerRef.current,
+      [type],
+    );
 
   const handleClickWaffleCard = (waffleCard: WaffleCardType) => {
     onClickWaffleCard && onClickWaffleCard(waffleCard);

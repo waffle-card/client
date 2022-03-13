@@ -2,16 +2,12 @@ import { useState, useContext, useEffect, useCallback } from 'react';
 import { ModalsStateContext } from '@/contexts';
 import { useInterval } from '@/hooks';
 
-interface UseScrollAnimationArgs<T> {
-  containerDom: HTMLElement | null;
-  deps: T[];
-}
 type ReturnTypes = [(on: boolean) => void, () => void, () => void];
 
-const useScrollAnimation = <T,>({
-  containerDom,
-  deps,
-}: UseScrollAnimationArgs<T>): ReturnTypes => {
+const useScrollAnimation = <T,>(
+  containerDom: HTMLElement | null,
+  deps: T[],
+): ReturnTypes => {
   const [isPlayMove, setIsPlayMove] = useState(true);
   const openedModals = useContext(ModalsStateContext);
   const [type] = deps;
