@@ -33,9 +33,11 @@ const WaffleCardsList = ({
   const user = useRecoilValue(userState);
   const waffleCards = useWaffleCardsState();
   const [containerRef, isOverflow] = useIsOverflow();
-  const containerDom = containerRef.current;
-  const [setIsPlayMove, handleClickFrontButton, handleClickBackButton] =
-    useScrollAnimation<'total' | 'my' | 'like' | undefined>(containerDom, type);
+  const [setIsPlayMove, moveScrollToFront, moveScrollToBack] =
+    useScrollAnimation({
+      containerDom: containerRef.current,
+      resetDep: [type],
+    });
 
   const handleClickWaffleCard = (waffleCard: WaffleCardType) => {
     onClickWaffleCard && onClickWaffleCard(waffleCard);
@@ -63,13 +65,13 @@ const WaffleCardsList = ({
   return (
     <StyledDiv>
       <PrevIcon
-        onClick={handleClickFrontButton}
+        onClick={moveScrollToFront}
         onMouseOver={() => {
           setIsPlayMove(false);
         }}
       />
       <NextIcon
-        onClick={handleClickBackButton}
+        onClick={moveScrollToBack}
         onMouseOver={() => {
           setIsPlayMove(false);
         }}

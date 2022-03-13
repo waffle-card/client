@@ -3,38 +3,41 @@ import { ModalsStateContext } from '@/contexts';
 import { useInterval } from '@/hooks';
 
 type ReturnTypes = [(on: boolean) => void, () => void, () => void];
+interface UseScrollAnimationArgs {
+  containerDom: HTMLElement | null;
+  resetDep: ['total' | 'my' | 'like' | undefined];
+}
 
-const useScrollAnimation = <ResetDepType,>(
-  containerDom: HTMLElement | null,
-  resetDep: ResetDepType,
-): ReturnTypes => {
+const useScrollAnimation = ({
+  containerDom,
+  resetDep,
+}: UseScrollAnimationArgs): ReturnTypes => {
   const [isPlayMove, setIsPlayMove] = useState(true);
   const openedModals = useContext(ModalsStateContext);
+  const [type] = resetDep;
 
-  const handleClickFrontButton = useCallback(() => {
-    if (containerDom instanceof Element) {
-      containerDom.scrollLeft = 0;
-      setIsPlayMove(true);
-    }
+  const moveScrollToFront = useCallback(() => {
+    if (!(containerDom instanceof Element)) return;
+    containerDom.scrollLeft = 0;
+    setIsPlayMove(true);
   }, [containerDom]);
 
-  const handleClickBackButton = useCallback(() => {
-    if (containerDom instanceof Element) {
-      containerDom.scrollLeft = containerDom.scrollWidth;
-    }
+  const moveScrollToBack = useCallback(() => {
+    if (!(containerDom instanceof Element)) return;
+    containerDom.scrollLeft = containerDom.scrollWidth;
   }, [containerDom]);
 
   useInterval(
     () => {
-      if (containerDom instanceof Element) {
-        const { scrollLeft, clientWidth } = containerDom;
-        const scrolledWidth = Math.ceil(scrollLeft + clientWidth);
-        const isRenderedCards = scrolledWidth > containerDom.clientWidth;
-        const isFinishScroll = scrolledWidth === containerDom.scrollWidth;
+      if (!(containerDom instanceof Element)) return;
 
-        isRenderedCards && isFinishScroll && setIsPlayMove(false);
-        containerDom.scrollLeft += 1;
-      }
+      const { scrollLeft, clientWidth } = containerDom;
+      const scrolledWidth = Math.ceil(scrollLeft + clientWidth);
+      const isRenderedCards = scrolledWidth > containerDom.clientWidth;
+      const isFinishScroll = scrolledWidth === containerDom.scrollWidth;
+
+      isRenderedCards && isFinishScroll && setIsPlayMove(false);
+      containerDom.scrollLeft += 1;
     },
     15,
     isPlayMove,
@@ -45,10 +48,10 @@ const useScrollAnimation = <ResetDepType,>(
   }, [openedModals.length]);
 
   useEffect(() => {
-    handleClickFrontButton();
-  }, [handleClickFrontButton, resetDep]);
+    moveScrollToFront();
+  }, [moveScrollToFront, type]);
 
-  return [setIsPlayMove, handleClickFrontButton, handleClickBackButton];
+  return [setIsPlayMove, moveScrollToFront, moveScrollToBack];
 };
 
 export default useScrollAnimation;

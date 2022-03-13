@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 
-function useInterval(callback: () => void, delay: number, play: boolean) {
+const useInterval = (callback: () => void, delay: number, play: boolean) => {
   const savedCallback: React.MutableRefObject<(() => void) | undefined> =
     useRef();
 
@@ -20,6 +20,6 @@ function useInterval(callback: () => void, delay: number, play: boolean) {
       return () => clearInterval(id);
     }
   }, [delay, play]);
-}
+};
 
 export default useInterval;
