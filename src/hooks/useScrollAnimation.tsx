@@ -2,19 +2,19 @@ import { useState, useContext, useEffect, useCallback } from 'react';
 import { ModalsStateContext } from '@/contexts';
 import { useInterval } from '@/hooks';
 
-type ReturnTypes = [(on: boolean) => void, () => void, () => void];
-interface UseScrollAnimationArgs {
+interface UseScrollAnimationArgs<T> {
   containerDom: HTMLElement | null;
-  resetDep: ['total' | 'my' | 'like' | undefined];
+  deps: T[];
 }
+type ReturnTypes = [(on: boolean) => void, () => void, () => void];
 
-const useScrollAnimation = ({
+const useScrollAnimation = <T,>({
   containerDom,
-  resetDep,
-}: UseScrollAnimationArgs): ReturnTypes => {
+  deps,
+}: UseScrollAnimationArgs<T>): ReturnTypes => {
   const [isPlayMove, setIsPlayMove] = useState(true);
   const openedModals = useContext(ModalsStateContext);
-  const [type] = resetDep;
+  const [type] = deps;
 
   const moveScrollToFront = useCallback(() => {
     if (!(containerDom instanceof Element)) return;
