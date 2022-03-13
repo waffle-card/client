@@ -2,17 +2,12 @@ import { useState, useContext, useEffect, useCallback } from 'react';
 import { ModalsIsOpenContext } from '@/contexts';
 import { useInterval } from '@/hooks';
 
-interface UseScrollAnimationProps {
-  containerDom: HTMLElement | null;
-  resetDep: 'total' | 'my' | 'like' | undefined;
-}
-
 type ReturnTypes = [(on: boolean) => void, () => void, () => void];
 
-const useScrollAnimation = ({
-  containerDom,
-  resetDep,
-}: UseScrollAnimationProps): ReturnTypes => {
+const useScrollAnimation = <ResetDepType,>(
+  containerDom: HTMLElement | null,
+  resetDep: ResetDepType,
+): ReturnTypes => {
   const [isPlayMove, setIsPlayMove] = useState(true);
   const isOpen = useContext(ModalsIsOpenContext);
 
