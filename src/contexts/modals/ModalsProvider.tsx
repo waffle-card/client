@@ -20,11 +20,8 @@ export const ModalsDispatchContext = createContext<{
 
 export const ModalsStateContext = createContext<ModalsStateType[]>([]);
 
-export const ModalsIsOpenContext = createContext<boolean>(false);
-
 const ModalsProvider = ({ children }: ModalsProviderProps) => {
   const [openedModals, setOpenedModals] = useState<ModalsStateType[]>([]);
-  const [isOpen, setIsOpen] = useState(false);
 
   const open = (
     Component: React.ReactElement,
@@ -33,14 +30,12 @@ const ModalsProvider = ({ children }: ModalsProviderProps) => {
     setOpenedModals(modals => {
       return [...modals, { Component, props }];
     });
-    setIsOpen(true);
   };
 
   const close = (Component: React.ReactElement) => {
     setOpenedModals(modals => {
       return modals.filter(modal => modal.Component !== Component);
     });
-    setIsOpen(false);
   };
 
   const dispatch = { open, close };
@@ -48,9 +43,7 @@ const ModalsProvider = ({ children }: ModalsProviderProps) => {
   return (
     <ModalsStateContext.Provider value={openedModals}>
       <ModalsDispatchContext.Provider value={dispatch}>
-        <ModalsIsOpenContext.Provider value={isOpen}>
-          {children}
-        </ModalsIsOpenContext.Provider>
+        {children}
       </ModalsDispatchContext.Provider>
     </ModalsStateContext.Provider>
   );

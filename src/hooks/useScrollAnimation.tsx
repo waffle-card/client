@@ -1,5 +1,5 @@
 import { useState, useContext, useEffect, useCallback } from 'react';
-import { ModalsIsOpenContext } from '@/contexts';
+import { ModalsStateContext } from '@/contexts';
 import { useInterval } from '@/hooks';
 
 type ReturnTypes = [(on: boolean) => void, () => void, () => void];
@@ -9,7 +9,7 @@ const useScrollAnimation = <ResetDepType,>(
   resetDep: ResetDepType,
 ): ReturnTypes => {
   const [isPlayMove, setIsPlayMove] = useState(true);
-  const isOpen = useContext(ModalsIsOpenContext);
+  const openedModals = useContext(ModalsStateContext);
 
   const handleClickFrontButton = useCallback(() => {
     if (containerDom instanceof Element) {
@@ -41,8 +41,8 @@ const useScrollAnimation = <ResetDepType,>(
   );
 
   useEffect(() => {
-    isOpen ? setIsPlayMove(false) : setIsPlayMove(true);
-  }, [isOpen]);
+    openedModals.length ? setIsPlayMove(false) : setIsPlayMove(true);
+  }, [openedModals.length]);
 
   useEffect(() => {
     handleClickFrontButton();
