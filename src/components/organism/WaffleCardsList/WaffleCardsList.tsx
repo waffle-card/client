@@ -64,18 +64,6 @@ const WaffleCardsList = ({
 
   return (
     <StyledDiv>
-      <PrevIcon
-        onClick={moveScrollToFront}
-        onMouseOver={() => {
-          setIsPlayMove(false);
-        }}
-      />
-      <NextIcon
-        onClick={moveScrollToBack}
-        onMouseOver={() => {
-          setIsPlayMove(false);
-        }}
-      />
       <Container
         ref={containerRef}
         isOverflow={isOverflow}
@@ -113,6 +101,18 @@ const WaffleCardsList = ({
           })()
         )}
       </Container>
+      <PrevIcon
+        onClick={moveScrollToFront}
+        onMouseOver={() => {
+          setIsPlayMove(false);
+        }}
+      />
+      <NextIcon
+        onClick={moveScrollToBack}
+        onMouseOver={() => {
+          setIsPlayMove(false);
+        }}
+      />
     </StyledDiv>
   );
 };
