@@ -121,6 +121,34 @@ const StyledDiv = styled.div`
   position: relative;
 `;
 
+const Container = styled.article<{
+  isOverflow: boolean;
+  type?: 'total' | 'my' | 'like';
+}>`
+  ${({ type }) => {
+    if (type === 'my') {
+      return css`
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      `;
+    }
+  }}
+  display: flex;
+  justify-content: ${({ isOverflow }) =>
+    isOverflow ? 'flex-start' : 'center'};
+  align-items: center;
+  position: relative;
+  padding-top: 2rem;
+  margin: 4rem 0;
+  overflow-x: auto;
+  transition: all 0.4s ease;
+  -ms-overflow-style: none;
+  ::-webkit-scrollbar {
+    display: none;
+  }
+`;
+
 const moveIconStyle = css`
   position: absolute;
   top: 45%;
@@ -150,34 +178,6 @@ const PrevIcon = styled(ArrowBackIosNewIcon)`
 const NextIcon = styled(ArrowForwardIosIcon)`
   ${moveIconStyle}
   right: 3%;
-`;
-
-const Container = styled.article<{
-  isOverflow: boolean;
-  type?: 'total' | 'my' | 'like';
-}>`
-  ${({ type }) => {
-    if (type === 'my') {
-      return css`
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      `;
-    }
-  }}
-  display: flex;
-  justify-content: ${({ isOverflow }) =>
-    isOverflow ? 'flex-start' : 'center'};
-  align-items: center;
-  position: relative;
-  padding-top: 2rem;
-  margin: 4rem 0;
-  overflow-x: auto;
-  transition: all 0.4s ease;
-  -ms-overflow-style: none;
-  ::-webkit-scrollbar {
-    display: none;
-  }
 `;
 
 const StyledWaffleCard = styled(WaffleCard)`
