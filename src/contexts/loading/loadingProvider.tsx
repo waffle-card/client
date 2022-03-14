@@ -1,10 +1,9 @@
 import React, { createContext, useContext, useState } from 'react';
 import { Spinner } from '@/components';
 
-const LoadingDispatchContext = createContext<(loading: boolean) => void>(
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  () => {},
-);
+const LoadingDispatchContext = createContext<(loading: boolean) => void>(() => {
+  return;
+});
 
 const LoadingStateContext = createContext(false);
 
