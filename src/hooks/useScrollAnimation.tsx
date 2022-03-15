@@ -1,53 +1,57 @@
-import { useState, useContext, useEffect, useCallback } from 'react';
-import { ModalsStateContext } from '@/contexts';
+import { useState, useEffect, useCallback } from 'react';
 import { useInterval } from '@/hooks';
 
-type ReturnTypes = [(on: boolean) => void, () => void, () => void];
+type ReturnTypes = [boolean, (on: boolean) => void, () => void, () => void];
 
 const useScrollAnimation = <T,>(
-  containerDom: HTMLElement | null,
-  deps: T[],
+  targetDom: HTMLElement | null,
+  deps?: T[],
 ): ReturnTypes => {
   const [isPlayMove, setIsPlayMove] = useState(true);
-  const openedModals = useContext(ModalsStateContext);
-  const [type] = deps;
 
   const moveScrollToFront = useCallback(() => {
-    if (!(containerDom instanceof Element)) return;
-    containerDom.scrollLeft = 0;
+    if (!(targetDom instanceof Element)) return;
+    targetDom.scrollLeft = 0;
     setIsPlayMove(true);
-  }, [containerDom]);
+  }, [targetDom]);
 
   const moveScrollToBack = useCallback(() => {
-    if (!(containerDom instanceof Element)) return;
-    containerDom.scrollLeft = containerDom.scrollWidth;
-  }, [containerDom]);
+    if (!(targetDom instanceof Element)) return;
+    targetDom.scrollLeft = targetDom.scrollWidth;
+  }, [targetDom]);
+
+  const calculateScrolledWidth = (): number | undefined => {
+    if (!(targetDom instanceof Element)) return;
+    const { scrollLeft, clientWidth } = targetDom;
+    return Math.ceil(scrollLeft + clientWidth);
+  };
+
+  const calculateDelay = (num: number): number | undefined => {
+    const ScrolledWidth = calculateScrolledWidth();
+    return ScrolledWidth && ScrolledWidth / num;
+  };
 
   useInterval(
     () => {
-      if (!(containerDom instanceof Element)) return;
-
-      const { scrollLeft, clientWidth } = containerDom;
-      const scrolledWidth = Math.ceil(scrollLeft + clientWidth);
-      const isRenderedCards = scrolledWidth > containerDom.clientWidth;
-      const isFinishScroll = scrolledWidth === containerDom.scrollWidth;
+      if (!(targetDom instanceof Element)) return;
+      const scrolledWidth = calculateScrolledWidth();
+      const isRenderedCards =
+        scrolledWidth && scrolledWidth > targetDom.clientWidth;
+      const isFinishScroll = scrolledWidth === targetDom.scrollWidth;
 
       isRenderedCards && isFinishScroll && setIsPlayMove(false);
-      containerDom.scrollLeft += 1;
+      targetDom.scrollLeft += 1;
     },
-    15,
+    calculateDelay(130),
     isPlayMove,
   );
 
   useEffect(() => {
-    openedModals.length ? setIsPlayMove(false) : setIsPlayMove(true);
-  }, [openedModals.length]);
-
-  useEffect(() => {
     moveScrollToFront();
-  }, [moveScrollToFront, type]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [moveScrollToFront, ...(deps ? deps : [])]);
 
-  return [setIsPlayMove, moveScrollToFront, moveScrollToBack];
+  return [isPlayMove, setIsPlayMove, moveScrollToFront, moveScrollToBack];
 };
 
 export default useScrollAnimation;

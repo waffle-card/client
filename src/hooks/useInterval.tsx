@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 
-const useInterval = (callback: () => void, delay: number, play: boolean) => {
+const useInterval = (callback: () => void, delay?: number, play?: boolean) => {
   const savedCallback: React.MutableRefObject<(() => void) | undefined> =
     useRef();
 
