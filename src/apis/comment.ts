@@ -1,11 +1,20 @@
 import { AxiosResponse } from 'axios';
 import { request, authRequest } from './request';
+import { CommentType } from '@/types';
 
 interface CommentApiType {
-  getCommentsByWaffleCardId: (waffleCardId: string) => Promise<AxiosResponse>;
-  getCommentById: (id: string) => Promise<AxiosResponse>;
-  createComment: (waffleCardId: string, text: string) => Promise<AxiosResponse>;
-  updateComment: (id: string, text: string) => Promise<AxiosResponse>;
+  getCommentsByWaffleCardId: (
+    waffleCardId: string,
+  ) => Promise<AxiosResponse<CommentType[]>>;
+  getCommentById: (id: string) => Promise<AxiosResponse<CommentType>>;
+  createComment: (
+    waffleCardId: string,
+    text: string,
+  ) => Promise<AxiosResponse<CommentType>>;
+  updateComment: (
+    id: string,
+    text: string,
+  ) => Promise<AxiosResponse<CommentType>>;
   deleteComment: (id: string) => Promise<AxiosResponse>;
 }
 
