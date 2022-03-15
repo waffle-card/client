@@ -1,15 +1,18 @@
-import React from 'react';
+import React, { useEffect, useContext } from 'react';
 import styled from '@emotion/styled';
 import PropTypes from 'prop-types';
 import { userState } from '@/recoils';
 import { useRecoilValue } from 'recoil';
-import { useWaffleCardsState } from '@/contexts';
-import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import { useWaffleCardsState, ModalsStateContext } from '@/contexts';
 import { useIsOverflow, useScrollAnimation } from '@/hooks';
-import { WaffleCard, EmptyCard, LoginGuide, NoCardGuide } from '@/components';
+import {
+  WaffleCard,
+  EmptyCard,
+  LoginGuide,
+  NoCardGuide,
+  ArrowIcons,
+} from '@/components';
 import { css } from '@emotion/react';
-import Common from '@/styles';
 import { WaffleCardType } from '@/types';
 
 interface WaffleCardsListProps extends React.ComponentProps<'article'> {
@@ -32,10 +35,11 @@ const WaffleCardsList = ({
 }: WaffleCardsListProps) => {
   const user = useRecoilValue(userState);
   const waffleCards = useWaffleCardsState();
-  const [containerRef, isOverflow] = useIsOverflow();
-  const [setIsPlayMove, moveScrollToFront, moveScrollToBack] =
+  const openedModals = useContext(ModalsStateContext);
+  const [cardsListRef, isOverflow] = useIsOverflow();
+  const [isPlayMove, setIsPlayMove, moveScrollToFront, moveScrollToBack] =
     useScrollAnimation<'total' | 'my' | 'like' | undefined>(
-      containerRef.current,
+      cardsListRef.current,
       [type],
     );
 
@@ -62,19 +66,28 @@ const WaffleCardsList = ({
     onClickLikeToggle && onClickLikeToggle(waffleCardId, likeToggled);
   };
 
+  const handleClickPrevIcon = () => {
+    moveScrollToFront();
+    setIsPlayMove(false);
+  };
+
+  useEffect(() => {
+    openedModals.length ? setIsPlayMove(false) : setIsPlayMove(true);
+  }, [openedModals.length, setIsPlayMove]);
+
   return (
-    <StyledDiv>
-      <Container
-        ref={containerRef}
+    <Container>
+      <CardsList
+        ref={cardsListRef}
         isOverflow={isOverflow}
         type={type}
-        {...props}
         onMouseOver={() => {
           setIsPlayMove(false);
         }}
         onMouseOut={() => {
           setIsPlayMove(true);
         }}
+        {...props}
       >
         {!user && type !== 'total' ? (
           <LoginGuide />
@@ -100,28 +113,22 @@ const WaffleCardsList = ({
             }
           })()
         )}
-      </Container>
-      <PrevIcon
-        onClick={moveScrollToFront}
-        onMouseOver={() => {
-          setIsPlayMove(false);
-        }}
+      </CardsList>
+      <StyledArrowIcons
+        width="92%"
+        visible={!isPlayMove}
+        onClickPrev={handleClickPrevIcon}
+        onClickNext={moveScrollToBack}
       />
-      <NextIcon
-        onClick={moveScrollToBack}
-        onMouseOver={() => {
-          setIsPlayMove(false);
-        }}
-      />
-    </StyledDiv>
+    </Container>
   );
 };
 
-const StyledDiv = styled.div`
+const Container = styled.div`
   position: relative;
 `;
 
-const Container = styled.article<{
+const CardsList = styled.article<{
   isOverflow: boolean;
   type?: 'total' | 'my' | 'like';
 }>`
@@ -149,37 +156,6 @@ const Container = styled.article<{
   }
 `;
 
-const moveIconStyle = css`
-  position: absolute;
-  top: 45%;
-  box-sizing: content-box;
-  padding: 1rem;
-  font-size: 2.7rem;
-  border-radius: 50px;
-  color: ${Common.colors.point};
-  background-color: rgba(255, 255, 255, 0.2);
-  transition: all 0.4s ease;
-  &:hover {
-    background-color: rgba(255, 255, 255, 0.2);
-    box-shadow: 0 0 2px 5px rgb(255, 255, 255, 0.2);
-  }
-  @media ${Common.media.sm} {
-    padding: 0.5rem;
-    font-size: 2rem;
-  }
-  z-index: 2;
-`;
-
-const PrevIcon = styled(ArrowBackIosNewIcon)`
-  ${moveIconStyle}
-  left: 3%;
-`;
-
-const NextIcon = styled(ArrowForwardIosIcon)`
-  ${moveIconStyle}
-  right: 3%;
-`;
-
 const StyledWaffleCard = styled(WaffleCard)`
   flex: 0 0 auto;
   margin: 0 1rem;
@@ -187,6 +163,12 @@ const StyledWaffleCard = styled(WaffleCard)`
     transform: translateY(-1rem);
   }
   transition: all 250ms ease-out;
+`;
+
+const StyledArrowIcons = styled(ArrowIcons)`
+  top: calc(50% + 16px);
+  left: 50%;
+  transform: translate(-50%, -50%);
 `;
 
 WaffleCardsList.protoTypes = {

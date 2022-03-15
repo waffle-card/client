@@ -6,6 +6,8 @@ import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import Common from '@/styles';
 
 interface ArrowIconsProps extends React.ComponentProps<'div'> {
+  width?: string | number;
+  visible?: boolean;
   visiblePrev?: boolean;
   visibleNext?: boolean;
   onClickPrev?: () => number | void;
@@ -13,6 +15,8 @@ interface ArrowIconsProps extends React.ComponentProps<'div'> {
 }
 
 const ArrowIcons = ({
+  width = '80%',
+  visible = true,
   visiblePrev = true,
   visibleNext = true,
   onClickPrev,
@@ -20,9 +24,15 @@ const ArrowIcons = ({
   ...props
 }: ArrowIconsProps): JSX.Element => {
   return (
-    <IconsContainer {...props}>
-      <PrevIcon onClick={onClickPrev} visiblePrev={visiblePrev} />
-      <NextIcon onClick={onClickNext} visibleNext={visibleNext} />
+    <IconsContainer {...props} width={width} visible={visible}>
+      <PrevIcon
+        onClick={onClickPrev}
+        visiblePrev={!visible ? false : visiblePrev}
+      />
+      <NextIcon
+        onClick={onClickNext}
+        visibleNext={!visible ? false : visibleNext}
+      />
     </IconsContainer>
   );
 };
@@ -31,17 +41,21 @@ export default ArrowIcons;
 const IconsContainer = styled.div<ArrowIconsProps>`
   position: absolute;
   top: 50%;
-  transform: translateY(-20%);
-  width: 80%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   display: flex;
   justify-content: space-between;
+  width: ${({ width }) => (typeof width === 'number' ? `${width}px` : width)};
+  z-index: 2;
+  @media ${Common.media.lg} {
+    visibility: ${({ visible }) => (visible ? 'visible' : 'hidden')};
+  }
   @media ${Common.media.md} {
     width: 90%;
   }
   @media ${Common.media.sm} {
     width: 90%;
   }
-  z-index: 2;
 `;
 
 const moveIconStyle = css`

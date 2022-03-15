@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import Slide from './Slide';
 import Common from '@/styles';
 import { GUIDE_SLIDE_DATA } from '@/constants';
-import ArrowIcons from './ArrowIcons';
+import { ArrowIcons } from '@/components';
 
 const GuideSlider = ({
   ...props
