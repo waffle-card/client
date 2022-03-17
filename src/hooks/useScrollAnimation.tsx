@@ -20,9 +20,12 @@ const useScrollAnimation = <T,>(
     targetDom.scrollLeft = targetDom.scrollWidth;
   }, [targetDom]);
 
-  const calculateDelay = (divideValue: number): number | undefined => {
-    return targetDom ? targetDom.scrollWidth / divideValue : undefined;
-  };
+  const calculateDelay = useCallback(
+    (divideValue: number): number | undefined => {
+      return targetDom ? targetDom.scrollWidth / divideValue : undefined;
+    },
+    [targetDom],
+  );
 
   useInterval(
     () => {
