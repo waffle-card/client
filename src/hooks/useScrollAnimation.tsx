@@ -3,9 +3,9 @@ import { useInterval } from '@/hooks';
 
 type ReturnTypes = [boolean, (on: boolean) => void, () => void, () => void];
 
-const useScrollAnimation = <T,>(
+const useScrollAnimation = (
   targetDom: HTMLElement | null,
-  deps?: T[],
+  deps?: ('total' | 'my' | 'like' | undefined)[],
 ): ReturnTypes => {
   const [isPlayMove, setIsPlayMove] = useState(true);
 
