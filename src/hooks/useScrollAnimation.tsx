@@ -20,29 +20,23 @@ const useScrollAnimation = <T,>(
     targetDom.scrollLeft = targetDom.scrollWidth;
   }, [targetDom]);
 
-  const calculateScrolledWidth = (): number | undefined => {
-    if (!(targetDom instanceof Element)) return;
-    const { scrollLeft, clientWidth } = targetDom;
-    return Math.ceil(scrollLeft + clientWidth);
-  };
-
-  const calculateDelay = (num: number): number | undefined => {
-    const ScrolledWidth = calculateScrolledWidth();
-    return ScrolledWidth && ScrolledWidth / num;
+  const calculateDelay = (divideValue: number): number | undefined => {
+    return targetDom ? targetDom.scrollWidth / divideValue : undefined;
   };
 
   useInterval(
     () => {
       if (!(targetDom instanceof Element)) return;
-      const scrolledWidth = calculateScrolledWidth();
-      const isRenderedCards =
-        scrolledWidth && scrolledWidth > targetDom.clientWidth;
-      const isFinishScroll = scrolledWidth === targetDom.scrollWidth;
+
+      const { scrollLeft, clientWidth } = targetDom;
+      const currentScrolledWidth = Math.ceil(scrollLeft + clientWidth);
+      const isRenderedCards = currentScrolledWidth > targetDom.clientWidth;
+      const isFinishScroll = currentScrolledWidth === targetDom.scrollWidth;
 
       isRenderedCards && isFinishScroll && setIsPlayMove(false);
       targetDom.scrollLeft += 1;
     },
-    calculateDelay(130),
+    calculateDelay(150),
     isPlayMove,
   );
 
