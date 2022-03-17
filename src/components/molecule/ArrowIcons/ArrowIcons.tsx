@@ -8,8 +8,6 @@ import Common from '@/styles';
 interface ArrowIconsProps extends React.ComponentProps<'div'> {
   width?: string | number;
   visible?: boolean;
-  visiblePrev?: boolean;
-  visibleNext?: boolean;
   onClickPrev?: () => number | void;
   onClickNext?: () => number | void;
 }
@@ -17,22 +15,14 @@ interface ArrowIconsProps extends React.ComponentProps<'div'> {
 const ArrowIcons = ({
   width = '80%',
   visible = true,
-  visiblePrev = true,
-  visibleNext = true,
   onClickPrev,
   onClickNext,
   ...props
 }: ArrowIconsProps): JSX.Element => {
   return (
     <IconsContainer {...props} width={width} visible={visible}>
-      <PrevIcon
-        onClick={onClickPrev}
-        visiblePrev={!visible ? false : visiblePrev}
-      />
-      <NextIcon
-        onClick={onClickNext}
-        visibleNext={!visible ? false : visibleNext}
-      />
+      <PrevIcon onClick={onClickPrev} />
+      <NextIcon onClick={onClickNext} />
     </IconsContainer>
   );
 };
@@ -78,10 +68,8 @@ const moveIconStyle = css`
 
 const PrevIcon = styled(ArrowBackIosNewIcon)<ArrowIconsProps>`
   ${moveIconStyle}
-  visibility: ${({ visiblePrev }) => (visiblePrev ? 'visible' : 'hidden')};
 `;
 
 const NextIcon = styled(ArrowForwardIosIcon)<ArrowIconsProps>`
   ${moveIconStyle}
-  visibility: ${({ visibleNext }) => (visibleNext ? 'visible' : 'hidden')};
 `;
