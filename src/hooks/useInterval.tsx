@@ -9,16 +9,16 @@ const useInterval = (callback: () => void, delay?: number, play?: boolean) => {
   }, [callback]);
 
   useEffect(() => {
-    function tick() {
-      if (savedCallback.current) {
-        savedCallback.current();
-      }
-    }
-    if (delay !== null) {
-      const id = setInterval(tick, delay);
-      if (!play) clearInterval(id);
-      return () => clearInterval(id);
-    }
+    if (!delay) return;
+
+    const tick = () => {
+      savedCallback.current && savedCallback.current();
+    };
+
+    const id = setInterval(tick, delay);
+    if (!play) clearInterval(id);
+
+    return () => clearInterval(id);
   }, [delay, play]);
 };
 

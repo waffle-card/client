@@ -20,13 +20,6 @@ const useScrollAnimation = (
     targetDom.scrollLeft = targetDom.scrollWidth;
   }, [targetDom]);
 
-  const calculateDelay = useCallback(
-    (divideValue: number): number | undefined => {
-      return targetDom ? targetDom.scrollWidth / divideValue : undefined;
-    },
-    [targetDom],
-  );
-
   useInterval(
     () => {
       if (!(targetDom instanceof Element)) return;
@@ -35,11 +28,10 @@ const useScrollAnimation = (
       const currentScrolledWidth = Math.ceil(scrollLeft + clientWidth);
       const isRenderedCards = currentScrolledWidth > targetDom.clientWidth;
       const isFinishScroll = currentScrolledWidth === targetDom.scrollWidth;
-
-      isRenderedCards && isFinishScroll && setIsPlayMove(false);
+      isRenderedCards && isFinishScroll && setIsPlayMove(false); // 스크롤 다됐을 때 멈추는 기능
       targetDom.scrollLeft += 1;
     },
-    calculateDelay(150),
+    15,
     isPlayMove,
   );
 
