@@ -1,13 +1,38 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useInterval } from '@/hooks';
 
-type ReturnTypes = [boolean, (on: boolean) => void, () => void, () => void];
+type ReturnTypes = [
+  boolean,
+  (on: boolean) => void,
+  () => void,
+  () => void,
+  (instance: HTMLDivElement | null) => void,
+];
 
 const useScrollAnimation = (
   targetDom: HTMLElement | null,
   deps?: ('total' | 'my' | 'like' | undefined)[],
 ): ReturnTypes => {
   const [isPlayMove, setIsPlayMove] = useState(true);
+  const [target, setTarget] = useState<HTMLDivElement | null>(null);
+
+  const onIntersect: IntersectionObserverCallback = ([entry]) => {
+    if (entry.isIntersecting) {
+      console.log('observe');
+      setIsPlayMove(false);
+    }
+  };
+
+  useEffect(() => {
+    let observer: IntersectionObserver;
+    if (target) {
+      observer = new IntersectionObserver(onIntersect, {
+        threshold: 0.1,
+      });
+      observer.observe(target);
+    }
+    return () => observer && observer.disconnect();
+  }, [target]);
 
   const moveScrollToFront = useCallback(() => {
     if (!(targetDom instanceof Element)) return;
@@ -23,12 +48,6 @@ const useScrollAnimation = (
   useInterval(
     () => {
       if (!(targetDom instanceof Element)) return;
-
-      const { scrollLeft, clientWidth } = targetDom;
-      const currentScrolledWidth = Math.ceil(scrollLeft + clientWidth);
-      const isRenderedCards = currentScrolledWidth > targetDom.clientWidth;
-      const isFinishScroll = currentScrolledWidth === targetDom.scrollWidth;
-      isRenderedCards && isFinishScroll && setIsPlayMove(false); // 스크롤 다됐을 때 멈추는 기능
       targetDom.scrollLeft += 1;
     },
     15,
@@ -40,7 +59,13 @@ const useScrollAnimation = (
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [moveScrollToFront, ...(deps ? deps : [])]);
 
-  return [isPlayMove, setIsPlayMove, moveScrollToFront, moveScrollToBack];
+  return [
+    isPlayMove,
+    setIsPlayMove,
+    moveScrollToFront,
+    moveScrollToBack,
+    setTarget,
+  ];
 };
 
 export default useScrollAnimation;
