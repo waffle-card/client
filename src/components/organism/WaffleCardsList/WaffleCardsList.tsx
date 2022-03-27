@@ -14,6 +14,7 @@ import {
 } from '@/components';
 import { css } from '@emotion/react';
 import { WaffleCardType } from '@/types';
+import { Hidden } from '@mui/material';
 
 interface WaffleCardsListProps extends React.ComponentProps<'article'> {
   type?: 'total' | 'my' | 'like';
@@ -37,8 +38,13 @@ const WaffleCardsList = ({
   const waffleCards = useWaffleCardsState();
   const openedModals = useContext(ModalsStateContext);
   const [cardsListRef, isOverflow] = useIsOverflow();
-  const [isPlayMove, setIsPlayMove, moveScrollToFront, moveScrollToBack] =
-    useScrollAnimation(cardsListRef.current, [type]);
+  const [
+    isPlayMove,
+    setIsPlayMove,
+    moveScrollToFront,
+    moveScrollToBack,
+    setTarget,
+  ] = useScrollAnimation(cardsListRef.current, [type]);
 
   const handleClickWaffleCard = (waffleCard: WaffleCardType) => {
     onClickWaffleCard && onClickWaffleCard(waffleCard);
@@ -96,17 +102,24 @@ const WaffleCardsList = ({
             if (waffleCards && waffleCards.length <= 0) {
               return <NoCardGuide />;
             } else {
-              return waffleCards?.map(waffleCard => (
-                <StyledWaffleCard
-                  type={type === 'my' ? 'my' : 'basic'}
-                  key={waffleCard.id}
-                  waffleCardData={waffleCard}
-                  onClickWaffleCard={handleClickWaffleCard}
-                  onClickLikeToggle={handleClickLikeToggle}
-                  onClickEdit={handleClickWaffleCardEdit}
-                  onClickDelete={handleClickWaffleCardDelete}
-                />
-              ));
+              return (
+                <>
+                  {waffleCards?.map(waffleCard => (
+                    <StyledWaffleCard
+                      type={type === 'my' ? 'my' : 'basic'}
+                      key={waffleCard.id}
+                      waffleCardData={waffleCard}
+                      onClickWaffleCard={handleClickWaffleCard}
+                      onClickLikeToggle={handleClickLikeToggle}
+                      onClickEdit={handleClickWaffleCardEdit}
+                      onClickDelete={handleClickWaffleCardDelete}
+                    />
+                  ))}
+                  <div ref={setTarget} style={{ visibility: 'hidden' }}>
+                    {type}
+                  </div>
+                </>
+              );
             }
           })()
         )}
