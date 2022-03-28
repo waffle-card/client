@@ -1,57 +1,62 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useInterval } from '@/hooks';
 
-type ReturnTypes = [
-  boolean,
-  (on: boolean) => void,
-  () => void,
-  () => void,
-  (instance: HTMLDivElement | null) => void,
-];
+interface ReturnTypes {
+  isPlaying: boolean;
+  isIntersecting: boolean;
+  setIsPlaying: (on: boolean) => void;
+  moveScrollToFront: () => void;
+  moveScrollToBack: () => void;
+  setObserveTarget: (instance: HTMLDivElement | null) => void;
+}
 
 const useScrollAnimation = (
-  targetDom: HTMLElement | null,
+  observeTargetDom: HTMLElement | null,
   deps?: ('total' | 'my' | 'like' | undefined)[],
 ): ReturnTypes => {
-  const [isPlayMove, setIsPlayMove] = useState(true);
-  const [target, setTarget] = useState<HTMLDivElement | null>(null);
+  const [isPlaying, setIsPlaying] = useState(true);
+  const [observeTarget, setObserveTarget] = useState<HTMLDivElement | null>(
+    null,
+  );
+  const [isIntersecting, setIsIntersecting] = useState(false);
 
   const onIntersect: IntersectionObserverCallback = ([entry]) => {
     if (entry.isIntersecting) {
       console.log('observe');
-      setIsPlayMove(false);
+      setIsIntersecting(true);
+      setIsPlaying(false);
+    } else {
+      setIsIntersecting(false);
     }
   };
-
   useEffect(() => {
     let observer: IntersectionObserver;
-    if (target) {
+    if (observeTarget) {
       observer = new IntersectionObserver(onIntersect, {
         threshold: 0.1,
       });
-      observer.observe(target);
+      observer.observe(observeTarget);
     }
     return () => observer && observer.disconnect();
-  }, [target]);
+  }, [observeTarget]);
 
   const moveScrollToFront = useCallback(() => {
-    if (!(targetDom instanceof Element)) return;
-    targetDom.scrollLeft = 0;
-    setIsPlayMove(true);
-  }, [targetDom]);
+    if (!(observeTargetDom instanceof Element)) return;
+    observeTargetDom.scrollLeft = 0;
+    setIsPlaying(true);
+  }, [observeTargetDom]);
 
   const moveScrollToBack = useCallback(() => {
-    if (!(targetDom instanceof Element)) return;
-    targetDom.scrollLeft = targetDom.scrollWidth;
-  }, [targetDom]);
+    if (!(observeTargetDom instanceof Element)) return;
+    observeTargetDom.scrollLeft = observeTargetDom.scrollWidth;
+  }, [observeTargetDom]);
 
   useInterval(
     () => {
-      if (!(targetDom instanceof Element)) return;
-      targetDom.scrollLeft += 1;
+      if (!(observeTargetDom instanceof Element)) return;
+      observeTargetDom.scrollLeft += 1;
     },
-    15,
-    isPlayMove,
+    isPlaying ? 15 : null,
   );
 
   useEffect(() => {
@@ -59,13 +64,14 @@ const useScrollAnimation = (
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [moveScrollToFront, ...(deps ? deps : [])]);
 
-  return [
-    isPlayMove,
-    setIsPlayMove,
+  return {
+    isPlaying,
+    setIsPlaying,
     moveScrollToFront,
     moveScrollToBack,
-    setTarget,
-  ];
+    setObserveTarget,
+    isIntersecting,
+  };
 };
 
 export default useScrollAnimation;

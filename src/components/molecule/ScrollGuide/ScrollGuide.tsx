@@ -31,10 +31,10 @@ interface ContainerProps extends React.ComponentProps<'div'> {
 }
 
 export const Container = styled.div<ContainerProps>`
-  position: absolute;
+  position: fixed;
   display: none;
   left: 50%;
-  bottom: 12%;
+  bottom: 10%;
   transform: translateX(-50%);
   width: 312px;
   visibility: ${({ isDelete }) => (isDelete ? 'hidden' : 'visible')};

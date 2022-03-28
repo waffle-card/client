@@ -37,13 +37,14 @@ const WaffleCardsList = ({
   const waffleCards = useWaffleCardsState();
   const openedModals = useContext(ModalsStateContext);
   const [cardsListRef, isOverflow] = useIsOverflow();
-  const [
-    isPlayMove,
-    setIsPlayMove,
+  const {
+    isPlaying,
+    isIntersecting,
+    setIsPlaying,
     moveScrollToFront,
     moveScrollToBack,
-    setTarget,
-  ] = useScrollAnimation(cardsListRef.current, [type]);
+    setObserveTarget,
+  } = useScrollAnimation(cardsListRef.current, [type]);
 
   const handleClickWaffleCard = (waffleCard: WaffleCardType) => {
     onClickWaffleCard && onClickWaffleCard(waffleCard);
@@ -70,27 +71,27 @@ const WaffleCardsList = ({
 
   const handleClickPrevIcon = () => {
     moveScrollToFront();
-    setIsPlayMove(false);
+    setIsPlaying(false);
   };
 
   useEffect(() => {
-    openedModals.length ? setIsPlayMove(false) : setIsPlayMove(true);
-  }, [openedModals.length, setIsPlayMove]);
+    openedModals.length ? setIsPlaying(false) : setIsPlaying(true);
+  }, [openedModals.length, setIsPlaying]);
 
   return (
-    <Container>
+    <Container
+      onMouseEnter={() => {
+        setIsPlaying(false);
+      }}
+      onMouseLeave={() => {
+        if (isIntersecting) return;
+        setIsPlaying(true);
+      }}
+    >
       <CardsList
         ref={cardsListRef}
         isOverflow={isOverflow}
         type={type}
-        onMouseOver={() => {
-          setIsPlayMove(false);
-          // 쓰로틀링 적용하기
-        }}
-        onMouseOut={() => {
-          setIsPlayMove(true);
-          // 스크롤 끝나면 실행안되게 하는 법 고민
-        }}
         {...props}
       >
         {!user && type !== 'total' ? (
@@ -116,7 +117,7 @@ const WaffleCardsList = ({
                       onClickDelete={handleClickWaffleCardDelete}
                     />
                   ))}
-                  <div ref={setTarget} style={{ visibility: 'hidden' }}>
+                  <div ref={setObserveTarget} style={{ visibility: 'hidden' }}>
                     {/* 여백 안생기는 방법 고민하기 forwordRef적용하던지? */}
                     {type}
                   </div>
@@ -128,7 +129,7 @@ const WaffleCardsList = ({
       </CardsList>
       <StyledArrowIcons
         width="92%"
-        visible={!isPlayMove}
+        visible={!isPlaying}
         onClickPrev={handleClickPrevIcon}
         onClickNext={moveScrollToBack}
       />
@@ -159,7 +160,6 @@ const CardsList = styled.article<{
   align-items: center;
   position: relative;
   padding-top: 2rem;
-  margin: 4rem 0;
   overflow-x: auto;
   transition: all 0.4s ease;
   -ms-overflow-style: none;
