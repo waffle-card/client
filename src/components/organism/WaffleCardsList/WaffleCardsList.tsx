@@ -14,7 +14,6 @@ import {
 } from '@/components';
 import { css } from '@emotion/react';
 import { WaffleCardType } from '@/types';
-import { Hidden } from '@mui/material';
 
 interface WaffleCardsListProps extends React.ComponentProps<'article'> {
   type?: 'total' | 'my' | 'like';
@@ -86,9 +85,11 @@ const WaffleCardsList = ({
         type={type}
         onMouseOver={() => {
           setIsPlayMove(false);
+          // 쓰로틀링 적용하기
         }}
         onMouseOut={() => {
           setIsPlayMove(true);
+          // 스크롤 끝나면 실행안되게 하는 법 고민
         }}
         {...props}
       >
@@ -116,6 +117,7 @@ const WaffleCardsList = ({
                     />
                   ))}
                   <div ref={setTarget} style={{ visibility: 'hidden' }}>
+                    {/* 여백 안생기는 방법 고민하기 forwordRef적용하던지? */}
                     {type}
                   </div>
                 </>
