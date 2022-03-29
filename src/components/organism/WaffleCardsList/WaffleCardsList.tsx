@@ -39,11 +39,11 @@ const WaffleCardsList = ({
   const [cardsListRef, isOverflow] = useIsOverflow();
   const {
     isPlaying,
-    isIntersecting,
     setIsPlaying,
+    isIntersecting,
+    setObserveTarget,
     moveScrollToFront,
     moveScrollToBack,
-    setObserveTarget,
   } = useScrollAnimation(cardsListRef.current, [type]);
 
   const handleClickWaffleCard = (waffleCard: WaffleCardType) => {
@@ -118,7 +118,6 @@ const WaffleCardsList = ({
                     />
                   ))}
                   <div ref={setObserveTarget} style={{ visibility: 'hidden' }}>
-                    {/* 여백 안생기는 방법 고민하기 forwordRef적용하던지? */}
                     {type}
                   </div>
                 </>

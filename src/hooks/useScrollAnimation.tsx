@@ -3,32 +3,32 @@ import { useInterval } from '@/hooks';
 
 interface ReturnTypes {
   isPlaying: boolean;
-  isIntersecting: boolean;
   setIsPlaying: (on: boolean) => void;
+  isIntersecting: boolean;
+  setObserveTarget: (instance: HTMLDivElement | null) => void;
   moveScrollToFront: () => void;
   moveScrollToBack: () => void;
-  setObserveTarget: (instance: HTMLDivElement | null) => void;
 }
 
 const useScrollAnimation = (
-  observeTargetDom: HTMLElement | null,
+  targetDom: HTMLElement | null,
   deps?: ('total' | 'my' | 'like' | undefined)[],
 ): ReturnTypes => {
   const [isPlaying, setIsPlaying] = useState(true);
+  const [isIntersecting, setIsIntersecting] = useState(false);
   const [observeTarget, setObserveTarget] = useState<HTMLDivElement | null>(
     null,
   );
-  const [isIntersecting, setIsIntersecting] = useState(false);
 
   const onIntersect: IntersectionObserverCallback = ([entry]) => {
     if (entry.isIntersecting) {
-      console.log('observe');
       setIsIntersecting(true);
       setIsPlaying(false);
     } else {
       setIsIntersecting(false);
     }
   };
+
   useEffect(() => {
     let observer: IntersectionObserver;
     if (observeTarget) {
@@ -41,20 +41,20 @@ const useScrollAnimation = (
   }, [observeTarget]);
 
   const moveScrollToFront = useCallback(() => {
-    if (!(observeTargetDom instanceof Element)) return;
-    observeTargetDom.scrollLeft = 0;
+    if (!(targetDom instanceof Element)) return;
+    targetDom.scrollLeft = 0;
     setIsPlaying(true);
-  }, [observeTargetDom]);
+  }, [targetDom]);
 
   const moveScrollToBack = useCallback(() => {
-    if (!(observeTargetDom instanceof Element)) return;
-    observeTargetDom.scrollLeft = observeTargetDom.scrollWidth;
-  }, [observeTargetDom]);
+    if (!(targetDom instanceof Element)) return;
+    targetDom.scrollLeft = targetDom.scrollWidth;
+  }, [targetDom]);
 
   useInterval(
     () => {
-      if (!(observeTargetDom instanceof Element)) return;
-      observeTargetDom.scrollLeft += 1;
+      if (!(targetDom instanceof Element)) return;
+      targetDom.scrollLeft += targetDom?.scrollWidth / 4000;
     },
     isPlaying ? 15 : null,
   );
@@ -67,10 +67,10 @@ const useScrollAnimation = (
   return {
     isPlaying,
     setIsPlaying,
+    isIntersecting,
+    setObserveTarget,
     moveScrollToFront,
     moveScrollToBack,
-    setObserveTarget,
-    isIntersecting,
   };
 };
 
