@@ -4,7 +4,7 @@ import { useInterval } from '@/hooks';
 interface ReturnTypes {
   isPlaying: boolean;
   setIsPlaying: (on: boolean) => void;
-  isIntersecting: boolean;
+  isShowingLastEl: boolean;
   setObserveTarget: (instance: HTMLDivElement | null) => void;
   moveScrollToFront: () => void;
   moveScrollToBack: () => void;
@@ -15,17 +15,17 @@ const useScrollAnimation = (
   deps?: ('total' | 'my' | 'like' | undefined)[],
 ): ReturnTypes => {
   const [isPlaying, setIsPlaying] = useState(true);
-  const [isIntersecting, setIsIntersecting] = useState(false);
+  const [isShowingLastEl, setIsShowingLastEl] = useState(false);
   const [observeTarget, setObserveTarget] = useState<HTMLDivElement | null>(
     null,
   );
 
   const onIntersect: IntersectionObserverCallback = ([entry]) => {
     if (entry.isIntersecting) {
-      setIsIntersecting(true);
+      setIsShowingLastEl(true);
       setIsPlaying(false);
     } else {
-      setIsIntersecting(false);
+      setIsShowingLastEl(false);
     }
   };
 
@@ -67,7 +67,7 @@ const useScrollAnimation = (
   return {
     isPlaying,
     setIsPlaying,
-    isIntersecting,
+    isShowingLastEl,
     setObserveTarget,
     moveScrollToFront,
     moveScrollToBack,

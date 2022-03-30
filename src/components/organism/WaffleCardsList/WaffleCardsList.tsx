@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { userState } from '@/recoils';
 import { useRecoilValue } from 'recoil';
 import { useWaffleCardsState, ModalsStateContext } from '@/contexts';
-import { useIsOverflow, useScrollAnimation } from '@/hooks';
+import { useIsOverflow, useScrollAnimation, useHover } from '@/hooks';
 import {
   WaffleCard,
   EmptyCard,
@@ -37,10 +37,11 @@ const WaffleCardsList = ({
   const waffleCards = useWaffleCardsState();
   const openedModals = useContext(ModalsStateContext);
   const [cardsListRef, isOverflow] = useIsOverflow();
+  const [ref, isHover] = useHover<HTMLDivElement>();
   const {
     isPlaying,
     setIsPlaying,
-    isIntersecting,
+    isShowingLastEl,
     setObserveTarget,
     moveScrollToFront,
     moveScrollToBack,
@@ -78,16 +79,12 @@ const WaffleCardsList = ({
     openedModals.length ? setIsPlaying(false) : setIsPlaying(true);
   }, [openedModals.length, setIsPlaying]);
 
+  useEffect(() => {
+    isHover ? setIsPlaying(false) : !isShowingLastEl && setIsPlaying(true);
+  }, [isHover, isShowingLastEl, setIsPlaying]);
+
   return (
-    <Container
-      onMouseEnter={() => {
-        setIsPlaying(false);
-      }}
-      onMouseLeave={() => {
-        if (isIntersecting) return;
-        setIsPlaying(true);
-      }}
-    >
+    <Container ref={ref}>
       <CardsList
         ref={cardsListRef}
         isOverflow={isOverflow}
