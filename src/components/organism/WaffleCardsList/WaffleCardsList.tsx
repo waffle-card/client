@@ -1,9 +1,9 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect } from 'react';
 import styled from '@emotion/styled';
 import PropTypes from 'prop-types';
 import { userState } from '@/recoils';
 import { useRecoilValue } from 'recoil';
-import { useWaffleCardsState, ModalsStateContext } from '@/contexts';
+import { useWaffleCardsState } from '@/contexts';
 import { useIsOverflow, useScrollAnimation, useHover } from '@/hooks';
 import {
   WaffleCard,
@@ -35,13 +35,12 @@ const WaffleCardsList = ({
 }: WaffleCardsListProps) => {
   const user = useRecoilValue(userState);
   const waffleCards = useWaffleCardsState();
-  const openedModals = useContext(ModalsStateContext);
   const [cardsListRef, isOverflow] = useIsOverflow();
   const [ref, isHover] = useHover<HTMLDivElement>();
   const {
     isPlaying,
-    setIsPlaying,
     isShowingLastEl,
+    setIsPlaying,
     setObserveTarget,
     moveScrollToFront,
     moveScrollToBack,
@@ -69,15 +68,6 @@ const WaffleCardsList = ({
   ) => {
     onClickLikeToggle && onClickLikeToggle(waffleCardId, likeToggled);
   };
-
-  const handleClickPrevIcon = () => {
-    moveScrollToFront();
-    setIsPlaying(false);
-  };
-
-  useEffect(() => {
-    openedModals.length ? setIsPlaying(false) : setIsPlaying(true);
-  }, [openedModals.length, setIsPlaying]);
 
   useEffect(() => {
     isHover ? setIsPlaying(false) : !isShowingLastEl && setIsPlaying(true);
@@ -114,9 +104,7 @@ const WaffleCardsList = ({
                       onClickDelete={handleClickWaffleCardDelete}
                     />
                   ))}
-                  <div ref={setObserveTarget} style={{ visibility: 'hidden' }}>
-                    {type}
-                  </div>
+                  <LastItem ref={setObserveTarget}></LastItem>
                 </>
               );
             }
@@ -126,7 +114,7 @@ const WaffleCardsList = ({
       <StyledArrowIcons
         width="92%"
         visible={!isPlaying}
-        onClickPrev={handleClickPrevIcon}
+        onClickPrev={moveScrollToFront}
         onClickNext={moveScrollToBack}
       />
     </Container>
@@ -162,6 +150,10 @@ const CardsList = styled.article<{
   ::-webkit-scrollbar {
     display: none;
   }
+`;
+
+const LastItem = styled.div`
+  margin: 0 5px;
 `;
 
 const StyledWaffleCard = styled(WaffleCard)`
