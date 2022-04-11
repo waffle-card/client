@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import styled from '@emotion/styled';
-import PropTypes from 'prop-types';
 import { userState } from '@/recoils';
 import { useRecoilValue } from 'recoil';
 import { useWaffleCardsState } from '@/contexts';
@@ -158,13 +157,6 @@ const StyledWaffleCard = styled(WaffleCard)`
   }
   transition: all 250ms ease-out;
 `;
-
-WaffleCardsList.protoTypes = {
-  onClickWaffleCard: PropTypes.func,
-  onClickWaffleCardCreate: PropTypes.func,
-  onClickWaffleCardEdit: PropTypes.func,
-  onClickWaffleCardDelete: PropTypes.func,
-};
 
 WaffleCardsList.defaultProps = {
   type: 'total',
