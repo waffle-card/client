@@ -5,20 +5,20 @@ import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import Common from '@/styles';
 
-interface ArrowIconsProps extends React.ComponentProps<'div'> {
+interface ArrowButtonsProps extends React.ComponentProps<'div'> {
   width?: string | number;
   visible?: boolean;
   onClickPrev?: () => number | void;
   onClickNext?: () => number | void;
 }
 
-const ArrowIcons = ({
+const ArrowButtons = ({
   width = '80%',
   visible = true,
   onClickPrev,
   onClickNext,
   ...props
-}: ArrowIconsProps): JSX.Element => {
+}: ArrowButtonsProps): JSX.Element => {
   return (
     <IconsContainer {...props} width={width} visible={visible}>
       <PrevIcon onClick={onClickPrev} />
@@ -26,9 +26,9 @@ const ArrowIcons = ({
     </IconsContainer>
   );
 };
-export default ArrowIcons;
+export default ArrowButtons;
 
-const IconsContainer = styled.div<ArrowIconsProps>`
+const IconsContainer = styled.div<ArrowButtonsProps>`
   position: absolute;
   top: 50%;
   left: 50%;
@@ -66,10 +66,10 @@ const moveIconStyle = css`
   }
 `;
 
-const PrevIcon = styled(ArrowBackIosNewIcon)<ArrowIconsProps>`
+const PrevIcon = styled(ArrowBackIosNewIcon)<ArrowButtonsProps>`
   ${moveIconStyle}
 `;
 
-const NextIcon = styled(ArrowForwardIosIcon)<ArrowIconsProps>`
+const NextIcon = styled(ArrowForwardIosIcon)<ArrowButtonsProps>`
   ${moveIconStyle}
 `;

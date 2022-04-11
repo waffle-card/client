@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import Slide from './Slide';
 import Common from '@/styles';
 import { GUIDE_SLIDE_DATA } from '@/constants';
-import { ArrowIcons } from '@/components';
+import ArrowButtons from './ArrowButtons';
 
 const GuideSlider = ({
   ...props
@@ -46,7 +46,10 @@ const GuideSlider = ({
           <Dot key={key} active={index === slideIndex}></Dot>
         ))}
       </Dots>
-      <ArrowIcons onClickPrev={handleClickPrev} onClickNext={handleClickNext} />
+      <ArrowButtons
+        onClickPrev={handleClickPrev}
+        onClickNext={handleClickNext}
+      />
     </Slider>
   );
 };

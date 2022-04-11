@@ -5,13 +5,8 @@ import { userState } from '@/recoils';
 import { useRecoilValue } from 'recoil';
 import { useWaffleCardsState } from '@/contexts';
 import { useIsOverflow, useScrollAnimation, useHover } from '@/hooks';
-import {
-  WaffleCard,
-  EmptyCard,
-  LoginGuide,
-  NoCardGuide,
-  ArrowIcons,
-} from '@/components';
+import { WaffleCard, EmptyCard, LoginGuide, NoCardGuide } from '@/components';
+import ArrowButtons from './ArrowButtons';
 import { css } from '@emotion/react';
 import { WaffleCardType } from '@/types';
 
@@ -38,7 +33,6 @@ const WaffleCardsList = ({
   const [cardsListRef, isOverflow] = useIsOverflow();
   const [ref, isHover] = useHover<HTMLDivElement>();
   const {
-    isPlaying,
     isShowingLastEl,
     setIsPlaying,
     setObserveTarget,
@@ -111,12 +105,12 @@ const WaffleCardsList = ({
           })()
         )}
       </CardsList>
-      <StyledArrowIcons
-        width="92%"
-        visible={!isPlaying}
-        onClickPrev={moveScrollToFront}
-        onClickNext={moveScrollToBack}
-      />
+      {isOverflow && (
+        <ArrowButtons
+          onClickPrev={moveScrollToFront}
+          onClickNext={moveScrollToBack}
+        />
+      )}
     </Container>
   );
 };
@@ -163,12 +157,6 @@ const StyledWaffleCard = styled(WaffleCard)`
     transform: translateY(-1rem);
   }
   transition: all 250ms ease-out;
-`;
-
-const StyledArrowIcons = styled(ArrowIcons)`
-  top: calc(50% + 16px);
-  left: 50%;
-  transform: translate(-50%, -50%);
 `;
 
 WaffleCardsList.protoTypes = {

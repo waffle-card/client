@@ -26,7 +26,6 @@ export { default as Spinner } from './molecule/Spinner/Spinner';
 export type { SpinnerProps } from './molecule/Spinner/Spinner';
 export { default as Tab } from './molecule/Tab/Tab';
 export { default as TabItem } from './molecule/Tab/TabItem';
-export { default as ArrowIcons } from './molecule/ArrowIcons/ArrowIcons';
 
 // organism
 export { default as CardEditModal } from './organism/CardEditModal/CardEditModal';

@@ -44,9 +44,9 @@ const useScrollAnimation = (
   useInterval(
     () => {
       if (!(targetDom instanceof Element)) return;
-      targetDom.scrollLeft += targetDom?.scrollWidth / 6000;
+      targetDom.scrollLeft += 1;
     },
-    isPlaying ? 15 : null,
+    isPlaying ? 16 : null,
   );
 
   useEffect(() => {
