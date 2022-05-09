@@ -7,3 +7,5 @@ export { default as useUser } from './useUser';
 export { default as useIsOverflow } from './useIsOverflow';
 export { default as useToggle } from './useToggle';
 export { default as useScrollToBottom } from './useScrollToBottom';
+export { default as useInterval } from './useInterval';
+export { default as useScrollAnimation } from './useScrollAnimation';

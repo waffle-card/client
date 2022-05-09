@@ -119,7 +119,7 @@ const HomePage = () => {
 
   return (
     <Container>
-      <Tab onClick={setTabValue} currentActiveTabItem={tabValue} />
+      <StyledTab onClick={setTabValue} currentActiveTabItem={tabValue} />
       <WaffleCardsList
         type={tabValue}
         onClickWaffleCard={handleClickWaffleCard}
@@ -143,6 +143,11 @@ const Container = styled.main`
   width: 100%;
   height: calc(100vh - 60px);
   margin: 0 auto;
+  padding-bottom: 5%;
+`;
+
+const StyledTab = styled(Tab)`
+  margin-bottom: 4rem;
 `;
 
 export default HomePage;
