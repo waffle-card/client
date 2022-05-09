@@ -1,8 +1,9 @@
 import { AxiosResponse } from 'axios';
 import { authRequest } from './request';
+import { LikeType } from '@/types';
 
 interface LikeApiType {
-  createLike: (waffleCardId: string) => Promise<AxiosResponse>;
+  createLike: (waffleCardId: string) => Promise<AxiosResponse<LikeType>>;
   deleteLike: (waffleCardId: string) => Promise<AxiosResponse>;
 }
 

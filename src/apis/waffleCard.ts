@@ -13,10 +13,9 @@ interface WaffleCardApiType {
     emoji,
     color,
     hashTags,
-  }: Pick<
-    WaffleCardType,
-    'emoji' | 'color' | 'hashTags'
-  >) => Promise<AxiosResponse>;
+  }: Pick<WaffleCardType, 'emoji' | 'color' | 'hashTags'>) => Promise<
+    AxiosResponse<WaffleCardType>
+  >;
   updateWaffleCard: (
     waffleCardId: string,
     {
@@ -24,7 +23,7 @@ interface WaffleCardApiType {
       color,
       hashTags,
     }: Pick<WaffleCardType, 'emoji' | 'color' | 'hashTags'>,
-  ) => Promise<AxiosResponse>;
+  ) => Promise<AxiosResponse<WaffleCardType>>;
   deleteWaffleCard: (
     waffleCardId: Pick<WaffleCardType, 'id'>,
   ) => Promise<AxiosResponse>;

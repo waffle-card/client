@@ -7,7 +7,7 @@ interface UserApiType {
     name: string;
     email: string;
     password: string;
-  }) => Promise<AxiosResponse>;
+  }) => Promise<AxiosResponse<UserType>>;
   login: (userInfo: {
     email: string;
     password: string;
@@ -19,7 +19,7 @@ interface UserApiType {
   }: {
     name?: string;
     password?: string;
-  }) => Promise<AxiosResponse>;
+  }) => Promise<AxiosResponse<UserType>>;
 }
 
 const userApi: UserApiType = {
