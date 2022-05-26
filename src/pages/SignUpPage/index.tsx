@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
 import Common from '@/styles';
@@ -5,10 +6,12 @@ import { authApi } from '@/apis';
 import { useForm } from '@/hooks';
 import styled from '@emotion/styled';
 import { formValidator } from '@/utils';
-import { Text, Button, Input, BackButton, Spinner } from '@/components';
+import { useLoadingDispatch } from '@/contexts';
+import { Text, Button, Input, BackButton } from '@/components';
 
 const SignUpPage = () => {
   const navigate = useNavigate();
+  const setLoading = useLoadingDispatch();
   const { isLoading, errors, handleChange, handleSubmit } = useForm({
     initialValues: {
       email: '',
@@ -67,6 +70,10 @@ const SignUpPage = () => {
     },
   });
 
+  useEffect(() => {
+    setLoading(isLoading);
+  }, [isLoading, setLoading]);
+
   return (
     <Container>
       <StyledBackButton />
@@ -94,7 +101,6 @@ const SignUpPage = () => {
         </InputWrapper>
         <StyledButton type="submit">가입하기</StyledButton>
       </ContentContainer>
-      <Spinner loading={isLoading} />
     </Container>
   );
 };
